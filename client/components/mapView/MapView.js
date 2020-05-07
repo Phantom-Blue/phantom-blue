@@ -10,11 +10,11 @@ import '../../../secrets'
 
 export const MapView = () => {
   const [viewport, setViewport] = useState({
-    latitute: 40.7128,
-    longitude: -74.006,
+    latitude: 40.7736,
+    longitude: -73.9566,
     width: '100vw',
     height: '100vh',
-    zoom: 4
+    zoom: 13
   })
 
   const [selectedState, setSeletedState] = useState(null)
@@ -28,7 +28,28 @@ export const MapView = () => {
         onViewportChange={viewport => {
           setViewport(viewport)
         }}
-      />
+      >
+        {data.newYorkCities.map((borough, idx) => {
+          return (
+            <Marker
+              key={idx}
+              latitude={borough.latitude}
+              longitude={borough.longitude}
+            >
+              <img
+                onClick={e => {
+                  e.preventDefault()
+                  setSeletedState(borough)
+                }}
+                src="./location-pin.png"
+                alt="city"
+                width="50px"
+                height="50px"
+              />
+            </Marker>
+          )
+        })}
+      </ReactMapGl>
     </div>
   )
 }
