@@ -1,7 +1,20 @@
 {
   "root": true,
-  "extends": ["fullstack", "prettier", "prettier/react"],
+  "extends": [
+    "fullstack",
+    "prettier",
+    "prettier/react",
+    "./node_modules/@pawjs/pawjs/.eslintrc"
+  ],
   "rules": {
     "semi": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config":
+          "./node_modules/@pawjs/pawjs/src/webpack/inc/webpack-resolver-config.js"
+      }
+    }
   }
 }

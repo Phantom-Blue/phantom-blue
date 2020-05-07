@@ -1,16 +1,16 @@
-# Boilermaker
+# pentimento
 
 _Good things come in pairs_
 
 Looking to mix up a backend with `express`/`sequelize` and a frontend with
-`react`/`redux`? That's `boilermaker`!
+`react`/`redux`? That's `pentimento`!
 
 Follow along with the boilerplate workshop to make your own! This canonical
 version can serve as a reference, or a starting point. For an in depth
 discussion into the code that makes up this repository, see the
-[Boilermaker Guided Tour][boilermaker-yt]
+[pentimento Guided Tour][pentimento-yt]
 
-[boilermaker-yt]: https://www.youtube.com/playlist?list=PLx0iOsdUOUmn7D5XL4mRUftn8hvAJGs8H
+[pentimento-yt]: https://www.youtube.com/playlist?list=PLx0iOsdUOUmn7D5XL4mRUftn8hvAJGs8H
 
 ## Setup
 
@@ -22,18 +22,18 @@ To use this as boilerplate, you'll need to take the following steps:
 * Run the following commands:
 
 ```
-git remote add boilermaker https://github.com/FullstackAcademy/boilermaker.git
-git fetch boilermaker
-git merge boilermaker/master
+git remote add pentimento https://github.com/FullstackAcademy/pentimento.git
+git fetch pentimento
+git merge pentimento/master
 ```
 
-Why did we do that? Because every once in a while, `boilermaker` may
+Why did we do that? Because every once in a while, `pentimento` may
 be updated with additional features or bug fixes, and you can easily
 get those changes from now on by entering:
 
 ```
-git fetch boilermaker
-git merge boilermaker/master
+git fetch pentimento
+git merge pentimento/master
 ```
 
 ## Customize
@@ -47,13 +47,13 @@ Now that you've got the code, follow these steps to get acclimated:
   parameter in `package.json`):
 
 ```
-export MY_APP_NAME=boilermaker
+export MY_APP_NAME=pentimento
 createdb $MY_APP_NAME
 createdb $MY_APP_NAME-test
 ```
 
-* By default, running `npm test` will use `boilermaker-test`, while
-  regular development uses `boilermaker`
+* By default, running `npm test` will use `pentimento-test`, while
+  regular development uses `pentimento`
 * Create a file called `secrets.js` in the project root
   * This file is listed in `.gitignore`, and will _only_ be required
     in your _development_ environment
@@ -82,7 +82,7 @@ process.env.GOOGLE_CALLBACK = '/auth/google/callback'
 Linters are fundamental to any project. They ensure that your code
 has a consistent style, which is critical to writing readable code.
 
-Boilermaker comes with a working linter (ESLint, with
+pentimento comes with a working linter (ESLint, with
 `eslint-config-fullstack`) "out of the box." However, everyone has
 their own style, so we recommend that you and your team work out yours
 and stick to it. Any linter rule that you object to can be "turned
@@ -105,7 +105,7 @@ From there, just follow your bliss.
 ## Deployment
 
 Ready to go world wide? Here's a guide to deployment! There are two
-supported ways to deploy in Boilermaker:
+supported ways to deploy in pentimento:
 
 * automatically, via continuous deployment with Travis.
 * "manually", from your local machine via the `deploy` script.
@@ -140,7 +140,7 @@ Continuous Integration is not about testing per se – it's about _continuously
 integrating_ your changes into the live application, instead of periodically
 _releasing_ new versions. CI tools can not only test your code, but then
 automatically deploy your app. This is known as Continuous Deployment.
-Boilermaker comes with a `.travis.yml` configuration almost ready for
+pentimento comes with a `.travis.yml` configuration almost ready for
 continuous deployment; follow these steps to the job.
 
 1.  Run the following commands to create a new branch:
@@ -191,7 +191,7 @@ will automatically push the app to Heroku for you.
 ### Cody's own deploy script
 
 Your local copy of the application can be pushed up to Heroku at will,
-using Boilermaker's handy deployment script:
+using pentimento's handy deployment script:
 
 1.  Make sure that all your work is fully committed and merged into your
     master branch on Github.
