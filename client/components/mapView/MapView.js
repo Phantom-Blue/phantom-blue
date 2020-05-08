@@ -8,6 +8,11 @@ import ReactMapGl, {
 import * as data from '../data/data.json'
 import '../../../secrets'
 
+const markerBtn = {
+  background: 'none',
+  border: 'none'
+}
+
 export const MapView = () => {
   const [viewport, setViewport] = useState({
     latitude: 40.7736,
@@ -36,16 +41,20 @@ export const MapView = () => {
               latitude={borough.latitude}
               longitude={borough.longitude}
             >
-              <img
+              <button
+                style={markerBtn}
                 onClick={e => {
                   e.preventDefault()
                   setSeletedState(borough)
                 }}
-                src="./location-pin.png"
-                alt="city"
-                width="50px"
-                height="50px"
-              />
+              >
+                <img
+                  width="50px"
+                  height="50px"
+                  src="./location-pin.png"
+                  alt="city"
+                />
+              </button>
             </Marker>
           )
         })}
