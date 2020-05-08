@@ -51,7 +51,7 @@ export const MapView = () => {
                 <img
                   width="50px"
                   height="50px"
-                  src="./location-pin.png"
+                  src="/location-pin.png"
                   alt="city"
                 />
               </button>

@@ -20,7 +20,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
         exclude: /node_modules/,
         loader: 'babel-loader'
       }
