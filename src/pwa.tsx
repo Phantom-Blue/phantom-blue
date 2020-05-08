@@ -4,7 +4,7 @@ import PwaIcon512 from './resources/img/pwa-icon-512x512.png';
 export default {
   name: process.env.APP_NAME,
   short_name: process.env.APP_NAME,
-
+  reactMap: process.env.REACT_APP_MAPBOX_KEY,
   // Possible values ltr(left to right)/rtl(right to left)
   dir: 'ltr',
 

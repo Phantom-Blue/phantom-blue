@@ -74,3 +74,5 @@ src/config/assets.js
 
 # Ignore sass cache
 .sass-cache
+
+secrets.js

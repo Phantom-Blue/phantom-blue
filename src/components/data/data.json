@@ -1,21 +1,25 @@
 {
     "newYorkCities": [
       {
+        "id": 1,
         "city": "Queens",
         "latitude": 40.7282,
         "longitude": -73.7949
       },
       {
+        "id": 2,
         "city": "Bronx",
         "latitude": 40.8448,
         "longitude": -73.8648
       },
       {
+        "id": 3,
         "city": "Manhattan",
         "latitude": 40.721845,
         "longitude": -73.983026
       },
       {
+        "id": 4,
         "city": "Brooklyn",
         "latitude": 40.6782,
         "longitude": -73.9442
