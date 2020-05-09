@@ -7,9 +7,6 @@ const Image = db.define('Images', {
     type: Sequelize.TEXT,
     allowNull: false,
   },
-  uploaderId: {
-  },
-
 });
 
 module.exports = Image;
