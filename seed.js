@@ -14,14 +14,14 @@ const seed = async () => {
 
     const Artists = await Promise.all([
       Artist.create({
-        firstName: Hyuro,
+        firstName: 'Hyuro',
         isVerified: true,
       }),
     ]);
     const Artworks = await Promise.all([
       Artwork.create({
         userId: 1,
-        artist: Dondi,
+        artist: 'Dondi',
         description: 'Tagged Dondi',
         locationId: 1,
         isVerified: true,
