@@ -1,10 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import ReactMapGl, {
-  Marker,
-  Popup,
-  NavigationControl,
-  FullscreenControl
-} from 'react-map-gl'
+import React, {useState} from 'react'
+import ReactMapGl, {Marker, Popup} from 'react-map-gl'
 import * as data from '../data/data.json'
 import '../../../secrets'
 
@@ -22,42 +17,53 @@ export const MapView = () => {
     zoom: 13
   })
 
-  const [selectedState, setSeletedState] = useState(null)
+  const [selectedState, setSelectedState] = useState(null)
 
   return (
     <div>
       <ReactMapGl
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
-        mapStyle="mapbox://styles/mapbox/streets-v11"
-        onViewportChange={viewport => {
-          setViewport(viewport)
+        mapStyle="mapbox://styles/gisellez/ck9yorghb2d811ipjrtgocomz"
+        onViewportChange={newport => {
+          setViewport(newport)
         }}
       >
-        {data.newYorkCities.map((borough, idx) => {
-          return (
-            <Marker
-              key={idx}
-              latitude={borough.latitude}
-              longitude={borough.longitude}
+        {data.newYorkCities.map(borough => (
+          <Marker
+            key={borough.id}
+            latitude={borough.latitude}
+            longitude={borough.longitude}
+          >
+            <button
+              type="button"
+              style={markerBtn}
+              onClick={ev => {
+                ev.preventDefault()
+                setSelectedState(borough)
+              }}
             >
-              <button
-                style={markerBtn}
-                onClick={e => {
-                  e.preventDefault()
-                  setSeletedState(borough)
-                }}
-              >
-                <img
-                  width="50px"
-                  height="50px"
-                  src="/location-pin.png"
-                  alt="city"
-                />
-              </button>
-            </Marker>
-          )
-        })}
+              <img
+                width="50px"
+                height="50px"
+                src="/location-pin.png"
+                alt="city"
+              />
+            </button>
+          </Marker>
+        ))}
+        {selectedState ? (
+          <Popup
+            className="popup-container"
+            latitude={selectedState.latitude}
+            longitude={selectedState.longitude}
+            onClose={() => {
+              setSelectedState(null)
+            }}
+          >
+            <h2>{selectedState.city}</h2>
+          </Popup>
+        ) : null}
       </ReactMapGl>
     </div>
   )
