@@ -16,7 +16,7 @@ import React from 'react';
 // importing edit artwork component, for when it's ready to plug in
 // import EditArtwork from './EditArtwork'
 
-export default class Options extends React.Component {
+export default class ArtworkOptions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

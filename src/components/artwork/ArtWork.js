@@ -8,7 +8,7 @@ import React from 'react';
 // import { connect } from 'react-redux';
 // import { fetchArtwork } from '../../store/artwork';
 import { Link } from 'react-router-dom'
-import Options from './Options';
+import ArtworkOptions from './ArtworkOptions';
 import { generateUrl } from './utils';
 
 const artwork = {
@@ -84,9 +84,9 @@ export default class Artwork extends React.Component {
           </div>
           <div>
             {
-            options
-              ? <Options artwork={artwork} />
-              : ('options')
+            options === true
+              ? <ArtworkOptions artwork={artwork} />
+              : ('')
             }
           </div>
         </div>
