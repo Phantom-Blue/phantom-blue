@@ -1,4 +1,12 @@
-const { db, Artist, Artwork, FavoriteArtwork, Image, Location, User} = require("./server/db");
+const {
+  db,
+  Artist,
+  Artwork,
+  FavoriteArtwork,
+  Image,
+  Location,
+  User,
+} = require('./server/db');
 
 const seed = async () => {
   try {
@@ -52,7 +60,7 @@ const seed = async () => {
 
 
   } catch (err) {
-    console.log(red(err));
+    console.log((err));
   }
 };
 
@@ -63,11 +71,11 @@ module.exports = seed;
 if (require.main === module) {
   seed()
     .then(() => {
-      console.log(green("Seeding success!"));
+      console.log(('Seeding success!'));
       db.close();
     })
     .catch(err => {
-      console.error(red("Oh noes! Something went wrong!"));
+      console.error(('Oh noes! Something went wrong!'));
       console.error(err);
       db.close();
     });
