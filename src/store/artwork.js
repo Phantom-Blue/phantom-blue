@@ -26,8 +26,8 @@ const verifiedArtwork = artwork => (
 // T H U N K S //
 export const fetchArtwork = location => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/artworks/`, location)
-    dispatch(gotAnArtwork(res.data.artwork))
+    const res = await axios.get('/api/artworks/', location)
+    dispatch(gotAnArtwork(res.data))
   } catch (error) {
     console.error("didn't receive any data")
   }
@@ -35,7 +35,7 @@ export const fetchArtwork = location => async (dispatch) => {
 
 export const verifyArtworkInDB = artworkId => async (dispatch) => {
   try {
-    const res = await axios.update(`/api/artworks/${artworkId}`)
+    const res = await axios.put(`/api/artworks/${artworkId}`)
     dispatch(verifiedArtwork(res.data))
   } catch (error) {
     console.error("didn't receive any data")
