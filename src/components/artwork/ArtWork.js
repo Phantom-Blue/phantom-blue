@@ -1,3 +1,9 @@
+/* eslint-disable semi */
+/* eslint-disable no-console */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-constant-condition */
+/* eslint-disable import/prefer-default-export */
+
 import React from 'react';
 // import { connect } from 'react-redux';
 // import { fetchArtwork } from '../../store/artwork';
@@ -9,7 +15,7 @@ const artwork = {
   artist: 'Dondi',
   imageUrl: 'https://d2jv9003bew7ag.cloudfront.net/uploads/Dondi-White-Children-of-the-Grave-part-Three.-Photo-Martha-Cooper-865x577.jpg',
   description: 'Tagged Dondi',
-  location: '123 Broadway, THA BRONX',
+  location: '123 Broadway, Bronx, NY',
   locationId: 1,
   isVerified: true,
 };
@@ -22,7 +28,19 @@ export default class Artwork extends React.Component {
       directions: '',
     };
     this.handleOptions = this.handleOptions.bind(this);
-    this.handleDirections = this.handleDirections.bind(this);
+  }
+
+  componentDidMount() {
+    //   const { latitude, longitude } = this.props;
+    //   const latLonLocation = { latitude, longitude };
+    //   getArtwork(latLonLocation);
+    const directionsUrl = generateUrl(artwork.location);
+    console.log(directionsUrl);
+    this.setState(
+      {
+        directions: directionsUrl,
+      },
+    );
   }
 
   handleOptions() {
@@ -34,21 +52,6 @@ export default class Artwork extends React.Component {
       },
     );
   }
-
-  handleDirections(e) {
-    const directionsUrl = generateUrl(artwork.location);
-    console.log(directionsUrl);
-    this.setState(
-      {
-        directions: directionsUrl,
-      },
-    );
-  }
-  // componentDidMount() {
-  //   const { latitude, longitude } = this.props;
-  //   const latLonLocation = { latitude, longitude };
-  //   getArtwork(latLonLocation);
-  // }
 
   render() {
     // const { artwork } = this.props;
@@ -89,7 +92,7 @@ export default class Artwork extends React.Component {
           </div>
         </div>
         <div>
-          <button type="submit" className="directions" onClick={(e) => { this.handleDirections(e); }}>
+          <button type="submit" className="directions">
             <a href={directions}>
               <h4>TAKE ME THERE</h4>
             </a>

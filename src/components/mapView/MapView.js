@@ -24,11 +24,9 @@ export const MapView = () => {
     height: '100vh',
     zoom: 13,
   });
-  // process.env.REACT_APP_MAPBOX_KEY
 
   const [selectedState, setSelectedState] = useState(null);
 
-  // console.log(viewport);
 
   // const {width, height, longtitude, latitude, zoom} = viewport;
 
