@@ -4,11 +4,11 @@ const db = require('../db');
 const Location = db.define('Locations', {
 
   longitude: {
-    type: Sequelize.TEXT,
+    type: Sequelize.DECIMAL,
     allowNull: false,
   },
   latitude: {
-    type: Sequelize.TEXT,
+    type: Sequelize.DECIMAL,
     allowNull: false,
   },
   address: {
