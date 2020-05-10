@@ -7,8 +7,9 @@ import ReactMapGl, {
   // FullscreenControl
 } from 'react-map-gl';
 import * as data from '../data/data.json';
-import '../../../secrets';
+import '../../secrets';
 import Pin from '../../resources/img/location-pin.png';
+import Artwork from '../artwork/ArtWork';
 
 const markerBtn = {
   background: 'none',
@@ -74,7 +75,11 @@ export const MapView = () => {
                 setSelectedState(null);
               }}
             >
-              <h2>{selectedState.city}</h2>
+              <Artwork
+                latitude={selectedState.latitude}
+                longitude={selectedState.longitude}
+              />
+              {/* <h2>{selectedState.city}</h2> */}
             </Popup>
           ) : null
           }
