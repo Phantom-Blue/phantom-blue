@@ -1,12 +1,15 @@
 import React from 'react';
 // import { connect } from 'react-redux';
 // import { fetchArtwork } from '../../store/artwork';
+import Options from './Options';
+import { generateUrl } from './utils';
 
 const artwork = {
   userId: 1,
   artist: 'Dondi',
   imageUrl: 'https://d2jv9003bew7ag.cloudfront.net/uploads/Dondi-White-Children-of-the-Grave-part-Three.-Photo-Martha-Cooper-865x577.jpg',
   description: 'Tagged Dondi',
+  location: '123 Broadway, THA BRONX',
   locationId: 1,
   isVerified: true,
 };
@@ -14,13 +17,33 @@ const artwork = {
 export default class Artwork extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      options: false,
+      directions: '',
+    };
     this.handleOptions = this.handleOptions.bind(this);
+    this.handleDirections = this.handleDirections.bind(this);
   }
 
-  // handleOptions(ev){
+  handleOptions() {
+    const { options } = this.state;
 
-  // }
+    this.setState(
+      {
+        options: !options,
+      },
+    );
+  }
+
+  handleDirections(e) {
+    const directionsUrl = generateUrl(artwork.location);
+    console.log(directionsUrl);
+    this.setState(
+      {
+        directions: directionsUrl,
+      },
+    );
+  }
   // componentDidMount() {
   //   const { latitude, longitude } = this.props;
   //   const latLonLocation = { latitude, longitude };
@@ -29,30 +52,47 @@ export default class Artwork extends React.Component {
 
   render() {
     // const { artwork } = this.props;
+    const { options, directions } = this.state;
     return (
-      <div className="artwork">
-        <button type="button" className="close">
-          <h4>X</h4>
-        </button>
-        <div className="image">
-          <button type="submit" className="historybutton">
-            <img src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowL.png" alt="back button" />
+      <div>
+        <div className="artwork">
+          <button type="button" className="close">
+            <h4>X</h4>
           </button>
-          <button type="submit" className="historybutton">
-            <img src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowR.png" alt="forward button" />
-          </button>
-          <img src={artwork.imageUrl} alt={artwork.artist} />
+          <div className="image">
+            <button type="submit" className="historybutton">
+              <img src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowL.png" alt="back button" />
+            </button>
+            <button type="submit" className="historybutton">
+              <img src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowR.png" alt="forward button" />
+            </button>
+            <img src={artwork.imageUrl} alt={artwork.artist} />
+          </div>
+          <div className="artworkoptions">
+            <h1 className="artistname">{artwork.artist}</h1>
+            <button
+              type="button"
+              className="historybutton"
+              onClick={() => {
+                this.handleOptions();
+              }}
+            >
+              <img src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png" alt="down button" />
+            </button>
+          </div>
+          <div>
+            {
+            options
+              ? <Options artwork={artwork} />
+              : ('options')
+            }
+          </div>
         </div>
-        <div className="artworkoptions">
-          <h1 className="artistname">{artwork.artist}</h1>
-          <button
-            type="button"
-            className="historybutton"
-            // onClick={(ev) => {
-            //   this.handleOptions(ev);
-            // }}
-          >
-            <img src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png" alt="down button" />
+        <div>
+          <button type="submit" className="directions" onClick={(e) => { this.handleDirections(e); }}>
+            <a href={directions}>
+              <h4>TAKE ME THERE</h4>
+            </a>
           </button>
         </div>
       </div>
