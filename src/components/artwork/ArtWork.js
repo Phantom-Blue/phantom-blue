@@ -18,7 +18,7 @@ const artwork = {
   description: 'Tagged Dondi',
   location: '123 Broadway, Bronx, NY',
   locationId: 1,
-  isVerified: true,
+  isVerified: false,
 };
 
 export default class Artwork extends React.Component {
@@ -77,9 +77,7 @@ export default class Artwork extends React.Component {
             <button
               type="button"
               className="historybutton"
-              onClick={() => {
-                this.handleOptions();
-              }}
+              onClick={this.handleOptions}
             >
               <img src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png" alt="down button" />
             </button>
