@@ -7,6 +7,7 @@
 import React from 'react';
 // import { connect } from 'react-redux';
 // import { fetchArtwork } from '../../store/artwork';
+import { Link } from 'react-router-dom'
 import Options from './Options';
 import { generateUrl } from './utils';
 
@@ -92,11 +93,11 @@ export default class Artwork extends React.Component {
           </div>
         </div>
         <div>
-          <button type="submit" className="directions">
-            <a href={directions}>
+          <Link to={directions}>
+            <button type="submit" className="directions">
               <h4>TAKE ME THERE</h4>
-            </a>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
     );

@@ -16,8 +16,6 @@ export function generateUrl(loc) {
       } else {
         initialUrl = initialUrl.concat('+', word);
       }
-      console.log(initialUrl);
-      console.log(word)
     }
     if (word === ',') {
       initialUrl = initialUrl.concat('%', '2C');
