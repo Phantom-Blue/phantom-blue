@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import ReactMapGl, {Marker, Popup} from 'react-map-gl'
 import * as data from '../data/data.json'
 import '../../../secrets'
+import Artwork from '../artwork/Artwork'
 
 const markerBtn = {
   background: 'none',
@@ -61,7 +62,11 @@ export const MapView = () => {
               setSelectedState(null)
             }}
           >
-            <h2>{selectedState.city}</h2>
+            <Artwork
+              latitude={selectedState.latitude}
+              longitude={selectedState.longitude}
+            />
+            {/* <h2>{selectedState.city}</h2> */}
           </Popup>
         ) : null}
       </ReactMapGl>
