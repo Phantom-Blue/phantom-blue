@@ -16,7 +16,7 @@ const artwork = {
   artist: 'Dondi',
   imageUrl: 'https://d2jv9003bew7ag.cloudfront.net/uploads/Dondi-White-Children-of-the-Grave-part-Three.-Photo-Martha-Cooper-865x577.jpg',
   description: 'Tagged Dondi',
-  location: '123 Broadway, Bronx, NY',
+  location: '2441 Boston Rd, The Bronx, NY 100467',
   locationId: 1,
   isVerified: false,
 };
@@ -91,7 +91,7 @@ export default class Artwork extends React.Component {
           </div>
         </div>
         <div>
-          <Link to={directions}>
+          <Link to={directions} target="_blank">
             <button type="submit" className="directions">
               <h4>TAKE ME THERE</h4>
             </button>
