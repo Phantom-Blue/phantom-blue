@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import ReactMapGl, {Marker, Popup} from 'react-map-gl'
 import * as data from '../data/data.json'
+// need to import css file here
 import '../../../secrets'
 
 const markerBtn = {
