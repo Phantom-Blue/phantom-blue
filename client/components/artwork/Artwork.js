@@ -39,7 +39,6 @@ export default class Artwork extends React.Component {
 
   handleOptions() {
     const {options} = this.state
-
     this.setState({
       options: !options
     })
