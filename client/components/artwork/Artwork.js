@@ -1,7 +1,7 @@
 import React from 'react'
 // import { connect } from 'react-redux';
 // import { fetchArtwork } from '../../store/artwork';
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {generateUrl} from './utils'
 
@@ -51,9 +51,6 @@ export default class Artwork extends React.Component {
     return (
       <div>
         <div className="artwork">
-          <button type="button" className="close">
-            <h4>X</h4>
-          </button>
           <div className="image">
             <button type="submit" className="historybutton">
               <img
@@ -87,11 +84,9 @@ export default class Artwork extends React.Component {
           </div>
         </div>
         <div>
-          <Link to={directions} target="_blank">
-            <button type="submit" className="directions">
-              <h4>TAKE ME THERE</h4>
-            </button>
-          </Link>
+          <a href={directions} target="_blank" rel="noopener noreferrer">
+            <h4>TAKE ME THERE</h4>
+          </a>
         </div>
       </div>
     )

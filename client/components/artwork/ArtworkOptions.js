@@ -1,10 +1,3 @@
-/* eslint-disable react/jsx-indent */
-/* eslint-disable semi */
-/* eslint-disable no-console */
-/* eslint-disable array-callback-return */
-/* eslint-disable no-constant-condition */
-/* eslint-disable import/prefer-default-export */
-
 import React from 'react'
 // import { connect } from 'react-redux';
 // import { verifyArtworkInDB } from '../../store/artwork'
