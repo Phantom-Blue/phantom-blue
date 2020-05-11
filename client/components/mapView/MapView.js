@@ -3,7 +3,7 @@ import ReactMapGl, {Marker, Popup} from 'react-map-gl'
 import * as data from '../data/data.json'
 import '../../../secrets'
 import Artwork from '../artwork/Artwork'
-
+// comment
 const markerBtn = {
   background: 'none',
   border: 'none'
