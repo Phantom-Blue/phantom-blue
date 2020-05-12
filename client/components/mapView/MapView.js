@@ -58,6 +58,7 @@ export const MapView = () => {
             className="popup-container"
             latitude={selectedState.latitude}
             longitude={selectedState.longitude}
+            closeOnClick={false}
             onClose={() => {
               setSelectedState(null)
             }}
