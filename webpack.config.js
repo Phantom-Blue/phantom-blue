@@ -11,7 +11,10 @@ module.exports = {
     filename: './public/bundle.js'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.css']
+    // modulesDirectories: [
+    //   'node_modules'
+    // ]
   },
   devtool: 'source-map',
   watchOptions: {
@@ -23,6 +26,10 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.css$/i,
+        loader: 'style-loader!css-loader'
       }
     ]
   }
