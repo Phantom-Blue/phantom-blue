@@ -31,6 +31,7 @@ const seed = async () => {
         address: '123 Broadway, THA BRONX'
       })
     ])
+
     const Users = await Promise.all([
       User.create({
         firstName: 'Patti',
