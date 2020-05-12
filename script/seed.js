@@ -54,13 +54,13 @@ const seed = async () => {
 
     const TaggedArtworks = await Promise.all([
       TaggedArtwork.create({
-        tagId: 1,
-        artworkId: 1
+        TagId: 1,
+        ArtworkId: 1
       }),
 
       TaggedArtwork.create({
-        tagId: 2,
-        artworkId: 1
+        TagId: 2,
+        ArtworkId: 1
       })
     ])
   } catch (err) {
