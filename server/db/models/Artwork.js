@@ -14,8 +14,17 @@ const Artwork = db.define('Artworks', {
 
   isVerified: {
     type: Sequelize.BOOLEAN,
-    allowNull: false,
+    allowNull: true,
     defaultValue: false
+  },
+  timestamp: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW
+  },
+
+  imageUrl: {
+    type: Sequelize.ARRAY(Sequelize.TEXT),
+    allowNull: false
   }
 })
 

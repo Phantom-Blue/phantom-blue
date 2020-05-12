@@ -1,38 +1,24 @@
 const User = require('./User')
 const Artwork = require('./Artwork')
-const Artist = require('./Artist')
-const FavoriteArtwork = require('./FavoriteArtwork')
-const Image = require('./Image')
 const Location = require('./Location')
+const Tag = require('./Tag')
+const TaggedArtwork = require('./TaggedArtwork')
 
 // ASSOCIATIONS
 
-Artwork.belongsToMany(User, {through: FavoriteArtwork})
-User.belongsToMany(Artwork, {through: FavoriteArtwork})
+Artwork.belongsTo(User)
+User.hasMany(Artwork)
 
-Artwork.belongsTo(Image)
-Image.hasOne(Artwork)
+Location.hasMany(Artwork)
+Artwork.belongsTo(Location)
 
-Location.belongsTo(Artwork)
-Artwork.hasOne(Location)
-
-// VVVVV THESE DON'T WORK VVVVV
-
-// User.belongsToMany(Artwork, { as: 'uploader' });
-
-// Artist.belongsToMany(Artwork);
-// Artwork.hasOne(Artist);
-
-// User.belongsToMany(Image);
-// Image.hasOne(User);
-
-// MODEL EXPORTS
+Artwork.belongsToMany(Tag, {through: TaggedArtwork})
+Tag.belongsToMany(Artwork, {through: TaggedArtwork})
 
 module.exports = {
   User,
   Artwork,
-  Artist,
-  FavoriteArtwork,
-  Image,
-  Location
+  Location,
+  Tag,
+  TaggedArtwork
 }

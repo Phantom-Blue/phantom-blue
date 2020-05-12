@@ -1,45 +1,29 @@
 const {
   db,
-  Artist,
   Artwork,
-  FavoriteArtwork,
-  Image,
+  Tag,
   Location,
-  User
+  User,
+  TaggedArtwork
 } = require('../server/db')
 
 const seed = async () => {
   try {
     await db.sync({force: true})
 
-    const Artists = await Promise.all([
-      Artist.create({
-        firstName: 'Hyuro',
-        isVerified: true
-      })
-    ])
     const Artworks = await Promise.all([
       Artwork.create({
         userId: 1,
         artist: 'Dondi',
         description: 'Tagged Dondi',
         locationId: 1,
-        isVerified: true
+        isVerified: true,
+        imageUrl: [
+          'https://external-preview.redd.it/mFR3HuW48ewK8V3l5Ai12vASlAQaE5vCGhEdpyZfCQA.png?auto=webp&s=5f08a7077d1a1d472270269a45f3fc4da2ca313b'
+        ]
       })
     ])
-    const FavoriteArtworks = await Promise.all([
-      FavoriteArtwork.create({
-        userId: 1,
-        artwordId: 1
-      })
-    ])
-    const Images = await Promise.all([
-      Image.create({
-        artworkId: 1,
-        imageText: 'sample',
-        userId: 1
-      })
-    ])
+
     const Locations = await Promise.all([
       Location.create({
         latitude: 40.8448,
@@ -57,6 +41,28 @@ const seed = async () => {
         imageUrl: ''
       })
     ])
+
+    const Tags = await Promise.all([
+      Tag.create({
+        tag: 'BOLD'
+      }),
+
+      Tag.create({
+        tag: 'BRASH'
+      })
+    ])
+
+    const TaggedArtworks = await Promise.all([
+      TaggedArtwork.create({
+        TagId: 1,
+        ArtworkId: 1
+      }),
+
+      TaggedArtwork.create({
+        TagId: 2,
+        ArtworkId: 1
+      })
+    ])
   } catch (err) {
     console.log(err)
   }
@@ -70,11 +76,11 @@ if (require.main === module) {
   seed()
     .then(() => {
       console.log('Seeding success!')
-      // db.close();
+      db.close()
     })
     .catch(err => {
       console.error('Oh noes! Something went wrong!')
       console.error(err)
-      // db.close();
+      db.close()
     })
 }
