@@ -2,30 +2,30 @@
 const router = require('express').Router()
 const {Artwork, Tag, TaggedArtwork} = require('../db/models/Index')
 
-router.put('/artworkId', async (req, res) => {
+router.post('/artworkId', async (req, res) => {
+  const {tag} = req.params
   const {artworkId} = req.body
-  const {tagsArray} = req.params
-
-  tagsArray.forEach(tag => {
-    /// CREATE HOOK TO CHECK FOR EXISTING TAG
-    /// CREATE TAG IF IT DOESNT EXIST
-  })
-  /// CREATE TAGGEDARTWORK W ARTWORK ID AND TAG ID
-
   try {
+    const newtag = await Tag.findOrCreate({
+      tag
+    })
+
+    await TaggedArtwork.create({
+      artworkId: artworkId,
+      tagId: newtag.id
+    })
+
+    const artworkToReturn = await Artwork.findOne({
+      where: {
+        id: artworkId
+      },
+      include: Tag
+    })
+
+    res.json(artworkToReturn)
   } catch (error) {
-    console.error('could not verify artwork')
+    console.error('could not get tags')
   }
 })
 
 module.exports = router
-
-// CRAFTING CREATE TAG HOOK TO CHECK ITS NOT ALREADY IN DB
-// FALLING ASLEEP ........
-// Tag.beforeCreate(async (tag) =>{
-//     const tagToCheck = Tag.findOne({
-//         where: {
-//             tag
-//         }
-//     })
-// })

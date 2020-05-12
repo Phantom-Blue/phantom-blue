@@ -33,7 +33,7 @@ const taggedArt = artwork => ({
 // T H U N K S //
 export const fetchArtwork = location => async dispatch => {
   try {
-    const res = await axios.get('/api/artworks/', location)
+    const res = await axios.get('/api/locations/', location)
     dispatch(gotAnArtwork(res.data))
   } catch (error) {
     console.error("didn't receive any data")
@@ -58,9 +58,9 @@ export const verifyArtworkInDB = artworkId => async dispatch => {
   }
 }
 
-export const addTagsToDB = (artworkId, tags) => async dispatch => {
+export const addTagsToDB = (artworkId, tag) => async dispatch => {
   try {
-    const res = await axios.post(`/api/tags/${artworkId}`, tags)
+    const res = await axios.post(`/api/tags/${artworkId}`, tag)
     dispatch(taggedArt(res.data))
   } catch (error) {
     console.error("didn't receive any data")

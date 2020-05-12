@@ -43,10 +43,10 @@ class ArtworkOptions extends React.Component {
   handleTagging(e) {
     e.preventDefault()
     const {artwork, addTags} = this.props
-
-    const tagsArray = this.state.tags.split(',')
-
-    addTags(artwork.id, tagsArray)
+    this.state.tags.split(',').forEach(tag => {
+      let cleanTag = tag.toLowerCase()
+      addTags(artwork.id, cleanTag)
+    })
     this.setState({
       tags: ''
     })
@@ -59,7 +59,11 @@ class ArtworkOptions extends React.Component {
         <div className="additionalartworkinfo">
           <h4>{artwork.artist}</h4>
           <h5>{artwork.description}</h5>
-          <p>{artwork.tags.tagName}</p>
+          <p>
+            {artwork.taggedArtwork
+              ? artwork.taggedArtwork.tag.map(tag => `${tag}, `)
+              : ''}{' '}
+          </p>
           <button type="submit" />
         </div>
         {// we render the verification option if the user is logged
@@ -109,7 +113,6 @@ class ArtworkOptions extends React.Component {
 // setting up connect reducers and thunks to make api calls once we have a db
 const mapState = state => ({
   artwork: state.artwork,
-  tags: state.tags,
   user: state.user
 })
 

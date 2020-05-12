@@ -29,7 +29,7 @@ class Artwork extends React.Component {
   }
 
   render() {
-    const {latitude, longitude, artwork} = this.props
+    const {latitude, longitude, artworks} = this.props
     const {options} = this.state
 
     const location = latitude.concat(' ', longitude)
@@ -52,37 +52,46 @@ class Artwork extends React.Component {
                 alt="forward button"
               />
             </button>
-            <img src={artwork.imageUrl} alt={artwork.artist} />
+            {// HERE WE INCOORPORATE A CAROUSEL //
+            artworks.map(artwork => (
+              <div key={artwork.id}>
+                <img src={artwork.imageUrl} alt={artwork.artist} />
+                <div className="artworkoptions">
+                  <h1 className="artistname">{artwork.artist}</h1>
+                  <button
+                    type="button"
+                    className="historybutton"
+                    onClick={this.handleOptions}
+                  >
+                    <img
+                      src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
+                      alt="down button"
+                    />
+                  </button>
+                  <div>
+                    {options === true ? (
+                      <ArtworkOptions artwork={artwork} />
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div>
+              <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
+                <h4>TAKE ME THERE</h4>
+              </a>
+            </div>
           </div>
-          <div className="artworkoptions">
-            <h1 className="artistname">{artwork.artist}</h1>
-            <button
-              type="button"
-              className="historybutton"
-              onClick={this.handleOptions}
-            >
-              <img
-                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
-                alt="down button"
-              />
-            </button>
-          </div>
-          <div>
-            {options === true ? <ArtworkOptions artwork={artwork} /> : ''}
-          </div>
-        </div>
-        <div>
-          <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
-            <h4>TAKE ME THERE</h4>
-          </a>
         </div>
       </div>
     )
   }
 }
 
-const mapState = () => ({
-  artwork: state.artwork
+const mapState = state => ({
+  artworks: state.artworks
 })
 
 const mapDispatch = dispatch => ({
