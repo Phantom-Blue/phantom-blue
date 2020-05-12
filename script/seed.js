@@ -30,7 +30,9 @@ const seed = async () => {
         description: 'Cartoony abstract googly eyes',
         locationId: 2,
         isVerified: false,
-        imageUrl: ['https://imgur.com/a/hhvyrE1']
+        imageUrl: [
+          'https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fi.imgur.com%2FXbAzCNC.jpg'
+        ]
       }),
       //3
       Artwork.create({
