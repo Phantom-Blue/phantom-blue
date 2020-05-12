@@ -4,7 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
-
+import {MapView} from './components/mapView/MapView'
 /**
  * COMPONENT
  */
@@ -21,10 +21,17 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route exact path="/" component={MapView} />
+        {/**REVISIT PATH NAME CONVENTION */}
+        <Route exact path="/map" component={MapView} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            {/** TODO: replace component on route below with upload Art component */}
+            <Route path="/upload" componet={UserHome} />
+            {/** TODO: replace component on route below with user account settings component */}
+            <Route path="/account" componet={UserHome} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

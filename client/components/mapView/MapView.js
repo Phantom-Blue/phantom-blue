@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
 import ReactMapGl, {Marker, Popup} from 'react-map-gl'
+import ArtworksPopup from 'reactjs-popup'
+import {Link} from 'react-router-dom'
 import * as data from '../data/data.json'
-import '../../../secrets'
 import Artwork from '../artwork/Artwork'
-
+import AllArtworks from '../allArtworks/AllArtworks'
+import '../../../secrets'
+import './mapView.css'
 const markerBtn = {
   background: 'none',
   border: 'none'
@@ -21,7 +24,7 @@ export const MapView = () => {
   const [selectedState, setSelectedState] = useState(null)
 
   return (
-    <div>
+    <div className="map-container">
       <ReactMapGl
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
@@ -67,9 +70,29 @@ export const MapView = () => {
               latitude={selectedState.latitude}
               longitude={selectedState.longitude}
             />
-            {/* <h2>{selectedState.city}</h2> */}
           </Popup>
         ) : null}
+        <div>
+          {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
+          <ArtworksPopup
+            trigger={
+              <div className="see-all-artworks-link-container">
+                <Link id="link-to-all-artworks">View as list</Link>
+              </div>
+            }
+            modal
+            closeOnDocumentClick
+          >
+            {close => (
+              <div className="modal">
+                <a className="close" onClick={close}>
+                  &times;
+                </a>
+                <AllArtworks />
+              </div>
+            )}
+          </ArtworksPopup>
+        </div>
       </ReactMapGl>
     </div>
   )
