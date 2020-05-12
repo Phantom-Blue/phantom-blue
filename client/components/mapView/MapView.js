@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
 import ReactMapGl, {Marker, Popup} from 'react-map-gl'
+import ArtworksPopup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
 import * as data from '../data/data.json'
 import Artwork from '../artwork/Artwork'
+import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
 const markerBtn = {
@@ -70,11 +72,26 @@ export const MapView = () => {
             />
           </Popup>
         ) : null}
-        <div className="see-all-artworks-link-container">
-          <Link id="link-to-all-artworks" to="/allartworks">
-            {' '}
-            View as list
-          </Link>
+        <div>
+          {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
+          <ArtworksPopup
+            trigger={
+              <div className="see-all-artworks-link-container">
+                <Link id="link-to-all-artworks">View as list</Link>
+              </div>
+            }
+            modal
+            closeOnDocumentClick
+          >
+            {close => (
+              <div className="modal">
+                <a className="close" onClick={close}>
+                  &times;
+                </a>
+                <AllArtworks />
+              </div>
+            )}
+          </ArtworksPopup>
         </div>
       </ReactMapGl>
     </div>
