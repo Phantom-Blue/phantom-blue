@@ -34,7 +34,7 @@ export const fetchArtwork = location => async dispatch => {
   }
 }
 
-export const fetchAllArtworks = async dispatch => {
+export const fetchAllArtworks = () => async dispatch => {
   try {
     const res = await axios.get('/api/artworks')
     dispatch(gotAllArtworks(res.data))

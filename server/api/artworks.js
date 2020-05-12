@@ -1,17 +1,27 @@
 const router = require('express').Router()
 const {Artwork, Location} = require('../db/models/Index')
 
+// router.get('/', async (req, res, next) => {
+//   const {latitude, longitude} = req.params
+//   try {
+//     const locationArtwork = await Location.findOne({
+//       where: {
+//         latitude,
+//         longitude
+//       },
+//       include: Artwork
+//     })
+//     res.json(locationArtwork.artwork)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
+
+// GET ALL ARTWORKS
 router.get('/', async (req, res, next) => {
-  const {latitude, longitude} = req.params
   try {
-    const locationArtwork = await Location.findOne({
-      where: {
-        latitude,
-        longitude
-      },
-      include: Artwork
-    })
-    res.json(locationArtwork.artwork)
+    const artworks = await Artwork.findAll()
+    res.json(artworks)
   } catch (err) {
     next(err)
   }
