@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import {MapView} from './components/mapView/MapView'
-
 /**
  * COMPONENT
  */
@@ -22,9 +21,9 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/" component={MapView} />
+        <Route exact path="/" component={MapView} />
         {/**REVISIT PATH NAME CONVENTION */}
-        <Route path="/map" component={MapView} />
+        <Route exact path="/map" component={MapView} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
