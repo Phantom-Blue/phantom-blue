@@ -21,6 +21,14 @@ const seed = async () => {
         imageUrl: [
           'https://external-preview.redd.it/mFR3HuW48ewK8V3l5Ai12vASlAQaE5vCGhEdpyZfCQA.png?auto=webp&s=5f08a7077d1a1d472270269a45f3fc4da2ca313b'
         ]
+      }),
+      Artwork.create({
+        userId: 2,
+        artist: 'unknown',
+        description: 'Cartoony abstract googly eyes',
+        locationId: 2,
+        isVerified: false,
+        imageUrl: ['https://imgur.com/a/hhvyrE1']
       })
     ])
 
@@ -29,6 +37,11 @@ const seed = async () => {
         latitude: 40.8448,
         longitude: -73.8648,
         address: '123 Broadway, THA BRONX'
+      }),
+      Location.create({
+        latitude: 40.70673,
+        longitude: -73.92262,
+        address: '408 Troutman St, Brooklyn, NY'
       })
     ])
     const Users = await Promise.all([
@@ -39,6 +52,15 @@ const seed = async () => {
         password: '123',
         isVerified: true,
         imageUrl: ''
+      }),
+      User.create({
+        firstName: 'Jenny',
+        lastName: 'Holzer',
+        email: 'protectme@fromwhatiwant.com',
+        password: '1234',
+        isVerified: false,
+        imageUrl:
+          'https://dazedimg-dazedgroup.netdna-ssl.com/2000/azure/dazed-prod/1100/8/1108073.jpg'
       })
     ])
 
@@ -52,6 +74,7 @@ const seed = async () => {
       })
     ])
 
+    /// would these be artwork tags?
     const TaggedArtworks = await Promise.all([
       TaggedArtwork.create({
         TagId: 1,
