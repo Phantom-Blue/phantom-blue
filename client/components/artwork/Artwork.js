@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchArtwork} from '../../store/artwork'
+import Dropdown from 'react-dropdown'
 // import { Link } from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {generateUrl} from './utils'
