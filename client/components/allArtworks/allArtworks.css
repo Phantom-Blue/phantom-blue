@@ -1,0 +1,15 @@
+.all-artworks-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.artwork-container {
+  margin: 20px;
+}
+.artwork-container img {
+  display: block;
+  object-fit: cover;
+  max-width: 500px;
+  width: 100%;
+  height: 100%;
+}
