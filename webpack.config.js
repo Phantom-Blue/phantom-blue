@@ -12,9 +12,6 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.css']
-    // modulesDirectories: [
-    //   'node_modules'
-    // ]
   },
   devtool: 'source-map',
   watchOptions: {
