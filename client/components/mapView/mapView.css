@@ -1,0 +1,22 @@
+.map-container {
+  width: 100vw;
+  height: 100vh;
+  margin: 20px;
+}
+
+.see-all-artworks-link-container {
+  position: absolute;
+  background-color: white;
+  padding: 20px;
+  width: 100vw;
+  bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.95;
+}
+
+#link-to-all-artworks {
+  color: black;
+  font-size: 30px;
+}

@@ -1,9 +1,10 @@
 import React, {useState} from 'react'
 import ReactMapGl, {Marker, Popup} from 'react-map-gl'
+import {Link} from 'react-router-dom'
 import * as data from '../data/data.json'
-import '../../../secrets'
 import Artwork from '../artwork/Artwork'
-// comment
+import '../../../secrets'
+import './mapView.css'
 const markerBtn = {
   background: 'none',
   border: 'none'
@@ -21,7 +22,7 @@ export const MapView = () => {
   const [selectedState, setSelectedState] = useState(null)
 
   return (
-    <div>
+    <div className="map-container">
       <ReactMapGl
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
@@ -67,9 +68,14 @@ export const MapView = () => {
               latitude={selectedState.latitude}
               longitude={selectedState.longitude}
             />
-            {/* <h2>{selectedState.city}</h2> */}
           </Popup>
         ) : null}
+        <div className="see-all-artworks-link-container">
+          <Link id="link-to-all-artworks" to="/allartworks">
+            {' '}
+            View as list
+          </Link>
+        </div>
       </ReactMapGl>
     </div>
   )
