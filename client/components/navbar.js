@@ -15,9 +15,12 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             <Link to="/">Pentimento</Link>
           </div>
           <div>
+            <Link to="/upload">Upload Art</Link>
+            <Link to="/map">Map</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
+            <Link to="/account">Account</Link>
           </div>
         </div>
       ) : (
@@ -27,6 +30,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             <Link to="/">Pentimento</Link>
           </div>
           <div className="sub-links">
+            <Link to="/login">Upload Art</Link>
+            <Link to="/map">Map</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
