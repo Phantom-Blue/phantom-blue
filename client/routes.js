@@ -25,7 +25,7 @@ class Routes extends Component {
         <Route exact path="/" component={MapView} />
         {/**REVISIT PATH NAME CONVENTION */}
         <Route exact path="/map" component={MapView} />
-        <Route exact path="/all" component={AllArtWorks} />
+        <Route exact path="/allartworks" component={AllArtWorks} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

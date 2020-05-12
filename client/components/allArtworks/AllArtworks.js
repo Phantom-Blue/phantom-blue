@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 // import {connect} from 'react-redux'
 // import {} from '../../AllArtWork'
 // import {Link} from 'react-router-dom'
+// import {fetchAllArtworks} from '../../store/artworks'
 import './allArtworks.css'
 
 // Dummy data testing purposes
@@ -52,6 +53,7 @@ export default class AllArtWorks extends Component {
           return (
             <div className="artwork-container" key={artwork.userId}>
               <img src={artwork.imageUrl} alt="Artwork" />
+              <h2>{artwork.artist}</h2>
             </div>
           )
         })}
@@ -61,7 +63,7 @@ export default class AllArtWorks extends Component {
 }
 
 // const mapState = () => ({
-//   AllArtWorks: state.allArtworks
+//   AllArtWorks: state.artwork.all
 // })
 
 // const mapDispatch = () => ({

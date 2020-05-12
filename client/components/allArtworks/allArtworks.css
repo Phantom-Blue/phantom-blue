@@ -5,6 +5,9 @@
 }
 .artwork-container {
   margin: 20px;
+  background-color: #ccd1d2;
+  border-radius: 20px;
+  padding: 40px;
 }
 .artwork-container img {
   display: block;
