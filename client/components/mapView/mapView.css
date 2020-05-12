@@ -25,6 +25,8 @@
 .modal > .content {
   width: 100%;
   padding: 10px 5px;
+  overflow: hidden;
+  height: 500px;
 }
 
 .modal > .actions {

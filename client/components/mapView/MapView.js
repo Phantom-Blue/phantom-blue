@@ -88,7 +88,9 @@ export const MapView = () => {
                 <a className="close" onClick={close}>
                   &times;
                 </a>
-                <AllArtworks />
+                <div>
+                  <AllArtworks />
+                </div>
               </div>
             )}
           </ArtworksPopup>

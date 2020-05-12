@@ -26,6 +26,7 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+// TODO: GET SINGLE ARTWORK BY ID
 
 router.put('/artworkId', async (req, res) => {
   const {id} = req.body
