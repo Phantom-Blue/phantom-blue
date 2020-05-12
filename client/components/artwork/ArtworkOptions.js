@@ -1,10 +1,8 @@
+/* eslint-disable no-alert */
 import React from 'react'
 import Popup from 'reactjs-popup'
 import {connect} from 'react-redux'
-import {verifyArtworkInDB, addTags, me} from '../../store'
-
-// import functions that need to be made in utils, to check whether use is
-// logged in or admin
+import {verifyArtworkInDB, addTagsToDB, me} from '../../store'
 
 // importing edit artwork component, for when it's ready to plug in
 // import EditArtwork from './EditArtwork'
@@ -13,43 +11,45 @@ class ArtworkOptions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isVerified: false,
-      tags: ''
+      tags: 'enter tags separated by commas'
     }
+
     this.handleTagging = this.handleTagging.bind(this)
     this.handleVerify = this.handleVerify.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
-    const {artwork} = this.props
-    this.setState({
-      isVerified: artwork.isVerified
-    })
-  }
-
-  handleVerify() {
-    const {artwork, user} = this.props
+  handleVerify(e) {
+    e.preventDefault()
+    const {artwork, user, verifyArtwork} = this.props
     if (artwork.userId !== user.id) {
       // calling the thunk for when we have a db
       verifyArtwork(artwork.id)
       // meanwhile we simulate the action w local state
-      this.setState({
-        isVerified: true
-      })
+      // this.setState({
+      //   isVerified: true
+      // })
       alert('this artwork has been verified')
     }
   }
 
   handleChange(e) {
+    e.preventDefault()
     this.setState({
       [e.target.name]: e.target.value
     })
   }
 
-  handleTagging() {
-    const {artwork} = this.props
-    addTags(artwork.id)
+  handleTagging(e) {
+    e.preventDefault()
+    const {artwork, addTags} = this.props
+
+    const tagsArray = this.state.tags.split(',')
+
+    addTags(artwork.id, tagsArray)
+    this.setState({
+      tags: ''
+    })
   }
 
   render() {
@@ -69,7 +69,7 @@ class ArtworkOptions extends React.Component {
               trigger={<button type="button">Verify</button>}
               position="right center"
             >
-              <button type="submit" onClick={this.handleVerify}>
+              <button type="submit" onClick={e => this.handleVerify(e)}>
                 I've seen this piece IRL
               </button>
             </Popup>
@@ -85,7 +85,7 @@ class ArtworkOptions extends React.Component {
                   type="text"
                   onChange={e => this.handleChange(e)}
                 />
-                <button type="submit" onClick={this.handleTagging}>
+                <button type="submit" onClick={e => this.handleTagging(e)}>
                   Tag it!
                 </button>
               </form>
@@ -107,14 +107,15 @@ class ArtworkOptions extends React.Component {
 }
 
 // setting up connect reducers and thunks to make api calls once we have a db
-
 const mapState = state => ({
   artwork: state.artwork,
+  tags: state.tags,
   user: state.user
 })
 
 const mapDispatch = dispatch => ({
   verifyArtwork: artworkId => dispatch(verifyArtworkInDB(artworkId)),
+  addTags: (artworkId, tags) => dispatch(addTagsToDB(artworkId, tags)),
   user: () => dispatch(me())
 })
 

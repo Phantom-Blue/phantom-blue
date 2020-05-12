@@ -1,22 +1,11 @@
 import React from 'react'
-// import { connect } from 'react-redux';
-// import { fetchArtwork } from '../../store/artwork';
-// import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {fetchArtwork} from '../../store/artwork'
+// import { Link } from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {generateUrl} from './utils'
 
-const artwork = {
-  userId: 1,
-  artist: 'Dondi',
-  imageUrl:
-    'https://d2jv9003bew7ag.cloudfront.net/uploads/Dondi-White-Children-of-the-Grave-part-Three.-Photo-Martha-Cooper-865x577.jpg',
-  description: 'Tagged Dondi',
-  location: '2441 Boston Rd, The Bronx, NY 10467',
-  locationId: 1,
-  isVerified: false
-}
-
-export default class Artwork extends React.Component {
+class Artwork extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -27,14 +16,9 @@ export default class Artwork extends React.Component {
   }
 
   componentDidMount() {
-    //   const { latitude, longitude } = this.props;
-    //   const latLonLocation = { latitude, longitude };
-    //   getArtwork(latLonLocation);
-    const directionsUrl = generateUrl(artwork.location)
-    console.log(directionsUrl)
-    this.setState({
-      directions: directionsUrl
-    })
+    const {latitude, longitude, getArtwork} = this.props
+    const latLonLocation = {latitude, longitude}
+    getArtwork(latLonLocation)
   }
 
   handleOptions() {
@@ -45,8 +29,13 @@ export default class Artwork extends React.Component {
   }
 
   render() {
-    // const { artwork } = this.props;
-    const {options, directions} = this.state
+    const {latitude, longitude, artwork} = this.props
+    const {options} = this.state
+
+    const location = latitude.concat(' ', longitude)
+
+    const directionsUrl = generateUrl(location)
+
     return (
       <div>
         <div className="artwork">
@@ -83,7 +72,7 @@ export default class Artwork extends React.Component {
           </div>
         </div>
         <div>
-          <a href={directions} target="_blank" rel="noopener noreferrer">
+          <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
             <h4>TAKE ME THERE</h4>
           </a>
         </div>
@@ -92,15 +81,12 @@ export default class Artwork extends React.Component {
   }
 }
 
-// const mapState = () => (
-//   {
-//     artwork: state.artwork,
-//   });
+const mapState = () => ({
+  artwork: state.artwork
+})
 
-// const mapDispatch = dispatch => (
-//   {
-//     getArtwork: location => dispatch(fetchArtwork(location)),
-//   }
-// );
+const mapDispatch = dispatch => ({
+  getArtwork: location => dispatch(fetchArtwork(location))
+})
 
-// export default connect(mapState, mapDispatch)(Artwork);
+export default connect(mapState, mapDispatch)(Artwork)
