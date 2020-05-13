@@ -64,4 +64,46 @@ router.delete('/:ArtworkId', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  /* To test with Postman, follow the commented instructions */
+
+  try {
+    // *** Change this to 'if (!req.user)'
+    if (req.user) {
+      // *** Set UserId equal to 1
+      const UserId = req.user.id
+
+      let {artist, description, timestamp, imageUrl, LocationId} = req.body
+      if (imageUrl && Array.isArray(imageUrl)) {
+        imageUrl = [imageUrl]
+      }
+      let isVerified = false
+
+      // *** Comment out the following if statement
+      if (req.user.isVerified || req.user.isAdmin) {
+        isVerified = true
+      }
+
+      const newArt = await Artwork.create({
+        artist,
+        description,
+        timestamp,
+        imageUrl,
+        isVerified,
+        UserId,
+        LocationId
+      })
+      if (newArt) {
+        res.json(newArt)
+      } else {
+        res.json('Failed to post.')
+      }
+    } else {
+      res.send('Log in to make a post.')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router
