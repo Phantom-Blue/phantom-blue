@@ -7,6 +7,7 @@ import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
+
 const markerBtn = {
   background: 'none',
   border: 'none'

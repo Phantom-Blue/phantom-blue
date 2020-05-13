@@ -11,13 +11,106 @@ const seed = async () => {
   try {
     await db.sync({force: true})
 
+    const Locations = await Promise.all([
+      //1
+      Location.create({
+        latitude: 40.8448,
+        longitude: -73.8648,
+        address: '2919 3rd Ave, The Bronx, NY 10455'
+        //plus.code: R38M+XG The Bronx, New York
+      }),
+      //2
+      Location.create({
+        latitude: 40.70673,
+        longitude: -73.92262,
+        address: '408 Troutman St, Brooklyn, NY'
+      }),
+      // 3
+      Location.create({
+        latitude: 40.69406,
+        longitude: -73.929549,
+        address: '1118-1158 Dekalb Ave, Brooklyn, NY 11221'
+        //plus.code: M3VC+J5 New York
+      }),
+      //4
+      Location.create({
+        latitude: 40.683237,
+        longitude: -73.910625,
+        address: '1 Moffat St, corner of 1741 Broadway, Bushwick, Brooklyn'
+        //plus.code: M3MQ+7Q New York
+      }),
+      //5
+      Location.create({
+        latitude: 40.705998,
+        longitude: -73.933512,
+        address: '73-61 Bogart St, Brooklyn, NY 11206'
+        //plus.code: M3MQ+7Q New York
+      }),
+      //6
+      Location.create({
+        latitude: 40.759314,
+        longitude: -73.984869,
+        address: '1572 Broadway, New York, NY 10036'
+        //plus.code: Q257+5Q Manhattan, New York, NY
+      }),
+      //7
+      Location.create({
+        latitude: 40.802336,
+        longitude: -73.941267,
+        address: '1718 Park Ave, New York, NY 10035'
+        //plus.code: R325+X9 New York
+      }),
+      //8
+      Location.create({
+        latitude: 40.707847,
+        longitude: -73.931796,
+        address: '453-427 Johnson Ave, Brooklyn, NY 11237'
+        //plus.code: P359+38 Brooklyn, New York
+      })
+    ])
+
+    const Users = await Promise.all([
+      //1
+      User.create({
+        firstName: 'Patti',
+        lastName: 'Smith',
+        email: 'people@havethepower.com',
+        password: '123',
+        isVerified: true,
+        imageUrl:
+          'https://the-talks.com/wp-content/uploads/2011/06/Patti-Smith-01.jpg',
+        isArtist: true
+      }),
+      //2
+      User.create({
+        firstName: 'Jenny',
+        lastName: 'Holzer',
+        email: 'protectme@fromwhatiwant.com',
+        password: '123',
+        isVerified: false,
+        imageUrl:
+          'https://dazedimg-dazedgroup.netdna-ssl.com/2000/azure/dazed-prod/1100/8/1108073.jpg',
+        isArtist: true
+      }),
+      //3
+      User.create({
+        firstName: 'Franklin',
+        lastName: 'Graham (not that one)',
+        email: 'photog@fg.com',
+        password: '123',
+        isVerified: true,
+        imageUrl: '',
+        isArtist: false
+      })
+    ])
+
     const Artworks = await Promise.all([
       //1
       Artwork.create({
-        userId: 1,
+        UserId: 1,
         artist: 'Dondi',
         description: 'Tagged Dondi',
-        locationId: 1,
+        LocationId: 1,
         isVerified: true,
         imageUrl: [
           'https://external-preview.redd.it/mFR3HuW48ewK8V3l5Ai12vASlAQaE5vCGhEdpyZfCQA.png?auto=webp&s=5f08a7077d1a1d472270269a45f3fc4da2ca313b'
@@ -131,99 +224,6 @@ const seed = async () => {
         locationId: 8,
         isVerified: false,
         imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc124.jpg']
-      })
-    ])
-
-    const Locations = await Promise.all([
-      //1
-      Location.create({
-        latitude: 40.8448,
-        longitude: -73.8648,
-        address: '2919 3rd Ave, The Bronx, NY 10455'
-        //plus.code: R38M+XG The Bronx, New York
-      }),
-      //2
-      Location.create({
-        latitude: 40.70673,
-        longitude: -73.92262,
-        address: '408 Troutman St, Brooklyn, NY'
-      }),
-      // 3
-      Location.create({
-        latitude: 40.69406,
-        longitude: -73.929549,
-        address: '1118-1158 Dekalb Ave, Brooklyn, NY 11221'
-        //plus.code: M3VC+J5 New York
-      }),
-      //4
-      Location.create({
-        latitude: 40.683237,
-        longitude: -73.910625,
-        address: '1 Moffat St, corner of 1741 Broadway, Bushwick, Brooklyn'
-        //plus.code: M3MQ+7Q New York
-      }),
-      //5
-      Location.create({
-        latitude: 40.705998,
-        longitude: -73.933512,
-        address: '73-61 Bogart St, Brooklyn, NY 11206'
-        //plus.code: M3MQ+7Q New York
-      }),
-      //6
-      Location.create({
-        latitude: 40.759314,
-        longitude: -73.984869,
-        address: '1572 Broadway, New York, NY 10036'
-        //plus.code: Q257+5Q Manhattan, New York, NY
-      }),
-      //7
-      Location.create({
-        latitude: 40.802336,
-        longitude: -73.941267,
-        address: '1718 Park Ave, New York, NY 10035'
-        //plus.code: R325+X9 New York
-      }),
-      //8
-      Location.create({
-        latitude: 40.707847,
-        longitude: -73.931796,
-        address: '453-427 Johnson Ave, Brooklyn, NY 11237'
-        //plus.code: P359+38 Brooklyn, New York
-      })
-    ])
-
-    const Users = await Promise.all([
-      //1
-      User.create({
-        firstName: 'Patti',
-        lastName: 'Smith',
-        email: 'people@havethepower.com',
-        password: '123',
-        isVerified: true,
-        imageUrl:
-          'https://the-talks.com/wp-content/uploads/2011/06/Patti-Smith-01.jpg',
-        isArtist: true
-      }),
-      //2
-      User.create({
-        firstName: 'Jenny',
-        lastName: 'Holzer',
-        email: 'protectme@fromwhatiwant.com',
-        password: '123',
-        isVerified: false,
-        imageUrl:
-          'https://dazedimg-dazedgroup.netdna-ssl.com/2000/azure/dazed-prod/1100/8/1108073.jpg',
-        isArtist: true
-      }),
-      //3
-      User.create({
-        firstName: 'Franklin',
-        lastName: 'Graham (not that one)',
-        email: 'photog@fg.com',
-        password: '123',
-        isVerified: true,
-        imageUrl: '',
-        isArtist: false
       })
     ])
 
