@@ -9,10 +9,6 @@ export class AllArtWorks extends Component {
     this.props.getAllArtWorks()
   }
 
-  componentDidMount() {
-    this.props.fetchAllArtworks()
-  }
-
   render() {
     const {allArtWorks} = this.props
 
