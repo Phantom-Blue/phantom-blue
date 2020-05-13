@@ -11,6 +11,16 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:artworkId', async (req, res, next) => {
+  try {
+    // console.log(req.params)
+    const artworks = await Artwork.findByPk(req.params.artworkId)
+    res.json(artworks)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.put('/artworkId', async (req, res) => {
   const {id} = req.body
   try {

@@ -10,7 +10,7 @@ import {
 import {me} from '../../store/user'
 
 // importing edit artwork component, for when it's ready to plug in
-// import EditArtwork from './EditArtwork'
+import EditArtwork from './EditArtwork'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class ArtworkOptions extends React.Component {
   }
 
   componentDidMount() {
-    this.props.geMe()
+    this.props.getMe()
   }
 
   handleVerify(e) {
@@ -102,13 +102,8 @@ class ArtworkOptions extends React.Component {
         ) : (
           ''
         )}
-        {/* {
-          // we render the edit artwork component if the user is an admin
-          user.isAdmin === true
-          ? (
-            <EditArtwork artworkId={artwork.id} />
-          ) : ('')
-        } */}
+        {// we render the edit artwork component if the user is an admin
+        user.isAdmin === true ? <EditArtwork artworkId={artwork.id} /> : ''}
       </div>
     )
   }
