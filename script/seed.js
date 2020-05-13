@@ -6,11 +6,11 @@ const {
   User,
   TaggedArtwork
 } = require('../server/db')
-
 const seed = async () => {
   try {
-    await db.sync({force: true})
-
+    await db.sync({
+      force: true
+    })
     const Locations = await Promise.all([
       //1
       Location.create({
@@ -68,7 +68,6 @@ const seed = async () => {
         //plus.code: P359+38 Brooklyn, New York
       })
     ])
-
     const Users = await Promise.all([
       //1
       User.create({
@@ -103,7 +102,6 @@ const seed = async () => {
         isArtist: false
       })
     ])
-
     const Artworks = await Promise.all([
       //1
       Artwork.create({
@@ -118,10 +116,10 @@ const seed = async () => {
       }),
       //2
       Artwork.create({
-        userId: 2,
+        UserId: 2,
         artist: 'unknown',
         description: 'Cartoony abstract googly eyes',
-        locationId: 2,
+        LocationId: 2,
         isVerified: false,
         imageUrl: [
           'https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fi.imgur.com%2FXbAzCNC.jpg'
@@ -129,20 +127,20 @@ const seed = async () => {
       }),
       //3
       Artwork.create({
-        userId: 3,
+        UserId: 3,
         artist: 'Menace Two, Theresa Kim aka Resa Piece',
         description:
-          '"In Pursuit of Magic" a Mural collaboration by graffiti writer Menace Two and street artist Theresa Kim aka Resa Piece',
-        locationId: 3,
+          '"In Pursuit of Magic" a Mural collaboration by graffiti writer Menace Two and street artist Theresa Kim aka Resa Piece"',
+        LocationId: 3,
         isVerified: false,
         imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc119.jpg']
       }),
       //4
       Artwork.create({
-        userId: 2,
+        UserId: 2,
         artist: 'unknown',
         description: 'A man with a hat',
-        locationId: 3,
+        LocationId: 3,
         isVerified: false,
         imageUrl: [
           'https://i.pinimg.com/originals/3e/88/0d/3e880d9e5e70e0d1fdeaa516f124af94.jpg'
@@ -150,33 +148,30 @@ const seed = async () => {
       }),
       //5
       Artwork.create({
-        userId: 3,
+        UserId: 3,
         artist: 'Menace Two, Theresa Kim aka Resa Piece',
         description:
-          'ollaboration by graffiti writer Menace Two and street artist Theresa Kim aka Resa Piece',
-        locationId: 5,
+          'Collaboration by graffiti writer Menace Two and street artist Theresa Kim aka Resa Piece',
+        LocationId: 5,
         isVerified: false,
         imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc97.jpg']
       }),
       //6
       Artwork.create({
-        userId: 3,
+        UserId: 3,
         artist: 'BKFoxx',
         description:
-          'Mural of Snoop Dogg by Long Island-based female artist BKFoxx, who paints photorealistic murals using only spray paint',
-        locationId: 4,
+          'Mural of Snoop Dogg by Long Island-basedUfemale artist BKFoxx, who paints photorealistic murals using only spray paint',
+        LocationId: 4,
         isVerified: false,
-        imageUrl: [
-          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140a.jpg',
-          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140d.jpg'
-        ]
+        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc140a.jpg']
       }),
       //7
       Artwork.create({
-        userId: 2,
+        UserId: 2,
         artist: 'Jenny Holzer',
         description: 'Installation, "Abuse of Power Comes as No Surprise"',
-        locationId: 6,
+        LocationId: 6,
         isVerified: false,
         imageUrl: [
           'https://images.curiator.com/image/upload/f_auto,q_auto/t_x/art/ost62rdpbftozam89gzx.jpg'
@@ -184,10 +179,10 @@ const seed = async () => {
       }),
       //8
       Artwork.create({
-        userId: 2,
+        UserId: 2,
         artist: 'Jenny Holzer',
         description: 'Installation, "Protect Me From What I Want"',
-        locationId: 6,
+        LocationId: 6,
         isVerified: false,
         imageUrl: [
           'https://artaspoliticalvoice.weebly.com/uploads/1/5/0/3/15031766/8228453_orig.jpg?0'
@@ -195,11 +190,11 @@ const seed = async () => {
       }),
       //9
       Artwork.create({
-        userId: 2,
+        UserId: 2,
         artist: 'Naomi Lawrence',
         description:
-          'A string installatioLa Flor De Mi Madre,” by artist Naomi Lawrence at Eugene McCabe Field in East Harlem, features three large crocheted flowers made of acrylic yarn, as well as smaller ones made in collaboration with neighborhood artists.',
-        locationId: 6,
+          'A string installatioLa Flor De Mi Madre," by artist Naomi Lawrence at Eugene McCabe Field in East Harlem, features three largeUcrocheted flowers made of acrylic yarn, as well as smaller ones made in collaboration with neighborhood artists.',
+        LocationId: 6,
         isVerified: false,
         imageUrl: [
           'https://cdn.vox-cdn.com/thumbor/eLTKUnrMZUN7TUow97y3Q01pkX4=/0x0:2016x1512/2120x1590/filters:focal(847x595:1169x917):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65181831/Naomi_Lawrence_McCabe_co_artist_070202019.0.jpg'
@@ -207,10 +202,10 @@ const seed = async () => {
       }),
       //10
       Artwork.create({
-        userId: 1,
+        UserId: 1,
         artist: 'Mark di Suvero',
         description: 'JOIE DE VIVRE',
-        locationId: 7,
+        LocationId: 7,
         isVerified: false,
         imageUrl: [
           'https://cdn.vox-cdn.com/thumbor/eLTKUnrMZUN7TUow97y3Q01pkX4=/0x0:2016x1512/2120x1590/filters:focal(847x595:1169x917):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65181831/Naomi_Lawrence_McCabe_co_artist_070202019.0.jpg'
@@ -218,15 +213,14 @@ const seed = async () => {
       }),
       //11
       Artwork.create({
-        userId: 1,
+        UserId: 1,
         artist: 'Jari Alvarez aka Werc',
         description: 'Unleashed',
-        locationId: 8,
+        LocationId: 8,
         isVerified: false,
         imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc124.jpg']
       })
     ])
-
     const Tags = await Promise.all([
       //1
       Tag.create({
@@ -253,47 +247,56 @@ const seed = async () => {
         tag: 'Blue'
       })
     ])
-
     const TaggedArtworks = await Promise.all([
       TaggedArtwork.create({
         TagId: 1,
         ArtworkId: 1
       }),
-
       TaggedArtwork.create({
         TagId: 2,
         ArtworkId: 1
       }),
-
       TaggedArtwork.create({
         TagId: 3,
         ArtworkId: 3
       }),
-
       TaggedArtwork.create({
         TagId: 4,
         ArtworkId: 3
       }),
-
       TaggedArtwork.create({
         TagId: 6,
         ArtworkId: 6
       }),
-
       TaggedArtwork.create({
         TagId: 5,
         ArtworkId: 6
+      }),
+      TaggedArtwork.create({
+        TagId: 5,
+        ArtworkId: 7
+      }),
+      TaggedArtwork.create({
+        TagId: 3,
+        ArtworkId: 8
+      }),
+      TaggedArtwork.create({
+        TagId: 1,
+        ArtworkId: 9
+      }),
+      TaggedArtwork.create({
+        TagId: 2,
+        ArtworkId: 7
       })
     ])
   } catch (err) {
     console.log(err)
   }
 }
-
 module.exports = seed
 // If this module is being required from another module, then we just export the
 // function, to be used as necessary. But it will run right away if the module
-// is executed directly (e.g. `node seed.js` or `npm run seed`)
+// is executed directly (e.g. node seed.js or npm run seed)
 if (require.main === module) {
   seed()
     .then(() => {
