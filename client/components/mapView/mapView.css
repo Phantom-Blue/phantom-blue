@@ -1,15 +1,13 @@
 .map-container {
   width: 100vw;
   height: 100vh;
-  margin: 20px;
 }
 
-.see-all-artworks-link-container {
-  position: absolute;
+.artwork-list-outer-container .see-all-artworks-link-container {
   background-color: white;
   padding: 20px;
   width: 100vw;
-  bottom: 0px;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +21,7 @@
 
 /* MODAL STYLE*/
 .modal > .content {
-  width: 100%;
+  width: 100vw;
   padding: 10px 5px;
   overflow: hidden;
   height: 500px;
