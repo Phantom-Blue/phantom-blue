@@ -53,9 +53,7 @@ export const verifyArtworkInDB = artworkId => async dispatch => {
 }
 
 // I N I T I A L   S T A T E //
-const initialState = {
-  all: []
-}
+const initialState = []
 
 // R E D U C E R //
 export default function artworkReducer(state = initialState, action) {
@@ -63,7 +61,7 @@ export default function artworkReducer(state = initialState, action) {
     case GET_AN_ARTWORK:
       return action.artwork
     case GET_ALL_ARTWORKS:
-      return {...state, all: action.artworks}
+      return action.artworks
     case VERIFY_ARTWORK:
       return action.artwork
     default:

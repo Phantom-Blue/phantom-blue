@@ -33,7 +33,7 @@ export class AllArtWorks extends Component {
 
 const mapState = state => {
   return {
-    allArtWorks: state.artwork.all
+    allArtWorks: state.artwork
   }
 }
 
