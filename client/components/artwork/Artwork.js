@@ -7,6 +7,7 @@ import {fetchArtwork} from '../../store/artworks'
 // import { Link } from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {generateUrl} from './utils'
+import Popup from 'reactjs-popup'
 
 class Artwork extends React.Component {
   constructor(props) {
@@ -34,7 +35,8 @@ class Artwork extends React.Component {
     const {latitude, longitude, artworks} = this.props
     const {options} = this.state
     console.log(this.props)
-    const directionsUrl = generateUrl(artworks[0])
+    console.log(options)
+    // const directionsUrl = generateUrl(artworks[0])
 
     return (
       <div>
@@ -47,30 +49,37 @@ class Artwork extends React.Component {
                     <img src={artwork.imageUrl} alt={artwork.artist} />
                     <div className="artworkoptions">
                       <h1 className="artistname">{artwork.artist}</h1>
-                      <button
-                        type="button"
-                        className="historybutton"
-                        onClick={this.handleOptions}
-                      >
-                        <img
-                          src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
-                          alt="down button"
-                        />
-                      </button>
                       <div>
-                        {options === true ? (
-                          <ArtworkOptions artwork={artwork} />
-                        ) : (
-                          ''
-                        )}
+                        <Popup
+                          trigger={
+                            <button
+                              type="button"
+                              className="historybutton"
+                              onClick={this.handleOptions}
+                            >
+                              <img
+                                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
+                                alt="down button"
+                              />
+                            </button>
+                          }
+                          position="right center"
+                        >
+                          {options === true ? (
+                            <ArtworkOptions artwork={artwork} />
+                          ) : (
+                            ''
+                          )}
+                        </Popup>
                       </div>
                     </div>
                   </div>
                 ))
               : 'Loading...'}
             <div>
+              {/* CRAFT NEW UTIL FUNC THAT TRANSFORMS LAT LONG INTO DIRECTIONS LINK */}
               {/* <a href={directionsUrl} target="_blank" rel="noopener noreferrer"> */}
-              <h4>TAKE ME THERE</h4>
+              {/* <h4>TAKE ME THERE</h4> */}
               {/* </a> */}
             </div>
           </div>

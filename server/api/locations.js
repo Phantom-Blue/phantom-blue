@@ -19,9 +19,20 @@ router.get('/:lat', async (req, res, next) => {
       },
       include: Tag
     })
+
     res.json(artworksToReturn)
   } catch (err) {
     next(err)
+  }
+})
+
+router.get('/artNearby/:id', async (req, res, next) => {
+  try {
+    const location = await Location.findByPk(req.params.id)
+    const nearbyArt = await location.getNearbyArt(10000)
+    res.send(nearbyArt)
+  } catch (err) {
+    console.error(err)
   }
 })
 
