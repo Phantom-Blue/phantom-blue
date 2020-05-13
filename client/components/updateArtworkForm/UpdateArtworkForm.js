@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 // import {connect} from 'react-redux'
 // import {updateArtwork, fetchSingleArtwork} from '../../store/artworks'
 
-export default class UpdateArtwork extends Component {
+export class UpdateArtworkForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      updateArtist: 'replace with curr props',
-      updateDescription: 'replace with curr props',
-      updateImageUrl: 'replace with curr props'
+      // updateArtist: 'replace with curr props',
+      // updateDescription: 'replace with curr props',
+      // updateImageUrl: 'replace with curr props'
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -17,17 +17,17 @@ export default class UpdateArtwork extends Component {
   }
 
   handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    // this.setState({
+    //   [e.target.name]: e.target.value
+    // })
   }
   handleUpdate(e, newArtWorkId) {
     e.preventDefault()
-    const newArtworkInfo = {
-      artist: this.state.updateArtist,
-      description: this.state.updateDescription,
-      imageUrl: this.state.imageUrl
-    }
+    // const newArtworkInfo = {
+    //   artist: this.state.updateArtist,
+    //   description: this.state.updateDescription,
+    //   imageUrl: this.state.imageUrl
+    // }
     // use updateArtwork from store
   }
 
@@ -40,7 +40,7 @@ export default class UpdateArtwork extends Component {
             type="text"
             name="updateArtist"
             placeholder="Artist name"
-            onChange={e => this.handleChange(e)}
+            // onChange={e => this.handleChange(e)}
           />
         </div>
         <div>
@@ -48,14 +48,14 @@ export default class UpdateArtwork extends Component {
             type="text"
             name="updateDescription"
             placeholder="Description"
-            onChange={e => this.handleChange(e)}
+            // onChange={e => this.handleChange(e)}
           />
         </div>
         <div>
           <input
             type="file"
             name="updateImageUrl"
-            onChange={e => this.handleChange(e)}
+            // onChange={e => this.handleChange(e)}
           />
         </div>
         <div>
@@ -82,4 +82,6 @@ export default class UpdateArtwork extends Component {
 //   }
 // }
 
-// export default connect(mapState, mapDispatch)(UpdateArtwork)
+// export default connect(mapState, mapDispatch)(UpdateArtworkForm)
+
+export default UpdateArtworkForm

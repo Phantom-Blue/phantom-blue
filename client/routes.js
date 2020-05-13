@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import {MapView} from './components/mapView/MapView'
+import {UpdateArtworkForm} from './components/updateArtworkForm/UpdateArtworkForm'
 /**
  * COMPONENT
  */
@@ -24,6 +25,8 @@ class Routes extends Component {
         <Route exact path="/" component={MapView} />
         {/**REVISIT PATH NAME CONVENTION */}
         <Route exact path="/map" component={MapView} />
+        {/** FOR TESTING PURPOSES UPDATE ARTWORK ROUTE NEED TO BE MOVE TO LOGGING USERS ONLY */}
+        <Route exact path="/updateartwork" component={UpdateArtworkForm} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
