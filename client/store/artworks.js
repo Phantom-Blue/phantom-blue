@@ -7,6 +7,7 @@ import axios from 'axios'
 const GET_AN_ARTWORK = 'GET_AN_ARTWORK'
 const GET_ALL_ARTWORKS = 'GET_ALL_ARTWORKS'
 const VERIFY_ARTWORK = 'VERIFY_ARTWORK'
+const UPDATE_ARTWORK = 'UPDATE_ARTWORK'
 
 // A C T I O N S //
 const gotAnArtwork = artwork => ({
@@ -22,6 +23,11 @@ const gotAllArtworks = artworks => ({
 const verifiedArtwork = artwork => ({
   type: VERIFY_ARTWORK,
   artwork
+})
+
+const updatedArtwork = artworkUpdated => ({
+  type: UPDATE_ARTWORK,
+  artworkUpdated
 })
 
 // T H U N K S //
@@ -52,6 +58,17 @@ export const verifyArtworkInDB = artworkId => async dispatch => {
   }
 }
 
+export const fetchUpdatedArtwork = (
+  artworkId,
+  artworkInfo
+) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/artworks/${artworkId}`, artworkInfo)
+    dispatch(updatedArtwork(res.data))
+  } catch (err) {
+    console.error(err, 'UNABLE TO UPDATE')
+  }
+}
 // I N I T I A L   S T A T E //
 const initialState = {
   all: []
@@ -66,6 +83,14 @@ export default function artworkReducer(state = initialState, action) {
       return {...state, all: action.artworks}
     case VERIFY_ARTWORK:
       return action.artwork
+    case UPDATE_ARTWORK:
+      return state.all.map(artwork => {
+        if (artwork.id === action.artworkUpdated.id) {
+          return action.artworkUpdated
+        } else {
+          return action.artwork
+        }
+      })
     default:
       return state
   }
