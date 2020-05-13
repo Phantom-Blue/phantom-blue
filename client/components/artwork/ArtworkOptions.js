@@ -2,7 +2,12 @@
 import React from 'react'
 import Popup from 'reactjs-popup'
 import {connect} from 'react-redux'
-import {verifyArtworkInDB, addTagsToDB, me} from '../../store'
+import {
+  verifyArtworkInDB,
+  addTagsToDB,
+  removeArtwork
+} from '../../store/artworks'
+import {me} from '../../store/user'
 
 // importing edit artwork component, for when it's ready to plug in
 // import EditArtwork from './EditArtwork'
@@ -119,6 +124,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   verifyArtwork: artworkId => dispatch(verifyArtworkInDB(artworkId)),
   addTags: (artworkId, tags) => dispatch(addTagsToDB(artworkId, tags)),
+  removeArtwork: artworkId => dispatch(removeArtwork(artworkId)),
   user: () => dispatch(me())
 })
 

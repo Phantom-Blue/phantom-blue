@@ -1,12 +1,10 @@
 import React from 'react'
-var ReactDOM = require('react-dom')
-var Carousel = require('react-responsive-carousel').Carousel
 import {connect} from 'react-redux'
 import {fetchArtwork} from '../../store/artworks'
 // import Dropdown from 'react-dropdown'
 // import { Link } from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
-import {generateUrl} from './utils'
+// import {generateUrl} from './utils'
 import Popup from 'reactjs-popup'
 
 class Artwork extends React.Component {
@@ -65,11 +63,11 @@ class Artwork extends React.Component {
                           }
                           position="right center"
                         >
-                          {options === true ? (
+                          {/* {options === true ? (
                             <ArtworkOptions artwork={artwork} />
                           ) : (
                             ''
-                          )}
+                          )} */}
                         </Popup>
                       </div>
                     </div>
