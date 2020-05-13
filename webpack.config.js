@@ -1,4 +1,5 @@
 const isDev = process.env.NODE_ENV === 'development'
+const nodeExternals = require('webpack-node-externals') //include this
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -10,6 +11,7 @@ module.exports = {
     path: __dirname,
     filename: './public/bundle.js'
   },
+  externals: [nodeExternals()], // just add this
   resolve: {
     extensions: ['.js', '.jsx', '.css']
   },

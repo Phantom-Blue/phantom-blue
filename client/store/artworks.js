@@ -8,34 +8,38 @@ const GET_AN_ARTWORK = 'GET_AN_ARTWORK'
 const GET_ALL_ARTWORKS = 'GET_ALL_ARTWORKS'
 const VERIFY_ARTWORK = 'VERIFY_ARTWORK'
 const ADD_TAGS = 'ADD_TAGS'
+const DELETE_ARTWORK = 'DELETE_ARTWORK'
 
 // A C T I O N S //
-const gotAnArtwork = artwork => ({
+const gotAnArtwork = artworks => ({
   type: GET_AN_ARTWORK,
-  artwork
+  artworks
 })
 
-const gotAllArtworks = artwork => ({
+const gotAllArtworks = artworks => ({
   type: GET_ALL_ARTWORKS,
-  artwork
+  artworks
 })
 
-const verifiedArtwork = artwork => ({
+const verifiedArtwork = artworks => ({
   type: VERIFY_ARTWORK,
-  artwork
+  artworks
 })
 
-const taggedArt = artwork => ({
+const deletedArtwork = artworks => ({
+  type: DELETE_ARTWORK,
+  artworks
+})
+
+const taggedArt = artworks => ({
   type: ADD_TAGS,
-  artwork
+  artworks
 })
 
 // T H U N K S //
 export const fetchArtwork = (lat, long) => async dispatch => {
   try {
-    // console.log('lat long before api request', lat, long)
     const {data} = await axios.get(`/api/locations/${lat}?long=${long}`)
-    // console.log('retrieved artworks sucessfully', data)
     dispatch(gotAnArtwork(data))
   } catch (error) {
     console.error("didn't receive any data")
@@ -44,8 +48,8 @@ export const fetchArtwork = (lat, long) => async dispatch => {
 
 export const fetchAllArtworks = async dispatch => {
   try {
-    const res = await axios.get('/api/artworks')
-    dispatch(gotAllArtworks(res.data))
+    const {data} = await axios.get('/api/artworks')
+    dispatch(gotAllArtworks(data))
   } catch (error) {
     console.error(error, 'UNABLE TO FETCH ALL ARTWORKS')
   }
@@ -53,8 +57,17 @@ export const fetchAllArtworks = async dispatch => {
 
 export const verifyArtworkInDB = artworkId => async dispatch => {
   try {
-    const res = await axios.put(`/api/artworks/${artworkId}`)
-    dispatch(verifiedArtwork(res.data))
+    const {data} = await axios.put(`/api/artworks/${artworkId}`)
+    dispatch(verifiedArtwork(data))
+  } catch (error) {
+    console.error("didn't receive any data")
+  }
+}
+
+export const removeArtwork = artworkId => async dispatch => {
+  try {
+    const {data} = await axios.delete(`/api/artworks/${artworkId}`)
+    dispatch(deletedArtwork(data))
   } catch (error) {
     console.error("didn't receive any data")
   }
@@ -62,15 +75,15 @@ export const verifyArtworkInDB = artworkId => async dispatch => {
 
 export const addTagsToDB = (artworkId, tag) => async dispatch => {
   try {
-    const res = await axios.post(`/api/tags/${artworkId}`, tag)
-    dispatch(taggedArt(res.data))
+    const {data} = await axios.post(`/api/tags/${artworkId}`, tag)
+    dispatch(taggedArt(data))
   } catch (error) {
     console.error("didn't receive any data")
   }
 }
 
 // I N I T I A L   S T A T E //
-const initialState = {}
+const initialState = []
 
 // R E D U C E R //
 export default function artworkReducer(state = initialState, action) {
@@ -83,6 +96,8 @@ export default function artworkReducer(state = initialState, action) {
       return action.artwork
     case ADD_TAGS:
       return action.artwork
+    case DELETE_ARTWORK:
+      return action.artwork.filter(artwork => artwork.id !== action.id)
     default:
       return state
   }
