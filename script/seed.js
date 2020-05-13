@@ -11,127 +11,6 @@ const seed = async () => {
   try {
     await db.sync({force: true})
 
-    const Artworks = await Promise.all([
-      //1
-      Artwork.create({
-        userId: 1,
-        artist: 'Dondi',
-        description: 'Tagged Dondi',
-        locationId: 1,
-        isVerified: true,
-        imageUrl: [
-          'https://external-preview.redd.it/mFR3HuW48ewK8V3l5Ai12vASlAQaE5vCGhEdpyZfCQA.png?auto=webp&s=5f08a7077d1a1d472270269a45f3fc4da2ca313b'
-        ]
-      }),
-      //2
-      Artwork.create({
-        userId: 2,
-        artist: 'unknown',
-        description: 'Cartoony abstract googly eyes',
-        locationId: 2,
-        isVerified: false,
-        imageUrl: ['https://imgur.com/a/hhvyrE1']
-      }),
-      //3
-      Artwork.create({
-        userId: 3,
-        artist: 'Menace Two, Theresa Kim aka Resa Piece',
-        description:
-          '"In Pursuit of Magic" a Mural collaboration by graffiti writer Menace Two and street artist Theresa Kim aka Resa Piece',
-        locationId: 3,
-        isVerified: false,
-        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc119.jpg']
-      }),
-      //4
-      Artwork.create({
-        userId: 2,
-        artist: 'unknown',
-        description: 'A man with a hat',
-        locationId: 3,
-        isVerified: false,
-        imageUrl: [
-          'https://i.pinimg.com/originals/3e/88/0d/3e880d9e5e70e0d1fdeaa516f124af94.jpg'
-        ]
-      }),
-      //5
-      Artwork.create({
-        userId: 3,
-        artist: 'Menace Two, Theresa Kim aka Resa Piece',
-        description:
-          'ollaboration by graffiti writer Menace Two and street artist Theresa Kim aka Resa Piece',
-        locationId: 5,
-        isVerified: false,
-        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc97.jpg']
-      }),
-      //6
-      Artwork.create({
-        userId: 3,
-        artist: 'BKFoxx',
-        description:
-          'Mural of Snoop Dogg by Long Island-based female artist BKFoxx, who paints photorealistic murals using only spray paint',
-        locationId: 4,
-        isVerified: false,
-        imageUrl: [
-          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140a.jpg',
-          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140d.jpg'
-        ]
-      }),
-      //7
-      Artwork.create({
-        userId: 2,
-        artist: 'Jenny Holzer',
-        description: 'Installation, "Abuse of Power Comes as No Surprise"',
-        locationId: 6,
-        isVerified: false,
-        imageUrl: [
-          'https://images.curiator.com/image/upload/f_auto,q_auto/t_x/art/ost62rdpbftozam89gzx.jpg'
-        ]
-      }),
-      //8
-      Artwork.create({
-        userId: 2,
-        artist: 'Jenny Holzer',
-        description: 'Installation, "Protect Me From What I Want"',
-        locationId: 6,
-        isVerified: false,
-        imageUrl: [
-          'https://artaspoliticalvoice.weebly.com/uploads/1/5/0/3/15031766/8228453_orig.jpg?0'
-        ]
-      }),
-      //9
-      Artwork.create({
-        userId: 2,
-        artist: 'Naomi Lawrence',
-        description:
-          'A string installatioLa Flor De Mi Madre,” by artist Naomi Lawrence at Eugene McCabe Field in East Harlem, features three large crocheted flowers made of acrylic yarn, as well as smaller ones made in collaboration with neighborhood artists.',
-        locationId: 6,
-        isVerified: false,
-        imageUrl: [
-          'https://cdn.vox-cdn.com/thumbor/eLTKUnrMZUN7TUow97y3Q01pkX4=/0x0:2016x1512/2120x1590/filters:focal(847x595:1169x917):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65181831/Naomi_Lawrence_McCabe_co_artist_070202019.0.jpg'
-        ]
-      }),
-      //10
-      Artwork.create({
-        userId: 1,
-        artist: 'Mark di Suvero',
-        description: 'JOIE DE VIVRE',
-        locationId: 7,
-        isVerified: false,
-        imageUrl: [
-          'https://cdn.vox-cdn.com/thumbor/eLTKUnrMZUN7TUow97y3Q01pkX4=/0x0:2016x1512/2120x1590/filters:focal(847x595:1169x917):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65181831/Naomi_Lawrence_McCabe_co_artist_070202019.0.jpg'
-        ]
-      }),
-      //11
-      Artwork.create({
-        userId: 1,
-        artist: 'Jari Alvarez aka Werc',
-        description: 'Unleashed',
-        locationId: 8,
-        isVerified: false,
-        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc124.jpg']
-      })
-    ])
-
     const Locations = await Promise.all([
       //1
       Location.create({
@@ -222,6 +101,127 @@ const seed = async () => {
         isVerified: true,
         imageUrl: '',
         isArtist: false
+      })
+    ])
+
+    const Artworks = await Promise.all([
+      //1
+      Artwork.create({
+        UserId: 1,
+        artist: 'Dondi',
+        description: 'Tagged Dondi',
+        LocationId: 1,
+        isVerified: true,
+        imageUrl: [
+          'https://external-preview.redd.it/mFR3HuW48ewK8V3l5Ai12vASlAQaE5vCGhEdpyZfCQA.png?auto=webp&s=5f08a7077d1a1d472270269a45f3fc4da2ca313b'
+        ]
+      }),
+      //2
+      Artwork.create({
+        UserId: 2,
+        artist: 'unknown',
+        description: 'Cartoony abstract googly eyes',
+        LocationId: 2,
+        isVerified: false,
+        imageUrl: ['https://imgur.com/a/hhvyrE1']
+      }),
+      //3
+      Artwork.create({
+        UserId: 3,
+        artist: 'Menace Two, Theresa Kim aka Resa Piece',
+        description:
+          '"In Pursuit of Magic" a Mural collaboration by graffiti writer Menace Two and street artist Theresa Kim aka Resa Piece"',
+        LocationId: 3,
+        isVerified: false,
+        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc119.jpg']
+      }),
+      //4
+      Artwork.create({
+        UserId: 2,
+        artist: 'unknown',
+        description: 'A man with a hat',
+        LocationId: 3,
+        isVerified: false,
+        imageUrl: [
+          'https://i.pinimg.com/originals/3e/88/0d/3e880d9e5e70e0d1fdeaa516f124af94.jpg'
+        ]
+      }),
+      //5
+      Artwork.create({
+        UserId: 3,
+        artist: 'Menace Two, Theresa Kim aka Resa Piece',
+        description:
+          'Collaboration by graffiti writer Menace Two and street artist Theresa Kim aka Resa Piece',
+        LocationId: 5,
+        isVerified: false,
+        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc97.jpg']
+      }),
+      //6
+      Artwork.create({
+        UserId: 3,
+        artist: 'BKFoxx',
+        description:
+          'Mural of Snoop Dogg by Long Island-basedUfemale artist BKFoxx, who paints photorealistic murals using only spray paint',
+        LocationId: 4,
+        isVerified: false,
+        imageUrl: [
+          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140a.jpg',
+          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140d.jpg'
+        ]
+      }),
+      //7
+      Artwork.create({
+        UserId: 2,
+        artist: 'Jenny Holzer',
+        description: 'Installation, "Abuse of Power Comes as No Surprise"',
+        LocationId: 6,
+        isVerified: false,
+        imageUrl: [
+          'https://images.curiator.com/image/upload/f_auto,q_auto/t_x/art/ost62rdpbftozam89gzx.jpg'
+        ]
+      }),
+      //8
+      Artwork.create({
+        UserId: 2,
+        artist: 'Jenny Holzer',
+        description: 'Installation, "Protect Me From What I Want"',
+        LocationId: 6,
+        isVerified: false,
+        imageUrl: [
+          'https://artaspoliticalvoice.weebly.com/uploads/1/5/0/3/15031766/8228453_orig.jpg?0'
+        ]
+      }),
+      //9
+      Artwork.create({
+        UserId: 2,
+        artist: 'Naomi Lawrence',
+        description:
+          'A string installatioLa Flor De Mi Madre,” by artist Naomi Lawrence at Eugene McCabe Field in East Harlem, features three largeUcrocheted flowers made of acrylic yarn, as well as smaller ones made in collaboration with neighborhood artists.',
+        LocationId: 6,
+        isVerified: false,
+        imageUrl: [
+          'https://cdn.vox-cdn.com/thumbor/eLTKUnrMZUN7TUow97y3Q01pkX4=/0x0:2016x1512/2120x1590/filters:focal(847x595:1169x917):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65181831/Naomi_Lawrence_McCabe_co_artist_070202019.0.jpg'
+        ]
+      }),
+      //10
+      Artwork.create({
+        UserId: 1,
+        artist: 'Mark di Suvero',
+        description: 'JOIE DE VIVRE',
+        LocationId: 7,
+        isVerified: false,
+        imageUrl: [
+          'https://cdn.vox-cdn.com/thumbor/eLTKUnrMZUN7TUow97y3Q01pkX4=/0x0:2016x1512/2120x1590/filters:focal(847x595:1169x917):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65181831/Naomi_Lawrence_McCabe_co_artist_070202019.0.jpg'
+        ]
+      }),
+      //11
+      Artwork.create({
+        UserId: 1,
+        artist: 'Jari Alvarez aka Werc',
+        description: 'Unleashed',
+        LocationId: 8,
+        isVerified: false,
+        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc124.jpg']
       })
     ])
 
