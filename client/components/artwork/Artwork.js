@@ -1,8 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchArtwork} from '../../store/artworks'
-// import Dropdown from 'react-dropdown'
-// import { Link } from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 // import {generateUrl} from './utils'
 import Popup from 'reactjs-popup'
@@ -47,9 +45,7 @@ class Artwork extends React.Component {
                     <img src={artwork.imageUrl} alt={artwork.artist} />
                     <div className="artworkoptions">
                       <h1 className="artistname">{artwork.artist}</h1>
-                      <div>
-                        {/* <Popup
-                          trigger={
+                      {/* <div>
                             <button
                               type="button"
                               className="historybutton"
@@ -60,16 +56,12 @@ class Artwork extends React.Component {
                                 alt="down button"
                               />
                             </button>
-                          }
-                          position="right center"
-                        >
-                          {/* {options === true ? (
+
+                          { options === true ? (
                             <ArtworkOptions artwork={artwork} />
-                          ) : (
-                            ''
-                          )} */}
-                        {/* </Popup> */}
-                      </div>
+                          ) : ('')
+                          }
+                      </div> */}
                     </div>
                   </div>
                 ))

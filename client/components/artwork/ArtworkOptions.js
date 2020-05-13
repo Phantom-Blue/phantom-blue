@@ -24,16 +24,15 @@ class ArtworkOptions extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
+  componentDidMount() {
+    this.props.geMe()
+  }
+
   handleVerify(e) {
     e.preventDefault()
     const {artwork, user, verifyArtwork} = this.props
     if (artwork.userId !== user.id) {
-      // calling the thunk for when we have a db
       verifyArtwork(artwork.id)
-      // meanwhile we simulate the action w local state
-      // this.setState({
-      //   isVerified: true
-      // })
       alert('this artwork has been verified')
     }
   }
@@ -67,7 +66,7 @@ class ArtworkOptions extends React.Component {
           <p>
             {artwork.taggedArtwork
               ? artwork.taggedArtwork.tag.map(tag => `${tag}, `)
-              : ''}{' '}
+              : ''}
           </p>
           <button type="submit" />
         </div>
@@ -125,7 +124,7 @@ const mapDispatch = dispatch => ({
   verifyArtwork: artworkId => dispatch(verifyArtworkInDB(artworkId)),
   addTags: (artworkId, tags) => dispatch(addTagsToDB(artworkId, tags)),
   removeArtwork: artworkId => dispatch(removeArtwork(artworkId)),
-  user: () => dispatch(me())
+  getMe: () => dispatch(me())
 })
 
 export default connect(mapState, mapDispatch)(ArtworkOptions)
