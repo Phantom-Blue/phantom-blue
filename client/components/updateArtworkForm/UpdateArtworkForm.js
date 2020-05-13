@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 // import {connect} from 'react-redux'
-// import {connect} from 'react-redux'
 // import {updateArtwork, fetchSingleArtwork} from '../../store/artworks'
 
 export class UpdateArtworkForm extends Component {
@@ -12,24 +11,24 @@ export class UpdateArtworkForm extends Component {
       // updateImageUrl: 'replace with curr props'
     }
 
-    this.handleChange = this.handleChange.bind(this)
-    this.handleUpdate = this.handleUpdate.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
+    // this.handleUpdate = this.handleUpdate.bind(this)
   }
 
-  handleChange(e) {
-    // this.setState({
-    //   [e.target.name]: e.target.value
-    // })
-  }
-  handleUpdate(e, newArtWorkId) {
-    e.preventDefault()
-    // const newArtworkInfo = {
-    //   artist: this.state.updateArtist,
-    //   description: this.state.updateDescription,
-    //   imageUrl: this.state.imageUrl
-    // }
-    // use updateArtwork from store
-  }
+  // handleChange(e) {
+  //   // this.setState({
+  //   //   [e.target.name]: e.target.value
+  //   // })
+  // }
+  // handleUpdate(e, newArtWorkId) {
+  //   e.preventDefault()
+  //   // const newArtworkInfo = {
+  //   //   artist: this.state.updateArtist,
+  //   //   description: this.state.updateDescription,
+  //   //   imageUrl: this.state.imageUrl
+  //   // }
+  //   // use updateArtwork from store
+  // }
 
   render() {
     return (
