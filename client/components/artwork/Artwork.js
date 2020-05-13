@@ -32,8 +32,8 @@ class Artwork extends React.Component {
   render() {
     const {latitude, longitude, artworks} = this.props
     const {options} = this.state
-    console.log(this.props)
-    console.log(options)
+    console.log('inside artwork', this.props)
+    // console.log(options)
     // const directionsUrl = generateUrl(artworks[0])
 
     return (
@@ -48,7 +48,7 @@ class Artwork extends React.Component {
                     <div className="artworkoptions">
                       <h1 className="artistname">{artwork.artist}</h1>
                       <div>
-                        <Popup
+                        {/* <Popup
                           trigger={
                             <button
                               type="button"
@@ -68,7 +68,7 @@ class Artwork extends React.Component {
                           ) : (
                             ''
                           )} */}
-                        </Popup>
+                        {/* </Popup> */}
                       </div>
                     </div>
                   </div>
