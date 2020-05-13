@@ -73,28 +73,31 @@ export const MapView = () => {
             />
           </Popup>
         ) : null}
-        <div>
-          {/* * BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK
-          <ArtworksPopup
-            trigger={
-              <div className="see-all-artworks-link-container">
-                <Link id="link-to-all-artworks">View as list</Link>
-              </div>
-            }
-            modal
-            closeOnDocumentClick
-          >
-            {close => (
-              <div className="modal">
-                <a className="close" onClick={close}>
-                  &times;
-                </a>
+      </ReactMapGl>
+      <div className="artwork-list-outer-container">
+        {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
+        <ArtworksPopup
+          position="top left"
+          trigger={
+            <div className="see-all-artworks-link-container">
+              <Link id="link-to-all-artworks">View as list</Link>
+            </div>
+          }
+          modal
+          closeOnDocumentClick
+        >
+          {close => (
+            <div className="modal">
+              <a className="close" onClick={close}>
+                &times;
+              </a>
+              <div className="content">
                 <AllArtworks />
               </div>
-            )}
-          </ArtworksPopup> */}
-        </div>
-      </ReactMapGl>
+            </div>
+          )}
+        </ArtworksPopup>
+      </div>
     </div>
   )
 }

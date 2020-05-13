@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Artwork, Location, Tag, TaggedArtwork} = require('../db/models')
+const {Artwork, Location, Tag} = require('../db/models')
 
 router.get('/:lat', async (req, res, next) => {
   const {long} = req.query
@@ -29,10 +29,10 @@ router.get('/:lat', async (req, res, next) => {
 router.get('/artNearby/:id', async (req, res, next) => {
   try {
     const location = await Location.findByPk(req.params.id)
-    const nearbyArt = await location.getNearbyArt(10000)
+    const nearbyArt = await location.getNearbyArt(1000)
     res.send(nearbyArt)
   } catch (err) {
-    console.error(err)
+    next(err)
   }
 })
 

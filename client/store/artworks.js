@@ -46,7 +46,7 @@ export const fetchArtwork = (lat, long) => async dispatch => {
   }
 }
 
-export const fetchAllArtworks = async dispatch => {
+export const fetchAllArtworks = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/artworks')
     dispatch(gotAllArtworks(data))
@@ -72,6 +72,8 @@ export const removeArtwork = artworkId => async dispatch => {
     console.error("didn't receive any data")
   }
 }
+// I N I T I A L   S T A T E //
+const initialState = []
 
 export const addTagsToDB = (artworkId, tag) => async dispatch => {
   try {
@@ -82,22 +84,19 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
   }
 }
 
-// I N I T I A L   S T A T E //
-const initialState = []
-
 // R E D U C E R //
 export default function artworkReducer(state = initialState, action) {
   switch (action.type) {
     case GET_AN_ARTWORK:
-      return action.artwork
+      return action.artworks
     case GET_ALL_ARTWORKS:
-      return action.artwork
+      return action.artworks
     case VERIFY_ARTWORK:
-      return action.artwork
+      return action.artworks
     case ADD_TAGS:
-      return action.artwork
+      return action.artworks
     case DELETE_ARTWORK:
-      return action.artwork.filter(artwork => artwork.id !== action.id)
+      return action.artworks.filter(artwork => artwork.id !== action.id)
     default:
       return state
   }

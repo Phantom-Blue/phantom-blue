@@ -119,7 +119,9 @@ const seed = async () => {
         description: 'Cartoony abstract googly eyes',
         LocationId: 2,
         isVerified: false,
-        imageUrl: ['https://imgur.com/a/hhvyrE1']
+        imageUrl: [
+          'https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fi.imgur.com%2FXbAzCNC.jpg'
+        ]
       }),
       //3
       Artwork.create({
@@ -160,10 +162,7 @@ const seed = async () => {
           'Mural of Snoop Dogg by Long Island-basedUfemale artist BKFoxx, who paints photorealistic murals using only spray paint',
         LocationId: 4,
         isVerified: false,
-        imageUrl: [
-          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140a.jpg',
-          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140d.jpg'
-        ]
+        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc140a.jpg']
       }),
       //7
       Artwork.create({
@@ -192,7 +191,7 @@ const seed = async () => {
         UserId: 2,
         artist: 'Naomi Lawrence',
         description:
-          'A string installatioLa Flor De Mi Madre,” by artist Naomi Lawrence at Eugene McCabe Field in East Harlem, features three largeUcrocheted flowers made of acrylic yarn, as well as smaller ones made in collaboration with neighborhood artists.',
+          'A string installatioLa Flor De Mi Madre," by artist Naomi Lawrence at Eugene McCabe Field in East Harlem, features three largeUcrocheted flowers made of acrylic yarn, as well as smaller ones made in collaboration with neighborhood artists.',
         LocationId: 6,
         isVerified: false,
         imageUrl: [

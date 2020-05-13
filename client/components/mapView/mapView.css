@@ -1,19 +1,13 @@
 .map-container {
   width: 100vw;
   height: 100vh;
-  margin: 20px;
 }
-
-.see-all-artworks-link-container {
-  position: absolute;
-  background-color: white;
-  padding: 20px;
+.artwork-list-outer-container .see-all-artworks-link-container {
   width: 100vw;
-  bottom: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.95;
+  padding: 40px;
 }
 
 #link-to-all-artworks {
@@ -22,18 +16,26 @@
 }
 
 /* MODAL STYLE*/
-.modal > .content {
-  width: 100%;
-  padding: 10px 5px;
+.modal {
+  position: absolute;
+  width: 100vw;
+  max-height: 600px;
+  right: calc(50% - 50%);
+  /* top: calc(50% - (max-height / 2)); */
+  /* margin: -305px 0 0 -300px; */
+  margin-top: -305px;
+  margin-right: -50%;
+  border: solid 2px #cccccc;
+  background-color: #ffffff;
+  overflow-y: scroll;
+  z-index: 10;
 }
-
-.modal > .actions {
-  width: 100%;
-  padding: 10px 5px;
-  margin: auto;
-  text-align: center;
-}
-
+/* .modal > .content { */
+/* width: 100%; */
+/* padding: 10px 5px; */
+/* overflow: hidden; */
+/* height: 500px; */
+/* } */
 .modal > .close {
   cursor: pointer;
   position: absolute;

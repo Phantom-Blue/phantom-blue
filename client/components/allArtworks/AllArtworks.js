@@ -1,46 +1,48 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import {connect} from 'react-redux'
-// import {} from '../../AllArtWork'
 // import {Link} from 'react-router-dom'
-import {fetchAllArtworks, removeArtwork} from '../../store/artworks'
+import {fetchAllArtworks} from '../../store/artworks'
 import './allArtworks.css'
 
 export class AllArtWorks extends Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {}
-  // this.handleDelete = this.handleDelete.bind(this)
-  // }
+  componentDidMount() {
+    this.props.getAllArtWorks()
+  }
 
   componentDidMount() {
     this.props.fetchAllArtworks()
   }
 
   render() {
-    const listOfArtworks = this.props.allArtwork || []
+    const {allArtWorks} = this.props
+
     return (
       <div className="all-artworks-container">
-        <h1>All Artworks</h1>
-        {listOfArtworks.map(artwork => {
-          return (
-            <div className="artwork-container" key={artwork.userId}>
-              <img src={artwork.imageUrl} alt="Artwork" />
-              <h2>{artwork.artist}</h2>
-            </div>
-          )
-        })}
+        <div>
+          {allArtWorks
+            ? allArtWorks.map(artwork => {
+                return (
+                  <div className="artwork-container" key={artwork.userId}>
+                    <img src={artwork.imageUrl} alt="Artwork" />
+                    <h2>{artwork.artist}</h2>
+                  </div>
+                )
+              })
+            : 'No Artworks at this location'}
+        </div>
       </div>
     )
   }
 }
 
-const mapState = state => ({
-  AllArtWorks: state.artwork
-})
+const mapState = state => {
+  return {
+    allArtWorks: state.artwork
+  }
+}
 
 const mapDispatch = dispatch => ({
-  fetchAllArtWorks: () => dispatch(fetchAllArtworks),
-  removeArtwork: artworkId => dispatch(removeArtwork(artworkId))
+  getAllArtWorks: () => dispatch(fetchAllArtworks())
 })
+
 export default connect(mapState, mapDispatch)(AllArtWorks)
