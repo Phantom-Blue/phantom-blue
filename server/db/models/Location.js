@@ -27,11 +27,13 @@ class GeoLocationBounds {
 }
 
 GeoLocationBounds.prototype.deltaLatitude = function() {
-  // console.log(((this.distance / this.earthsRadius) / Math.PI * 180))
   return this.distance / this.earthsRadius / Math.PI * 180
 }
 
 GeoLocationBounds.prototype.deltaLongitude = function() {
+  return this.myLatitude * (1 / Math.cos(this.myLatitude * Math.PI / 180))
+
+  // ----------vvvvv------------ Ignore these comments ----------vvvvv------------
   // console.log("Delta: ",(this.myLatitude / Math.cos(this.myLatitude)) * Math.PI / 180)
   // let r = this.distance / this.earthsRadius
   // let latT = Math.asin(Math.sin(this.myLatitude)/Math.cos(r))
@@ -41,7 +43,7 @@ GeoLocationBounds.prototype.deltaLongitude = function() {
   // console.log("returning ", ((this.myLatitude / Math.cos(this.myLatitude)) * Math.PI / 180)*-1)
   // console.log(this.myLatitude * (1 / Math.cos(this.myLatitude * Math.PI / 180)))
   // // return ((this.myLatitude / Math.cos(this.myLatitude)) * Math.PI / 180)*-1
-  return this.myLatitude * (1 / Math.cos(this.myLatitude * Math.PI / 180))
+  //-------------------------------------------------------------------------------
 }
 
 GeoLocationBounds.prototype.points = function() {
@@ -58,7 +60,6 @@ GeoLocationBounds.prototype.points = function() {
 }
 
 Location.prototype.getNearbyLocations = async function(radius) {
-  let curr = this
   let locations = await Location.findAll()
   locations = locations.map(location => location.dataValues)
   const bounds = new GeoLocationBounds(this.longitude, this.latitude, radius)
@@ -69,14 +70,9 @@ Location.prototype.getNearbyLocations = async function(radius) {
       ranges.latitude.min <= location.latitude &&
       location.latitude <= ranges.latitude.max &&
       ranges.longitude.min <= location.longitude &&
-      location.longitude <= ranges.longitude.max &&
-      !(
-        location.latitude === curr.latitude &&
-        location.longitude === curr.longitude
-      )
+      location.longitude <= ranges.longitude.max
     )
   })
-
   return nearby
 }
 
