@@ -1,61 +1,49 @@
 import React from 'react'
 import {connect} from 'react-redux'
+// import RedirectArtwork from './RedirectArtwork'
+import {Link} from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {fetchOneArtwork} from '../../store/artworks'
 import './artwork.css'
+import AllArtworks from '../allArtworks/AllArtworks'
 
 class SingleArtwork extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      //   options: false,
-    }
-    // this.handleOptions = this.handleOptions.bind(this)
-  }
-
   componentDidMount() {
     this.props.getOneArtwork(this.props.match.params.id)
   }
 
-  //   handleOptions() {
-  //     const {options} = this.state
-  //     this.setState({
-  //       options: !options
-  //     })
-  //   }
-
   render() {
-    console.log(this.props)
-    const {options} = this.state
+    console.log('SINGLE ARTPROPS', this.props)
     const {artwork} = this.props
-
     return (
       <div>
-        <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
-        <div className="carousel-text">
-          <h1 className="artistname">{artwork.artist}</h1>
+        {this.props.artwork ? (
+          //   && this.props.artwork[0] ?
           <div>
-            <button
-              type="button"
-              className="historybutton"
-              // onClick={this.handleOptions}
-            >
-              <img
-                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
-                alt="down button"
-                width="15"
-              />
-            </button>
-            <ArtworkOptions artwork={artwork} />
+            <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
+            <div className="carousel-text">
+              <h1 className="artistname">{artwork.artist}</h1>
+              <ArtworkOptions artwork={artwork} />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div>
+            <p>No artworks here</p>
+            <Link to={`/artwork/${this.props.match.params.id}`}>
+              <button type="button">Retry</button>
+            </Link>
+            <Link to="/map">
+              <button type="submit">View Map</button>
+            </Link>
+          </div>
+        )}
       </div>
     )
   }
 }
 
 const mapState = state => ({
-  artwork: state.artwork
+  artwork: state.artwork.selected
 })
 
 const mapDispatch = dispatch => ({

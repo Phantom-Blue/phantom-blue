@@ -22,7 +22,8 @@ class Artwork extends React.Component {
   }
 
   render() {
-    const {artworks} = this.props
+    // const {artworks} = this.props
+    console.log('SINGLE ARTWORK', this.props)
     // console.log('inside artwork', this.props)
     // console.log(options)
     // const directionsUrl = generateUrl(artworks[0])
@@ -67,7 +68,7 @@ class Artwork extends React.Component {
 }
 
 const mapState = state => ({
-  artworks: state.artwork
+  artworks: state.artwork.all
 })
 
 const mapDispatch = dispatch => ({
