@@ -72,8 +72,6 @@ export const removeArtwork = artworkId => async dispatch => {
     console.error("didn't receive any data")
   }
 }
-// I N I T I A L   S T A T E //
-const initialState = []
 
 export const addTagsToDB = (artworkId, tag) => async dispatch => {
   try {
@@ -83,6 +81,9 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
     console.error("didn't receive any data")
   }
 }
+
+// I N I T I A L   S T A T E //
+const initialState = []
 
 // R E D U C E R //
 export default function artworkReducer(state = initialState, action) {
