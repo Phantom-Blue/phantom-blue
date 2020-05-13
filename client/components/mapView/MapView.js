@@ -76,6 +76,7 @@ export const MapView = () => {
       <div className="artwork-list-outer-container">
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
         <ArtworksPopup
+          position="top left"
           trigger={
             <div className="see-all-artworks-link-container">
               <Link id="link-to-all-artworks">View as list</Link>
@@ -89,7 +90,7 @@ export const MapView = () => {
               <a className="close" onClick={close}>
                 &times;
               </a>
-              <div>
+              <div className="content">
                 <AllArtworks />
               </div>
             </div>

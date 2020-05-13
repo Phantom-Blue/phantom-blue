@@ -2,16 +2,12 @@
   width: 100vw;
   height: 100vh;
 }
-
 .artwork-list-outer-container .see-all-artworks-link-container {
-  background-color: white;
-  padding: 20px;
   width: 100vw;
-  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.95;
+  padding: 40px;
 }
 
 #link-to-all-artworks {
@@ -20,20 +16,24 @@
 }
 
 /* MODAL STYLE*/
-.modal > .content {
-  width: 100vw;
-  padding: 10px 5px;
-  overflow: hidden;
-  height: 500px;
-}
-
-.modal > .actions {
+.modal {
+  position: absolute;
   width: 100%;
-  padding: 10px 5px;
-  margin: auto;
-  text-align: center;
+  max-height: 600px;
+  right: calc(50% - 50%);
+  top: calc(50% - (max-height / 2));
+  margin: -305px 0 0 -300px;
+  border: solid 2px #cccccc;
+  background-color: #ffffff;
+  overflow-y: scroll;
+  z-index: 10;
 }
-
+.modal > .content {
+  /* width: 100%; */
+  /* padding: 10px 5px; */
+  /* overflow: hidden; */
+  /* height: 500px; */
+}
 .modal > .close {
   cursor: pointer;
   position: absolute;
