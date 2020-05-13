@@ -6,11 +6,11 @@ const TaggedArtwork = require('./TaggedArtwork')
 
 // ASSOCIATIONS
 
-Artwork.belongsTo(User)
-User.hasMany(Artwork)
-
 Location.hasMany(Artwork)
 Artwork.belongsTo(Location)
+
+Artwork.belongsTo(User)
+User.hasMany(Artwork)
 
 Artwork.belongsToMany(Tag, {through: TaggedArtwork})
 Tag.belongsToMany(Artwork, {through: TaggedArtwork})

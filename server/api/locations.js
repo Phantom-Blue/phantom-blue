@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Artwork, Location, Tag} = require('../db/models')
+const {Artwork, Location, Tag, TaggedArtwork} = require('../db/models')
 
 router.get('/:lat', async (req, res, next) => {
   const {long} = req.query
@@ -15,11 +15,10 @@ router.get('/:lat', async (req, res, next) => {
 
     const artworksToReturn = await Artwork.findAll({
       where: {
-        locationId: location.id
+        LocationId: location.id
       },
       include: Tag
     })
-    console.log('RETRIEVED SUCCESSFULLY')
     res.json(artworksToReturn)
   } catch (err) {
     next(err)

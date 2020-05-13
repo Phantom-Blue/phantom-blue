@@ -20,8 +20,6 @@ class Artwork extends React.Component {
 
   componentDidMount() {
     const {latitude, longitude, getArtwork} = this.props
-    // const latLonLocation = {latitude, longitude}
-    // console.log(latLonLocation, ' INSIDE ARTWORK COMPONENT')
     getArtwork(latitude, longitude)
   }
 
@@ -35,54 +33,48 @@ class Artwork extends React.Component {
   render() {
     const {latitude, longitude, artworks} = this.props
     const {options} = this.state
-    // console.log(latitude, ' IN ARTWORK RENDER')
-    console.log(this.props, 'insie artworks render')
-    // const location = latitude.concat(' ', longitude)
-
-    const directionsUrl = generateUrl(latitude, longitude)
+    console.log(this.props)
+    const directionsUrl = generateUrl(artworks[0])
 
     return (
       <div>
-        {/* <div className="artwork">
+        <div className="artwork">
           <div className="image">
-          <Carousel showArrows={true}>
             {// HERE WE INCOORPORATE A CAROUSEL //
-            this.props.artworks ? (
-              artworks.map(artwork => (
-                <div key={artwork.id}>
-                  <img src={artwork.imageUrl} alt={artwork.artist} />
-                  <div className="artworkoptions">
-                    <h1 className="artistname">{artwork.artist}</h1>
-                    <button
-                      type="button"
-                      className="historybutton"
-                      onClick={this.handleOptions}
-                    >
-                      <img
-                        src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
-                        alt="down button"
-                      />
-                    </button>
-                    <div>
-                      {options === true ? (
-                        <ArtworkOptions artwork={artwork} />
-                      ) : (
-                        ''
-                      )}
+            this.props.artworks[0]
+              ? this.props.artworks.map(artwork => (
+                  <div key={artwork.id}>
+                    <img src={artwork.imageUrl} alt={artwork.artist} />
+                    <div className="artworkoptions">
+                      <h1 className="artistname">{artwork.artist}</h1>
+                      <button
+                        type="button"
+                        className="historybutton"
+                        onClick={this.handleOptions}
+                      >
+                        <img
+                          src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
+                          alt="down button"
+                        />
+                      </button>
+                      <div>
+                        {options === true ? (
+                          <ArtworkOptions artwork={artwork} />
+                        ) : (
+                          ''
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            ) : ('Loading...')
-            }
-            </Carousel>
+                ))
+              : 'Loading...'}
             <div>
-              <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
-                <h4>TAKE ME THERE</h4>
-              </a>
+              {/* <a href={directionsUrl} target="_blank" rel="noopener noreferrer"> */}
+              <h4>TAKE ME THERE</h4>
+              {/* </a> */}
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     )
   }

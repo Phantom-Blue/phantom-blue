@@ -35,7 +35,7 @@ export const fetchArtwork = (lat, long) => async dispatch => {
   try {
     // console.log('lat long before api request', lat, long)
     const {data} = await axios.get(`/api/locations/${lat}?long=${long}`)
-    console.log('retrieved artworks sucessfully')
+    // console.log('retrieved artworks sucessfully', data)
     dispatch(gotAnArtwork(data))
   } catch (error) {
     console.error("didn't receive any data")
