@@ -11,7 +11,7 @@ export class AllArtWorks extends Component {
 
   render() {
     const {allArtWorks} = this.props
-    console.log('>>>>>>>>>> allArtWorks: ', allArtWorks)
+    // console.log('>>>>>>>>>> allArtWorks: ', allArtWorks)
     return (
       <div className="all-artworks-container">
         <div>
