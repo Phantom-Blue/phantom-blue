@@ -8,9 +8,7 @@ const {
 } = require('../server/db')
 const seed = async () => {
   try {
-    await db.sync({
-      force: true
-    })
+    await db.sync({force: true})
     const Locations = await Promise.all([
       //1
       Location.create({
