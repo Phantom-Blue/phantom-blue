@@ -1,19 +1,35 @@
-export function generateUrl(loc) {
+export function generateUrl(loc, loc2) {
   let directionsUrl = 'https://www.google.com/maps/dir//'
-  loc.split(' ').map((word, ind) => {
-    if (ind === 0) {
-      directionsUrl = directionsUrl.concat(word)
-    } else if (word !== ',' || word !== '.' || word !== '!' || word !== '?') {
-      if (word.endsWith(',')) {
-        const comaLessWord = word.substring(0, word.length - 1)
-        directionsUrl = directionsUrl.concat('+', comaLessWord)
-      } else {
-        directionsUrl = directionsUrl.concat('+', word)
+
+  function craftUrls(str) {
+    str.split(' ').map((word, ind) => {
+      if (ind === 0) {
+        directionsUrl = directionsUrl.concat(word)
+      } else if (word !== ',' || word !== '.' || word !== '!' || word !== '?') {
+        if (word.endsWith(',')) {
+          const comaLessWord = word.substring(0, word.length - 1)
+          directionsUrl = directionsUrl.concat('+', comaLessWord)
+        } else {
+          directionsUrl = directionsUrl.concat('+', word)
+        }
       }
-    }
-    if (word === ',') {
-      directionsUrl = directionsUrl.concat('%', '2C')
-    }
-  })
+      if (word === ',') {
+        directionsUrl = directionsUrl.concat('%', '2C')
+      }
+    })
+  }
+  if (typeof loc !== 'string') {
+    let num = loc.toString(10)
+    // console.log(num, ' inside utils, first number')
+    craftUrls(num)
+  }
+  if (loc2 && loc !== 'string') {
+    let num2 = loc2.toString(10)
+    // console.log(num2, 'inside utils, second number')
+    craftUrls(num2)
+  } else {
+    craftUrls(loc)
+  }
+  console.log(directionsUrl)
   return directionsUrl
 }

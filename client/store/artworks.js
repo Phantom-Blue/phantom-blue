@@ -15,9 +15,9 @@ const gotAnArtwork = artwork => ({
   artwork
 })
 
-const gotAllArtworks = artworks => ({
+const gotAllArtworks = artwork => ({
   type: GET_ALL_ARTWORKS,
-  artworks
+  artwork
 })
 
 const verifiedArtwork = artwork => ({
@@ -31,10 +31,12 @@ const taggedArt = artwork => ({
 })
 
 // T H U N K S //
-export const fetchArtwork = location => async dispatch => {
+export const fetchArtwork = (lat, long) => async dispatch => {
   try {
-    const res = await axios.get('/api/locations/', location)
-    dispatch(gotAnArtwork(res.data))
+    // console.log('lat long before api request', lat, long)
+    const {data} = await axios.get(`/api/locations/${lat}?long=${long}`)
+    console.log('retrieved artworks sucessfully')
+    dispatch(gotAnArtwork(data))
   } catch (error) {
     console.error("didn't receive any data")
   }
@@ -68,9 +70,7 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
 }
 
 // I N I T I A L   S T A T E //
-const initialState = {
-  all: []
-}
+const initialState = {}
 
 // R E D U C E R //
 export default function artworkReducer(state = initialState, action) {
@@ -78,7 +78,7 @@ export default function artworkReducer(state = initialState, action) {
     case GET_AN_ARTWORK:
       return action.artwork
     case GET_ALL_ARTWORKS:
-      return {...state, all: action.artworks}
+      return action.artwork
     case VERIFY_ARTWORK:
       return action.artwork
     case ADD_TAGS:

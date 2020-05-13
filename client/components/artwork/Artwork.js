@@ -1,7 +1,9 @@
 import React from 'react'
+var ReactDOM = require('react-dom')
+var Carousel = require('react-responsive-carousel').Carousel
 import {connect} from 'react-redux'
-import {fetchArtwork} from '../../store/artwork'
-import Dropdown from 'react-dropdown'
+import {fetchArtwork} from '../../store/artworks'
+// import Dropdown from 'react-dropdown'
 // import { Link } from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {generateUrl} from './utils'
@@ -18,8 +20,9 @@ class Artwork extends React.Component {
 
   componentDidMount() {
     const {latitude, longitude, getArtwork} = this.props
-    const latLonLocation = {latitude, longitude}
-    getArtwork(latLonLocation)
+    // const latLonLocation = {latitude, longitude}
+    // console.log(latLonLocation, ' INSIDE ARTWORK COMPONENT')
+    getArtwork(latitude, longitude)
   }
 
   handleOptions() {
@@ -32,71 +35,65 @@ class Artwork extends React.Component {
   render() {
     const {latitude, longitude, artworks} = this.props
     const {options} = this.state
+    // console.log(latitude, ' IN ARTWORK RENDER')
+    console.log(this.props, 'insie artworks render')
+    // const location = latitude.concat(' ', longitude)
 
-    const location = latitude.concat(' ', longitude)
-
-    const directionsUrl = generateUrl(location)
+    const directionsUrl = generateUrl(latitude, longitude)
 
     return (
       <div>
-        <div className="artwork">
+        {/* <div className="artwork">
           <div className="image">
-            <button type="submit" className="historybutton">
-              <img
-                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowL.png"
-                alt="back button"
-              />
-            </button>
-            <button type="submit" className="historybutton">
-              <img
-                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowR.png"
-                alt="forward button"
-              />
-            </button>
+          <Carousel showArrows={true}>
             {// HERE WE INCOORPORATE A CAROUSEL //
-            artworks.map(artwork => (
-              <div key={artwork.id}>
-                <img src={artwork.imageUrl} alt={artwork.artist} />
-                <div className="artworkoptions">
-                  <h1 className="artistname">{artwork.artist}</h1>
-                  <button
-                    type="button"
-                    className="historybutton"
-                    onClick={this.handleOptions}
-                  >
-                    <img
-                      src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
-                      alt="down button"
-                    />
-                  </button>
-                  <div>
-                    {options === true ? (
-                      <ArtworkOptions artwork={artwork} />
-                    ) : (
-                      ''
-                    )}
+            this.props.artworks ? (
+              artworks.map(artwork => (
+                <div key={artwork.id}>
+                  <img src={artwork.imageUrl} alt={artwork.artist} />
+                  <div className="artworkoptions">
+                    <h1 className="artistname">{artwork.artist}</h1>
+                    <button
+                      type="button"
+                      className="historybutton"
+                      onClick={this.handleOptions}
+                    >
+                      <img
+                        src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
+                        alt="down button"
+                      />
+                    </button>
+                    <div>
+                      {options === true ? (
+                        <ArtworkOptions artwork={artwork} />
+                      ) : (
+                        ''
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : ('Loading...')
+            }
+            </Carousel>
             <div>
               <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
                 <h4>TAKE ME THERE</h4>
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     )
   }
 }
 
 const mapState = state => ({
-  artworks: state.artworks
+  artworks: state.artwork
 })
 
 const mapDispatch = dispatch => ({
-  getArtwork: location => dispatch(fetchArtwork(location))
+  getArtwork: (lat, long) => dispatch(fetchArtwork(lat, long))
 })
 
 export default connect(mapState, mapDispatch)(Artwork)

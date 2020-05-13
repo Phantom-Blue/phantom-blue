@@ -73,7 +73,7 @@ export const MapView = () => {
           </Popup>
         ) : null}
         <div>
-          {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
+          {/* * BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK
           <ArtworksPopup
             trigger={
               <div className="see-all-artworks-link-container">
@@ -91,7 +91,7 @@ export const MapView = () => {
                 <AllArtworks />
               </div>
             )}
-          </ArtworksPopup>
+          </ArtworksPopup> */}
         </div>
       </ReactMapGl>
     </div>

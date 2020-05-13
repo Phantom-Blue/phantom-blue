@@ -1,13 +1,15 @@
 const router = require('express').Router()
-const {Artwork, Location, Tag} = require('../db/models/Index')
+const {Artwork, Location, Tag} = require('../db/models')
 
-router.get('/', async (req, res, next) => {
-  const {latitude, longitude} = req.params
+router.get('/:lat', async (req, res, next) => {
+  const {long} = req.query
+  const {lat} = req.params
+
   try {
     const location = await Location.findOne({
       where: {
-        latitude,
-        longitude
+        latitude: lat,
+        longitude: long
       }
     })
 
@@ -17,7 +19,7 @@ router.get('/', async (req, res, next) => {
       },
       include: Tag
     })
-
+    console.log('RETRIEVED SUCCESSFULLY')
     res.json(artworksToReturn)
   } catch (err) {
     next(err)
