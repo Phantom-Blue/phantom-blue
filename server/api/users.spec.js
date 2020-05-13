@@ -4,9 +4,8 @@ const {expect} = require('chai')
 const request = require('supertest')
 const {db, User} = require('../db')
 const app = require('../index')
-// const User = db.model('User')
 
-describe('User routes', () => {
+xdescribe('User routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
