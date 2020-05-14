@@ -9,6 +9,7 @@ const GET_ALL_ARTWORKS = 'GET_ALL_ARTWORKS'
 const VERIFY_ARTWORK = 'VERIFY_ARTWORK'
 const ADD_TAGS = 'ADD_TAGS'
 const DELETE_ARTWORK = 'DELETE_ARTWORK'
+const POST_ARTWORK = 'POST_ARTWORK'
 
 // A C T I O N S //
 const gotAnArtwork = artworks => ({
@@ -33,6 +34,11 @@ const deletedArtwork = artworks => ({
 
 const taggedArt = artworks => ({
   type: ADD_TAGS,
+  artworks
+})
+
+const postedArtwork = artworks => ({
+  type: POST_ARTWORK,
   artworks
 })
 
@@ -82,6 +88,15 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
   }
 }
 
+export const postArtwork = newArt => async dispatch => {
+  try {
+    const {data} = await axios.post('/api/artworks', newArt)
+    dispatch(postedArtwork(data))
+  } catch (error) {
+    console.error('Unable to post artwork.')
+  }
+}
+
 // I N I T I A L   S T A T E //
 const initialState = []
 
@@ -98,6 +113,8 @@ export default function artworkReducer(state = initialState, action) {
       return action.artworks
     case DELETE_ARTWORK:
       return action.artworks.filter(artwork => artwork.id !== action.id)
+    case POST_ARTWORK:
+      return [...state, action.artworks]
     default:
       return state
   }
