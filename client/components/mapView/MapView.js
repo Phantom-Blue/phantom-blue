@@ -35,7 +35,6 @@ class MapView extends Component {
 
   render() {
     const {theArtworks} = this.props
-
     return (
       <div className="map-container">
         <ReactMapGl

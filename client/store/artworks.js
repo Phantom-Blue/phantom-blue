@@ -46,6 +46,7 @@ const taggedArt = artwork => ({
 export const fetchLocationArtwork = (lat, long) => async dispatch => {
   try {
     const {data} = await axios.get(`/api/locations/${lat}?long=${long}`)
+    console.log('GOT ARTWORK', data)
     dispatch(gotArtByLoc(data))
   } catch (error) {
     console.error("didn't receive any data")
@@ -107,7 +108,7 @@ const initialState = {
 export default function artworkReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ART_BY_LOCATION:
-      return {...state, all: action.artwork}
+      return {...state, selected: action.artwork}
     case GET_ONE_ARTWORK:
       return {...state, selected: action.artwork}
     case GET_ALL_ARTWORKS:

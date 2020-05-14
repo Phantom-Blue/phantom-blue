@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchLocationArtwork} from '../../store/artworks'
 import ArtworkOptions from './ArtworkOptions'
-// import {generateUrl} from './utils'
+import {generateUrl} from './utils'
 import Popup from 'reactjs-popup'
 import './artwork.css'
 import SingleArtwork from './SingleArtwork'
@@ -17,16 +17,15 @@ class Artwork extends React.Component {
   }
 
   componentDidMount() {
+    console.log('IN COMPONENT DID MOUNT', this.props)
     const {latitude, longitude, getArtwork} = this.props
     getArtwork(latitude, longitude)
   }
 
   render() {
-    // const {artworks} = this.props
-    console.log('SINGLE ARTWORK', this.props)
-    // console.log('inside artwork', this.props)
+    const {address} = this.props
     // console.log(options)
-    // const directionsUrl = generateUrl(artworks[0])
+    const directionsUrl = generateUrl(address)
 
     return (
       <div>
@@ -35,11 +34,7 @@ class Artwork extends React.Component {
             {// HERE WE INCOORPORATE A CAROUSEL //
             this.props.artworks[0]
               ? this.props.artworks.map(artwork => (
-                  <Link
-                    to={`/artwork/${artwork.id}`}
-                    // artwork={artwork}
-                    key={artwork.id}
-                  >
+                  <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
                     <img
                       src={artwork.imageUrl}
                       alt={artwork.artist}
@@ -47,18 +42,13 @@ class Artwork extends React.Component {
                     />
                     <h5 className="artistname">{artwork.artist}</h5>
                   </Link>
-
-                  // <SingleArtwork
-                  //   className="carousel-image"
-                  //   key={artwork.id}
-                  //   artwork={artwork} />
                 ))
               : 'Loading...'}
             <div>
               {/* CRAFT NEW UTIL FUNC THAT TRANSFORMS LAT LONG INTO DIRECTIONS LINK */}
-              {/* <a href={directionsUrl} target="_blank" rel="noopener noreferrer"> */}
-              {/* <h4>TAKE ME THERE</h4> */}
-              {/* </a> */}
+              <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
+                <h4>TAKE ME THERE</h4>
+              </a>
             </div>
           </div>
         </div>
@@ -68,7 +58,7 @@ class Artwork extends React.Component {
 }
 
 const mapState = state => ({
-  artworks: state.artwork.all
+  artworks: state.artwork.selected
 })
 
 const mapDispatch = dispatch => ({
