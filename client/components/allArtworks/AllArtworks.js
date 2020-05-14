@@ -11,12 +11,11 @@ export class AllArtWorks extends Component {
 
   render() {
     const {allArtWorks} = this.props
-    // console.log('>>>>>>>>>> allArtWorks: ', allArtWorks)
     return (
       <div className="all-artworks-container">
         <div>
           {allArtWorks
-            ? allArtWorks.all.map(artwork => {
+            ? allArtWorks.map(artwork => {
                 return (
                   <div className="artwork-container" key={artwork.userId}>
                     <img src={artwork.imageUrl} alt="Artwork" />
@@ -31,12 +30,9 @@ export class AllArtWorks extends Component {
   }
 }
 
-const mapState = state => {
-  console.log(state)
-  return {
-    allArtWorks: state.artwork
-  }
-}
+const mapState = state => ({
+  allArtWorks: state.artwork.all
+})
 
 const mapDispatch = dispatch => ({
   getAllArtWorks: () => dispatch(fetchAllArtworks())

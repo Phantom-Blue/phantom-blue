@@ -4,7 +4,6 @@ import {fetchAllArtworks} from '../../store/artworks'
 import ReactMapGl, {Marker, Popup} from 'react-map-gl'
 import ArtworksPopup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
-// import * as data from '../data/data.json'
 import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
@@ -118,11 +117,9 @@ class MapView extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    theArtworks: state.artwork
-  }
-}
+const mapState = state => ({
+  theArtworks: state.artwork.all
+})
 
 const mapDispatch = dispatch => ({
   getArtWorksss: () => dispatch(fetchAllArtworks())
