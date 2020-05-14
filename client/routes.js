@@ -4,6 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import AllArtworks from './components/allArtworks/AllArtworks'
+import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
 import MapView from './components/mapView/MapView'
 /**
@@ -16,6 +17,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
+    console.log(this.props)
 
     return (
       <Switch>
@@ -25,6 +27,7 @@ class Routes extends Component {
         <Route exact path="/" component={MapView} />
         {/**REVISIT PATH NAME CONVENTION */}
         <Route exact path="/map" component={MapView} />
+        <Route exact path="/artwork/:id" component={SingleArtwork} />
         <Route exact path="/all" component={AllArtworks} />
         {isLoggedIn && (
           <Switch>
@@ -42,7 +45,6 @@ class Routes extends Component {
     )
   }
 }
-
 /**
  * CONTAINER
  */

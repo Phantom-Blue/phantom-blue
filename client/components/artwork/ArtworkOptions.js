@@ -1,6 +1,7 @@
 /* eslint-disable no-alert */
 import React from 'react'
 import Popup from 'reactjs-popup'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {
   verifyArtworkInDB,
@@ -10,7 +11,7 @@ import {
 import {me} from '../../store/user'
 
 // importing edit artwork component, for when it's ready to plug in
-// import EditArtwork from './EditArtwork'
+import EditArtwork from './EditArtwork'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class ArtworkOptions extends React.Component {
   }
 
   componentDidMount() {
-    this.props.geMe()
+    this.props.getMe()
   }
 
   handleVerify(e) {
@@ -33,7 +34,7 @@ class ArtworkOptions extends React.Component {
     const {artwork, user, verifyArtwork} = this.props
     if (artwork.userId !== user.id) {
       verifyArtwork(artwork.id)
-      alert('this artwork has been verified')
+      alert('Thanks so much! This artwork has now been verified!')
     }
   }
 
@@ -49,6 +50,7 @@ class ArtworkOptions extends React.Component {
     const {artwork, addTags} = this.props
     this.state.tags.split(',').forEach(tag => {
       let cleanTag = tag.toLowerCase()
+      // console.log(cleanTag)
       addTags(artwork.id, cleanTag)
     })
     this.setState({
@@ -56,33 +58,45 @@ class ArtworkOptions extends React.Component {
     })
   }
 
+  handleDelete(e) {
+    const {removeOneArtwork, artwork} = this.props
+    removeOneArtwork(artwork.id)
+  }
+
   render() {
+    console.log(this.props)
     const {artwork, user} = this.props
     return (
       <div>
         <div className="additionalartworkinfo">
-          <h4>{artwork.artist}</h4>
-          <h5>{artwork.description}</h5>
-          <p>
-            {artwork.taggedArtwork
-              ? artwork.taggedArtwork.tag.map(tag => `${tag}, `)
-              : ''}
-          </p>
+          <div>
+            <p>{artwork.description}</p>
+          </div>
+          <div>
+            <p>T A G S:</p>
+            <p>
+              {artwork.Tags ? artwork.Tags.map(tag => `| ${tag.tag} |`) : ''}
+            </p>
+          </div>
           <button type="submit" />
         </div>
         {// we render the verification option if the user is logged
         user.id ? (
           <div>
             <Popup
-              trigger={<button type="button">Verify</button>}
-              position="right center"
+              trigger={
+                <button type="button">
+                  <h4> V E R I F Y </h4>
+                </button>
+              }
+              position="center right"
             >
               <button type="submit" onClick={e => this.handleVerify(e)}>
-                I've seen this piece IRL
+                I've seen this piece IRL, at this location!
               </button>
             </Popup>
 
-            <Popup
+            {/* <Popup
               trigger={<button type="button">Add Tags</button>}
               position="right center"
             >
@@ -97,18 +111,31 @@ class ArtworkOptions extends React.Component {
                   Tag it!
                 </button>
               </form>
-            </Popup>
+            </Popup> */}
           </div>
         ) : (
           ''
         )}
-        {/* {
-          // we render the edit artwork component if the user is an admin
-          user.isAdmin === true
-          ? (
-            <EditArtwork artworkId={artwork.id} />
-          ) : ('')
-        } */}
+        {// we render the edit artwork component if the user is an admin
+        user.isAdmin === true ? (
+          <Popup
+            trigger={
+              <button type="button">
+                <h4> D E L E T E </h4>
+              </button>
+            }
+            position="center"
+          >
+            <Link to="/map">
+              <button type="submit" onClick={e => this.handleDelete(e)}>
+                Yes, delete this artwork
+              </button>
+            </Link>
+          </Popup>
+        ) : (
+          // <EditArtwork artworkId={artwork.id} />
+          ''
+        )}
       </div>
     )
   }
@@ -116,14 +143,14 @@ class ArtworkOptions extends React.Component {
 
 // setting up connect reducers and thunks to make api calls once we have a db
 const mapState = state => ({
-  artwork: state.artwork,
+  artwork: state.artwork.selected,
   user: state.user
 })
 
 const mapDispatch = dispatch => ({
   verifyArtwork: artworkId => dispatch(verifyArtworkInDB(artworkId)),
   addTags: (artworkId, tags) => dispatch(addTagsToDB(artworkId, tags)),
-  removeArtwork: artworkId => dispatch(removeArtwork(artworkId)),
+  removeOneArtwork: artworkId => dispatch(removeArtwork(artworkId)),
   getMe: () => dispatch(me())
 })
 

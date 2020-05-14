@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Artwork, Location} = require('../db/models')
+const {Artwork, Location, Tag} = require('../db/models')
 
 // GET ALL ARTWORKS
 
@@ -14,13 +14,27 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.put('/artworkId', async (req, res) => {
-  const {id} = req.body
+router.get('/:artworkId', async (req, res, next) => {
+  const {artworkId} = req.params
+  try {
+    // console.log(req.params)
+    const artwork = await Artwork.findByPk(artworkId, {
+      include: Tag
+    })
+    res.json(artwork)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:artworkId', async (req, res) => {
+  const {artworkId} = req.params
   try {
     const artworkToVerify = await Artwork.findOne({
       where: {
-        id
-      }
+        id: artworkId
+      },
+      include: Tag
     })
     const verfiedArtwork = await artworkToVerify.update({
       isVerified: true

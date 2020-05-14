@@ -16,7 +16,7 @@ export class AllArtWorks extends Component {
       <div className="all-artworks-container">
         <div>
           {allArtWorks
-            ? allArtWorks.map(artwork => {
+            ? allArtWorks.all.map(artwork => {
                 return (
                   <div className="artwork-container" key={artwork.userId}>
                     <img src={artwork.imageUrl} alt="Artwork" />
@@ -32,6 +32,7 @@ export class AllArtWorks extends Component {
 }
 
 const mapState = state => {
+  console.log(state)
   return {
     allArtWorks: state.artwork
   }

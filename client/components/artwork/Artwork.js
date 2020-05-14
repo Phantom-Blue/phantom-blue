@@ -1,18 +1,19 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchArtwork} from '../../store/artworks'
+import {fetchLocationArtwork} from '../../store/artworks'
 import ArtworkOptions from './ArtworkOptions'
 // import {generateUrl} from './utils'
 import Popup from 'reactjs-popup'
+import './artwork.css'
+import SingleArtwork from './SingleArtwork'
+import {Link} from 'react-router-dom'
 
 class Artwork extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      options: false,
       directions: ''
     }
-    this.handleOptions = this.handleOptions.bind(this)
   }
 
   componentDidMount() {
@@ -20,50 +21,37 @@ class Artwork extends React.Component {
     getArtwork(latitude, longitude)
   }
 
-  handleOptions() {
-    const {options} = this.state
-    this.setState({
-      options: !options
-    })
-  }
-
   render() {
-    const {latitude, longitude, artworks} = this.props
-    const {options} = this.state
-    console.log('inside artwork', this.props)
+    // const {artworks} = this.props
+    console.log('SINGLE ARTWORK', this.props)
+    // console.log('inside artwork', this.props)
     // console.log(options)
     // const directionsUrl = generateUrl(artworks[0])
 
     return (
       <div>
         <div className="artwork">
-          <div className="image">
+          <div id="carousel">
             {// HERE WE INCOORPORATE A CAROUSEL //
             this.props.artworks[0]
               ? this.props.artworks.map(artwork => (
-                  <div key={artwork.id}>
-                    <img src={artwork.imageUrl} alt={artwork.artist} />
-                    <div className="artworkoptions">
-                      <h1 className="artistname">{artwork.artist}</h1>
-                      {/* <div>
-                            <button
-                              type="button"
-                              className="historybutton"
-                              onClick={this.handleOptions}
-                            >
-                              <img
-                                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
-                                alt="down button"
-                              />
-                            </button>
+                  <Link
+                    to={`/artwork/${artwork.id}`}
+                    // artwork={artwork}
+                    key={artwork.id}
+                  >
+                    <img
+                      src={artwork.imageUrl}
+                      alt={artwork.artist}
+                      width="200"
+                    />
+                    <h5 className="artistname">{artwork.artist}</h5>
+                  </Link>
 
-                          { options === true ? (
-                            <ArtworkOptions artwork={artwork} />
-                          ) : ('')
-                          }
-                      </div> */}
-                    </div>
-                  </div>
+                  // <SingleArtwork
+                  //   className="carousel-image"
+                  //   key={artwork.id}
+                  //   artwork={artwork} />
                 ))
               : 'Loading...'}
             <div>
@@ -80,11 +68,11 @@ class Artwork extends React.Component {
 }
 
 const mapState = state => ({
-  artworks: state.artwork
+  artworks: state.artwork.all
 })
 
 const mapDispatch = dispatch => ({
-  getArtwork: (lat, long) => dispatch(fetchArtwork(lat, long))
+  getArtwork: (lat, long) => dispatch(fetchLocationArtwork(lat, long))
 })
 
 export default connect(mapState, mapDispatch)(Artwork)
