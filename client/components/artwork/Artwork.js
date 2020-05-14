@@ -17,8 +17,9 @@ class Artwork extends React.Component {
   }
 
   componentDidMount() {
+    console.log('IN COMPONENT DID MOUNT', this.props)
     const {latitude, longitude, getArtwork} = this.props
-    getArtwork(latitude, longitude)
+    // getArtwork(latitude, longitude)
   }
 
   render() {
@@ -35,11 +36,7 @@ class Artwork extends React.Component {
             {// HERE WE INCOORPORATE A CAROUSEL //
             this.props.artworks[0]
               ? this.props.artworks.map(artwork => (
-                  <Link
-                    to={`/artwork/${artwork.id}`}
-                    // artwork={artwork}
-                    key={artwork.id}
-                  >
+                  <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
                     <img
                       src={artwork.imageUrl}
                       alt={artwork.artist}
