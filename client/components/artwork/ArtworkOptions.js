@@ -64,8 +64,8 @@ class ArtworkOptions extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const {artwork, user} = this.props
+    console.log(user.id, artwork.UserId, artwork)
     return (
       <div>
         <div className="additionalartworkinfo">
@@ -113,6 +113,24 @@ class ArtworkOptions extends React.Component {
               </form>
             </Popup> */}
           </div>
+        ) : (
+          ''
+        )}
+        {user.id === artwork.UserId ? (
+          <Popup
+            trigger={
+              <button type="button">
+                <h4> D E L E T E </h4>
+              </button>
+            }
+            position="center"
+          >
+            <Link to="/map">
+              <button type="submit" onClick={e => this.handleDelete(e)}>
+                Yes, delete this artwork
+              </button>
+            </Link>
+          </Popup>
         ) : (
           ''
         )}

@@ -13,7 +13,7 @@ class SingleArtwork extends React.Component {
   }
 
   render() {
-    console.log('SINGLE ARTPROPS', this.props)
+    // console.log('SINGLE ARTPROPS', this.props)
     const {artwork} = this.props
     return (
       <div>
