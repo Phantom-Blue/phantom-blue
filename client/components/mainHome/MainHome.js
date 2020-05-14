@@ -15,22 +15,27 @@ class MainHome extends React.Component {
   render() {
     const {artworks} = this.props
     console.log(this.props.artworks[0], 'INSIDE MAIN HOME RENDERRRRRRRRR')
-    let directionsUrl
     return (
       <div>
         {this.props.artworks[0] ? (
           this.props.artworks.map(artwork => (
             <div key={artwork.id}>
-              <div>{console.log(artwork.id)}</div>
-              <h1> IT LOADS </h1>
-              <img src={artwork.imageUrl[0]} />
+              <img src={artwork.imageUrl[0]} width="300" />
               <Link to={`/artwork/${this.props.match.params.id}`}>
                 <button type="button">
-                  <p>{artwork.description}</p>
+                  <div>
+                    <h4>{artwork.artist}</h4>
+                  </div>
+                  <div>
+                    <p>{artwork.description}</p>
+                  </div>
                 </button>
               </Link>
-              {(directionsUrl = generateUrl(artwork.Location.address))}
-              <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
+              <a
+                href={generateUrl(artwork.Location.address)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <h4>TAKE ME THERE</h4>
               </a>
             </div>
