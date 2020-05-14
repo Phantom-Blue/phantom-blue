@@ -1,107 +1,68 @@
 import React from 'react'
-// import { connect } from 'react-redux';
-// import { fetchArtwork } from '../../store/artwork';
-// import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {fetchLocationArtwork} from '../../store/artworks'
 import ArtworkOptions from './ArtworkOptions'
 import {generateUrl} from './utils'
+import Popup from 'reactjs-popup'
+import './artwork.css'
+import SingleArtwork from './SingleArtwork'
+import {Link} from 'react-router-dom'
 
-const artwork = {
-  userId: 1,
-  artist: 'Dondi',
-  imageUrl:
-    'https://d2jv9003bew7ag.cloudfront.net/uploads/Dondi-White-Children-of-the-Grave-part-Three.-Photo-Martha-Cooper-865x577.jpg',
-  description: 'Tagged Dondi',
-  location: '2441 Boston Rd, The Bronx, NY 10467',
-  locationId: 1,
-  isVerified: false
-}
-
-export default class Artwork extends React.Component {
+class Artwork extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      options: false,
       directions: ''
     }
-    this.handleOptions = this.handleOptions.bind(this)
   }
 
   componentDidMount() {
-    //   const { latitude, longitude } = this.props;
-    //   const latLonLocation = { latitude, longitude };
-    //   getArtwork(latLonLocation);
-    const directionsUrl = generateUrl(artwork.location)
-    console.log(directionsUrl)
-    this.setState({
-      directions: directionsUrl
-    })
-  }
-
-  handleOptions() {
-    const {options} = this.state
-
-    this.setState({
-      options: !options
-    })
+    console.log('IN COMPONENT DID MOUNT', this.props)
+    const {latitude, longitude, getArtwork} = this.props
+    getArtwork(latitude, longitude)
   }
 
   render() {
-    // const { artwork } = this.props;
-    const {options, directions} = this.state
+    const {address} = this.props
+    // console.log(options)
+    const directionsUrl = generateUrl(address)
+
     return (
       <div>
         <div className="artwork">
-          <div className="image">
-            <button type="submit" className="historybutton">
-              <img
-                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowL.png"
-                alt="back button"
-              />
-            </button>
-            <button type="submit" className="historybutton">
-              <img
-                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowR.png"
-                alt="forward button"
-              />
-            </button>
-            <img src={artwork.imageUrl} alt={artwork.artist} />
+          <div id="carousel">
+            {// HERE WE INCOORPORATE A CAROUSEL //
+            this.props.artworks[0]
+              ? this.props.artworks.map(artwork => (
+                  <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
+                    <img
+                      src={artwork.imageUrl}
+                      alt={artwork.artist}
+                      width="200"
+                    />
+                    <h5 className="artistname">{artwork.artist}</h5>
+                  </Link>
+                ))
+              : 'Loading...'}
+            <div>
+              {/* CRAFT NEW UTIL FUNC THAT TRANSFORMS LAT LONG INTO DIRECTIONS LINK */}
+              <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
+                <h4>TAKE ME THERE</h4>
+              </a>
+            </div>
           </div>
-          <div className="artworkoptions">
-            <h1 className="artistname">{artwork.artist}</h1>
-            <button
-              type="button"
-              className="historybutton"
-              onClick={this.handleOptions}
-            >
-              <img
-                src="http://www.gisellezatonyl.com/WRONGSmall/Assets/Images/arrowD.png"
-                alt="down button"
-              />
-            </button>
-          </div>
-          <div>
-            {options === true ? <ArtworkOptions artwork={artwork} /> : ''}
-          </div>
-        </div>
-        <div>
-          <a href={directions} target="_blank" rel="noopener noreferrer">
-            <h4>TAKE ME THERE</h4>
-          </a>
         </div>
       </div>
     )
   }
 }
 
-// const mapState = () => (
-//   {
-//     artwork: state.artwork,
-//   });
+const mapState = state => ({
+  artworks: state.artwork.selected
+})
 
-// const mapDispatch = dispatch => (
-//   {
-//     getArtwork: location => dispatch(fetchArtwork(location)),
-//   }
-// );
+const mapDispatch = dispatch => ({
+  getArtwork: (lat, long) => dispatch(fetchLocationArtwork(lat, long))
+})
 
-// export default connect(mapState, mapDispatch)(Artwork);
+export default connect(mapState, mapDispatch)(Artwork)

@@ -1,83 +1,109 @@
-import React, {useState} from 'react'
-import ReactMapGl, {Marker, Popup} from 'react-map-gl'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {fetchAllArtworks} from '../../store/artworks'
+import ReactMapGl, {
+  Marker,
+  Popup,
+  NavigationControl,
+  FullscreenControl
+} from 'react-map-gl'
 import ArtworksPopup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
-import * as data from '../data/data.json'
 import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
-const markerBtn = {
-  background: 'none',
-  border: 'none'
-}
 
-export const MapView = () => {
-  const [viewport, setViewport] = useState({
-    latitude: 40.7736,
-    longitude: -73.9566,
-    width: '100vw',
-    height: '100vh',
-    zoom: 13
-  })
+class MapView extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      viewport: {
+        latitude: 40.7736,
+        longitude: -73.9566,
+        width: '100vw',
+        height: '100vh',
+        zoom: 12
+      },
+      selectedPin: null
+    }
+  }
 
-  const [selectedState, setSelectedState] = useState(null)
+  componentDidMount() {
+    this.props.getArtWorksss()
+  }
 
-  return (
-    <div className="map-container">
-      <ReactMapGl
-        {...viewport}
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
-        mapStyle="mapbox://styles/gisellez/ck9yorghb2d811ipjrtgocomz"
-        onViewportChange={newport => {
-          setViewport(newport)
-        }}
-      >
-        {data.newYorkCities.map(borough => (
-          <Marker
-            key={borough.id}
-            latitude={borough.latitude}
-            longitude={borough.longitude}
-          >
-            <button
-              type="button"
-              style={markerBtn}
-              onClick={ev => {
-                ev.preventDefault()
-                setSelectedState(borough)
+  render() {
+    const {theArtworks} = this.props
+    return (
+      <div className="map-container">
+        <ReactMapGl
+          {...this.state.viewport}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
+          mapStyle="mapbox://styles/gisellez/ck9yorghb2d811ipjrtgocomz"
+          onViewportChange={newport => {
+            this.setState({viewport: newport})
+          }}
+        >
+          {theArtworks
+            ? theArtworks.map(artwork => (
+                <Marker
+                  key={artwork.id}
+                  latitude={Number(artwork.Location.latitude)}
+                  longitude={Number(artwork.Location.longitude)}
+                >
+                  <button
+                    type="button"
+                    id="marker-pin"
+                    onClick={ev => {
+                      ev.preventDefault()
+                      this.setState({selectedPin: artwork.Location})
+                    }}
+                  >
+                    <img
+                      width="50px"
+                      height="50px"
+                      src="/location-pin.png"
+                      alt="city"
+                    />
+                  </button>
+                </Marker>
+              ))
+            : ''}
+          {this.state.selectedPin ? (
+            <Popup
+              className="popup-container"
+              latitude={Number(this.state.selectedPin.latitude)}
+              longitude={Number(this.state.selectedPin.longitude)}
+              closeOnClick={false}
+              onClose={() => {
+                this.setState({selectedPin: null})
               }}
             >
-              <img
-                width="50px"
-                height="50px"
-                src="/location-pin.png"
-                alt="city"
+              <Artwork
+                latitude={Number(this.state.selectedPin.latitude)}
+                longitude={Number(this.state.selectedPin.longitude)}
+                address={this.state.selectedPin.address}
               />
-            </button>
-          </Marker>
-        ))}
-        {selectedState ? (
-          <Popup
-            className="popup-container"
-            latitude={selectedState.latitude}
-            longitude={selectedState.longitude}
-            closeOnClick={false}
-            onClose={() => {
-              setSelectedState(null)
-            }}
-          >
-            <Artwork
-              latitude={selectedState.latitude}
-              longitude={selectedState.longitude}
-            />
-          </Popup>
-        ) : null}
-        <div>
-          {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
+            </Popup>
+          ) : (
+            ''
+          )}
+          <div id="navegation-control">
+            <NavigationControl />
+          </div>
+          <div id="fullscreen-control">
+            <FullscreenControl />
+          </div>
+        </ReactMapGl>
+        {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
+        <div className="artwork-list-outer-container">
           <ArtworksPopup
             trigger={
               <div className="see-all-artworks-link-container">
-                <Link id="link-to-all-artworks">View as list</Link>
+                <Link to="/" id="link-to-all-artworks">
+                  View as list
+                </Link>
               </div>
             }
             modal
@@ -88,14 +114,24 @@ export const MapView = () => {
                 <a className="close" onClick={close}>
                   &times;
                 </a>
-                <AllArtworks />
+                <div className="content">
+                  <AllArtworks />
+                </div>
               </div>
             )}
           </ArtworksPopup>
         </div>
-      </ReactMapGl>
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
-export default MapView
+const mapState = state => ({
+  theArtworks: state.artwork.all
+})
+
+const mapDispatch = dispatch => ({
+  getArtWorksss: () => dispatch(fetchAllArtworks())
+})
+
+export default connect(mapState, mapDispatch)(MapView)

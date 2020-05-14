@@ -3,9 +3,11 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
+import AllArtworks from './components/allArtworks/AllArtworks'
+import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
-import {MapView} from './components/mapView/MapView'
 import {UpdateArtworkForm} from './components/updateArtworkForm/UpdateArtworkForm'
+import MapView from './components/mapView/MapView'
 /**
  * COMPONENT
  */
@@ -16,6 +18,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
+    console.log(this.props)
 
     return (
       <Switch>
@@ -27,6 +30,8 @@ class Routes extends Component {
         <Route exact path="/map" component={MapView} />
         {/** FOR TESTING PURPOSES UPDATE ARTWORK ROUTE NEED TO BE MOVE TO LOGGING USERS ONLY */}
         <Route exact path="/updateartwork" component={UpdateArtworkForm} />
+        <Route exact path="/artwork/:id" component={SingleArtwork} />
+        <Route exact path="/all" component={AllArtworks} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -43,7 +48,6 @@ class Routes extends Component {
     )
   }
 }
-
 /**
  * CONTAINER
  */
