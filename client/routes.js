@@ -8,6 +8,7 @@ import AllArtworks from './components/allArtworks/AllArtworks'
 import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
 import MapView from './components/mapView/MapView'
+import LocationArtwork from './components/artwork/LocationArtwork'
 /**
  * COMPONENT
  */
@@ -29,6 +30,7 @@ class Routes extends Component {
         {/**REVISIT PATH NAME CONVENTION */}
         <Route exact path="/map" component={MapView} />
         <Route exact path="/artwork/:id" component={SingleArtwork} />
+        <Route exact path="/location/:id" component={LocationArtwork} />
         <Route exact path="/all" component={AllArtworks} />
         {isLoggedIn && (
           <Switch>

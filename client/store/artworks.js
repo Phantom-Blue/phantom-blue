@@ -6,6 +6,7 @@ import axios from 'axios'
 
 // A C T I O N   C R E A T O R S //
 const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
+const GET_ART_BY_LOCATIONID = 'GET_ART_BY_LOCATIONID'
 const GET_ONE_ARTWORK = 'GET_ONE_ARTWORK'
 const GET_ALL_ARTWORKS = 'GET_ALL_ARTWORKS'
 const GET_ALL_VERIFIED = 'GET_ALL_VERIFIED'
@@ -17,6 +18,11 @@ const POST_ARTWORK = 'POST_ARTWORK'
 // A C T I O N S //
 const gotArtByLoc = artwork => ({
   type: GET_ART_BY_LOCATION,
+  artwork
+})
+
+const gotArtByLocId = artwork => ({
+  type: GET_ART_BY_LOCATIONID,
   artwork
 })
 
@@ -61,6 +67,16 @@ export const fetchLocationArtwork = (lat, long) => async dispatch => {
     const {data} = await axios.get(`/api/locations/${lat}?long=${long}`)
     console.log('GOT ARTWORK', data)
     dispatch(gotArtByLoc(data))
+  } catch (error) {
+    console.error("didn't receive any data")
+  }
+}
+
+export const fetchArtWorkByLocationId = LocationId => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/artworks/artbylocation/${LocationId}`)
+    console.log('GOT ARTWORK', data)
+    dispatch(gotArtByLocId(data))
   } catch (error) {
     console.error("didn't receive any data")
   }
@@ -140,6 +156,8 @@ const initialState = {
 export default function artworkReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ART_BY_LOCATION:
+      return {...state, selected: action.artwork}
+    case GET_ART_BY_LOCATIONID:
       return {...state, selected: action.artwork}
     case GET_ONE_ARTWORK:
       return {...state, selected: action.artwork}
