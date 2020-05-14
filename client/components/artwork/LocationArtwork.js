@@ -1,11 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchArtWorkByLocationId} from '../../store/artworks'
-import ArtworkOptions from './ArtworkOptions'
-// import {generateUrl} from './utils'
+import {generateUrl} from './utils'
 import Popup from 'reactjs-popup'
 import './artwork.css'
-import SingleArtwork from './SingleArtwork'
 import {Link} from 'react-router-dom'
 import {
   CarouselProvider,
@@ -24,36 +22,49 @@ class LocationArtwork extends React.Component {
   }
 
   render() {
-    // const {address} = this.props
-    // const directionsUrl = generateUrl(address)
-    console.log('INSIDE OF LOCATION ARTWORKS', this.props)
-
     return (
       <div>
         {// HERE WE INCOORPORATE A CAROUSEL //
         this.props.artworks[0] ? (
-          <CarouselProvider
-            naturalSlideWidth={100}
-            naturalSlideHeight={125}
-            totalSlides={this.props.artworks.length}
-          >
-            <Slider className="carousel">
-              {this.props.artworks.map((artwork, i) => (
-                <Slide index={i} key={artwork.id} className="carousel-image">
-                  <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
-                    <img
-                      src={artwork.imageUrl}
-                      alt={artwork.artist}
-                      // width="200"
-                    />
-                    <h5 className="artistname">{artwork.artist}</h5>
-                  </Link>
-                </Slide>
-              ))}
-            </Slider>
-            <ButtonBack>Back</ButtonBack>
-            <ButtonNext>Next</ButtonNext>
-          </CarouselProvider>
+          <div>
+            <CarouselProvider
+              naturalSlideWidth={100}
+              naturalSlideHeight={125}
+              totalSlides={this.props.artworks.length}
+            >
+              <div>
+                <Slider className="carousel">
+                  {this.props.artworks.map((artwork, i) => (
+                    <Slide
+                      index={i}
+                      key={artwork.id}
+                      className="carousel-image"
+                    >
+                      <center>
+                        <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
+                          <img src={artwork.imageUrl} alt={artwork.artist} />
+                          <h5 className="artistname">{artwork.artist}</h5>
+                        </Link>
+                        <div>
+                          <a
+                            href={generateUrl(
+                              this.props.artworks[0].Location.address
+                            )}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <h4>TAKE ME THERE</h4>
+                          </a>
+                          <ButtonBack>Back</ButtonBack>
+                          <ButtonNext>Next</ButtonNext>
+                        </div>
+                      </center>
+                    </Slide>
+                  ))}
+                </Slider>
+              </div>
+            </CarouselProvider>
+          </div>
         ) : (
           <div>
             <center>
@@ -65,11 +76,6 @@ class LocationArtwork extends React.Component {
             </center>
           </div>
         )}
-        {/* <div>
-              <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
-                <h4>TAKE ME THERE</h4>
-              </a>
-            </div> */}
       </div>
     )
   }
