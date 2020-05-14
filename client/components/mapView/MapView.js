@@ -9,19 +9,10 @@ import ReactMapGl, {
 } from 'react-map-gl'
 import ArtworksPopup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
-// import Artwork from '../artwork/Artwork'
+import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
-
-const markerBtn = {
-  background: 'none',
-  border: 'none'
-}
-const navegationStyle = {
-  position: 'absolute',
-  margin: '10px'
-}
 
 class MapView extends Component {
   constructor(props) {
@@ -64,10 +55,10 @@ class MapView extends Component {
                 >
                   <button
                     type="button"
-                    style={markerBtn}
+                    id="marker-pin"
                     onClick={ev => {
                       ev.preventDefault()
-                      this.setState({selectedPin: artwork})
+                      this.setState({selectedPin: artwork.Location})
                     }}
                   >
                     <img
@@ -83,29 +74,26 @@ class MapView extends Component {
           {this.state.selectedPin ? (
             <Popup
               className="popup-container"
-              latitude={Number(this.state.selectedPin.Location.latitude)}
-              longitude={Number(this.state.selectedPin.Location.longitude)}
+              latitude={Number(this.state.selectedPin.latitude)}
+              longitude={Number(this.state.selectedPin.longitude)}
               closeOnClick={false}
               onClose={() => {
                 this.setState({selectedPin: null})
               }}
             >
-              <div>
-                <h1>{this.state.selectedPin.artist}</h1>
-                {/*<Artwork
-                  latitude={Number(this.state.selectedPin.Location.latitude)}
-                  longitude={Number(this.state.selectedPin.Location.longitude)}
-                  address={this.state.selectedPin.Location.address}
-                />*/}
-              </div>
+              <Artwork
+                latitude={Number(this.state.selectedPin.latitude)}
+                longitude={Number(this.state.selectedPin.longitude)}
+                address={this.state.selectedPin.address}
+              />
             </Popup>
           ) : (
             ''
           )}
-          <div style={navegationStyle}>
+          <div id="navegation-control">
             <NavigationControl />
           </div>
-          <div style={navegationStyle}>
+          <div id="fullscreen-control">
             <FullscreenControl />
           </div>
         </ReactMapGl>

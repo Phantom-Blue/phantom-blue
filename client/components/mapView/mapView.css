@@ -2,6 +2,20 @@
   width: 100vw;
   height: 100vh;
 }
+#marker-pin {
+  background: none;
+  border: none;
+}
+
+#navegation-control {
+  position: absolute;
+  margin: 20px;
+}
+#fullscreen-control {
+  position: absolute;
+  margin: 20px;
+  top: 100px;
+}
 .artwork-list-outer-container .see-all-artworks-link-container {
   width: 100vw;
   display: flex;
