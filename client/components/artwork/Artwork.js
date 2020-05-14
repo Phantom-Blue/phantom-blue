@@ -9,13 +9,6 @@ import SingleArtwork from './SingleArtwork'
 import {Link} from 'react-router-dom'
 
 class Artwork extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      directions: ''
-    }
-  }
-
   componentDidMount() {
     console.log('IN COMPONENT DID MOUNT', this.props)
     const {latitude, longitude, getArtwork} = this.props
@@ -24,7 +17,6 @@ class Artwork extends React.Component {
 
   render() {
     const {address} = this.props
-    // console.log(options)
     const directionsUrl = generateUrl(address)
 
     return (
@@ -32,18 +24,26 @@ class Artwork extends React.Component {
         <div className="artwork">
           <div id="carousel">
             {// HERE WE INCOORPORATE A CAROUSEL //
-            this.props.artworks[0]
-              ? this.props.artworks.map(artwork => (
-                  <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
-                    <img
-                      src={artwork.imageUrl}
-                      alt={artwork.artist}
-                      width="200"
-                    />
-                    <h5 className="artistname">{artwork.artist}</h5>
-                  </Link>
-                ))
-              : 'Loading...'}
+            this.props.artworks[0] ? (
+              this.props.artworks.map(artwork => (
+                <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
+                  <img
+                    src={artwork.imageUrl}
+                    alt={artwork.artist}
+                    width="200"
+                  />
+                  <h5 className="artistname">{artwork.artist}</h5>
+                </Link>
+              ))
+            ) : (
+              <center>
+                <h2>L O A D I N G . . .</h2>
+                <img
+                  src="http://gisellezatonyl.com/images/blobbers-03-newalgos-12-23-13-02-lessframes-600pxw.gif"
+                  width="300"
+                />
+              </center>
+            )}
             <div>
               {/* CRAFT NEW UTIL FUNC THAT TRANSFORMS LAT LONG INTO DIRECTIONS LINK */}
               <a href={directionsUrl} target="_blank" rel="noopener noreferrer">

@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable semi */
 /* eslint-disable no-console */
 
@@ -7,6 +8,7 @@ import axios from 'axios'
 const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
 const GET_ONE_ARTWORK = 'GET_ONE_ARTWORK'
 const GET_ALL_ARTWORKS = 'GET_ALL_ARTWORKS'
+const GET_ALL_VERIFIED = 'GET_ALL_VERIFIED'
 const VERIFY_ARTWORK = 'VERIFY_ARTWORK'
 const ADD_TAGS = 'ADD_TAGS'
 const DELETE_ARTWORK = 'DELETE_ARTWORK'
@@ -30,6 +32,11 @@ const gotAllArtworks = artwork => ({
 
 const verifiedArtwork = artwork => ({
   type: VERIFY_ARTWORK,
+  artwork
+})
+
+const gotAllVerified = artwork => ({
+  type: GET_ALL_VERIFIED,
   artwork
 })
 
@@ -86,6 +93,15 @@ export const verifyArtworkInDB = artworkId => async dispatch => {
   }
 }
 
+export const fetchAllVerified = () => async dispatch => {
+  try {
+    const {data} = await axios.get('/api/artworks/verified')
+    dispatch(gotAllVerified(data))
+  } catch (error) {
+    console.error(error, 'unable to fetch verified artworks')
+  }
+}
+
 export const removeArtwork = artworkId => async dispatch => {
   try {
     const {data} = await axios.delete(`/api/artworks/${artworkId}`)
@@ -116,7 +132,8 @@ export const postArtwork = newArt => async dispatch => {
 // I N I T I A L   S T A T E //
 const initialState = {
   all: [],
-  selected: {}
+  selected: {},
+  verified: []
 }
 
 // R E D U C E R //
@@ -130,6 +147,8 @@ export default function artworkReducer(state = initialState, action) {
       return {...state, all: action.artwork}
     case VERIFY_ARTWORK:
       return {...state, selected: action.artwork}
+    case GET_ALL_VERIFIED:
+      return {...state, verified: action.artwork}
     case ADD_TAGS:
       return {...state, selected: action.artwork}
     case DELETE_ARTWORK:

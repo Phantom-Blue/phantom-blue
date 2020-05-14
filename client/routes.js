@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
+import MainHome from './components/mainHome/MainHome'
 import AllArtworks from './components/allArtworks/AllArtworks'
 import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
@@ -32,7 +33,7 @@ class Routes extends Component {
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/home" component={MainHome} />
             {/** TODO: replace component on route below with upload Art component */}
             <Route path="/upload" componet={UserHome} />
             {/** TODO: replace component on route below with user account settings component */}

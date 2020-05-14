@@ -14,6 +14,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/verified', async (req, res, next) => {
+  try {
+    const verifiedArtworks = await Artwork.findAll({
+      where: {
+        isVerified: true
+      },
+      include: Location
+    })
+    res.json(verifiedArtworks)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:artworkId', async (req, res, next) => {
   const {artworkId} = req.params
   try {
