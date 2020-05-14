@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import AllArtworks from './components/allArtworks/AllArtworks'
 import {me} from './store'
-import {MapView} from './components/mapView/MapView'
+import MapView from './components/mapView/MapView'
 /**
  * COMPONENT
  */

@@ -15,7 +15,7 @@ const markerBtn = {
   border: 'none'
 }
 
-export class MapView extends Component {
+class MapView extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -31,10 +31,11 @@ export class MapView extends Component {
   }
 
   componentDidMount() {
-    this.props.getAllArtWorks()
+    this.props.getArtWorksss()
   }
 
   render() {
+    console.log('=========>', this.props)
     const {allArtWorks} = this.props || []
     return (
       <div className="map-container">
@@ -50,8 +51,8 @@ export class MapView extends Component {
             ? allArtWorks.map(artwork => (
                 <Marker
                   key={artwork.id}
-                  latitude={artwork.location.latitude}
-                  longitude={artwork.location.longitude}
+                  latitude={artwork.Location.latitude}
+                  longitude={artwork.Location.longitude}
                 >
                   <button
                     type="button"
@@ -124,7 +125,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  getAllArtWorks: () => dispatch(fetchAllArtworks())
+  getArtWorksss: () => dispatch(fetchAllArtworks())
 })
 
 export default connect(mapState, mapDispatch)(MapView)
