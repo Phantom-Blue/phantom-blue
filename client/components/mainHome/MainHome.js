@@ -30,20 +30,20 @@ class MainHome extends React.Component {
             naturalSlideHeight={125}
             totalSlides={this.props.artworks.length}
           >
-            <Slider>
+            <Slider className="carousel">
               {this.props.artworks.map((artwork, i) => (
                 <Slide index={i} key={artwork.id} className="carousel-image">
-                  <img src={artwork.imageUrl[0]} width="300" />
+                  <img src={artwork.imageUrl[0]} />
                   <Link to={`/artwork/${artwork.id}`}>
                     <button type="button">
                       <div>
-                        <h4>{artwork.artist}</h4>
-                      </div>
-                      <div>
-                        <p>{artwork.description}</p>
+                        <h2>{artwork.artist}</h2>
                       </div>
                     </button>
                   </Link>
+                  <div>
+                    <p>{artwork.description}</p>
+                  </div>
                   <a
                     href={generateUrl(artwork.Location.address)}
                     target="_blank"
