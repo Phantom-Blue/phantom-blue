@@ -15,7 +15,7 @@ const markerBtn = {
   border: 'none'
 }
 
-export class MapView extends Component {
+class MapView extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -35,7 +35,8 @@ export class MapView extends Component {
   }
 
   render() {
-    const {allArtWorks} = this.props || []
+    const {theArtworks} = this.props
+    // console.log('All Art', theArtworks)
     return (
       <div className="map-container">
         <ReactMapGl
@@ -46,12 +47,12 @@ export class MapView extends Component {
             this.setState(newport)
           }}
         >
-          {allArtWorks
-            ? allArtWorks.map(artwork => (
+          {theArtworks
+            ? theArtworks.map(artwork => (
                 <Marker
                   key={artwork.id}
-                  latitude={artwork.location.latitude}
-                  longitude={artwork.location.longitude}
+                  latitude={Number(artwork.Location.latitude)}
+                  longitude={Number(artwork.Location.longitude)}
                 >
                   <button
                     type="button"
@@ -82,8 +83,8 @@ export class MapView extends Component {
               }}
             >
               <Artwork
-                latitude={this.state.selectedPin.latitude}
-                longitude={this.state.selectedPin.longitude}
+                latitude={Number(this.state.selectedPin.latitude)}
+                longitude={Number(this.state.selectedPin.longitude)}
               />
             </Popup>
           ) : null}
@@ -119,7 +120,7 @@ export class MapView extends Component {
 
 const mapState = state => {
   return {
-    allArtWorks: state.artwork
+    theArtworks: state.artwork
   }
 }
 
@@ -128,23 +129,3 @@ const mapDispatch = dispatch => ({
 })
 
 export default connect(mapState, mapDispatch)(MapView)
-
-// class Map extends Component {
-//   state = {
-//     viewport: {
-//       width: 400,
-//       height: 400,
-//       latitude: 37.7577,
-//       longitude: -122.4376,
-//       zoom: 8
-//     }
-//   };
-//   render() {
-//     return (
-//       <ReactMapGL
-//         {...this.state.viewport}
-//         onViewportChange={(viewport) => this.setState({viewport})}
-//       />
-//     );
-//   }
-// }
