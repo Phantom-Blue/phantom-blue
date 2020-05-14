@@ -31,7 +31,7 @@ class MapView extends Component {
   }
 
   componentDidMount() {
-    this.props.getAllArtWorks()
+    this.props.getArtWorksss()
   }
 
   render() {
@@ -125,7 +125,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => ({
-  getAllArtWorks: () => dispatch(fetchAllArtworks())
+  getArtWorksss: () => dispatch(fetchAllArtworks())
 })
 
 export default connect(mapState, mapDispatch)(MapView)
