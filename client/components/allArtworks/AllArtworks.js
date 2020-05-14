@@ -16,7 +16,7 @@ export class AllArtWorks extends Component {
       <div className="all-artworks-container">
         <div>
           {allArtWorks
-            ? allArtWorks.all.map(artwork => {
+            ? allArtWorks.map(artwork => {
                 return (
                   <div className="artwork-container" key={artwork.userId}>
                     <Link to={`/artwork/${artwork.id}`}>
@@ -33,12 +33,9 @@ export class AllArtWorks extends Component {
   }
 }
 
-const mapState = state => {
-  console.log(state)
-  return {
-    allArtWorks: state.artwork
-  }
-}
+const mapState = state => ({
+  allArtWorks: state.artwork.all
+})
 
 const mapDispatch = dispatch => ({
   getAllArtWorks: () => dispatch(fetchAllArtworks())
