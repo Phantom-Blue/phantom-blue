@@ -1,4 +1,4 @@
-#carousel {
+/* #carousel {
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -12,21 +12,10 @@
   z-index: 1;
 }
 
-#carousel .carousel-image {
+#carousel .carousel-image img {
   position: absolute;
   display: block;
   margin: auto;
-  min-width: 100%;
-  height: 100%;
-}
-
-@media (min-width: 600px) {
-  #staff .staff-profile {
-    flex: 0 0 50%;
-  }
-}
-@media (min-width: 960px) {
-  #staff .staff-profile {
-    flex: 0 0 33%;
-  }
-}
+  min-width: 300px;
+  height: 400px;
+} */

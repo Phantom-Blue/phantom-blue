@@ -6,6 +6,14 @@ import {fetchAllVerified} from '../../store/artworks'
 import {generateUrl} from '../artwork/utils'
 import './mainHome.css'
 import {Link} from 'react-router-dom'
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  ButtonBack,
+  ButtonNext
+} from 'pure-react-carousel'
+import 'pure-react-carousel/dist/react-carousel.es.css'
 
 class MainHome extends React.Component {
   componentDidMount() {
@@ -13,33 +21,42 @@ class MainHome extends React.Component {
   }
 
   render() {
-    const {artworks} = this.props
-    console.log(this.props.artworks[0], 'INSIDE MAIN HOME RENDERRRRRRRRR')
+    console.log(this.props.artworks, 'INSIDE MAIN HOME RENDERRRRRRRRR')
     return (
       <div>
         {this.props.artworks[0] ? (
-          this.props.artworks.map(artwork => (
-            <div key={artwork.id}>
-              <img src={artwork.imageUrl[0]} width="300" />
-              <Link to={`/artwork/${this.props.match.params.id}`}>
-                <button type="button">
-                  <div>
-                    <h4>{artwork.artist}</h4>
-                  </div>
-                  <div>
-                    <p>{artwork.description}</p>
-                  </div>
-                </button>
-              </Link>
-              <a
-                href={generateUrl(artwork.Location.address)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <h4>TAKE ME THERE</h4>
-              </a>
-            </div>
-          ))
+          <CarouselProvider
+            naturalSlideWidth={100}
+            naturalSlideHeight={125}
+            totalSlides={this.props.artworks.length}
+          >
+            <Slider>
+              {this.props.artworks.map((artwork, i) => (
+                <Slide index={i} key={artwork.id} className="carousel-image">
+                  <img src={artwork.imageUrl[0]} width="300" />
+                  <Link to={`/artwork/${artwork.id}`}>
+                    <button type="button">
+                      <div>
+                        <h4>{artwork.artist}</h4>
+                      </div>
+                      <div>
+                        <p>{artwork.description}</p>
+                      </div>
+                    </button>
+                  </Link>
+                  <a
+                    href={generateUrl(artwork.Location.address)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <h4>TAKE ME THERE</h4>
+                  </a>
+                </Slide>
+              ))}
+            </Slider>
+            <ButtonBack>Back</ButtonBack>
+            <ButtonNext>Next</ButtonNext>
+          </CarouselProvider>
         ) : (
           <center>
             <h2>L O A D I N G . . .</h2>
