@@ -43,9 +43,9 @@ const taggedArt = artwork => ({
   artwork
 })
 
-const postedArtwork = artworks => ({
+const postedArtwork = artwork => ({
   type: POST_ARTWORK,
-  artworks
+  artwork
 })
 
 // T H U N K S //
@@ -134,7 +134,7 @@ export default function artworkReducer(state = initialState, action) {
     case DELETE_ARTWORK:
       return action.artworks.filter(artwork => artwork.id !== action.id)
     case POST_ARTWORK:
-      return [...state, action.artworks]
+      return {...state, all: [...state.all, action.artwork]}
     default:
       return state
   }
