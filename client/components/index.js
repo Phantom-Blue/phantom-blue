@@ -6,5 +6,5 @@
 export {default as Navbar} from './navbar/navbar'
 export {default as UserHome} from './user-home'
 export {Login, Signup} from './auth-form'
-export {MapView} from './mapView/MapView'
-export {UpdateArtworkForm} from './updateArtworkForm/UpdateArtworkForm'
+// export {MapView} from './mapView/MapView'
+// export UpdateArtworkForm from './updateArtworkForm/UpdateArtworkForm'

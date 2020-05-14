@@ -97,8 +97,11 @@ export const fetchUpdatedArtwork = (
   artworkInfo
 ) => async dispatch => {
   try {
-    const res = await axios.put(`/api/artworks/${artworkId}`, artworkInfo)
-    dispatch(updatedArtwork(res.data))
+    const {data} = await axios.put(
+      `/api/artworks/${artworkId}/edit`,
+      artworkInfo
+    )
+    dispatch(updatedArtwork(data))
   } catch (err) {
     console.error(err, 'UNABLE TO UPDATE')
   }

@@ -1,86 +1,126 @@
 import React, {Component} from 'react'
-// import {connect} from 'react-redux'
-// import {updateArtwork, fetchSingleArtwork} from '../../store/artworks'
+import {connect} from 'react-redux'
+import {fetchUpdatedArtwork, fetchOneArtwork} from '../../store/artworks'
 
-export class UpdateArtworkForm extends Component {
+class UpdateArtworkForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      // updateArtist: 'replace with curr props',
-      // updateDescription: 'replace with curr props',
-      // updateImageUrl: 'replace with curr props'
+      updateArtist: '',
+      updateImageUrl: [],
+      updateDescription: ''
     }
 
-    // this.handleChange = this.handleChange.bind(this)
-    // this.handleUpdate = this.handleUpdate.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleUpdate = this.handleUpdate.bind(this)
+    this.handleDeleteImage = this.handleDeleteImage.bind(this)
+  }
+  async componentDidMount() {
+    await this.props.getSingleArtwork(this.props.match.params.id)
+    this.setState({
+      updateArtist: this.props.artwork.artist,
+      updateImageUrl: this.props.artwork.imageUrl,
+      updateDescription: this.props.artwork.description
+    })
+  }
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+  handleUpdate(e, updateArtworkId) {
+    e.preventDefault()
+    const updatedArtworkInfo = {
+      artist: this.state.updateArtist,
+      imageUrl: this.state.updateImageUrl,
+      description: this.state.updateDescription
+    }
+    this.props.handleUpdateArtwork(updateArtworkId, updatedArtworkInfo)
   }
 
-  // handleChange(e) {
-  //   // this.setState({
-  //   //   [e.target.name]: e.target.value
-  //   // })
-  // }
-  // handleUpdate(e, newArtWorkId) {
-  //   e.preventDefault()
-  //   // const newArtworkInfo = {
-  //   //   artist: this.state.updateArtist,
-  //   //   description: this.state.updateDescription,
-  //   //   imageUrl: this.state.imageUrl
-  //   // }
-  //   // use updateArtwork from store
-  // }
+  async handleDeleteImage(artworkImg) {
+    const update = await this.state.updateImageUrl.filter(
+      art => art !== artworkImg
+    )
+    this.setState({updateImageUrl: update})
+  }
 
   render() {
+    const {artwork} = this.props || {}
+    console.log('artwork ====> ', artwork)
+    const handleDeleteImage = this.handleDeleteImage
     return (
       <div className="update-form-container">
-        <h1>Update Artwork</h1>
-        <div>
-          <input
-            type="text"
-            name="updateArtist"
-            placeholder="Artist name"
-            // onChange={e => this.handleChange(e)}
-          />
-        </div>
-        <div>
-          <textarea
-            type="text"
-            name="updateDescription"
-            placeholder="Description"
-            // onChange={e => this.handleChange(e)}
-          />
-        </div>
-        <div>
-          <input
-            type="file"
-            name="updateImageUrl"
-            // onChange={e => this.handleChange(e)}
-          />
-        </div>
-        <div>
-          <button id="update-artwork-btn" type="submit">
-            Update Artwork
-          </button>
-        </div>
+        <form onSubmit={e => this.handleUpdate(e, artwork.id)}>
+          <h1>Update Artwork</h1>
+          <div>
+            <input
+              type="text"
+              name="updateArtist"
+              value={this.state.updateArtist}
+              placeholder="Artist name"
+              onChange={e => this.handleChange(e)}
+            />
+          </div>
+          <div>
+            {this.state.updateImageUrl
+              ? this.state.updateImageUrl.map((artImg, idx) => {
+                  return (
+                    <div key={idx}>
+                      <img src={artImg} />
+                      <button
+                        type="submit"
+                        onClick={function() {
+                          handleDeleteImage(artImg)
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )
+                })
+              : ''}
+            <input
+              type="text"
+              name="updateImageUrl"
+              value={this.state.updateImageUrl}
+              onChange={e => this.handleChange(e)}
+            />
+          </div>
+          <div>
+            <textarea
+              type="text"
+              name="updateDescription"
+              value={this.state.updateDescription}
+              placeholder="Description"
+              onChange={e => this.handleChange(e)}
+            />
+          </div>
+          <div>
+            <button id="update-artwork-btn" type="submit">
+              Update Artwork
+            </button>
+          </div>
+        </form>
       </div>
     )
   }
 }
 
-// const mapState = state => {
-//   return {
-//     artwork: state.artwork
-//   }
-// }
+const mapState = state => {
+  console.log('state', state)
+  return {
+    artwork: state.artwork.selected
+  }
+}
 
-// const mapDispatch = dispatch => {
-//   return {
-//     handleUpdateArtwork: (artworkId, artworkUpdatedInfo) => {
-//       dispatch(updateArtwork(artworkId, artworkUpdatedInfo))
-//     }
-//   }
-// }
+const mapDispatch = dispatch => {
+  return {
+    handleUpdateArtwork: (artworkId, artworkUpdatedInfo) => {
+      dispatch(fetchUpdatedArtwork(artworkId, artworkUpdatedInfo))
+    },
+    getSingleArtwork: artworkId => dispatch(fetchOneArtwork(artworkId))
+  }
+}
 
-// export default connect(mapState, mapDispatch)(UpdateArtworkForm)
-
-export default UpdateArtworkForm
+export default connect(mapState, mapDispatch)(UpdateArtworkForm)

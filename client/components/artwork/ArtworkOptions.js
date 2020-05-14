@@ -10,8 +10,7 @@ import {
 } from '../../store/artworks'
 import {me} from '../../store/user'
 
-// importing edit artwork component, for when it's ready to plug in
-import EditArtwork from './EditArtwork'
+import UpdateArtworkForm from '../updateArtworkForm/UpdateArtworkForm'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
@@ -89,7 +88,7 @@ class ArtworkOptions extends React.Component {
                   <h4> V E R I F Y </h4>
                 </button>
               }
-              position="center right"
+              // position="center right"
             >
               <button type="submit" onClick={e => this.handleVerify(e)}>
                 I've seen this piece IRL, at this location!
@@ -123,7 +122,7 @@ class ArtworkOptions extends React.Component {
                 <h4> D E L E T E </h4>
               </button>
             }
-            position="center"
+            // position="center"
           >
             <Link to="/map">
               <button type="submit" onClick={e => this.handleDelete(e)}>
@@ -142,7 +141,7 @@ class ArtworkOptions extends React.Component {
                 <h4> D E L E T E </h4>
               </button>
             }
-            position="center"
+            // position="center"
           >
             <Link to="/map">
               <button type="submit" onClick={e => this.handleDelete(e)}>
@@ -152,6 +151,23 @@ class ArtworkOptions extends React.Component {
           </Popup>
         ) : (
           // <EditArtwork artworkId={artwork.id} />
+          ''
+        )}
+        {// we render the edit artwork component if the user is an admin
+        user.isAdmin === true ? (
+          <Popup
+            trigger={
+              <button type="button">
+                <h4> EDIT</h4>
+              </button>
+            }
+            // position="center"
+          >
+            <Link to={`/artwork/${artwork.id}/updateartwork`}>
+              <button type="submit">Yes, edit artwork</button>
+            </Link>
+          </Popup>
+        ) : (
           ''
         )}
       </div>

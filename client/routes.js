@@ -6,7 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import AllArtworks from './components/allArtworks/AllArtworks'
 import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
-import {UpdateArtworkForm} from './components/updateArtworkForm/UpdateArtworkForm'
+import UpdateArtworkForm from './components/updateArtworkForm/UpdateArtworkForm'
 import MapView from './components/mapView/MapView'
 /**
  * COMPONENT
@@ -29,7 +29,11 @@ class Routes extends Component {
         {/**REVISIT PATH NAME CONVENTION */}
         <Route exact path="/map" component={MapView} />
         {/** FOR TESTING PURPOSES UPDATE ARTWORK ROUTE NEED TO BE MOVE TO LOGGING USERS ONLY */}
-        <Route exact path="/updateartwork" component={UpdateArtworkForm} />
+        <Route
+          exact
+          path="/artwork/:id/updateartwork"
+          component={UpdateArtworkForm}
+        />
         <Route exact path="/artwork/:id" component={SingleArtwork} />
         <Route exact path="/all" component={AllArtworks} />
         {isLoggedIn && (
