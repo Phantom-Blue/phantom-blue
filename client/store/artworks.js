@@ -4,7 +4,8 @@
 import axios from 'axios'
 
 // A C T I O N   C R E A T O R S //
-const GET_AN_ARTWORK = 'GET_AN_ARTWORK'
+const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
+const GET_ONE_ARTWORK = 'GET_ONE_ARTWORK'
 const GET_ALL_ARTWORKS = 'GET_ALL_ARTWORKS'
 const VERIFY_ARTWORK = 'VERIFY_ARTWORK'
 const ADD_TAGS = 'ADD_TAGS'
@@ -12,29 +13,34 @@ const DELETE_ARTWORK = 'DELETE_ARTWORK'
 const POST_ARTWORK = 'POST_ARTWORK'
 
 // A C T I O N S //
-const gotAnArtwork = artworks => ({
-  type: GET_AN_ARTWORK,
-  artworks
+const gotArtByLoc = artwork => ({
+  type: GET_ART_BY_LOCATION,
+  artwork
 })
 
-const gotAllArtworks = artworks => ({
+const gotArtbyId = artwork => ({
+  type: GET_ONE_ARTWORK,
+  artwork
+})
+
+const gotAllArtworks = artwork => ({
   type: GET_ALL_ARTWORKS,
-  artworks
+  artwork
 })
 
-const verifiedArtwork = artworks => ({
+const verifiedArtwork = artwork => ({
   type: VERIFY_ARTWORK,
-  artworks
+  artwork
 })
 
-const deletedArtwork = artworks => ({
+const deletedArtwork = id => ({
   type: DELETE_ARTWORK,
-  artworks
+  id
 })
 
-const taggedArt = artworks => ({
+const taggedArt = artwork => ({
   type: ADD_TAGS,
-  artworks
+  artwork
 })
 
 const postedArtwork = artworks => ({
@@ -43,10 +49,19 @@ const postedArtwork = artworks => ({
 })
 
 // T H U N K S //
-export const fetchArtwork = (lat, long) => async dispatch => {
+export const fetchLocationArtwork = (lat, long) => async dispatch => {
   try {
     const {data} = await axios.get(`/api/locations/${lat}?long=${long}`)
-    dispatch(gotAnArtwork(data))
+    dispatch(gotArtByLoc(data))
+  } catch (error) {
+    console.error("didn't receive any data")
+  }
+}
+
+export const fetchOneArtwork = artworkId => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/artworks/${artworkId}`)
+    dispatch(gotArtbyId(data))
   } catch (error) {
     console.error("didn't receive any data")
   }
@@ -73,7 +88,7 @@ export const verifyArtworkInDB = artworkId => async dispatch => {
 export const removeArtwork = artworkId => async dispatch => {
   try {
     const {data} = await axios.delete(`/api/artworks/${artworkId}`)
-    dispatch(deletedArtwork(data))
+    dispatch(deletedArtwork(artworkId))
   } catch (error) {
     console.error("didn't receive any data")
   }
@@ -81,7 +96,7 @@ export const removeArtwork = artworkId => async dispatch => {
 
 export const addTagsToDB = (artworkId, tag) => async dispatch => {
   try {
-    const {data} = await axios.post(`/api/tags/${artworkId}`, tag)
+    const {data} = await axios.post(`/api/tags/${artworkId}`, {tag: tag})
     dispatch(taggedArt(data))
   } catch (error) {
     console.error("didn't receive any data")
@@ -98,19 +113,24 @@ export const postArtwork = newArt => async dispatch => {
 }
 
 // I N I T I A L   S T A T E //
-const initialState = []
+const initialState = {
+  all: [],
+  selected: {}
+}
 
 // R E D U C E R //
 export default function artworkReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_AN_ARTWORK:
-      return action.artworks
+    case GET_ART_BY_LOCATION:
+      return {...state, all: action.artwork}
+    case GET_ONE_ARTWORK:
+      return {...state, selected: action.artwork}
     case GET_ALL_ARTWORKS:
-      return action.artworks
+      return {...state, all: action.artwork}
     case VERIFY_ARTWORK:
-      return action.artworks
+      return {...state, selected: action.artwork}
     case ADD_TAGS:
-      return action.artworks
+      return {...state, selected: action.artwork}
     case DELETE_ARTWORK:
       return action.artworks.filter(artwork => artwork.id !== action.id)
     case POST_ARTWORK:
