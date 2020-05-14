@@ -6,7 +6,7 @@ import {Login, Signup, UserHome} from './components'
 import AllArtworks from './components/allArtworks/AllArtworks'
 import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
-import {MapView} from './components/mapView/MapView'
+import MapView from './components/mapView/MapView'
 /**
  * COMPONENT
  */

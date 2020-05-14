@@ -2,9 +2,12 @@ const router = require('express').Router()
 const {Artwork, Location, Tag} = require('../db/models')
 
 // GET ALL ARTWORKS
+
 router.get('/', async (req, res, next) => {
   try {
-    const artworks = await Artwork.findAll()
+    const artworks = await Artwork.findAll({
+      include: Location
+    })
     res.json(artworks)
   } catch (err) {
     next(err)
