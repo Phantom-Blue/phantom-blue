@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-// import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {fetchAllArtworks} from '../../store/artworks'
 import './allArtworks.css'
 
@@ -19,8 +19,10 @@ export class AllArtWorks extends Component {
             ? allArtWorks.all.map(artwork => {
                 return (
                   <div className="artwork-container" key={artwork.userId}>
-                    <img src={artwork.imageUrl} alt="Artwork" />
-                    <h2>{artwork.artist}</h2>
+                    <Link to={`/artwork/${artwork.id}`}>
+                      <img src={artwork.imageUrl} alt="Artwork" />
+                      <h2>{artwork.artist}</h2>
+                    </Link>
                   </div>
                 )
               })
