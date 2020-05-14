@@ -64,6 +64,13 @@ const seed = async () => {
         longitude: -73.931796,
         address: '453-427 Johnson Ave, Brooklyn, NY 11237'
         //plus.code: P359+38 Brooklyn, New York
+      }),
+      //9
+      Location.create({
+        latitude: 40.708942,
+        longitude: -74.010754,
+        address: '135 Broadway, New York, NY 10006'
+        //plus.code: PX5Q+HJ New York
       })
     ])
     const Users = await Promise.all([
@@ -166,10 +173,10 @@ const seed = async () => {
       }),
       //7
       Artwork.create({
-        UserId: 2,
+        UserId: 6,
         artist: 'Jenny Holzer',
         description: 'Installation, "Abuse of Power Comes as No Surprise"',
-        LocationId: 6,
+        LocationId: 7,
         isVerified: false,
         imageUrl: [
           'https://images.curiator.com/image/upload/f_auto,q_auto/t_x/art/ost62rdpbftozam89gzx.jpg'
@@ -192,7 +199,7 @@ const seed = async () => {
         artist: 'Naomi Lawrence',
         description:
           'A string installatioLa Flor De Mi Madre," by artist Naomi Lawrence at Eugene McCabe Field in East Harlem, features three largeUcrocheted flowers made of acrylic yarn, as well as smaller ones made in collaboration with neighborhood artists.',
-        LocationId: 6,
+        LocationId: 7,
         isVerified: false,
         imageUrl: [
           'https://cdn.vox-cdn.com/thumbor/eLTKUnrMZUN7TUow97y3Q01pkX4=/0x0:2016x1512/2120x1590/filters:focal(847x595:1169x917):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65181831/Naomi_Lawrence_McCabe_co_artist_070202019.0.jpg'
@@ -203,10 +210,10 @@ const seed = async () => {
         UserId: 1,
         artist: 'Mark di Suvero',
         description: 'JOIE DE VIVRE',
-        LocationId: 7,
+        LocationId: 9,
         isVerified: false,
         imageUrl: [
-          'https://cdn.vox-cdn.com/thumbor/eLTKUnrMZUN7TUow97y3Q01pkX4=/0x0:2016x1512/2120x1590/filters:focal(847x595:1169x917):format(webp):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/65181831/Naomi_Lawrence_McCabe_co_artist_070202019.0.jpg'
+          'https://live.staticflickr.com/7447/9942168345_f1733be17e_b.jpg'
         ]
       }),
       //11
