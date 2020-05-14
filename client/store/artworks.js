@@ -146,7 +146,7 @@ export default function artworkReducer(state = initialState, action) {
     case GET_ALL_ARTWORKS:
       return {...state, all: action.artwork}
     case VERIFY_ARTWORK:
-      return action.artwork
+      return {...state, selected: action.artwork}
     case UPDATE_ARTWORK:
       return state.all.map(artwork => {
         if (artwork.id === action.artworkUpdated.id) {
@@ -155,7 +155,6 @@ export default function artworkReducer(state = initialState, action) {
           return action.artwork
         }
       })
-    // return {...state, selected: action.artwork}
     case ADD_TAGS:
       return {...state, selected: action.artwork}
     case DELETE_ARTWORK:
