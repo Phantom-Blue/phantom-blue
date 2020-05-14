@@ -23,7 +23,7 @@ class MapView extends Component {
         longitude: -73.9566,
         width: '100vw',
         height: '100vh',
-        zoom: 13
+        zoom: 11
       },
       selectedPin: null
     }
@@ -58,7 +58,7 @@ class MapView extends Component {
                     style={markerBtn}
                     onClick={ev => {
                       ev.preventDefault()
-                      this.setState(artwork)
+                      this.setState({selectedPin: artwork.Location})
                     }}
                   >
                     <img
@@ -74,19 +74,22 @@ class MapView extends Component {
           {this.state.selectedPin ? (
             <Popup
               className="popup-container"
-              latitude={this.state.selectedPin.latitude}
-              longitude={this.state.selectedPin.longitude}
+              latitude={Number(this.state.selectedPin.latitude)}
+              longitude={Number(this.state.selectedPin.longitude)}
               closeOnClick={false}
               onClose={() => {
-                this.setState(null)
+                this.setState({selectedPin: null})
               }}
             >
               <Artwork
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
+                address={this.state.selectedPin.address}
               />
             </Popup>
-          ) : null}
+          ) : (
+            ''
+          )}
         </ReactMapGl>
         <div className="artwork-list-outer-container">
           {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
