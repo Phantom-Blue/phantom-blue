@@ -11,7 +11,6 @@ export class AllArtWorks extends Component {
 
   render() {
     const {allArtWorks} = this.props
-
     return (
       <div className="all-artworks-container">
         <div>
