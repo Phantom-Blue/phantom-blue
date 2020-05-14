@@ -1,10 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllArtworks} from '../../store/artworks'
-import ReactMapGl, {Marker, Popup} from 'react-map-gl'
+import ReactMapGl, {
+  Marker,
+  Popup,
+  NavigationControl,
+  FullscreenControl
+} from 'react-map-gl'
 import ArtworksPopup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
-import Artwork from '../artwork/Artwork'
+// import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
@@ -12,6 +17,10 @@ import './mapView.css'
 const markerBtn = {
   background: 'none',
   border: 'none'
+}
+const navegationStyle = {
+  position: 'absolute',
+  margin: '10px'
 }
 
 class MapView extends Component {
@@ -23,7 +32,7 @@ class MapView extends Component {
         longitude: -73.9566,
         width: '100vw',
         height: '100vh',
-        zoom: 11
+        zoom: 12
       },
       selectedPin: null
     }
@@ -35,7 +44,7 @@ class MapView extends Component {
 
   render() {
     const {theArtworks} = this.props
-    console.log(theArtworks)
+
     return (
       <div className="map-container">
         <ReactMapGl
@@ -43,7 +52,7 @@ class MapView extends Component {
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
           mapStyle="mapbox://styles/gisellez/ck9yorghb2d811ipjrtgocomz"
           onViewportChange={newport => {
-            this.setState(newport)
+            this.setState({viewport: newport})
           }}
         >
           {theArtworks
@@ -58,7 +67,7 @@ class MapView extends Component {
                     style={markerBtn}
                     onClick={ev => {
                       ev.preventDefault()
-                      this.setState({selectedPin: artwork.Location})
+                      this.setState({selectedPin: artwork})
                     }}
                   >
                     <img
@@ -70,34 +79,44 @@ class MapView extends Component {
                   </button>
                 </Marker>
               ))
-            : 'No Art Here -_-'}
+            : ''}
           {this.state.selectedPin ? (
             <Popup
               className="popup-container"
-              latitude={Number(this.state.selectedPin.latitude)}
-              longitude={Number(this.state.selectedPin.longitude)}
+              latitude={Number(this.state.selectedPin.Location.latitude)}
+              longitude={Number(this.state.selectedPin.Location.longitude)}
               closeOnClick={false}
               onClose={() => {
                 this.setState({selectedPin: null})
               }}
             >
-              <Artwork
-                latitude={Number(this.state.selectedPin.latitude)}
-                longitude={Number(this.state.selectedPin.longitude)}
-                address={this.state.selectedPin.address}
-              />
+              <div>
+                <h1>{this.state.selectedPin.artist}</h1>
+                {/*<Artwork
+                  latitude={Number(this.state.selectedPin.Location.latitude)}
+                  longitude={Number(this.state.selectedPin.Location.longitude)}
+                  address={this.state.selectedPin.Location.address}
+                />*/}
+              </div>
             </Popup>
           ) : (
             ''
           )}
+          <div style={navegationStyle}>
+            <NavigationControl />
+          </div>
+          <div style={navegationStyle}>
+            <FullscreenControl />
+          </div>
         </ReactMapGl>
+        {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
         <div className="artwork-list-outer-container">
-          {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
           <ArtworksPopup
-            position="top left"
             trigger={
               <div className="see-all-artworks-link-container">
-                <Link id="link-to-all-artworks">View as list</Link>
+                <Link to="/" id="link-to-all-artworks">
+                  View as list
+                </Link>
               </div>
             }
             modal
