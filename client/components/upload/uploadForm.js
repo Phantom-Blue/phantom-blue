@@ -72,13 +72,13 @@ export class UploadForm extends React.Component {
 
   errorMessage() {
     if (
-      (this.props.error.response.data &&
-        this.props.error.response.data.includes('notNull Violation')) ||
-      this.props.error.response.includes('notNull Violation')
+      this.props.error.response.data &&
+      this.props.error.response.data.includes('notNull Violation')
     ) {
       return 'Enter all required fields'
     }
-    return 'Invalid Address'
+    // return 'Invalid Address'
+    return 'Enter all required fields'
   }
 
   render() {
@@ -132,7 +132,8 @@ export class UploadForm extends React.Component {
 }
 
 const mapState = state => ({
-  error: state.artwork.error
+  error: state.artwork.error,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({

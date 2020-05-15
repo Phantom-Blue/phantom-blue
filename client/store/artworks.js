@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 
 import axios from 'axios'
+import history from '../history'
 
 // A C T I O N   C R E A T O R S //
 const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
@@ -175,6 +176,7 @@ export const postArtwork = newArt => async dispatch => {
 
   try {
     dispatch(postedArtwork(res.data))
+    history.push('/map')
   } catch (error) {
     console.error(error)
   }
