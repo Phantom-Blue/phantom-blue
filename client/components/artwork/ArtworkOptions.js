@@ -10,8 +10,6 @@ import {
 } from '../../store/artworks'
 import {me} from '../../store/user'
 
-import UpdateArtworkForm from '../updateArtworkForm/UpdateArtworkForm'
-
 class ArtworkOptions extends React.Component {
   constructor(props) {
     super(props)
@@ -157,10 +155,9 @@ class ArtworkOptions extends React.Component {
           <Popup
             trigger={
               <button type="button">
-                <h4> E D I T </h4>
+                <h4>EDIT</h4>
               </button>
             }
-            // position="center"
           >
             <Link to={`/artwork/${artwork.id}/edit`}>
               <button type="submit">Yes, edit artwork</button>
