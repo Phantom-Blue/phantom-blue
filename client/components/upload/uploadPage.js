@@ -6,7 +6,7 @@ export const UploadPage = props => {
   return (
     <div>
       <h1>Upload Art</h1>
-      <UploadForm />
+      <UploadForm history={props.history} />
     </div>
   )
 }
