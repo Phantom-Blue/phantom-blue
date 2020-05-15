@@ -78,7 +78,7 @@ class UpdateArtworkForm extends Component {
                       <img src={artImg} alt="Artwork Image" />
                       <button
                         type="submit"
-                        onClick={function() {
+                        onClick={() => {
                           handleDeleteImage(artImg)
                         }}
                       >
