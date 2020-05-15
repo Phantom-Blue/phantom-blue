@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Artwork = require('./Artwork')
 const crypto = require('crypto')
 
 const User = db.define('Users', {
@@ -70,6 +71,11 @@ module.exports = User
  */
 User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+}
+
+User.prototype.getArtwork = async function() {
+  const artwork = await Artwork.findAll({where: {UserId: this.id}})
+  return artwork
 }
 
 /**

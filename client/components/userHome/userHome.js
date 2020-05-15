@@ -18,6 +18,7 @@ export class SingleUserHome extends Component {
   render() {
     // console.log('>>>>> this.props:', this.props)
     const user = this.props || {}
+    const allArtwork = this.props.user.artwork
     return (
       <div>
         {this.props.user.firstName ? (
@@ -28,7 +29,25 @@ export class SingleUserHome extends Component {
             <img src={this.props.user.imageUrl} width="100%" />
             <br />
             <div className="saved-artwork">
-              <p>Your Artwork</p>
+              <h5 align="center">Your Uploaded Artwork</h5>
+              <br />
+              <div className="users-artworks" align="center">
+                {allArtwork
+                  ? allArtwork.map(artwork => {
+                      return (
+                        <div className="artwork-display" key={artwork.id}>
+                          <img
+                            src={artwork.imageUrl}
+                            alt="Artwork"
+                            width="250px"
+                          />
+                          <p>{artwork.artist}</p>
+                          <br />
+                        </div>
+                      )
+                    })
+                  : "You haven't uploaded anything yet!"}
+              </div>
             </div>
           </div>
         ) : (

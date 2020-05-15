@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Artwork} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -16,9 +16,9 @@ router.get('/', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     console.log('req.params: ', req.params)
-    const users = await User.findByPk(req.params.userId, {
-      // attributes: ['firstName', 'lastName', 'isVerified', 'imageUrl']
-    })
+    const users = await User.findByPk(req.params.userId)
+    const artwork = await users.getArtwork()
+    users.dataValues.artwork = artwork
     res.json(users)
   } catch (err) {
     next(err)
