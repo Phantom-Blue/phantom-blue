@@ -14,6 +14,35 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/verified', async (req, res, next) => {
+  try {
+    const verifiedArtworks = await Artwork.findAll({
+      where: {
+        isVerified: true
+      },
+      include: Location
+    })
+    res.json(verifiedArtworks)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/artbylocation/:locationId', async (req, res, next) => {
+  const {locationId} = req.params
+  try {
+    const artByLocationId = await Artwork.findAll({
+      where: {
+        LocationId: locationId
+      },
+      include: Location
+    })
+    res.json(artByLocationId)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:artworkId', async (req, res, next) => {
   const {artworkId} = req.params
   try {
@@ -139,6 +168,29 @@ router.post('/', async (req, res, next) => {
       }
     } else {
       res.send('Log in to make a post.')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:artworkId/edit', async (req, res, next) => {
+  const id = req.params.artworkId
+  try {
+    if (req.user) {
+      let {artist, description, imageUrl} = req.body
+
+      let artwork = {artist, description, imageUrl}
+
+      const updatedArtwork = await Artwork.update(artwork, {where: {id: id}})
+
+      if (updatedArtwork) {
+        res.json(updatedArtwork)
+      } else {
+        res.json('Failed to updated.')
+      }
+    } else {
+      res.json('log in to update.')
     }
   } catch (err) {
     next(err)

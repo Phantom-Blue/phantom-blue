@@ -10,9 +10,6 @@ import {
 } from '../../store/artworks'
 import {me} from '../../store/user'
 
-// importing edit artwork component, for when it's ready to plug in
-import EditArtwork from './EditArtwork'
-
 class ArtworkOptions extends React.Component {
   constructor(props) {
     super(props)
@@ -89,7 +86,6 @@ class ArtworkOptions extends React.Component {
                   <h4> V E R I F Y </h4>
                 </button>
               }
-              position="center right"
             >
               <button type="submit" onClick={e => this.handleVerify(e)}>
                 I've seen this piece IRL, at this location!
@@ -123,7 +119,6 @@ class ArtworkOptions extends React.Component {
                 <h4> D E L E T E </h4>
               </button>
             }
-            position="center"
           >
             <Link to="/map">
               <button type="submit" onClick={e => this.handleDelete(e)}>
@@ -142,7 +137,6 @@ class ArtworkOptions extends React.Component {
                 <h4> D E L E T E </h4>
               </button>
             }
-            position="center"
           >
             <Link to="/map">
               <button type="submit" onClick={e => this.handleDelete(e)}>
@@ -151,7 +145,13 @@ class ArtworkOptions extends React.Component {
             </Link>
           </Popup>
         ) : (
-          // <EditArtwork artworkId={artwork.id} />
+          ''
+        )}
+        {user.isAdmin === true ? (
+          <Link to={`/artwork/${artwork.id}/edit`}>
+            <button type="submit">EDIT</button>
+          </Link>
+        ) : (
           ''
         )}
       </div>
