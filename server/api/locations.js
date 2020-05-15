@@ -26,6 +26,32 @@ router.get('/:lat', async (req, res, next) => {
   }
 })
 
+router.post('/artHere', async (req, res, next) => {
+  const {latitude, longitude, address} = req.body
+  console.log('REQ THAT BODY', req.body)
+  try {
+    await Location.findOrCreate({
+      where: {
+        latitude: latitude,
+        longitude: longitude,
+        address: address
+      }
+    })
+    const myLocation = await Location.findOne({
+      where: {
+        address: address
+      }
+    })
+
+    const artWhereIAm = await myLocation.getNearbyArt(1000)
+    console.log('ART WHERE I AM', artWhereIAm)
+
+    res.json(artWhereIAm)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/artNearby/:id', async (req, res, next) => {
   try {
     const location = await Location.findByPk(req.params.id)

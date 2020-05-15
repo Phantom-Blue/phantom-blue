@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchAllVerified} from '../../store/artworks'
+import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
 import {generateUrl} from '../artwork/utils'
 import './mainHome.css'
 import {Link} from 'react-router-dom'
@@ -18,8 +18,8 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '../../../secrets'
 
 class MainHome extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.handleLocation = this.handleLocation.bind(this)
   }
   componentDidMount() {
@@ -27,6 +27,7 @@ class MainHome extends React.Component {
   }
 
   handleLocation() {
+    const {getMyLocationArt} = this.props
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async function(position) {
         const latitude = position.coords.latitude
@@ -42,7 +43,12 @@ class MainHome extends React.Component {
         const address = await geocoder._geocode(
           [latitude.toString(), longitude.toString()].join()
         )
-        console.log(address)
+        const myLocation = {
+          latitude,
+          longitude,
+          address: address.body.features[0].place_name
+        }
+        getMyLocationArt(myLocation)
         // `api.mapbox.com/geocoding/v5/mapbox.places-permanent/{${longitude}, ${latitude}}`
       })
     } else {
@@ -51,14 +57,13 @@ class MainHome extends React.Component {
   }
 
   render() {
-    console.log(this.props.artworks, 'INSIDE MAIN HOME RENDERRRRRRRRR')
+    console.log(this.props, 'INSIDE MAIN HOME RENDERRRRRRRRR')
     return (
       <div>
         <div>
           <div id="geocoder">{}</div>
           <button type="submit" onClick={() => this.handleLocation()}>
-            {' '}
-            SHARE LOCATION{' '}
+            SHARE LOCATION
           </button>
         </div>
         {/* {this.props.artworks[0] ? (
@@ -109,11 +114,13 @@ class MainHome extends React.Component {
 }
 
 const mapState = state => ({
-  artworks: state.artwork.verified
+  artworks: state.artwork.verified,
+  locationArtworks: state.artwork.selected
 })
 
 const mapDispatch = dispatch => ({
-  getVerifiedArtwork: () => dispatch(fetchAllVerified())
+  getVerifiedArtwork: () => dispatch(fetchAllVerified()),
+  getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location))
 })
 
 export default connect(mapState, mapDispatch)(MainHome)
