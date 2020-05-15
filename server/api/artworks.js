@@ -126,26 +126,13 @@ router.post('/', async (req, res, next) => {
 router.put('/:artworkId/edit', async (req, res, next) => {
   const id = req.params.artworkId
   try {
-    // *** Change this to 'if (!req.user)'
     if (req.user) {
-      // *** Set UserId equal to 1
-      // const UserId = req.user.id
-
       let {artist, description, imageUrl} = req.body
-
-      // if (imageUrl && Array.isArray(imageUrl)) {
-      //     imageUrl = [imageUrl]
-      // }
-      // let isVerified = false
-
-      // // *** Comment out the following if statement
-      // if (req.user.isVerified || req.user.isAdmin) {
-      //   isVerified = true
-      // }
 
       let artwork = {artist, description, imageUrl}
 
       const updatedArtwork = await Artwork.update(artwork, {where: {id: id}})
+
       if (updatedArtwork) {
         res.json(updatedArtwork)
       } else {

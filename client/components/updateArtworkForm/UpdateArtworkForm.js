@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Link, Redirect} from 'react-router-dom'
 import {fetchUpdatedArtwork, fetchOneArtwork} from '../../store/artworks'
 
 class UpdateArtworkForm extends Component {
@@ -12,6 +13,7 @@ class UpdateArtworkForm extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    // this.handleFileChange = this.handleFileChange.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.handleDeleteImage = this.handleDeleteImage.bind(this)
   }
@@ -28,6 +30,13 @@ class UpdateArtworkForm extends Component {
       [e.target.name]: e.target.value
     })
   }
+  // TODO: Continue working on  a separate edit for upload
+  // handleFileChange(e) {
+  //   this.setState({
+  //     [e.target.name]: e.target.files[0]
+  //   })
+  //   console.log(e.target.files[0].name)
+  // }
   handleUpdate(e, updateArtworkId) {
     e.preventDefault()
     const updatedArtworkInfo = {
@@ -47,7 +56,6 @@ class UpdateArtworkForm extends Component {
 
   render() {
     const {artwork} = this.props || {}
-    console.log('artwork ====> ', artwork)
     const handleDeleteImage = this.handleDeleteImage
     return (
       <div className="update-form-container">
@@ -67,7 +75,7 @@ class UpdateArtworkForm extends Component {
               ? this.state.updateImageUrl.map((artImg, idx) => {
                   return (
                     <div key={idx}>
-                      <img src={artImg} />
+                      <img src={artImg} alt="Artwork Image" />
                       <button
                         type="submit"
                         onClick={function() {
@@ -80,12 +88,12 @@ class UpdateArtworkForm extends Component {
                   )
                 })
               : ''}
-            <input
-              type="text"
+            {/*<input
+              type="file"
               name="updateImageUrl"
               value={this.state.updateImageUrl}
               onChange={e => this.handleChange(e)}
-            />
+           /> */}
           </div>
           <div>
             <textarea
@@ -107,20 +115,15 @@ class UpdateArtworkForm extends Component {
   }
 }
 
-const mapState = state => {
-  console.log('state', state)
-  return {
-    artwork: state.artwork.selected
-  }
-}
+const mapState = state => ({
+  artwork: state.artwork.selected
+})
 
-const mapDispatch = dispatch => {
-  return {
-    handleUpdateArtwork: (artworkId, artworkUpdatedInfo) => {
-      dispatch(fetchUpdatedArtwork(artworkId, artworkUpdatedInfo))
-    },
-    getSingleArtwork: artworkId => dispatch(fetchOneArtwork(artworkId))
-  }
-}
+const mapDispatch = dispatch => ({
+  handleUpdateArtwork: (artworkId, artworkUpdatedInfo) => {
+    dispatch(fetchUpdatedArtwork(artworkId, artworkUpdatedInfo))
+  },
+  getSingleArtwork: artworkId => dispatch(fetchOneArtwork(artworkId))
+})
 
 export default connect(mapState, mapDispatch)(UpdateArtworkForm)

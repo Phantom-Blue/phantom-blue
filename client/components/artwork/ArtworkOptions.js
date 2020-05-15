@@ -150,7 +150,6 @@ class ArtworkOptions extends React.Component {
             </Link>
           </Popup>
         ) : (
-          // <EditArtwork artworkId={artwork.id} />
           ''
         )}
         {// we render the edit artwork component if the user is an admin
@@ -158,12 +157,12 @@ class ArtworkOptions extends React.Component {
           <Popup
             trigger={
               <button type="button">
-                <h4> EDIT</h4>
+                <h4> E D I T </h4>
               </button>
             }
             // position="center"
           >
-            <Link to={`/artwork/${artwork.id}/updateartwork`}>
+            <Link to={`/artwork/${artwork.id}/edit`}>
               <button type="submit">Yes, edit artwork</button>
             </Link>
           </Popup>

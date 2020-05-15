@@ -28,12 +28,6 @@ class Routes extends Component {
         <Route exact path="/" component={MapView} />
         {/**REVISIT PATH NAME CONVENTION */}
         <Route exact path="/map" component={MapView} />
-        {/** FOR TESTING PURPOSES UPDATE ARTWORK ROUTE NEED TO BE MOVE TO LOGGING USERS ONLY */}
-        <Route
-          exact
-          path="/artwork/:id/updateartwork"
-          component={UpdateArtworkForm}
-        />
         <Route exact path="/artwork/:id" component={SingleArtwork} />
         <Route exact path="/all" component={AllArtworks} />
         {isLoggedIn && (
@@ -44,6 +38,7 @@ class Routes extends Component {
             <Route path="/upload" componet={UserHome} />
             {/** TODO: replace component on route below with user account settings component */}
             <Route path="/account" componet={UserHome} />
+            <Route path="/artwork/:id/edit" component={UpdateArtworkForm} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
