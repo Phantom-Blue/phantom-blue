@@ -34,7 +34,7 @@ class Artwork extends React.Component {
               <h3 className="artistname">{this.props.artworks[0].artist}</h3>
             </Link>
             <Link to={`/location/${this.props.artworks[0].LocationId}`}>
-              <p>V I E W A L L A R T A T T H I S L O C A T I O N</p>
+              <p>View all art at this location</p>
             </Link>
           </div>
         ) : (
