@@ -30,7 +30,7 @@ class UpdateArtworkForm extends Component {
       [e.target.name]: e.target.value
     })
   }
-  // TODO: Continue working on  a separate edit for upload
+  // Note: add upload functionally below--- a upload cannnot be updated. In this case we want to just have the ability to add to current image
   // handleFileChange(e) {
   //   this.setState({
   //     [e.target.name]: e.target.files[0]
