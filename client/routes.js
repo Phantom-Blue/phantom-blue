@@ -7,6 +7,7 @@ import MainHome from './components/mainHome/MainHome'
 import AllArtworks from './components/allArtworks/AllArtworks'
 import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
+import UpdateArtworkForm from './components/updateArtworkForm/UpdateArtworkForm.js'
 import MapView from './components/mapView/MapView'
 import LocationArtwork from './components/artwork/LocationArtwork'
 /**
@@ -19,7 +20,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-    console.log(this.props)
+    console.log('user', isLoggedIn)
 
     return (
       <Switch>
@@ -41,6 +42,7 @@ class Routes extends Component {
             <Route path="/upload" componet={UserHome} />
             {/** TODO: replace component on route below with user account settings component */}
             <Route path="/account" componet={UserHome} />
+            <Route exact path="/artwork/:id/edit" component={UpdateArtworkForm} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

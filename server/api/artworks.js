@@ -152,4 +152,27 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/:artworkId/edit', async (req, res, next) => {
+  const id = req.params.artworkId
+  try {
+    if (req.user) {
+      let {artist, description, imageUrl} = req.body
+
+      let artwork = {artist, description, imageUrl}
+
+      const updatedArtwork = await Artwork.update(artwork, {where: {id: id}})
+
+      if (updatedArtwork) {
+        res.json(updatedArtwork)
+      } else {
+        res.json('Failed to updated.')
+      }
+    } else {
+      res.json('log in to update.')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 module.exports = router

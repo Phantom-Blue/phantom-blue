@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {fetchOneArtwork} from '../../store/artworks'
 import './artwork.css'
-import AllArtworks from '../allArtworks/AllArtworks'
+// import AllArtworks from '../allArtworks/AllArtworks'
 
 class SingleArtwork extends React.Component {
   componentDidMount() {
