@@ -11,6 +11,7 @@ const VERIFY_ARTWORK = 'VERIFY_ARTWORK'
 const ADD_TAGS = 'ADD_TAGS'
 const DELETE_ARTWORK = 'DELETE_ARTWORK'
 const POST_ARTWORK = 'POST_ARTWORK'
+const CATCH_ERROR = 'CATCH_ERROR'
 
 // A C T I O N S //
 const gotArtByLoc = artwork => ({
@@ -46,6 +47,11 @@ const taggedArt = artwork => ({
 const postedArtwork = artwork => ({
   type: POST_ARTWORK,
   artwork
+})
+
+const passError = error => ({
+  type: CATCH_ERROR,
+  error
 })
 
 // T H U N K S //
@@ -105,23 +111,39 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
 }
 
 export const postArtwork = newArt => async dispatch => {
+  let res
   try {
-    const {data} = await axios.post('/api/artworks', newArt)
-    dispatch(postedArtwork(data))
+    console.log('The art! ', newArt)
+    if (newArt.error) {
+      return dispatch(passError(newArt.error))
+    }
+    res = await axios.post('/api/artworks', newArt)
+    console.log('THe data.. ', res.data)
   } catch (error) {
     console.error('Unable to post artwork.')
+    return dispatch(passError(error))
+  }
+
+  try {
+    dispatch(postedArtwork(res.data))
+  } catch (error) {
+    console.error(error)
   }
 }
 
 // I N I T I A L   S T A T E //
 const initialState = {
   all: [],
-  selected: {}
+  selected: {},
+  error: false
 }
 
 // R E D U C E R //
+// eslint-disable-next-line complexity
 export default function artworkReducer(state = initialState, action) {
   switch (action.type) {
+    case CATCH_ERROR:
+      return {...state, error: action.error}
     case GET_ART_BY_LOCATION:
       return {...state, selected: action.artwork}
     case GET_ONE_ARTWORK:
