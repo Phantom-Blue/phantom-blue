@@ -14,8 +14,8 @@ export class UploadForm extends React.Component {
       name: '',
       description: '',
       imageUrl: '',
-      latitude: '',
-      longitude: '',
+      latitude: null,
+      longitude: null,
       address: null,
       error: null
     }
@@ -48,7 +48,7 @@ export class UploadForm extends React.Component {
   componentDidMount() {
     var geocoder = new MapboxGeocoder({
       accessToken: process.env.REACT_APP_MAPBOX_KEY,
-      types: 'country,region,place,postcode,locality,neighborhood'
+      types: 'country,region,place,locality,neighborhood, address'
     })
     geocoder.addTo('#geocoder')
     // geocoder._inputEl.onChange(console.log(geocoder.inputString))
@@ -68,15 +68,14 @@ export class UploadForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     this.props.postArtwork(this.state)
-    // this.setState({
-    //   name: '',
-    //   description: '',
-    //   imageUrl: ''
-    // })
   }
 
   errorMessage() {
-    if (this.props.error.response.includes('notNull Violation')) {
+    if (
+      (this.props.error.response.data &&
+        this.props.error.response.data.includes('notNull Violation')) ||
+      this.props.error.response.includes('notNull Violation')
+    ) {
       return 'Enter all required fields'
     }
     return 'Invalid Address'
@@ -115,10 +114,7 @@ export class UploadForm extends React.Component {
               handleChange(e)
             }}
           />
-          {/* <Geocoder
-         accessToken = {process.env.REACT_APP_MAPBOX_KEY}
-         onSelect = {() => {console.log("hi")}}
-        /> */}
+          <label>Address:</label>
           <div id="geocoder" />
           <button
             type="submit"

@@ -113,12 +113,10 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
 export const postArtwork = newArt => async dispatch => {
   let res
   try {
-    console.log('The art! ', newArt)
     if (newArt.error) {
       return dispatch(passError(newArt.error))
     }
     res = await axios.post('/api/artworks', newArt)
-    console.log('THe data.. ', res.data)
   } catch (error) {
     console.error('Unable to post artwork.')
     return dispatch(passError(error))
@@ -135,7 +133,7 @@ export const postArtwork = newArt => async dispatch => {
 const initialState = {
   all: [],
   selected: {},
-  error: false
+  error: null
 }
 
 // R E D U C E R //
