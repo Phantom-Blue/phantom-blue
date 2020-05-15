@@ -33,7 +33,7 @@ class LocationArtwork extends React.Component {
               totalSlides={this.props.artworks.length}
             >
               <div>
-                <Slider className="carousel">
+                <Slider id="carousel">
                   {this.props.artworks.map((artwork, i) => (
                     <Slide
                       index={i}

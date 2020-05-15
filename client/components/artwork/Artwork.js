@@ -8,6 +8,7 @@ import './artwork.css'
 import SingleArtwork from './SingleArtwork'
 import {Link} from 'react-router-dom'
 import LocationArtwork from './LocationArtwork'
+import './artwork.css'
 
 class Artwork extends React.Component {
   componentDidMount() {
@@ -21,7 +22,7 @@ class Artwork extends React.Component {
     const directionsUrl = generateUrl(address)
 
     return (
-      <div id="carousel">
+      <div id="map-popup-container">
         {// HERE WE INCOORPORATE A CAROUSEL //
         this.props.artworks[0] ? (
           <div>
@@ -29,7 +30,8 @@ class Artwork extends React.Component {
               <img
                 src={this.props.artworks[0].imageUrl[0]}
                 alt={this.props.artworks[0].artist}
-                width="200"
+                id="map-popup-img"
+                // width="200"
               />
               <h3 className="artistname">{this.props.artworks[0].artist}</h3>
             </Link>
