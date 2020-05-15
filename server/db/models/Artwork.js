@@ -17,6 +17,7 @@ const Artwork = db.define('Artworks', {
     allowNull: true,
     defaultValue: false
   },
+
   timestamp: {
     type: Sequelize.DATE,
     defaultValue: Sequelize.NOW

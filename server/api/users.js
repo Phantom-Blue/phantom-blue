@@ -1,17 +1,40 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Artwork} = require('../db/models')
 module.exports = router
 
-// router.get('/', async (req, res, next) => {
-//   try {
-//     const users = await User.findAll({
-//       // explicitly select only the id and email fields - even though
-//       // users' passwords are encrypted, it won't help if we just
-//       // send everything to anyone who asks!
-//       attributes: ['id', 'email']
-//     })
-//     res.json(users)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+router.get('/', async (req, res, next) => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id', 'firstName', 'lastName', 'isVerified', 'email']
+    })
+    res.json(users)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:userId', async (req, res, next) => {
+  try {
+    console.log('req.params: ', req.params)
+    const users = await User.findByPk(req.params.userId)
+    const artwork = await users.getArtwork()
+    users.dataValues.artwork = artwork
+    res.json(users)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:userId', async (req, res, next) => {
+  try {
+    if (req.user && req.user.isAdmin) {
+      const artwork = await User.findByPk(req.params.userId)
+      await artwork.destroy()
+      res.sendStatus(204)
+    } else {
+      res.sendStatus(403)
+    }
+  } catch (err) {
+    next(err)
+  }
+})

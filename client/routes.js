@@ -9,6 +9,7 @@ import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
 import UpdateArtworkForm from './components/updateArtworkForm/UpdateArtworkForm.js'
 import MapView from './components/mapView/MapView'
+import SingleUserHome from './components/userHome/userHome'
 import LocationArtwork from './components/artwork/LocationArtwork'
 /**
  * COMPONENT
@@ -29,13 +30,14 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/" component={MapView} />
         {/**REVISIT PATH NAME CONVENTION */}
-        <Route exact path="/map" component={MapView} />
         <Route exact path="/artwork/:id" component={SingleArtwork} />
+        <Route exact path="/map" component={MapView} />
         <Route exact path="/location/:id" component={LocationArtwork} />
         <Route exact path="/all" component={AllArtworks} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
+            <Route exact path="/account" component={SingleUserHome} />
             <Route path="/home" component={MainHome} />
             {/** TODO: replace component on route below with upload Art component */}
             <Route path="/upload" component={UploadPage} />

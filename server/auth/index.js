@@ -40,8 +40,15 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', async (req, res, next) => {
+  try {
+    const users = await User.findByPk(req.user.id)
+    const artwork = await users.getArtwork()
+    users.dataValues.artwork = artwork
+    res.json(users)
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.use('/google', require('./google'))
