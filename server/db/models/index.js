@@ -6,8 +6,8 @@ const TaggedArtwork = require('./TaggedArtwork')
 
 // ASSOCIATIONS
 
+Artwork.belongsTo(Location, {foreignKey: {allowNull: false}})
 Location.hasMany(Artwork)
-Artwork.belongsTo(Location)
 
 Artwork.belongsTo(User)
 User.hasMany(Artwork)

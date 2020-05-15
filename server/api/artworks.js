@@ -119,8 +119,16 @@ router.post('/', async (req, res, next) => {
       // *** Set UserId equal to 1
       const UserId = req.user.id
 
-      let {artist, description, timestamp, imageUrl, LocationId} = req.body
-      if (imageUrl && Array.isArray(imageUrl)) {
+      let {
+        artist,
+        description,
+        timestamp,
+        imageUrl,
+        latitude,
+        longitude,
+        address
+      } = req.body
+      if (imageUrl && !Array.isArray(imageUrl)) {
         imageUrl = [imageUrl]
       }
       let isVerified = false
@@ -130,15 +138,29 @@ router.post('/', async (req, res, next) => {
         isVerified = true
       }
 
-      const newArt = await Artwork.create({
+      const location = await Location.findOrCreate({
+        where: {
+          latitude,
+          longitude,
+          address
+        }
+      })
+
+      console.log(location)
+
+      let newArt = await Artwork.create({
         artist,
         description,
         timestamp,
         imageUrl,
         isVerified,
         UserId,
-        LocationId
+        LocationId: location[0].dataValues.id
       })
+
+      newArt.dataValues.Location = location[0]
+      console.log('The newest art ', newArt)
+      // const newArt = await Artwork.findByPk(make.id, {include: Location})
       if (newArt) {
         res.json(newArt)
       } else {

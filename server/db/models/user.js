@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 const crypto = require('crypto')
+const Artwork = require('./Artwork')
 
 const User = db.define('Users', {
   firstName: {
@@ -85,6 +86,11 @@ User.encryptPassword = function(plainText, salt) {
     .update(plainText)
     .update(salt)
     .digest('hex')
+}
+
+User.prototype.getArtwork = async function() {
+  const artwork = await Artwork.findAll({where: {UserId: this.id}})
+  return artwork
 }
 
 /**
