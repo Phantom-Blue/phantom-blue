@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup, UserHome, UploadPage} from './components'
 import MainHome from './components/mainHome/MainHome'
 import AllArtworks from './components/allArtworks/AllArtworks'
 import SingleArtwork from './components/artwork/SingleArtwork'
@@ -40,7 +40,7 @@ class Routes extends Component {
             <Route exact path="/account" component={SingleUserHome} />
             <Route path="/home" component={MainHome} />
             {/** TODO: replace component on route below with upload Art component */}
-            <Route path="/upload" componet={UserHome} />
+            <Route path="/upload" component={UploadPage} />
             {/** TODO: replace component on route below with user account settings component */}
             <Route path="/account" componet={UserHome} />
             <Route
