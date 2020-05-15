@@ -3,11 +3,14 @@ import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
+import MainHome from './components/mainHome/MainHome'
 import AllArtworks from './components/allArtworks/AllArtworks'
 import SingleArtwork from './components/artwork/SingleArtwork'
 import {me} from './store'
+import UpdateArtworkForm from './components/updateArtworkForm/UpdateArtworkForm.js'
 import MapView from './components/mapView/MapView'
 import SingleUserHome from './components/userHome/userHome'
+import LocationArtwork from './components/artwork/LocationArtwork'
 /**
  * COMPONENT
  */
@@ -18,7 +21,7 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-    console.log(this.props)
+    console.log('user', isLoggedIn)
 
     return (
       <Switch>
@@ -29,16 +32,22 @@ class Routes extends Component {
         {/**REVISIT PATH NAME CONVENTION */}
         <Route exact path="/artwork/:id" component={SingleArtwork} />
         <Route exact path="/map" component={MapView} />
+        <Route exact path="/location/:id" component={LocationArtwork} />
         <Route exact path="/all" component={AllArtworks} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/account" component={SingleUserHome} />
-            <Route path="/home" component={UserHome} />
+            <Route path="/home" component={MainHome} />
             {/** TODO: replace component on route below with upload Art component */}
             <Route path="/upload" componet={UserHome} />
             {/** TODO: replace component on route below with user account settings component */}
             <Route path="/account" componet={UserHome} />
+            <Route
+              exact
+              path="/artwork/:id/edit"
+              component={UpdateArtworkForm}
+            />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
