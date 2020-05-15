@@ -155,7 +155,7 @@ class ArtworkOptions extends React.Component {
           <Popup
             trigger={
               <button type="button">
-                <h4>EDIT</h4>
+                <h4>E D I T</h4>
               </button>
             }
           >
