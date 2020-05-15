@@ -14,17 +14,54 @@ import {
   ButtonNext
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+import '../../../secrets'
 
 class MainHome extends React.Component {
+  constructor() {
+    super()
+    this.handleLocation = this.handleLocation.bind(this)
+  }
   componentDidMount() {
     this.props.getVerifiedArtwork()
+  }
+
+  handleLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(async function(position) {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+        var geocoder = new MapboxGeocoder({
+          accessToken: process.env.REACT_APP_MAPBOX_KEY,
+          types: 'address',
+          reverseGeocode: true
+        })
+        geocoder.addTo('#geocoder')
+        console.log(geocoder)
+
+        const address = await geocoder._geocode(
+          [latitude.toString(), longitude.toString()].join()
+        )
+        console.log(address)
+        // `api.mapbox.com/geocoding/v5/mapbox.places-permanent/{${longitude}, ${latitude}}`
+      })
+    } else {
+      console.log('Geolocation not available')
+    }
   }
 
   render() {
     console.log(this.props.artworks, 'INSIDE MAIN HOME RENDERRRRRRRRR')
     return (
       <div>
-        {this.props.artworks[0] ? (
+        <div>
+          <div id="geocoder">{}</div>
+          <button type="submit" onClick={() => this.handleLocation()}>
+            {' '}
+            SHARE LOCATION{' '}
+          </button>
+        </div>
+        {/* {this.props.artworks[0] ? (
           <CarouselProvider
             naturalSlideWidth={100}
             naturalSlideHeight={125}
@@ -65,7 +102,7 @@ class MainHome extends React.Component {
               width="300"
             />
           </center>
-        )}
+        )} */}
       </div>
     )
   }
