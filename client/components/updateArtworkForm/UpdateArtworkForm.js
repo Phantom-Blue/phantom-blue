@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link, Redirect} from 'react-router-dom'
+// import {Link, Redirect} from 'react-router-dom'
 import {fetchUpdatedArtwork, fetchOneArtwork} from '../../store/artworks'
 
 class UpdateArtworkForm extends Component {
@@ -55,7 +55,7 @@ class UpdateArtworkForm extends Component {
   }
 
   render() {
-    const {artwork} = this.props || {}
+    const {artwork} = this.props
     const handleDeleteImage = this.handleDeleteImage
     return (
       <div className="update-form-container">

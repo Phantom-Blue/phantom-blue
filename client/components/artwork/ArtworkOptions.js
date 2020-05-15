@@ -86,7 +86,6 @@ class ArtworkOptions extends React.Component {
                   <h4> V E R I F Y </h4>
                 </button>
               }
-              // position="center right"
             >
               <button type="submit" onClick={e => this.handleVerify(e)}>
                 I've seen this piece IRL, at this location!
@@ -120,7 +119,6 @@ class ArtworkOptions extends React.Component {
                 <h4> D E L E T E </h4>
               </button>
             }
-            // position="center"
           >
             <Link to="/map">
               <button type="submit" onClick={e => this.handleDelete(e)}>
@@ -139,7 +137,6 @@ class ArtworkOptions extends React.Component {
                 <h4> D E L E T E </h4>
               </button>
             }
-            // position="center"
           >
             <Link to="/map">
               <button type="submit" onClick={e => this.handleDelete(e)}>
@@ -150,19 +147,10 @@ class ArtworkOptions extends React.Component {
         ) : (
           ''
         )}
-        {// we render the edit artwork component if the user is an admin
-        user.isAdmin === true ? (
-          <Popup
-            trigger={
-              <button type="button">
-                <h4>E D I T</h4>
-              </button>
-            }
-          >
-            <Link to={`/artwork/${artwork.id}/edit`}>
-              <button type="submit">Yes, edit artwork</button>
-            </Link>
-          </Popup>
+        {user.isAdmin === true ? (
+          <Link to={`/artwork/${artwork.id}/edit`}>
+            <button type="submit">EDIT</button>
+          </Link>
         ) : (
           ''
         )}
