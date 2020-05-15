@@ -14,6 +14,35 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/verified', async (req, res, next) => {
+  try {
+    const verifiedArtworks = await Artwork.findAll({
+      where: {
+        isVerified: true
+      },
+      include: Location
+    })
+    res.json(verifiedArtworks)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/artbylocation/:locationId', async (req, res, next) => {
+  const {locationId} = req.params
+  try {
+    const artByLocationId = await Artwork.findAll({
+      where: {
+        LocationId: locationId
+      },
+      include: Location
+    })
+    res.json(artByLocationId)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:artworkId', async (req, res, next) => {
   const {artworkId} = req.params
   try {
