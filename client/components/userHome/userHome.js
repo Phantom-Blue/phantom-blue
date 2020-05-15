@@ -36,6 +36,7 @@ export class SingleUserHome extends Component {
                   ? allArtwork.map(artwork => {
                       return (
                         <div className="artwork-display" key={artwork.id}>
+                          <Link to={`/artwork/${artwork.id}`} />
                           <img
                             src={artwork.imageUrl}
                             alt="Artwork"
