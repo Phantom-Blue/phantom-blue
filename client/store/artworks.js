@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 
 import axios from 'axios'
+import history from '../history'
 
 // A C T I O N   C R E A T O R S //
 const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
@@ -16,6 +17,7 @@ const ADD_TAGS = 'ADD_TAGS'
 const UPDATE_ARTWORK = 'UPDATE_ARTWORK'
 const DELETE_ARTWORK = 'DELETE_ARTWORK'
 const POST_ARTWORK = 'POST_ARTWORK'
+const CATCH_ERROR = 'CATCH_ERROR'
 
 // A C T I O N S //
 const gotArtByLoc = artwork => ({
@@ -70,6 +72,11 @@ const taggedArt = artwork => ({
 const postedArtwork = artwork => ({
   type: POST_ARTWORK,
   artwork
+})
+
+const passError = error => ({
+  type: CATCH_ERROR,
+  error
 })
 
 // T H U N K S //
@@ -172,11 +179,22 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
 }
 
 export const postArtwork = newArt => async dispatch => {
+  let res
   try {
-    const {data} = await axios.post('/api/artworks', newArt)
-    dispatch(postedArtwork(data))
+    if (newArt.error) {
+      return dispatch(passError(newArt.error))
+    }
+    res = await axios.post('/api/artworks', newArt)
   } catch (error) {
     console.error('Unable to post artwork.')
+    return dispatch(passError(error))
+  }
+
+  try {
+    dispatch(postedArtwork(res.data))
+    history.push('/map')
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -184,12 +202,16 @@ export const postArtwork = newArt => async dispatch => {
 const initialState = {
   all: [],
   selected: {},
+  error: null,
   verified: []
 }
 
 // R E D U C E R //
+// eslint-disable-next-line complexity
 export default function artworkReducer(state = initialState, action) {
   switch (action.type) {
+    case CATCH_ERROR:
+      return {...state, error: action.error}
     case GET_ART_BY_LOCATION:
       return {...state, selected: action.artwork}
     case GET_ART_BY_LOCATIONID:
