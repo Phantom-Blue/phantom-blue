@@ -91,7 +91,7 @@ router.post('/', async (req, res, next) => {
       const UserId = req.user.id
 
       let {artist, description, timestamp, imageUrl, LocationId} = req.body
-      if (imageUrl && Array.isArray(imageUrl)) {
+      if (imageUrl && !Array.isArray(imageUrl)) {
         imageUrl = [imageUrl]
       }
       let isVerified = false
