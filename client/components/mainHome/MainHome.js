@@ -16,10 +16,15 @@ import {
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '../../../secrets'
+import Popup from 'reactjs-popup'
+import ArtByLocationMap from '../mapView/ArtByLocationMap'
 
 class MainHome extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      location: false
+    }
     this.handleLocation = this.handleLocation.bind(this)
   }
   componentDidMount() {
@@ -51,6 +56,9 @@ class MainHome extends React.Component {
         getMyLocationArt(myLocation)
         // `api.mapbox.com/geocoding/v5/mapbox.places-permanent/{${longitude}, ${latitude}}`
       })
+      this.setState({
+        location: true
+      })
     } else {
       console.log('Geolocation not available')
     }
@@ -58,7 +66,7 @@ class MainHome extends React.Component {
 
   render() {
     console.log(this.props, 'INSIDE MAIN HOME RENDERRRRRRRRR')
-    return (
+    return this.state.location === false ? (
       <div>
         <div>
           <div id="geocoder">{}</div>
@@ -66,7 +74,7 @@ class MainHome extends React.Component {
             SHARE LOCATION
           </button>
         </div>
-        {/* {this.props.artworks[0] ? (
+        {this.props.artworks[0] ? (
           <CarouselProvider
             naturalSlideWidth={100}
             naturalSlideHeight={125}
@@ -107,8 +115,10 @@ class MainHome extends React.Component {
               width="300"
             />
           </center>
-        )} */}
+        )}
       </div>
+    ) : (
+      <ArtByLocationMap artworks={this.props.locationArtworks} />
     )
   }
 }
