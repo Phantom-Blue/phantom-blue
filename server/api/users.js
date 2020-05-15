@@ -15,14 +15,11 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    if (req.user && req.user.isAdmin) {
-      const users = await User.findByPk(req.params.userId, {
-        attributes: ['firstName', 'lastName', 'isVerified', 'imageUrl']
-      })
-      res.json(users)
-    } else {
-      res.sendStatus(403)
-    }
+    console.log('req.params: ', req.params)
+    const users = await User.findByPk(req.params.userId, {
+      // attributes: ['firstName', 'lastName', 'isVerified', 'imageUrl']
+    })
+    res.json(users)
   } catch (err) {
     next(err)
   }
@@ -31,7 +28,7 @@ router.get('/:userId', async (req, res, next) => {
 router.delete('/:userId', async (req, res, next) => {
   try {
     if (req.user && req.user.isAdmin) {
-      const artwork = await Artwork.findByPk(req.params.userId)
+      const artwork = await User.findByPk(req.params.userId)
       await artwork.destroy()
       res.sendStatus(204)
     } else {

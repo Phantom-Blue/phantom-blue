@@ -169,7 +169,10 @@ const seed = async () => {
           'Mural of Snoop Dogg by Long Island-basedUfemale artist BKFoxx, who paints photorealistic murals using only spray paint',
         LocationId: 4,
         isVerified: false,
-        imageUrl: ['https://matcmp.ncc.edu/grahamf/StreetArt/misc140a.jpg']
+        imageUrl: [
+          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140a.jpg',
+          'https://matcmp.ncc.edu/grahamf/StreetArt/misc140d.jpg'
+        ]
       }),
       //7
       Artwork.create({

@@ -2,12 +2,14 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import user from './user'
+import userReducer from './userHome'
 import artworkReducer from './artworks'
+import user from './user'
 
 const reducer = combineReducers({
-  user: user,
-  artwork: artworkReducer
+  singleUser: userReducer,
+  artwork: artworkReducer,
+  user: user
 })
 
 const middleware = composeWithDevTools(
