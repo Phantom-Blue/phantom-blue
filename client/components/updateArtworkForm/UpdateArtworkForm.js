@@ -45,6 +45,7 @@ class UpdateArtworkForm extends Component {
       description: this.state.updateDescription
     }
     this.props.handleUpdateArtwork(updateArtworkId, updatedArtworkInfo)
+    this.props.history.push(`/artwork/${updateArtworkId}`)
   }
 
   async handleDeleteImage(artworkImg) {
