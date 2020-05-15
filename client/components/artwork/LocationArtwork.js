@@ -46,15 +46,15 @@ class LocationArtwork extends React.Component {
                           <h5 className="artistname">{artwork.artist}</h5>
                         </Link>
                         <div>
-                          <a
+                          {/* <a
                             href={generateUrl(
-                              this.props.artworks[0].Location.address
+                              artwork.Location.address
                             )}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
                             <h4>TAKE ME THERE</h4>
-                          </a>
+                          </a> */}
                           <ButtonBack>Back</ButtonBack>
                           <ButtonNext>Next</ButtonNext>
                         </div>
