@@ -42,19 +42,19 @@ input[type='password'] {
   align-items: center;
   background-color: white;
   box-shadow: 5px 10px 8px #888888;
-  padding: 20px;
+  padding: 5px;
 }
 #google-log-in img {
   max-width: 25px;
   max-height: 25px;
 }
 #google-log-in a {
-  padding: 0 30px;
+  padding: 0 5px;
 }
 #google-log-in a,
 #sign-up-form-btn {
   color: black;
-  font-size: 18px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -66,4 +66,16 @@ input[type='password'] {
 #sign-up-form-btn:hover,
 #login-form-btn:hover {
   opacity: 0.6;
+}
+@media only screen and (min-device-width: 768px) {
+  #google-log-in {
+    padding: 20px;
+  }
+  #google-log-in a {
+    padding: 0 30px;
+  }
+  #google-log-in a,
+  #sign-up-form-btn {
+    font-size: 18px;
+  }
 }
