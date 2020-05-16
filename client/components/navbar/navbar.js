@@ -17,7 +17,7 @@ class Navbar extends Component {
   handleMenuClick() {
     const {innerWidth} = window
 
-    if (innerWidth <= 667) {
+    if (innerWidth <= 768) {
       if (this.menuItems.current.style.display === 'flex') {
         this.menuItems.current.style.display = 'none'
       } else {
