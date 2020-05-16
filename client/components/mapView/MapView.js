@@ -63,12 +63,6 @@ class MapView extends Component {
                     }}
                   >
                     <MapPin />
-                    {/* <img
-                      width="50px"
-                      height="50px"
-                      src="/location-pin.svg"
-                      alt="city"
-                    /> */}
                   </button>
                 </Marker>
               ))

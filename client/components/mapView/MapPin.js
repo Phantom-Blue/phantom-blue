@@ -6,13 +6,14 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
 
 const pinStyle = {
   cursor: 'pointer',
-  fill: '#d00',
-  stroke: 'none'
+  fill: '#2E86C1',
+  stroke: 'none',
+  enableBackground: 'new 0 0 512 512'
 }
 
 export default class CityPin extends Component {
   render() {
-    const {size = 20, onClick} = this.props
+    const {size = 38, onClick} = this.props
 
     return (
       <svg
