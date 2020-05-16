@@ -18,6 +18,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '../../../secrets'
 import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import ls from 'local-storage'
+import Geocode from 'react-geocode'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -44,19 +45,22 @@ class MainHome extends React.Component {
         ls.set('latitude', latitude)
         ls.set('longitude', longitude)
 
-        var geocoder = new MapboxGeocoder({
-          accessToken: process.env.REACT_APP_MAPBOX_KEY,
-          types: 'address',
-          reverseGeocode: true
-        })
-        geocoder.addTo('#geocoder')
-        console.log(geocoder)
+        Geocode.setApiKey('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
 
-        const address = await geocoder._geocode(
-          [latitude.toString(), longitude.toString()].join()
+        Geocode.setLanguage('en')
+        Geocode.setRegion('es')
+        Geocode.enableDebug()
+
+        // Get address from latidude & longitude.
+        Geocode.fromLatLng('48.8583701', '2.2922926').then(
+          response => {
+            const address = response.results[0].formatted_address
+            console.log(address)
+          },
+          error => {
+            console.error(error)
+          }
         )
-
-        console.log('ADDRESS INSIDE IF STATEMENT', address)
 
         const myLocation = {
           latitude,
