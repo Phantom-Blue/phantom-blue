@@ -22,28 +22,30 @@ export class SingleUserHome extends Component {
     return (
       <div>
         {this.props.user.firstName ? (
-          <div className="user-home-container" align="center">
-            <br />
-            <h2> Welcome, {this.props.user.firstName}! </h2>
-            <br />
-            <img src={this.props.user.imageUrl} width="100%" />
-            <br />
+          <div className="user-home-container">
+            <div className="user-info-container">
+              <div>
+                <h2 align="center" id="user-name">
+                  {' '}
+                  Welcome, {this.props.user.firstName}!
+                </h2>
+              </div>
+              <div>
+                <img id="user-img" src={this.props.user.imageUrl} />
+              </div>
+            </div>
             <div className="saved-artwork">
-              <h5 align="center">Your Uploaded Artwork</h5>
-              <br />
-              <div className="users-artworks" align="center">
+              <h2 align="center">Your Uploaded Artwork</h2>
+              <div className="users-artworks">
                 {allArtwork
                   ? allArtwork.map(artwork => {
                       return (
                         <div className="artwork-display" key={artwork.id}>
-                          <Link to={`/artwork/${artwork.id}`} />
-                          <img
-                            src={artwork.imageUrl}
-                            alt="Artwork"
-                            width="250px"
-                          />
-                          <p>{artwork.artist}</p>
-                          <br />
+                          <Link to={`/artwork/${artwork.id}`}>
+                            <img src={artwork.imageUrl} alt="Artwork" />
+                            <p>{artwork.artist}</p>
+                            <br />
+                          </Link>
                         </div>
                       )
                     })
