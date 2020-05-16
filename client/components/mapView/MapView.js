@@ -13,6 +13,7 @@ import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
+import MapPin from './MapPin'
 
 class MapView extends Component {
   constructor(props) {
@@ -61,12 +62,13 @@ class MapView extends Component {
                       this.setState({selectedPin: artwork.Location})
                     }}
                   >
-                    <img
+                    <MapPin />
+                    {/* <img
                       width="50px"
                       height="50px"
                       src="/location-pin.svg"
                       alt="city"
-                    />
+                    /> */}
                   </button>
                 </Marker>
               ))
