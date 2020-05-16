@@ -8,11 +8,9 @@ import './navbar.css'
 class Navbar extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      close: 'hidden'
-    }
     this.menuIcon = React.createRef()
     this.menuItems = React.createRef()
+
     this.handleMenuClick = this.handleMenuClick.bind(this)
   }
 
@@ -20,10 +18,10 @@ class Navbar extends Component {
     const {innerWidth} = window
 
     if (innerWidth <= 667) {
-      if (this.menuItems.current.style.display === 'block') {
+      if (this.menuItems.current.style.display === 'flex') {
         this.menuItems.current.style.display = 'none'
       } else {
-        this.menuItems.current.style.display = 'block'
+        this.menuItems.current.style.display = 'flex'
       }
     }
   }

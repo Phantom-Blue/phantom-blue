@@ -5,42 +5,62 @@
 }
 .nav-links {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: baseline;
+  margin: 10px;
 }
 
 .main-link a,
 .sub-links a {
   color: black;
+  margin: 0;
 }
 
 .main-link a {
-  font-size: 60px;
+  font-size: 40px;
 }
 .sub-links a {
   font-size: 20px;
+  margin: 5px;
 }
 .sub-links {
   display: none;
+  flex-direction: column;
+  padding: 5px;
 }
-/* Display menu icon on mobile */
+/*MOBILE MENU BAR */
+.menu-icon {
+  margin: 0;
+  position: absolute;
+  top: 12px;
+  right: 0;
+}
 .menu-icon div {
   width: 35px;
   height: 5px;
-  background-color: black;
   margin: 6px 20px;
+  background-color: black;
 }
+
 /* BELOW CHANGES TO TABLES AND DESKTOP*/
 @media only screen and (min-device-width: 768px) {
   .nav-links {
+    flex-direction: row;
     justify-content: space-between;
+    padding: 20px;
   }
   .menu-icon div {
     display: none;
   }
   .sub-links {
-    display: block;
+    display: flex;
+    flex-direction: row;
+  }
+  .sub-links a {
+    margin: 0 10px;
+  }
+  .sub-links a:hover {
+    opacity: 0.6;
   }
 }
