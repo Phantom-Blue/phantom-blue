@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../../store'
+import {Link} from 'react-router-dom'
 import './auth-form.css'
 /**
  * COMPONENT
@@ -51,7 +52,18 @@ const AuthForm = props => {
               {displayName}
             </button>
           </div>
-          <a href="/auth/google">{displayName} with Google</a>
+          <div>
+            {name === 'login' ? (
+              <Link id="sign-up-form-btn" to="signup">
+                Create an account{' '}
+              </Link>
+            ) : (
+              ''
+            )}
+          </div>
+          <a id="google-log-in" href="/auth/google">
+            {displayName} with Google
+          </a>
         </div>
       </form>
     </div>

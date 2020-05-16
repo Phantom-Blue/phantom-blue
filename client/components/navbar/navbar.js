@@ -79,7 +79,6 @@ class Navbar extends Component {
                 <Link to="/login">Upload Art</Link>
                 <Link to="/map">Map</Link>
                 <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
               </div>
             </div>
           )}

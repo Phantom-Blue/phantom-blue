@@ -19,7 +19,7 @@ label small {
 input[type='text'],
 input[type='email'],
 input[type='password'] {
-  background: white;
+  background-color: white;
   border: 1px solid black;
   padding: 10px;
   border-radius: 10px;
@@ -32,4 +32,16 @@ input[type='password'] {
   font-size: 20px;
   background-color: #1ba644;
   border-radius: 10px;
+}
+
+#google-log-in,
+#sign-up-form-btn {
+  color: black;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#google-log-in:hover,
+#sign-up-form-btn:hover {
+  opacity: 0.6;
 }
