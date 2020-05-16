@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../../store'
 import {Link} from 'react-router-dom'
+import GoogleLogo from '../resources/google-logo.png'
 import './auth-form.css'
 /**
  * COMPONENT
@@ -72,9 +73,12 @@ const AuthForm = props => {
               ''
             )}
           </div>
-          <a id="google-log-in" href="/auth/google">
-            {displayName} with Google
-          </a>
+          <div id="google-log-in">
+            <img src={GoogleLogo} alt="google-logo" />
+            <a id="google-log-in-btn" href="/auth/google">
+              {displayName} with Google
+            </a>
+          </div>
         </div>
       </form>
     </div>

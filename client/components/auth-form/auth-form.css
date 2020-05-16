@@ -35,7 +35,23 @@ input[type='password'] {
   border-radius: 10px;
 }
 
-#google-log-in,
+#google-log-in {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  box-shadow: 5px 10px 8px #888888;
+  padding: 20px;
+}
+#google-log-in img {
+  max-width: 25px;
+  max-height: 25px;
+}
+#google-log-in a {
+  padding: 0 30px;
+}
+#google-log-in a,
 #sign-up-form-btn {
   color: black;
   font-size: 18px;
