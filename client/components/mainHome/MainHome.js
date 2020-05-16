@@ -16,16 +16,19 @@ import {
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '../../../secrets'
-import Popup from 'reactjs-popup'
 import ArtByLocationMap from '../mapView/ArtByLocationMap'
+import ls from 'local-storage'
 
 class MainHome extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: false
+      location: false,
+      longitude: 0,
+      latitude: 0
     }
     this.handleLocation = this.handleLocation.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     this.props.getVerifiedArtwork()
@@ -37,6 +40,10 @@ class MainHome extends React.Component {
       navigator.geolocation.getCurrentPosition(async function(position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
+        console.log(longitude)
+        ls.set('latitude', latitude)
+        ls.set('longitude', longitude)
+
         var geocoder = new MapboxGeocoder({
           accessToken: process.env.REACT_APP_MAPBOX_KEY,
           types: 'address',
@@ -48,24 +55,39 @@ class MainHome extends React.Component {
         const address = await geocoder._geocode(
           [latitude.toString(), longitude.toString()].join()
         )
+
+        console.log('ADDRESS INSIDE IF STATEMENT', address)
+
         const myLocation = {
           latitude,
           longitude,
           address: address.body.features[0].place_name
         }
         getMyLocationArt(myLocation)
-        // `api.mapbox.com/geocoding/v5/mapbox.places-permanent/{${longitude}, ${latitude}}`
-      })
-      this.setState({
-        location: true
       })
     } else {
       console.log('Geolocation not available')
     }
+
+    const lat = ls.get('latitude')
+    const long = ls.get('longitude')
+
+    this.setState({
+      latitude: lat,
+      longitude: long,
+      location: true
+    })
   }
 
+  // handleChange(e){
+  //   e.preventDefault(e)
+  //   this.setState({
+  //     [e.target.name] : e.target.value
+  //   })
+
+  // }
+
   render() {
-    console.log(this.props, 'INSIDE MAIN HOME RENDERRRRRRRRR')
     return this.state.location === false ? (
       <div>
         <div>
@@ -118,7 +140,11 @@ class MainHome extends React.Component {
         )}
       </div>
     ) : (
-      <ArtByLocationMap artworks={this.props.locationArtworks} />
+      <ArtByLocationMap
+        artworks={this.props.locationArtworks}
+        latitude={this.state.latitude}
+        longitude={this.state.longitude}
+      />
     )
   }
 }

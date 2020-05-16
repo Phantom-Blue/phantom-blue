@@ -50,6 +50,7 @@
     "express": "^4.16.4",
     "express-session": "^1.17.1",
     "history": "^4.10.1",
+    "local-storage": "^2.0.0",
     "mapbox-gl": "^1.10.0",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",

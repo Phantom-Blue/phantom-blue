@@ -18,17 +18,18 @@ class ArtByLoctionMap extends Component {
     super(props)
     this.state = {
       viewport: {
-        latitude: 40.7736,
-        longitude: -73.9566,
+        latitude: this.props.latitude,
+        longitude: this.props.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 16
+        zoom: 15
       },
       selectedPin: null
     }
   }
 
   render() {
+    // console.log(this.props)
     const {locationArtworks} = this.props
     return (
       <div className="map-container">
