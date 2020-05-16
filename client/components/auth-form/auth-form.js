@@ -33,13 +33,13 @@ const AuthForm = props => {
             <div>
               <div>
                 <label id="labels" htmlFor="firstName">
-                  <small>First Name</small>
+                  <small>First name</small>
                 </label>
                 <input name="firstName" type="text" defaultValue={null} />
               </div>
               <div>
                 <label htmlFor="lastName">
-                  <small>Last Name</small>
+                  <small>Last name</small>
                 </label>
                 <input name="lastName" type="text" defaultValue={null} />
               </div>
@@ -53,8 +53,19 @@ const AuthForm = props => {
             </button>
           </div>
           <div>
+            {name === 'signup' ? (
+              <p>
+                Already have an account?{' '}
+                <Link id="login-form-btn" to="/login">
+                  {' '}
+                  Sign In{' '}
+                </Link>{' '}
+              </p>
+            ) : (
+              ''
+            )}
             {name === 'login' ? (
-              <Link id="sign-up-form-btn" to="signup">
+              <Link id="sign-up-form-btn" to="/signup">
                 Create an account{' '}
               </Link>
             ) : (

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 100px;
 }
 
 .login-form-container form div,
@@ -41,7 +42,12 @@ input[type='password'] {
   cursor: pointer;
 }
 
+#login-form-btn {
+  color: #1277c9;
+}
+
 #google-log-in:hover,
-#sign-up-form-btn:hover {
+#sign-up-form-btn:hover,
+#login-form-btn:hover {
   opacity: 0.6;
 }
