@@ -13,7 +13,7 @@ export class UploadForm extends React.Component {
     this.state = {
       name: '',
       description: '',
-      imageUrl: '',
+      imageFile: '',
       latitude: null,
       longitude: null,
       address: null,
@@ -23,6 +23,7 @@ export class UploadForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
+    this.handleFile = this.handleFile.bind(this)
   }
 
   async handleGeocode(geocoder) {
@@ -51,14 +52,10 @@ export class UploadForm extends React.Component {
       types: 'country,region,place,locality,neighborhood, address'
     })
     geocoder.addTo('#geocoder')
-    // geocoder._inputEl.onChange(console.log(geocoder.inputString))
-    console.dir(geocoder._inputEl)
+
     geocoder._inputEl.addEventListener('change', () => {
       this.handleGeocode(geocoder)
     })
-
-    console.dir(geocoder)
-    // document.getElementById('search').innerHTML = geocoder
   }
 
   handleChange(e) {
@@ -68,6 +65,14 @@ export class UploadForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     this.props.postArtwork(this.state)
+  }
+
+  handleFile(e) {
+    let reader = new FileReader()
+    reader.onload = () => {
+      this.setState({imageFile: reader.result})
+    }
+    reader.readAsDataURL(e.target.files[0])
   }
 
   errorMessage() {
@@ -105,13 +110,13 @@ export class UploadForm extends React.Component {
               handleChange(e)
             }}
           />
-          <label htmlFor="imageUrl">Image URL: </label>
+          <label htmlFor="imageFile">Image File:</label>
           <input
-            type="text"
-            value={this.state.imageUrl}
-            name="imageUrl"
+            id="imageFile"
+            type="file"
+            name="imageFile"
             onChange={e => {
-              handleChange(e)
+              this.handleFile(e)
             }}
           />
           <label>Address:</label>

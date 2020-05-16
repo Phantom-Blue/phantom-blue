@@ -1,5 +1,11 @@
 const router = require('express').Router()
 const {Artwork, Location, Tag} = require('../db/models')
+const cloudinary = require('cloudinary')
+cloudinary.config({
+  cloud_name: 'pentimento',
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 // GET ALL ARTWORKS
 
@@ -110,6 +116,7 @@ router.delete('/:ArtworkId', async (req, res, next) => {
   }
 })
 
+// eslint-disable-next-line complexity
 router.post('/', async (req, res, next) => {
   /* To test with Postman, follow the commented instructions */
 
@@ -123,20 +130,30 @@ router.post('/', async (req, res, next) => {
         artist,
         description,
         timestamp,
-        imageUrl,
         latitude,
         longitude,
-        address
+        address,
+        imageFile
+        // imageUrl
       } = req.body
-      if (imageUrl && !Array.isArray(imageUrl)) {
-        imageUrl = [imageUrl]
-      }
       let isVerified = false
 
       // *** Comment out the following if statement
       if (req.user.isVerified || req.user.isAdmin) {
         isVerified = true
       }
+
+      let imageUrl
+
+      if (latitude && longitude && address) {
+        await cloudinary.v2.uploader.upload(imageFile, function(error, result) {
+          console.log(result, error)
+          imageUrl = result.secure_url
+        })
+      }
+      // if (imageUrl && !Array.isArray(imageUrl)) {
+      //   imageUrl = [imageUrl]
+      // }
 
       const location = await Location.findOrCreate({
         where: {
@@ -152,7 +169,7 @@ router.post('/', async (req, res, next) => {
         artist,
         description,
         timestamp,
-        imageUrl,
+        imageUrl: [imageUrl],
         isVerified,
         UserId,
         LocationId: location[0].dataValues.id
