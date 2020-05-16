@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth} from '../store'
-
+import {auth} from '../../store'
+import './auth-form.css'
 /**
  * COMPONENT
  */
@@ -10,25 +10,28 @@ const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
 
   return (
-    <div>
+    <div className="login-form-container">
       <form onSubmit={handleSubmit} name={name}>
+        {error && error.response && <div> {error.response.data} </div>}
         <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="text" />
+          <div>
+            <label htmlFor="email">
+              <small>Email</small>
+            </label>
+            <input name="email" type="text" />
+          </div>
+          <div>
+            <label htmlFor="password">
+              <small>Password</small>
+            </label>
+            <input name="password" type="password" />
+          </div>
         </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
+        <div className="sign-up-form-container">
           {name === 'signup' ? (
             <div>
               <div>
-                <label htmlFor="firstName">
+                <label id="labels" htmlFor="firstName">
                   <small>First Name</small>
                 </label>
                 <input name="firstName" type="text" defaultValue={null} />
@@ -43,11 +46,14 @@ const AuthForm = props => {
           ) : (
             ''
           )}
-          <button type="submit">{displayName}</button>
+          <div>
+            <button id="login-btn" type="submit">
+              {displayName}
+            </button>
+          </div>
+          <a href="/auth/google">{displayName} with Google</a>
         </div>
-        {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
     </div>
   )
 }
