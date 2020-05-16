@@ -133,8 +133,8 @@ router.post('/', async (req, res, next) => {
         latitude,
         longitude,
         address,
+        imageUrl,
         imageFile
-        // imageUrl
       } = req.body
       let isVerified = false
 
@@ -143,17 +143,12 @@ router.post('/', async (req, res, next) => {
         isVerified = true
       }
 
-      let imageUrl
-
       if (latitude && longitude && address) {
         await cloudinary.v2.uploader.upload(imageFile, function(error, result) {
           console.log(result, error)
           imageUrl = result.secure_url
         })
       }
-      // if (imageUrl && !Array.isArray(imageUrl)) {
-      //   imageUrl = [imageUrl]
-      // }
 
       const location = await Location.findOrCreate({
         where: {
@@ -162,8 +157,6 @@ router.post('/', async (req, res, next) => {
           address
         }
       })
-
-      console.log(location)
 
       let newArt = await Artwork.create({
         artist,
@@ -176,8 +169,7 @@ router.post('/', async (req, res, next) => {
       })
 
       newArt.dataValues.Location = location[0]
-      console.log('The newest art ', newArt)
-      // const newArt = await Artwork.findByPk(make.id, {include: Location})
+
       if (newArt) {
         res.json(newArt)
       } else {
