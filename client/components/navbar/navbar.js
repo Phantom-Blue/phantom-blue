@@ -65,7 +65,19 @@ class Navbar extends Component {
               <div className="main-link">
                 <Link to="/">PENTIMENTO</Link>
               </div>
-              <div className="sub-links">
+              {/**Mobile menu bar */}
+              <div
+                className="menu-icon"
+                ref={this.menuIcon}
+                onClick={e => {
+                  this.handleMenuClick(e)
+                }}
+              >
+                <div />
+                <div />
+                <div />
+              </div>
+              <div className="sub-links" ref={this.menuItems}>
                 <Link to="/login">Upload Art</Link>
                 <Link to="/map">Map</Link>
                 <Link to="/login">Login</Link>
