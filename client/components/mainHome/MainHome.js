@@ -113,7 +113,7 @@ class MainHome extends React.Component {
       <div>
         <div className="search-section">
           <div className="search-label">
-            <p>To start looking for artworks near you,</p>
+            <p>To find street art near you,</p>
             <h4>enter you address:</h4>
           </div>
           <div className="search-box-submit">
