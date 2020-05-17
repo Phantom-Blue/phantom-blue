@@ -17,8 +17,9 @@ import 'pure-react-carousel/dist/react-carousel.es.css'
 import '../../../secrets'
 import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import ls from 'local-storage'
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+// import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
 import 'react-google-places-autocomplete/dist/index.min.css'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -26,12 +27,13 @@ class MainHome extends React.Component {
     this.state = {
       location: false,
       longitude: 0,
-      latitude: 0
+      latitude: 0,
+      address: null,
+      error: null
     }
     this.handleLocation = this.handleLocation.bind(this)
-  }
-  componentDidMount() {
-    this.props.getVerifiedArtwork()
+    this.handleGeocode = this.handleGeocode.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleLocation() {
@@ -40,14 +42,11 @@ class MainHome extends React.Component {
       navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
-
         ls.set('latitude', latitude)
         ls.set('longitude', longitude)
       })
-
       const lat = ls.get('latitude')
       const long = ls.get('longitude')
-
       const myLocation = {
         latitude: lat,
         longitude: long
@@ -65,7 +64,22 @@ class MainHome extends React.Component {
     }
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+
+    const {latitude, longitude} = this.state
+
+    const myLocation = {latitude, longitude}
+
+    this.props.getMyLocationArt(myLocation)
+
+    this.setState({
+      location: true
+    })
+  }
+
   async handleGeocode(geocoder) {
+    // console.log('GOT IN GEOCODE')
     const coded = await geocoder._geocode(geocoder._inputEl.value)
     if (coded.body.features[0]) {
       let longitude = coded.body.features[0].center[0]
@@ -82,7 +96,10 @@ class MainHome extends React.Component {
       })
     }
   }
+
   componentDidMount() {
+    this.props.getVerifiedArtwork()
+
     var geocoder = new MapboxGeocoder({
       accessToken: process.env.REACT_APP_MAPBOX_KEY,
       types: 'country,region,place,locality,neighborhood, address'
@@ -97,10 +114,25 @@ class MainHome extends React.Component {
     console.log('MAIN HOME RENDER', this.props.locationArtworks)
     return this.state.location === false ? (
       <div>
+        <form>
+          <label>
+            <p>To start looking for artworks near you</p>
+            <h4>enter you address:</h4>
+          </label>
+          <div id="geocoder" />
+          <button
+            type="submit"
+            onClick={e => {
+              this.handleSubmit(e)
+            }}
+          >
+            Submit!
+          </button>
+        </form>
         <div>
-          <GooglePlacesAutocomplete onSelect={console.log('SEARCH')} />
+          {/* <GooglePlacesAutocomplete onSelect={console.log('SEARCH')} /> */}
           <button type="submit" onClick={() => this.handleLocation()}>
-            SHARE LOCATION
+            or share your current location
           </button>
         </div>
         {this.props.artworks[0] ? (
