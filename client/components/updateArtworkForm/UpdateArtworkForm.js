@@ -119,10 +119,13 @@ class UpdateArtworkForm extends Component {
               name="updateImageFile"
               onChange={e => this.handleFileChange(e, this.state)}
             />
-            <label htmlFor="file">Upload Photo</label>
+            <label htmlFor="file" className="file-label">
+              Upload Another Photo
+            </label>
           </div>
-          <div>
+          <div id="update-artist-name">
             <input
+              id="update-artist-name"
               type="text"
               name="updateArtist"
               value={this.state.updateArtist}

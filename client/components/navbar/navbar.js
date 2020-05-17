@@ -18,10 +18,10 @@ class Navbar extends Component {
     const {innerWidth} = window
 
     if (innerWidth <= 768) {
-      if (this.menuItems.current.style.display === 'flex') {
-        this.menuItems.current.style.display = 'none'
-      } else {
+      if (this.menuItems.current.style.display === 'none') {
         this.menuItems.current.style.display = 'flex'
+      } else {
+        this.menuItems.current.style.display = 'none'
       }
     }
   }
