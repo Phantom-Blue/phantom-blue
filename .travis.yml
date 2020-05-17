@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-- 12
+  - 12
 services:
-- postgresql
+  - postgresql
 addons:
   postgresql: '10'
 dist: xenial
@@ -11,12 +11,17 @@ notifications:
     on_success: change
     on_failure: always
 install:
-- npm ci
+  - npm ci
 before_script:
-- psql -c 'create database "pentimento-test";' -U postgres
+  - psql -c 'create database "pentimento-test";' -U postgres
 script:
-- npm test
-- npm run build-client
-deploy:
+  - npm test
+  - npm run build-client
+deploy: # see README for details on these keys
+  skip_cleanup: true
+  provider: heroku
+  app: pentimentostreet
   api_key:
-    secure: QbX9BGjdlqVsodIOsuSLUiZHu16dFsYFNRXtgeRAUyENR1Horghp4cQPxAcy4BtEJXA0o1VKzNP0NJLhaMiEzqLprex0oQRvj2+ivAaALV1mbJxdMx2G8SM3IVuOkXnWVTvrgM2Xol3fEoqEjFjTwKYlHBh5MVIE8IqMoaKR+R8ABwtqeRZDi4A0Loj0+ijodfP9Kef65J7wpBJrAhIpXH+1jf1PJAC3HnyknfO1l1DuwW5MnHmG1V6+kLP4HVV0YUH+UixUM7v966eFxE9E8SbED7HtNJC8O++eqpRS2DapRqRbH83An8kWD6kl6nvNYxJFis9+Xyui2yZa8pGTwhRJWDLgc4dCzIlM5/W22fH4ZuYzg93oU4cG57oeOVb85boR4WipmXTydO+QpABqfPHCHJ9/SzA1TGDnu66SCJRNQYI7Y5NaYc2Yk/uxuLrMxQ69IVNPePdZKT0W40ueNuRuchZsuZCIAdjUU624SfMWPXdGv8Vs82nWArPpeLLKK/4mht+CqU+rJCQIkJODBNGhvHT+RfTz2SQnTnnubDDE+vK4M6C2RuhPDouF3DUEEzFHNyhmfZql3HTm6wwmZc7djzttZoK3PlCToNdMHNBUB78qDMxMKbMvp1v7OqeH217wSiHtfaGbf8QzBa1C0SWB9wq6K40dJQtk0y7oID8=
+    secure: umqTFEWqybnuOmUZWZN7AiLlnepHqR99H/nSaPGvrpbvujKHvtx4p0beroeG1RVUMptSiFvjA3RoD37t6rT0gclxqVIfd51RmwudWXL++1nrzFYPe4cqDeTwMKOah2AXRtgOocbmcwYLaznpStVQ/JWh0MEHAJpTVXAUd7ZCAjhdSZTj16v21PG2azhPZnClmtzubqXV+WxHMgoizUt2acalW1PPc9ME2mWTPH0Ztpa49RZP4zIqjDG1ZKPdB+pB+GS4RItvh/SfWJeJhYprK1qSt14bCBpM501TrGqqp0yV2b1yc1X478dY9EMyhdQlniZ6UtNl4/vAqG4DpJC2mLduiNzpe5wc1KGo9QC28ZZh8SaD+Clyx8OU2j4KVE+K8RVQhhcdYnVHbT81hWizR3Cymb7ujNsMkQ3HKYUfHFS5zQXHfWCyXjsfaj1ONGR0GF04DhhNkHLtw60Dw1nNE3xZVuVtz0FfscQUyiUu4aKhvGMhpXuKXYBSDXnhRq/qR4HAx4pTh2mAxSzItmEQ6INHmZZUyDRN/rCyX98GknGpXoFUA+q8BidAptS1PROPNPF1lzpJqrMU70NGzI1t+DbgmjvIOet5aFYxnjF5hvX0QCTYrWFrR+8Dbnge2SSCrKVpYsW4S4WtWM2F4nzG3v16rQG7MUY8lLssbxQyKEI=
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
