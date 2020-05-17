@@ -5,6 +5,7 @@
 #marker-pin {
   background: none;
   border: none;
+  outline: none;
 }
 
 #navegation-control {

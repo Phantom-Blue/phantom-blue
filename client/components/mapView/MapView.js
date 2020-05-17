@@ -1,3 +1,4 @@
+/* eslint-disable react/no-access-state-in-setstate */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllArtworks} from '../../store/artworks'
@@ -68,22 +69,26 @@ class MapView extends Component {
                 </Marker>
               ))
             : ''}
+          {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
           {this.state.selectedPin ? (
-            <div
-              className="popup-container"
-              latitude={Number(this.state.selectedPin.latitude)}
-              longitude={Number(this.state.selectedPin.longitude)}
-              // closeOnClick={false}
-              onClose={() => {
-                this.setState({selectedPin: null})
-              }}
-            >
-              <div>
-                <Artwork
-                  latitude={Number(this.state.selectedPin.latitude)}
-                  longitude={Number(this.state.selectedPin.longitude)}
-                  address={this.state.selectedPin.address}
-                />
+            <div>
+              <div
+                className="popup-container"
+                latitude={Number(this.state.selectedPin.latitude)}
+                longitude={Number(this.state.selectedPin.longitude)}
+                // closeOnClick={false}
+                onClose={() => {
+                  this.setState({selectedPin: null})
+                }}
+              >
+                <div>
+                  <button type="submit"> Close</button>
+                  <Artwork
+                    latitude={Number(this.state.selectedPin.latitude)}
+                    longitude={Number(this.state.selectedPin.longitude)}
+                    address={this.state.selectedPin.address}
+                  />
+                </div>
               </div>
             </div>
           ) : (

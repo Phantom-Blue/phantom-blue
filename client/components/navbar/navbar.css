@@ -25,7 +25,7 @@
   margin: 5px;
 }
 .sub-links {
-  display: none;
+  display: flex;
   flex-direction: column;
   padding: 5px;
 }
