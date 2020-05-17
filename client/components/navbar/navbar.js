@@ -12,10 +12,10 @@ class Navbar extends Component {
       visible: false
     }
 
-    this.handleMenuClick = this.handleMenuClick.bind(this)
+    this.toggleMenu = this.toggleMenu.bind(this)
   }
 
-  handleMenuClick() {
+  toggleMenu() {
     const {innerWidth} = window
 
     if (innerWidth < 768) {
@@ -37,7 +37,7 @@ class Navbar extends Component {
               <div
                 className="menu-icon"
                 onClick={e => {
-                  this.handleMenuClick(e)
+                  this.toggleMenu(e)
                 }}
               >
                 <div />
