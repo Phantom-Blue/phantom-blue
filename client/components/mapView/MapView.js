@@ -29,10 +29,16 @@ class MapView extends Component {
       },
       selectedPin: null
     }
+    this.popupContainer = React.createRef();
+    this.handleClose = this.handleClose.bind(this)
   }
-
+  
   componentDidMount() {
     this.props.getAllArtWorks()
+  }
+
+  handleClose() {
+    this.popupContainer.style.width = '0vw'
   }
 
   render() {
@@ -74,6 +80,7 @@ class MapView extends Component {
             <div>
               <div
                 className="popup-container"
+                ref = {this.popupContainer}
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
                 // closeOnClick={false}
@@ -82,7 +89,7 @@ class MapView extends Component {
                 }}
               >
                 <div>
-                  <button type="submit"> Close</button>
+                  <button type="button" onClick={() => this.handleClose()}> Close</button>
                   <Artwork
                     latitude={Number(this.state.selectedPin.latitude)}
                     longitude={Number(this.state.selectedPin.longitude)}
