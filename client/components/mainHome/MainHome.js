@@ -17,6 +17,8 @@ import 'pure-react-carousel/dist/react-carousel.es.css'
 import '../../../secrets'
 import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import ls from 'local-storage'
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
+import 'react-google-places-autocomplete/dist/index.min.css'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -63,19 +65,40 @@ class MainHome extends React.Component {
     }
   }
 
-  // handleChange(e){
-  //   e.preventDefault(e)
-  //   this.setState({
-  //     [e.target.name] : e.target.value
-  //   })
-
-  // }
+  async handleGeocode(geocoder) {
+    const coded = await geocoder._geocode(geocoder._inputEl.value)
+    if (coded.body.features[0]) {
+      let longitude = coded.body.features[0].center[0]
+      let latitude = coded.body.features[0].center[1]
+      let address = coded.body.features[0].place_name
+      this.setState({
+        latitude,
+        longitude,
+        address
+      })
+    } else {
+      this.setState({
+        error: {response: 'Invalid Address'}
+      })
+    }
+  }
+  componentDidMount() {
+    var geocoder = new MapboxGeocoder({
+      accessToken: process.env.REACT_APP_MAPBOX_KEY,
+      types: 'country,region,place,locality,neighborhood, address'
+    })
+    geocoder.addTo('#geocoder')
+    geocoder._inputEl.addEventListener('change', () => {
+      this.handleGeocode(geocoder)
+    })
+  }
 
   render() {
     console.log('MAIN HOME RENDER', this.props.locationArtworks)
     return this.state.location === false ? (
       <div>
         <div>
+          <GooglePlacesAutocomplete onSelect={console.log('SEARCH')} />
           <button type="submit" onClick={() => this.handleLocation()}>
             SHARE LOCATION
           </button>
