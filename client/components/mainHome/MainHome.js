@@ -3,8 +3,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
+import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import {generateUrl} from '../artwork/utils'
-import './mainHome.css'
 import {Link} from 'react-router-dom'
 import {
   CarouselProvider,
@@ -14,11 +14,9 @@ import {
   ButtonNext
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
+import './mainHome.css'
 import '../../../secrets'
-import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import ls from 'local-storage'
-// import GooglePlacesAutocomplete from 'react-google-places-autocomplete'
-import 'react-google-places-autocomplete/dist/index.min.css'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 
 class MainHome extends React.Component {
@@ -114,7 +112,7 @@ class MainHome extends React.Component {
     console.log('MAIN HOME RENDER', this.props.locationArtworks)
     return this.state.location === false ? (
       <div>
-        <form>
+        <form className="search-form">
           <label>
             <p>To start looking for artworks near you</p>
             <h4>enter you address:</h4>
