@@ -56,16 +56,19 @@ class ArtworkOptions extends React.Component {
   }
 
   handleDelete(e) {
+    e.preventDefault()
     const {removeOneArtwork, artwork} = this.props
     removeOneArtwork(artwork.id)
   }
 
   render() {
+    console.log(this.props)
     const {artwork, user} = this.props
     console.log(user.id, artwork.UserId, artwork)
     return (
       <div>
         <div className="additionalartworkinfo">
+          n
           <div>
             <p>{artwork.description}</p>
           </div>

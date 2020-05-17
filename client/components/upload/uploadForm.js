@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {postArtwork} from '../../store/artworks'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import './upload.css'
+import axios from 'axios'
+import {CloudinaryContext} from 'cloudinary-react'
 
 import '../../../secrets'
 
@@ -11,9 +13,10 @@ export class UploadForm extends React.Component {
     super(props)
 
     this.state = {
-      name: '',
+      artist: 'Unknown Artist',
       description: '',
-      imageUrl: '',
+      imageFile: null,
+      imageUrl: null,
       latitude: null,
       longitude: null,
       address: null,
@@ -23,12 +26,11 @@ export class UploadForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
+    this.handleFileRead = this.handleFileRead.bind(this)
   }
 
   async handleGeocode(geocoder) {
     const coded = await geocoder._geocode(geocoder._inputEl.value)
-
-    console.log(coded)
     if (coded.body.features[0]) {
       let longitude = coded.body.features[0].center[0]
       let latitude = coded.body.features[0].center[1]
@@ -51,23 +53,52 @@ export class UploadForm extends React.Component {
       types: 'country,region,place,locality,neighborhood, address'
     })
     geocoder.addTo('#geocoder')
-    // geocoder._inputEl.onChange(console.log(geocoder.inputString))
-    console.dir(geocoder._inputEl)
+
     geocoder._inputEl.addEventListener('change', () => {
       this.handleGeocode(geocoder)
     })
-
-    console.dir(geocoder)
-    // document.getElementById('search').innerHTML = geocoder
   }
 
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value})
   }
 
+  // eslint-disable-next-line complexity
   handleSubmit(e) {
     e.preventDefault()
+
+    // if (this.state.longitude && this.state.latitude && this.state.address && this.state.imageFile){
+    //   const sendFile = async function(fileData) {
+    //     const file = await axios.post(`https://api.cloudinary.com/v1_1/pentimento/upload`, {file: this.state.imageFile, upload_preset:      'ea0bwcdh'})
+    //     return file.data.secure_url
+    //   }
+    //   const imageUrl = await this.sendFile(this.state.imageFile)
+    //   this.setState({imageUrl: imageUrl})
+    //
+    // }
+
+    // ^ This is code for if we were handling image uploading on the front end. This reduces the amount of data passed through our express server, but also makes it possible to upload images to the cloudinary database without any security checks, so for now it will stay on the backend.
+
     this.props.postArtwork(this.state)
+  }
+
+  handleFileRead(e) {
+    if (e.target.files[0]) {
+      let reader = new FileReader()
+      reader.onload = () => {
+        this.setState({imageFile: reader.result})
+      }
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }
+
+  async sendFile() {
+    const file = await axios.post(
+      `https://api.cloudinary.com/v1_1/pentimento/upload`,
+      {file: this.state.imageFile, upload_preset: 'ea0bwcdh'}
+    )
+    console.log(file.data.secure_url)
+    return file.data.secure_url
   }
 
   errorMessage() {
@@ -76,9 +107,14 @@ export class UploadForm extends React.Component {
       this.props.error.response.data.includes('notNull Violation')
     ) {
       return 'Enter all required fields'
+    } else if (this.state.error === 'Missing image file.') {
+      return 'Add an image.'
+    } else if (this.state.error === 'Missing location information.') {
+      return 'Add a location.'
     }
     // return 'Invalid Address'
-    return 'Enter all required fields'
+    console.log('No!')
+    return 'Error.'
   }
 
   render() {
@@ -87,11 +123,11 @@ export class UploadForm extends React.Component {
     return (
       <div>
         <form>
-          <label htmlFor="name">Name: </label>
+          <label htmlFor="artist">Artist: </label>
           <input
             type="text"
-            value={this.state.name}
-            name="name"
+            value={this.state.artist}
+            artist="artist"
             onChange={e => {
               handleChange(e)
             }}
@@ -105,15 +141,16 @@ export class UploadForm extends React.Component {
               handleChange(e)
             }}
           />
-          <label htmlFor="imageUrl">Image URL: </label>
+          <label htmlFor="imageFile">Image File:</label>
           <input
-            type="text"
-            value={this.state.imageUrl}
-            name="imageUrl"
+            id="imageFile"
+            type="file"
+            name="imageFile"
             onChange={e => {
-              handleChange(e)
+              this.handleFileRead(e)
             }}
           />
+
           <label>Address:</label>
           <div id="geocoder" />
           <button

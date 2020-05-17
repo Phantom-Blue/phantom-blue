@@ -16,7 +16,6 @@ import 'pure-react-carousel/dist/react-carousel.es.css'
 
 class LocationArtwork extends React.Component {
   componentDidMount() {
-    console.log('IN COMPONENT DID MOUNT', this.props)
     const {getArtworkByLocId, match} = this.props
     getArtworkByLocId(match.params.id)
   }

@@ -30,6 +30,5 @@ export function generateUrl(loc, loc2) {
   } else {
     craftUrls(loc)
   }
-  console.log(directionsUrl)
   return directionsUrl
 }

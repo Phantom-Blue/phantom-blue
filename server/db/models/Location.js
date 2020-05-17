@@ -83,7 +83,32 @@ Location.prototype.getNearbyArt = async function(radius) {
   const nearbyArt = allArt
     .map(art => art.dataValues)
     .filter(work => nearbyIds.includes(work.LocationId))
+  return nearbyArt
+}
 
+Location.getNearbyArt = async function(radius, longitude, latitude) {
+  let locations = await Location.findAll()
+  locations = locations.map(location => location.dataValues)
+  const bounds = new GeoLocationBounds(longitude, latitude, radius)
+  const ranges = bounds.points()
+  const nearby = locations.filter(location => {
+    return (
+      ranges.latitude.min <= location.latitude &&
+      location.latitude <= ranges.latitude.max &&
+      ranges.longitude.min <= location.longitude &&
+      location.longitude <= ranges.longitude.max
+    )
+  })
+
+  const nearbyIds = nearby.map(location => location.id)
+  const allArt = await Artwork.findAll({
+    include: Location
+  })
+  const nearbyArt = allArt
+    .map(art => {
+      return art.dataValues
+    })
+    .filter(work => nearbyIds.includes(work.LocationId))
   return nearbyArt
 }
 

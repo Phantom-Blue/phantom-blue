@@ -176,7 +176,7 @@ const seed = async () => {
       }),
       //7
       Artwork.create({
-        UserId: 6,
+        UserId: 3,
         artist: 'Jenny Holzer',
         description: 'Installation, "Abuse of Power Comes as No Surprise"',
         LocationId: 7,
