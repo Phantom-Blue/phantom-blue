@@ -13,12 +13,10 @@ class SingleArtwork extends React.Component {
   }
 
   render() {
-    // console.log('SINGLE ARTPROPS', this.props)
     const {artwork} = this.props
     return (
       <div>
         {this.props.artwork ? (
-          //   && this.props.artwork[0] ?
           <div>
             {artwork.imageUrl
               ? artwork.imageUrl.map((url, idx) => {
