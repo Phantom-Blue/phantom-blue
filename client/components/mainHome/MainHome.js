@@ -117,16 +117,16 @@ class MainHome extends React.Component {
             <p>To start looking for artworks near you</p>
             <h4>enter you address:</h4>
           </label>
-          <div id="geocoder" />
-          <button
-            type="submit"
-            onClick={e => {
-              this.handleSubmit(e)
-            }}
-          >
-            Submit!
-          </button>
         </form>
+        <div id="geocoder" />
+        <button
+          type="submit"
+          onClick={e => {
+            this.handleSubmit(e)
+          }}
+        >
+          Submit!
+        </button>
         <div>
           {/* <GooglePlacesAutocomplete onSelect={console.log('SEARCH')} /> */}
           <button type="submit" onClick={() => this.handleLocation()}>
