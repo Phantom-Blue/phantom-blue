@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import axios from 'axios'
 import {
   fetchUpdatedArtwork,
   fetchOneArtwork,
@@ -22,7 +21,7 @@ class UpdateArtworkForm extends Component {
     this.handleFileChange = this.handleFileChange.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.handleDeleteImage = this.handleDeleteImage.bind(this)
-    this.sendFile = this.sendFile.bind(this)
+    // this.sendFile = this.sendFile.bind(this)
   }
   async componentDidMount() {
     await this.props.getSingleArtwork(this.props.match.params.id)
@@ -45,63 +44,46 @@ class UpdateArtworkForm extends Component {
     if (e.target.files[0]) {
       let reader = new FileReader()
       reader.onload = () => {
+        console.log(this.state)
         this.setState({
           updateImageFile: [...state.updateImageFile, reader.result],
           displayImages: [...state.displayImages, reader.result]
         })
+        console.log(this.state)
       }
       reader.readAsDataURL(e.target.files[0])
     }
   }
 
-  // sends new files to cloud
-  async sendFile(newFile) {
-    let result
-    const newFiles = newFile.map(async file => {
-      const updatedUrl = await axios.post(
-        `https://api.cloudinary.com/v1_1/pentimento/upload`,
-        {
-          file: file,
-          // eslint-disable-next-line camelcase
-          upload_preset: 'ea0bwcdh'
-        }
-      )
-      console.log('send file ---->', updatedUrl.data.secure_url)
-      return updatedUrl.data.secure_url
-    })
-    console.log('newFiles', newFiles)
-    return newFiles
-  }
-  // const file = await axios.post(
-  //     `https://api.cloudinary.com/v1_1/pentimento/upload`, {
-  //       file: newFile,
-  //       // eslint-disable-next-line camelcase
-  //       upload_preset: 'ea0bwcdh'
-  //     }
-  //   )
-  //   console.log('send file ---->', file.data.secure_url)
-  //   return file.data.secure_url
-  // }
-
   handleUpdate(e, updateArtworkId) {
     e.preventDefault()
-    this.setState({updateImageFile: this.sendFile(this.state.updateImageFile)})
-    console.log('update img file', this.state.updateImageFile)
     const updatedArtworkInfo = {
       artist: this.state.updateArtist,
-      imageUrl: [...this.state.updateImageUrl, ...this.state.updateImageFile],
+      imageUrl: this.state.updateImageUrl,
+      newImages: this.state.updateImageFile,
       description: this.state.updateDescription
     }
     this.props.handleUpdateArtwork(updateArtworkId, updatedArtworkInfo)
-    // this.props.history.push(`/artwork/${updateArtworkId}`)
+    this.props.history.push(`/artwork/${updateArtworkId}`)
   }
 
   // handles delete of existing images
-  async handleDeleteImage(artworkImg) {
-    const update = await this.state.updateImageUrl.filter(
+  handleDeleteImage(artworkImg) {
+    const updatedUrls = this.state.updateImageUrl.filter(
       art => art !== artworkImg
     )
-    this.setState({updateImageUrl: update})
+    const updatedUris = this.state.updateImageFile.filter(
+      art => art !== artworkImg
+    )
+    const updatedDisplay = this.state.displayImages.filter(
+      art => art !== artworkImg
+    )
+    console.log(this.state)
+    this.setState({
+      updateImageUrl: updatedUrls,
+      updateImageFile: updatedUris,
+      displayImages: updatedDisplay
+    })
   }
 
   render() {
@@ -128,7 +110,7 @@ class UpdateArtworkForm extends Component {
                     <div key={idx}>
                       <img src={artImg} alt="Artwork Image" />
                       <button
-                        type="submit"
+                        type="button"
                         onClick={() => {
                           handleDeleteImage(artImg)
                         }}
