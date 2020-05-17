@@ -5,6 +5,7 @@ import {
   fetchOneArtwork,
   postArtwork
 } from '../../store/artworks'
+import './updateArtworkForm.css'
 
 class UpdateArtworkForm extends Component {
   constructor(props) {
@@ -49,7 +50,6 @@ class UpdateArtworkForm extends Component {
           updateImageFile: [...state.updateImageFile, reader.result],
           displayImages: [...state.displayImages, reader.result]
         })
-        console.log(this.state)
       }
       reader.readAsDataURL(e.target.files[0])
     }
@@ -78,7 +78,6 @@ class UpdateArtworkForm extends Component {
     const updatedDisplay = this.state.displayImages.filter(
       art => art !== artworkImg
     )
-    console.log(this.state)
     this.setState({
       updateImageUrl: updatedUrls,
       updateImageFile: updatedUris,
@@ -88,12 +87,38 @@ class UpdateArtworkForm extends Component {
 
   render() {
     const {artwork} = this.props
-    // console.log('artwork' , artwork)
     const handleDeleteImage = this.handleDeleteImage
     return (
       <div className="update-form-container">
         <form>
           <h1>Update Artwork</h1>
+          <div className="update-artwork-container">
+            {this.state.displayImages
+              ? this.state.displayImages.map((artImg, idx) => {
+                  return (
+                    <div key={idx}>
+                      <img src={artImg} alt="Artwork Image" />
+                      <button
+                        id="update-art-btn"
+                        type="button"
+                        onClick={() => {
+                          handleDeleteImage(artImg)
+                        }}
+                      >
+                        Remove image
+                      </button>
+                    </div>
+                  )
+                })
+              : ''}
+          </div>
+          <div>
+            <input
+              type="file"
+              name="updateImageFile"
+              onChange={e => this.handleFileChange(e, this.state)}
+            />
+          </div>
           <div>
             <input
               type="text"
@@ -101,30 +126,6 @@ class UpdateArtworkForm extends Component {
               value={this.state.updateArtist}
               placeholder="Artist name"
               onChange={e => this.handleChange(e)}
-            />
-          </div>
-          <div>
-            {this.state.displayImages
-              ? this.state.displayImages.map((artImg, idx) => {
-                  return (
-                    <div key={idx}>
-                      <img src={artImg} alt="Artwork Image" />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleDeleteImage(artImg)
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  )
-                })
-              : ''}
-            <input
-              type="file"
-              name="updateImageFile"
-              onChange={e => this.handleFileChange(e, this.state)}
             />
           </div>
           <div>
