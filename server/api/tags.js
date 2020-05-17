@@ -1,6 +1,6 @@
 /* eslint-disable no-empty */
 const router = require('express').Router()
-const {Artwork, Tag, TaggedArtwork} = require('../db/models/Index')
+const {Artwork, Tag, TaggedArtwork} = require('../db/models')
 
 router.post('/:artworkId', async (req, res) => {
   const {artworkId} = req.params
