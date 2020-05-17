@@ -68,9 +68,9 @@ class ArtworkOptions extends React.Component {
     return (
       <div>
         <div className="additionalartworkinfo">
-          n
           <div>
             <p>{artwork.description}</p>
+            <br />
           </div>
           <div>
             <p>T A G S:</p>

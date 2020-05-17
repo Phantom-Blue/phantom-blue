@@ -19,10 +19,13 @@ class SingleArtwork extends React.Component {
       <div>
         {this.props.artwork ? (
           //   && this.props.artwork[0] ?
-          <div>
-            <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
+          <div className="single-artwork-container">
+            <div className="single-image">
+              <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
+            </div>
             <div className="carousel-text">
               <h1 className="artistname">{artwork.artist}</h1>
+              {/* <br /> */}
               <ArtworkOptions artwork={artwork} />
             </div>
           </div>
