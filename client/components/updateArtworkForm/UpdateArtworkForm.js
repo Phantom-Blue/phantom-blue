@@ -133,7 +133,7 @@ class UpdateArtworkForm extends Component {
               onChange={e => this.handleChange(e)}
             />
           </div>
-          <div>
+          <div id="update-textarea">
             <textarea
               type="text"
               name="updateDescription"
