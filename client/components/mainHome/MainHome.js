@@ -14,11 +14,11 @@ import {
   ButtonNext
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+// import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '../../../secrets'
 import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import ls from 'local-storage'
-import Geocode from 'react-geocode'
+// import Geocode from 'react-geocode'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -38,49 +38,32 @@ class MainHome extends React.Component {
   handleLocation() {
     const {getMyLocationArt} = this.props
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(async function(position) {
+      navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
-        console.log(longitude)
+
         ls.set('latitude', latitude)
         ls.set('longitude', longitude)
+      })
 
-        Geocode.setApiKey('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx')
+      const lat = ls.get('latitude')
+      const long = ls.get('longitude')
 
-        Geocode.setLanguage('en')
-        Geocode.setRegion('es')
-        Geocode.enableDebug()
+      const myLocation = {
+        latitude: lat,
+        longitude: long
+      }
 
-        // Get address from latidude & longitude.
-        Geocode.fromLatLng('48.8583701', '2.2922926').then(
-          response => {
-            const address = response.results[0].formatted_address
-            console.log(address)
-          },
-          error => {
-            console.error(error)
-          }
-        )
+      getMyLocationArt(myLocation)
 
-        const myLocation = {
-          latitude,
-          longitude,
-          address: address.body.features[0].place_name
-        }
-        getMyLocationArt(myLocation)
+      this.setState({
+        latitude: lat,
+        longitude: long,
+        location: true
       })
     } else {
       console.log('Geolocation not available')
     }
-
-    const lat = ls.get('latitude')
-    const long = ls.get('longitude')
-
-    this.setState({
-      latitude: lat,
-      longitude: long,
-      location: true
-    })
   }
 
   // handleChange(e){
@@ -92,10 +75,10 @@ class MainHome extends React.Component {
   // }
 
   render() {
+    console.log('MAIN HOME RENDER', this.props.locationArtworks)
     return this.state.location === false ? (
       <div>
         <div>
-          <div id="geocoder">{}</div>
           <button type="submit" onClick={() => this.handleLocation()}>
             SHARE LOCATION
           </button>
