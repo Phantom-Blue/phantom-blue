@@ -3,8 +3,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
+import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import {generateUrl} from '../artwork/utils'
-import './mainHome.css'
 import {Link} from 'react-router-dom'
 import {
   CarouselProvider,
@@ -14,9 +14,11 @@ import {
   ButtonNext
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
+import './mainHome.css'
 import '../../../secrets'
-import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import ls from 'local-storage'
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+// import 'mapbox-gl-js/v1.10.0/mapbox-gl.css'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -24,12 +26,12 @@ class MainHome extends React.Component {
     this.state = {
       location: false,
       longitude: 0,
-      latitude: 0
+      latitude: 0,
+      address: null
     }
     this.handleLocation = this.handleLocation.bind(this)
-  }
-  componentDidMount() {
-    this.props.getVerifiedArtwork()
+    this.handleGeocode = this.handleGeocode.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleLocation() {
@@ -38,14 +40,11 @@ class MainHome extends React.Component {
       navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
-
         ls.set('latitude', latitude)
         ls.set('longitude', longitude)
       })
-
       const lat = ls.get('latitude')
       const long = ls.get('longitude')
-
       const myLocation = {
         latitude: lat,
         longitude: long
@@ -63,21 +62,80 @@ class MainHome extends React.Component {
     }
   }
 
-  // handleChange(e){
-  //   e.preventDefault(e)
-  //   this.setState({
-  //     [e.target.name] : e.target.value
-  //   })
+  handleSubmit(e) {
+    e.preventDefault()
 
-  // }
+    const {latitude, longitude} = this.state
+
+    const myLocation = {latitude, longitude}
+
+    this.props.getMyLocationArt(myLocation)
+
+    this.setState({
+      location: true
+    })
+  }
+
+  async handleGeocode(geocoder) {
+    // console.log('GOT IN GEOCODE')
+    const coded = await geocoder._geocode(geocoder._inputEl.value)
+    if (coded.body.features[0]) {
+      let longitude = coded.body.features[0].center[0]
+      let latitude = coded.body.features[0].center[1]
+      let address = coded.body.features[0].place_name
+      this.setState({
+        latitude,
+        longitude,
+        address
+      })
+    } else {
+      this.setState({
+        error: {response: 'Invalid Address'}
+      })
+    }
+  }
+
+  componentDidMount() {
+    this.props.getVerifiedArtwork()
+
+    var geocoder = new MapboxGeocoder({
+      accessToken: process.env.REACT_APP_MAPBOX_KEY,
+      types: 'country,region,place,locality,neighborhood, address'
+    })
+    geocoder.addTo('#geocoder')
+    geocoder._inputEl.addEventListener('change', () => {
+      this.handleGeocode(geocoder)
+    })
+  }
 
   render() {
-    console.log('MAIN HOME RENDER', this.props.locationArtworks)
     return this.state.location === false ? (
       <div>
-        <div>
-          <button type="submit" onClick={() => this.handleLocation()}>
-            SHARE LOCATION
+        <div className="search-section">
+          <div className="search-label">
+            <p>To start looking for artworks near you,</p>
+            <h4>enter you address:</h4>
+          </div>
+          <div className="search-box-submit">
+            <div id="geocoder" />
+            <button
+              type="submit"
+              className="submit"
+              onClick={e => {
+                this.handleSubmit(e)
+              }}
+            >
+              Submit!
+            </button>
+          </div>
+        </div>
+        <div className="share-location-section">
+          <button
+            type="submit"
+            className="share-location"
+            onClick={() => this.handleLocation()}
+          >
+            or use your current location
           </button>
         </div>
         {this.props.artworks[0] ? (

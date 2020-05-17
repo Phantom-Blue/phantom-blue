@@ -66,6 +66,7 @@
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",
     "react-geocode": "^0.2.1",
+    "react-google-places-autocomplete": "^2.0.5",
     "react-map-gl": "^5.2.5",
     "react-redux": "^7.2.0",
     "react-responsive-carousel": "^3.2.7",
