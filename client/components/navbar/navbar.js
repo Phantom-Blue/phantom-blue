@@ -24,6 +24,7 @@ class Navbar extends Component {
   }
   render() {
     const {isLoggedIn, handleClick} = this.props
+    const {innerWidth} = window
     return (
       <div>
         <nav>
@@ -72,12 +73,23 @@ class Navbar extends Component {
                 <div />
                 <div />
               </div>
+              {/** MOBILE TOGGLE */}
               {this.state.visible && (
                 <div className="sub-links">
                   <Link to="/login">Upload Art</Link>
                   <Link to="/map">Map</Link>
                   <Link to="/login">Login</Link>
                 </div>
+              )}
+              {/** DESKTOP */}
+              {innerWidth >= 768 ? (
+                <div className="sub-links">
+                  <Link to="/login">Upload Art</Link>
+                  <Link to="/map">Map</Link>
+                  <Link to="/login">Login</Link>
+                </div>
+              ) : (
+                ''
               )}
             </div>
           )}
