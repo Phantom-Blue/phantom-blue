@@ -143,37 +143,37 @@ router.post('/', async (req, res, next) => {
         isVerified = true
       }
 
-      if (latitude && longitude && address) {
+      if (latitude && longitude && address && imageFile) {
         await cloudinary.v2.uploader.upload(imageFile, function(error, result) {
           console.log(result, error)
           imageUrl = result.secure_url
         })
-      }
 
-      const location = await Location.findOrCreate({
-        where: {
-          latitude,
-          longitude,
-          address
+        const location = await Location.findOrCreate({
+          where: {
+            latitude,
+            longitude,
+            address
+          }
+        })
+
+        let newArt = await Artwork.create({
+          artist,
+          description,
+          timestamp,
+          imageUrl: [imageUrl],
+          isVerified,
+          UserId,
+          LocationId: location[0].dataValues.id
+        })
+
+        newArt.dataValues.Location = location[0]
+
+        if (newArt) {
+          res.json(newArt)
+        } else {
+          res.json('Failed to post.')
         }
-      })
-
-      let newArt = await Artwork.create({
-        artist,
-        description,
-        timestamp,
-        imageUrl: [imageUrl],
-        isVerified,
-        UserId,
-        LocationId: location[0].dataValues.id
-      })
-
-      newArt.dataValues.Location = location[0]
-
-      if (newArt) {
-        res.json(newArt)
-      } else {
-        res.json('Failed to post.')
       }
     } else {
       res.send('Log in to make a post.')

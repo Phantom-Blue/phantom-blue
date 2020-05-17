@@ -4,7 +4,6 @@ import {postArtwork} from '../../store/artworks'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import './upload.css'
 import axios from 'axios'
-import {CloudinaryContext} from 'cloudinary-react'
 import '../../../secrets'
 
 export class UploadForm extends React.Component {
@@ -77,7 +76,6 @@ export class UploadForm extends React.Component {
     // }
 
     // ^ This is code for if we were handling image uploading on the front end. This reduces the amount of data passed through our express server, but also makes it possible to upload images to the cloudinary database without any security checks, so for now it will stay on the backend.
-
     this.props.postArtwork(this.state)
   }
 

@@ -20,7 +20,14 @@ class SingleArtwork extends React.Component {
         {this.props.artwork ? (
           //   && this.props.artwork[0] ?
           <div>
-            <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
+            {artwork.imageUrl
+              ? artwork.imageUrl.map((url, idx) => {
+                  return (
+                    <img src={url} alt={artwork.artist} width="200" key={idx} />
+                  )
+                })
+              : ''}
+            {/* <img src={artwork.imageUrl} alt={artwork.artist} width="200" /> */}
             <div className="carousel-text">
               <h1 className="artistname">{artwork.artist}</h1>
               <ArtworkOptions artwork={artwork} />
