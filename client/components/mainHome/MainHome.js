@@ -78,34 +78,34 @@ class MainHome extends React.Component {
 
   async handleGeocode(geocoder) {
     // console.log('GOT IN GEOCODE')
-    const coded = await geocoder._geocode(geocoder._inputEl.value)
-    if (coded.body.features[0]) {
-      let longitude = coded.body.features[0].center[0]
-      let latitude = coded.body.features[0].center[1]
-      let address = coded.body.features[0].place_name
-      this.setState({
-        latitude,
-        longitude,
-        address
-      })
-    } else {
-      this.setState({
-        error: {response: 'Invalid Address'}
-      })
-    }
+    // const coded = await geocoder._geocode(geocoder._inputEl.value)
+    // if (coded.body.features[0]) {
+    //   let longitude = coded.body.features[0].center[0]
+    //   let latitude = coded.body.features[0].center[1]
+    //   let address = coded.body.features[0].place_name
+    //   this.setState({
+    //     latitude,
+    //     longitude,
+    //     address
+    //   })
+    // } else {
+    //   this.setState({
+    //     error: {response: 'Invalid Address'}
+    //   })
+    // }
   }
 
   componentDidMount() {
     this.props.getVerifiedArtwork()
 
-    var geocoder = new MapboxGeocoder({
-      accessToken: process.env.REACT_APP_MAPBOX_KEY,
-      types: 'country,region,place,locality,neighborhood, address'
-    })
-    geocoder.addTo('#geocoder')
-    geocoder._inputEl.addEventListener('change', () => {
-      this.handleGeocode(geocoder)
-    })
+    // var geocoder = new MapboxGeocoder({
+    //   accessToken: process.env.REACT_APP_MAPBOX_KEY,
+    //   types: 'country,region,place,locality,neighborhood, address'
+    // })
+    // geocoder.addTo('#geocoder')
+    // geocoder._inputEl.addEventListener('change', () => {
+    //   this.handleGeocode(geocoder)
+    // })
   }
 
   render() {
@@ -117,7 +117,7 @@ class MainHome extends React.Component {
             <h4>enter you address:</h4>
           </div>
           <div className="search-box-submit">
-            <div id="geocoder" />
+            {/* <div id="geocoder" /> */}
             <button
               type="submit"
               className="submit"
