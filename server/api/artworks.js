@@ -187,9 +187,9 @@ router.put('/:artworkId/edit', async (req, res, next) => {
   const id = req.params.artworkId
   try {
     if (req.user) {
-      let {artist, description, imageUrl} = req.body
+      let {artist, description, imageUrl, address} = req.body
 
-      let artwork = {artist, description, imageUrl}
+      let artwork = {artist, description, imageUrl, address}
 
       const updatedArtwork = await Artwork.update(artwork, {where: {id: id}})
 

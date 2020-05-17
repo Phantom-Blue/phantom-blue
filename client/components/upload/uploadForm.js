@@ -5,7 +5,6 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import './upload.css'
 import axios from 'axios'
 import {CloudinaryContext} from 'cloudinary-react'
-
 import '../../../secrets'
 
 export class UploadForm extends React.Component {
