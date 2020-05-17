@@ -5,16 +5,17 @@ const ICON = `M54 24a22 22 0 1 0-28 21.1L32 59l6-13.8A22 22 0 0 0 54 24z`
 const pathStyle = {
   strokeWidth: '2',
   strokeMiterLimit: '10',
-  stroke: '#202020',
+  stroke: '#ADDEFF',
   fill: 'none',
   dataName: 'layer2',
   strokeLinejoin: 'round',
   strokeLineCap: 'round'
 }
+
 const circleStyle = {
   strokeWidth: '2',
   strokeMiterLimit: '10',
-  stroke: '#202020',
+  stroke: '#ADDEFF',
   fill: 'none',
   r: '12',
   cy: '24',
