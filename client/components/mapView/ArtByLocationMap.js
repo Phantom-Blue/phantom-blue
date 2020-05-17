@@ -38,7 +38,7 @@ class ArtByLoctionMap extends Component {
       <div className="map-container">
         <ReactMapGl
           {...this.state.viewport}
-          mapboxApiAccessToken={REACT_APP_MAPBOX_KEY}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
           mapStyle="mapbox://styles/gisellez/ck9yorghb2d811ipjrtgocomz"
           onViewportChange={newport => {
             this.setState({viewport: newport})
