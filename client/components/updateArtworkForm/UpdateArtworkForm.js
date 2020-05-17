@@ -114,10 +114,12 @@ class UpdateArtworkForm extends Component {
           </div>
           <div id="file-container">
             <input
+              id="file"
               type="file"
               name="updateImageFile"
               onChange={e => this.handleFileChange(e, this.state)}
             />
+            <label htmlFor="file">Upload Photo</label>
           </div>
           <div>
             <input

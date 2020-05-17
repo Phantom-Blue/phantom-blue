@@ -34,13 +34,21 @@
 }
 
 input[type='file'] {
-  padding: 20px;
-  border: none;
-  font-size: 17px;
-  color: #b8b8b8;
+  height: 0;
+  overflow: hidden;
+  width: 0;
 }
 
-#file-container {
-  overflow: hidden;
+input[type='file'] + label {
+  background: #5d95e8;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: inherit;
+  font-weight: 600;
+  outline: none;
+  padding: 1rem 50px;
   position: relative;
 }
