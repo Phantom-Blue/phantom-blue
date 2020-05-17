@@ -21,7 +21,6 @@ class UpdateArtworkForm extends Component {
     this.handleFileChange = this.handleFileChange.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.handleDeleteImage = this.handleDeleteImage.bind(this)
-    // this.sendFile = this.sendFile.bind(this)
   }
   async componentDidMount() {
     await this.props.getSingleArtwork(this.props.match.params.id)
@@ -88,7 +87,6 @@ class UpdateArtworkForm extends Component {
 
   render() {
     const {artwork} = this.props
-    // console.log('artwork' , artwork)
     const handleDeleteImage = this.handleDeleteImage
     return (
       <div className="update-form-container">
