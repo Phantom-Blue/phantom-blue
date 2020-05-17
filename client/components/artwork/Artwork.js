@@ -31,7 +31,6 @@ class Artwork extends React.Component {
                 src={this.props.artworks[0].imageUrl[0]}
                 alt={this.props.artworks[0].artist}
                 id="map-popup-img"
-                // width="200"
               />
               <h3 className="artistname">{this.props.artworks[0].artist}</h3>
             </Link>

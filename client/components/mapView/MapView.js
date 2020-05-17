@@ -68,21 +68,23 @@ class MapView extends Component {
               ))
             : ''}
           {this.state.selectedPin ? (
-            <Popup
+            <div
               className="popup-container"
               latitude={Number(this.state.selectedPin.latitude)}
               longitude={Number(this.state.selectedPin.longitude)}
-              closeOnClick={false}
+              // closeOnClick={false}
               onClose={() => {
                 this.setState({selectedPin: null})
               }}
             >
-              <Artwork
-                latitude={Number(this.state.selectedPin.latitude)}
-                longitude={Number(this.state.selectedPin.longitude)}
-                address={this.state.selectedPin.address}
-              />
-            </Popup>
+              <div>
+                <Artwork
+                  latitude={Number(this.state.selectedPin.latitude)}
+                  longitude={Number(this.state.selectedPin.longitude)}
+                  address={this.state.selectedPin.address}
+                />
+              </div>
+            </div>
           ) : (
             ''
           )}

@@ -29,7 +29,7 @@
   font-size: 30px;
 }
 
-/* MODAL STYLE*/
+/* MODAL STYLE FOR VIEW AS A LIST ARTWORKS*/
 .modal {
   position: absolute;
   width: 100vw;
@@ -53,4 +53,20 @@
   right: 5px;
   top: 5px;
   font-size: 26px;
+}
+
+/* POPUP STYLE */
+
+.popup-container {
+  background-color: white;
+  opacity: 0.85;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+}
+
+.popup-container div {
+  margin-top: 20px;
 }

@@ -23,12 +23,10 @@ class SingleArtwork extends React.Component {
           //   <div className="single-image">
           //     <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
           //   </div>
-          <div>
+          <div className="single-image" id="map-popup-container">
             {artwork.imageUrl
               ? artwork.imageUrl.map((url, idx) => {
-                  return (
-                    <img src={url} alt={artwork.artist} width="200" key={idx} />
-                  )
+                  return <img src={url} alt={artwork.artist} key={idx} />
                 })
               : ''}
             {/* <img src={artwork.imageUrl} alt={artwork.artist} width="200" /> */}
