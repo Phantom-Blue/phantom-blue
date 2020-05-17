@@ -65,7 +65,7 @@ class Navbar extends Component {
               <div
                 className="menu-icon"
                 onClick={e => {
-                  this.handleMenuClick(e)
+                  this.toggleMenu(e)
                 }}
               >
                 <div />
