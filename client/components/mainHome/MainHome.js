@@ -14,11 +14,9 @@ import {
   ButtonNext
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
-// import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import '../../../secrets'
 import ArtByLocationMap from '../mapView/ArtByLocationMap'
 import ls from 'local-storage'
-// import Geocode from 'react-geocode'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -29,7 +27,6 @@ class MainHome extends React.Component {
       latitude: 0
     }
     this.handleLocation = this.handleLocation.bind(this)
-    // this.handleChange = this.handleChange.bind(this)
   }
   componentDidMount() {
     this.props.getVerifiedArtwork()
