@@ -36,6 +36,7 @@ class MapView extends Component {
 
   render() {
     const {theArtworks} = this.props
+    const {innerWidth} = window
     console.log(theArtworks)
     return (
       <div className="map-container">
@@ -88,12 +89,28 @@ class MapView extends Component {
           ) : (
             ''
           )}
-          <div id="navegation-control">
-            <NavigationControl />
-          </div>
-          <div id="fullscreen-control">
-            <FullscreenControl />
-          </div>
+
+          {innerWidth > 768 ? (
+            <div>
+              <div id="navegation-control">
+                <NavigationControl />
+              </div>
+              <div id="fullscreen-control">
+                <FullscreenControl />
+              </div>
+            </div>
+          ) : innerWidth < 768 && this.state.selectedPin === null ? (
+            <div>
+              <div id="navegation-control">
+                <NavigationControl />
+              </div>
+              <div id="fullscreen-control">
+                <FullscreenControl />
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
         <div className="artwork-list-outer-container">
