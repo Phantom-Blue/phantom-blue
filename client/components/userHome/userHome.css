@@ -1,7 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .user-home-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+/*  Use personal info */
+.user-info-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  padding: 20px;
+}
+#user-name {
+  padding: 30px;
+  color: #6e90ac;
+}
+
+#user-img {
+  width: 90vw;
+  border-radius: 20px;
+}
+.saved-artwork {
   padding: 20px;
 }
 
-.saved-artwork {
-  padding: 20px;
+/* User artwork */
+.saved-artwork h2 {
+  font-size: 20px;
+  margin: 50px 0px;
+}
+.users-artworks {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.artwork-display img {
+  width: 130px;
+  height: 120px;
+}
+
+.artwork-display p {
+  font-size: 20px;
+  color: #6e90ac;
 }

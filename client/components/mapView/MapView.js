@@ -13,6 +13,7 @@ import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
+import MapPin from './MapPin'
 
 class MapView extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class MapView extends Component {
   }
 
   componentDidMount() {
-    this.props.getArtWorksss()
+    this.props.getAllArtWorks()
   }
 
   render() {
@@ -61,12 +62,7 @@ class MapView extends Component {
                       this.setState({selectedPin: artwork.Location})
                     }}
                   >
-                    <img
-                      width="50px"
-                      height="50px"
-                      src="/location-pin.png"
-                      alt="city"
-                    />
+                    <MapPin />
                   </button>
                 </Marker>
               ))
@@ -132,7 +128,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  getArtWorksss: () => dispatch(fetchAllArtworks())
+  getAllArtWorks: () => dispatch(fetchAllArtworks())
 })
 
 export default connect(mapState, mapDispatch)(MapView)

@@ -44,12 +44,7 @@
   overflow-y: scroll;
   z-index: 10;
 }
-/* .modal > .content { */
-/* width: 100%; */
-/* padding: 10px 5px; */
-/* overflow: hidden; */
-/* height: 500px; */
-/* } */
+
 .modal > .close {
   cursor: pointer;
   position: absolute;

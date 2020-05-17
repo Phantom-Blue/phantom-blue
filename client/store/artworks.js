@@ -50,9 +50,9 @@ const verifiedArtwork = artwork => ({
   artwork
 })
 
-const updatedArtwork = artworkUpdated => ({
+const updatedArtwork = artwork => ({
   type: UPDATE_ARTWORK,
-  artworkUpdated
+  artwork
 })
 const gotAllVerified = artwork => ({
   type: GET_ALL_VERIFIED,
@@ -145,12 +145,30 @@ export const fetchUpdatedArtwork = (
   artworkId,
   artworkInfo
 ) => async dispatch => {
+  let {newImages} = artworkInfo
   try {
+    for (let i = 0; i < newImages.length; i++) {
+      const url = await axios.post(
+        `https://api.cloudinary.com/v1_1/pentimento/upload`,
+        {
+          file: newImages[i],
+          // eslint-disable-next-line camelcase
+          upload_preset: 'ea0bwcdh'
+        }
+      )
+      newImages[i] = url.data.secure_url
+    }
+  } catch (err) {
+    console.error(err, 'Unable to upload image.')
+    return
+  }
+  try {
+    artworkInfo.imageUrl = [...artworkInfo.imageUrl, ...newImages]
     const {data} = await axios.put(
       `/api/artworks/${artworkId}/edit`,
       artworkInfo
     )
-    dispatch(updatedArtwork(data))
+    dispatch(updatedArtwork(artworkInfo))
   } catch (err) {
     console.error(err, 'UNABLE TO UPDATE')
   }
@@ -229,13 +247,7 @@ export default function artworkReducer(state = initialState, action) {
     case VERIFY_ARTWORK:
       return {...state, selected: action.artwork}
     case UPDATE_ARTWORK:
-      return state.all.map(artwork => {
-        if (artwork.id === action.artworkUpdated.id) {
-          return action.artworkUpdated
-        } else {
-          return action.artwork
-        }
-      })
+      return {...state, selected: action.artwork}
     case GET_ALL_VERIFIED:
       return {...state, verified: action.artwork}
     case ADD_TAGS:
