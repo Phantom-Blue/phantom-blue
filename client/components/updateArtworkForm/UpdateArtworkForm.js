@@ -22,7 +22,6 @@ class UpdateArtworkForm extends Component {
     this.handleFileChange = this.handleFileChange.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.handleDeleteImage = this.handleDeleteImage.bind(this)
-    // this.sendFile = this.sendFile.bind(this)
   }
   async componentDidMount() {
     await this.props.getSingleArtwork(this.props.match.params.id)
@@ -45,7 +44,7 @@ class UpdateArtworkForm extends Component {
     if (e.target.files[0]) {
       let reader = new FileReader()
       reader.onload = () => {
-        console.log(this.state)
+        console.log('handle file', this.state)
         this.setState({
           updateImageFile: [...state.updateImageFile, reader.result],
           displayImages: [...state.displayImages, reader.result]
@@ -91,7 +90,7 @@ class UpdateArtworkForm extends Component {
     return (
       <div className="update-form-container">
         <form>
-          <h1>Update Artwork</h1>
+          <h2>Update Artwork</h2>
           <div className="update-artwork-container">
             {this.state.displayImages
               ? this.state.displayImages.map((artImg, idx) => {

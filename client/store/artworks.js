@@ -168,7 +168,7 @@ export const fetchUpdatedArtwork = (
       `/api/artworks/${artworkId}/edit`,
       artworkInfo
     )
-    dispatch(updatedArtwork(artworkInfo))
+    dispatch(updatedArtwork(data))
   } catch (err) {
     console.error(err, 'UNABLE TO UPDATE')
   }

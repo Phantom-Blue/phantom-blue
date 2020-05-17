@@ -46,14 +46,14 @@
   font-size: inherit;
   font-weight: 600;
   outline: none;
-  padding: 20px 50px;
+  padding: 20px 40px;
   position: relative;
   border-radius: 10px;
 }
 
 #update-artist-name input[type='text'] {
   border-radius: 10px;
-  padding: 20px 50px;
+  padding: 20px 40px;
 }
 
 #update-textarea textarea {
@@ -62,7 +62,7 @@
 }
 #update-artwork-btn {
   max-width: 300px;
-  padding: 20px 50px;
+  padding: 20px 40px;
   color: white;
   font-size: 20px;
   background-color: #1ba644;
