@@ -112,7 +112,7 @@ class UpdateArtworkForm extends Component {
                 })
               : ''}
           </div>
-          <div>
+          <div id="file-container">
             <input
               type="file"
               name="updateImageFile"

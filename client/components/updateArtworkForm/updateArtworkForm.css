@@ -16,7 +16,8 @@
 }
 .update-artwork-container img {
   max-width: 400px;
-  max-height: 450px;
+  max-height: 500px;
+  border-radius: 10px;
 }
 
 #update-art-btn {
@@ -26,9 +27,20 @@
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  background: white;
-  padding: 5px;
+  padding: 20px;
 }
 #update-art-btn:hover {
   opacity: 0.7;
+}
+
+input[type='file'] {
+  padding: 20px;
+  border: none;
+  font-size: 17px;
+  color: #b8b8b8;
+}
+
+#file-container {
+  overflow: hidden;
+  position: relative;
 }
