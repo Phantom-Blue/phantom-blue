@@ -7,6 +7,7 @@ import history from '../history'
 
 // A C T I O N   C R E A T O R S //
 const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
+const GET_ART_FROM_MY_LOCATION = 'GET_ART_FROM_MY_LOCATION'
 const GET_ART_BY_LOCATIONID = 'GET_ART_BY_LOCATIONID'
 const GET_ONE_ARTWORK = 'GET_ONE_ARTWORK'
 const GET_ALL_ARTWORKS = 'GET_ALL_ARTWORKS'
@@ -26,6 +27,11 @@ const gotArtByLoc = artwork => ({
 
 const gotArtByLocId = artwork => ({
   type: GET_ART_BY_LOCATIONID,
+  artwork
+})
+
+const gotArtFromMyLoc = artwork => ({
+  type: GET_ART_FROM_MY_LOCATION,
   artwork
 })
 
@@ -89,6 +95,20 @@ export const fetchArtWorkByLocationId = LocationId => async dispatch => {
     const {data} = await axios.get(`/api/artworks/artbylocation/${LocationId}`)
     console.log('GOT ARTWORK', data)
     dispatch(gotArtByLocId(data))
+  } catch (error) {
+    console.error("didn't receive any data")
+  }
+}
+
+export const fetchArtFromMyLocation = location => async dispatch => {
+  const {latitude, longitude} = location
+  console.log('INSIDE THUUUNK', latitude, longitude)
+  try {
+    const {data} = await axios.get(
+      `/api/locations/artNearby/10000/${longitude}/${latitude}`
+    )
+    // console.log('GOT ARTWORK', data)
+    dispatch(gotArtFromMyLoc(data))
   } catch (error) {
     console.error("didn't receive any data")
   }
@@ -217,6 +237,8 @@ export default function artworkReducer(state = initialState, action) {
     case GET_ART_BY_LOCATION:
       return {...state, selected: action.artwork}
     case GET_ART_BY_LOCATIONID:
+      return {...state, selected: action.artwork}
+    case GET_ART_FROM_MY_LOCATION:
       return {...state, selected: action.artwork}
     case GET_ONE_ARTWORK:
       return {...state, selected: action.artwork}

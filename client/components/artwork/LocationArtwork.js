@@ -16,7 +16,6 @@ import 'pure-react-carousel/dist/react-carousel.es.css'
 
 class LocationArtwork extends React.Component {
   componentDidMount() {
-    console.log('IN COMPONENT DID MOUNT', this.props)
     const {getArtworkByLocId, match} = this.props
     getArtworkByLocId(match.params.id)
   }
@@ -33,7 +32,7 @@ class LocationArtwork extends React.Component {
               totalSlides={this.props.artworks.length}
             >
               <div>
-                <Slider className="carousel">
+                <Slider id="carousel">
                   {this.props.artworks.map((artwork, i) => (
                     <Slide
                       index={i}

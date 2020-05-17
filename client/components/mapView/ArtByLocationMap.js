@@ -1,42 +1,46 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchAllArtworks} from '../../store/artworks'
 import ReactMapGl, {
   Marker,
   Popup,
   NavigationControl,
   FullscreenControl
 } from 'react-map-gl'
+// import {fetchArtFromMyLocation} from '../../store/artworks'
 import ArtworksPopup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
 import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
-import MapPin from './MapPin'
+import ls from 'local-storage'
 
-class MapView extends Component {
+class ArtByLoctionMap extends Component {
   constructor(props) {
     super(props)
     this.state = {
       viewport: {
-        latitude: 40.7736,
-        longitude: -73.9566,
+        latitude: this.props.latitude,
+        longitude: this.props.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 12
+        zoom: 15
       },
-      selectedPin: null
+      selectedPin: null,
+      selectedPinLat: 0,
+      selectedPinLong: 0,
+      selectedPinAdd: ''
     }
   }
 
-  componentDidMount() {
-    this.props.getAllArtWorks()
-  }
+  // componentDidMount(){
+  //   const {latitude, longitude, artworks} = this.props
+  //   localStorage.
+  // }
 
   render() {
-    const {theArtworks} = this.props
-    console.log(theArtworks)
+    console.log('SELECTED PIN IN ART BY LOCATION MAP', this.state.selectedPin)
+    // const {locationArtworks} = this.props
     return (
       <div className="map-container">
         <ReactMapGl
@@ -47,8 +51,8 @@ class MapView extends Component {
             this.setState({viewport: newport})
           }}
         >
-          {theArtworks
-            ? theArtworks.map(artwork => (
+          {this.props.artworks[0]
+            ? this.props.artworks.map(artwork => (
                 <Marker
                   key={artwork.id}
                   latitude={Number(artwork.Location.latitude)}
@@ -59,32 +63,42 @@ class MapView extends Component {
                     id="marker-pin"
                     onClick={ev => {
                       ev.preventDefault()
-                      this.setState({selectedPin: artwork.Location})
+                      this.setState({
+                        selectedPinLat: artwork.Location.latitude,
+                        selectedPinLong: artwork.Location.longitude,
+                        selectedPinAdd: artwork.Location.address
+                      })
                     }}
                   >
-                    <MapPin />
+                    <img
+                      width="50px"
+                      height="50px"
+                      src="/location-pin.png"
+                      alt="city"
+                    />
                   </button>
                 </Marker>
               ))
             : ''}
-          {this.state.selectedPin ? (
+          {console.log(this.state.selectedPin)}
+          {this.state.selectedPinLat !== null ? (
             <Popup
               className="popup-container"
-              latitude={Number(this.state.selectedPin.latitude)}
-              longitude={Number(this.state.selectedPin.longitude)}
+              latitude={Number(this.state.selectedPinLat)}
+              longitude={Number(this.state.selectedPinLong)}
               closeOnClick={false}
               onClose={() => {
                 this.setState({selectedPin: null})
               }}
             >
               <Artwork
-                latitude={Number(this.state.selectedPin.latitude)}
-                longitude={Number(this.state.selectedPin.longitude)}
-                address={this.state.selectedPin.address}
+                latitude={Number(this.state.selectedPinLat)}
+                longitude={Number(this.state.selectedPinLong)}
+                address={this.state.selectedPinAdd}
               />
             </Popup>
           ) : (
-            ''
+            'THE PIN IS NULLLLLLLLLL'
           )}
           <div id="navegation-control">
             <NavigationControl />
@@ -123,12 +137,12 @@ class MapView extends Component {
   }
 }
 
-const mapState = state => ({
-  theArtworks: state.artwork.all
-})
+// const mapState = state => ({
+//   locationArtworks: state.artwork.selected
+// })
 
-const mapDispatch = dispatch => ({
-  getAllArtWorks: () => dispatch(fetchAllArtworks())
-})
+// const mapDispatch = dispatch => ({
+//   getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location))
+// })
 
-export default connect(mapState, mapDispatch)(MapView)
+export default connect(null, null)(ArtByLoctionMap)
