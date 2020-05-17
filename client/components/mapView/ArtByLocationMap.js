@@ -33,14 +33,7 @@ class ArtByLoctionMap extends Component {
     }
   }
 
-  // componentDidMount(){
-  //   const {latitude, longitude, artworks} = this.props
-  //   localStorage.
-  // }
-
   render() {
-    console.log('SELECTED PIN IN ART BY LOCATION MAP', this.state.selectedPin)
-    // const {locationArtworks} = this.props
     return (
       <div className="map-container">
         <ReactMapGl
@@ -80,7 +73,6 @@ class ArtByLoctionMap extends Component {
                 </Marker>
               ))
             : ''}
-          {console.log(this.state.selectedPin)}
           {this.state.selectedPinLat !== null ? (
             <Popup
               className="popup-container"

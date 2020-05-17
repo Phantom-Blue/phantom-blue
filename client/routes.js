@@ -26,7 +26,7 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/home" component={MainHome} />
+        <Route exact path="/" component={MainHome} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/" component={MapView} />
@@ -39,7 +39,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/account" component={SingleUserHome} />
-            <Route path="/home" component={MainHome} />
+            <Route exact path="/" component={MainHome} />
             {/** TODO: replace component on route below with upload Art component */}
             <Route path="/upload" component={UploadPage} />
             {/** TODO: replace component on route below with user account settings component */}

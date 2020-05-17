@@ -18,6 +18,7 @@ import './mainHome.css'
 import '../../../secrets'
 import ls from 'local-storage'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
+// import 'mapbox-gl-js/v1.10.0/mapbox-gl.css'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -26,8 +27,7 @@ class MainHome extends React.Component {
       location: false,
       longitude: 0,
       latitude: 0,
-      address: null,
-      error: null
+      address: null
     }
     this.handleLocation = this.handleLocation.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
@@ -109,28 +109,33 @@ class MainHome extends React.Component {
   }
 
   render() {
-    console.log('MAIN HOME RENDER', this.props.locationArtworks)
     return this.state.location === false ? (
       <div>
-        <form className="search-form">
-          <label>
-            <p>To start looking for artworks near you</p>
+        <div className="search-section">
+          <div className="search-label">
+            <p>To start looking for artworks near you,</p>
             <h4>enter you address:</h4>
-          </label>
-        </form>
-        <div id="geocoder" />
-        <button
-          type="submit"
-          onClick={e => {
-            this.handleSubmit(e)
-          }}
-        >
-          Submit!
-        </button>
-        <div>
-          {/* <GooglePlacesAutocomplete onSelect={console.log('SEARCH')} /> */}
-          <button type="submit" onClick={() => this.handleLocation()}>
-            or share your current location
+          </div>
+          <div className="search-box-submit">
+            <div id="geocoder" />
+            <button
+              type="submit"
+              className="submit"
+              onClick={e => {
+                this.handleSubmit(e)
+              }}
+            >
+              Submit!
+            </button>
+          </div>
+        </div>
+        <div className="share-location-section">
+          <button
+            type="submit"
+            className="share-location"
+            onClick={() => this.handleLocation()}
+          >
+            or use your current location
           </button>
         </div>
         {this.props.artworks[0] ? (
