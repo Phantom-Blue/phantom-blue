@@ -89,7 +89,7 @@ class MapView extends Component {
           ) : (
             ''
           )}
-
+          {/** CONDITIONS FOR LOADING NAV CONTROLS BASE ON DEVICE */}
           {innerWidth > 768 ? (
             <div>
               <div id="navegation-control">
