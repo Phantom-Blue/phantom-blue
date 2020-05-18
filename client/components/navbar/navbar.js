@@ -55,6 +55,19 @@ class Navbar extends Component {
                   <Link to="/account">Account</Link>
                 </div>
               )}
+              {/** DESKTOP */}
+              {innerWidth > 768 ? (
+                <div className="sub-links">
+                  <Link to="/upload">Upload Art</Link>
+                  <Link to="/map">Map</Link>
+                  <a href="#" onClick={handleClick}>
+                    Logout
+                  </a>
+                  <Link to="/account">Account</Link>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
           ) : (
             <div className="nav-links">
@@ -82,7 +95,7 @@ class Navbar extends Component {
                 </div>
               )}
               {/** DESKTOP */}
-              {innerWidth >= 768 ? (
+              {innerWidth > 768 ? (
                 <div className="sub-links">
                   <Link to="/login">Upload Art</Link>
                   <Link to="/map">Map</Link>
