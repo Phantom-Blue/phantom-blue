@@ -35,19 +35,6 @@
 }
 /* MODAL STYLE FOR VIEW AS A LIST ARTWORKS*/
 
-.modal {
-  position: absolute;
-  width: 100%;
-  max-height: 600px;
-  margin-top: -305px;
-  margin-right: -50%;
-  border: none;
-  border-radius: 10px;
-  background-color: #ffffff;
-  overflow-y: scroll;
-  z-index: 10;
-}
-
 .modal > .close {
   cursor: pointer;
   position: absolute;
@@ -71,6 +58,28 @@
 }
 
 @media only screen and (min-device-width: 768px) {
+  .modal {
+    position: absolute;
+    width: 100%;
+    max-height: 600px;
+    margin-top: -305px;
+    margin-right: -50%;
+    border: none;
+    border-radius: 10px;
+    background-color: #ffffff;
+    overflow-y: scroll;
+    z-index: 10;
+  }
+
+  .modal > .close {
+    cursor: pointer;
+    position: absolute;
+    display: block;
+    line-height: 20px;
+    right: 10px;
+    top: 5px;
+    font-size: 30px;
+  }
   .close-btn {
     font-size: 30px;
     top: -5px;

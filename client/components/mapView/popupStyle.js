@@ -19,3 +19,15 @@ export const desktopContentStyle = {
   borderRadius: '5px',
   padding: '10px'
 }
+
+export const mobileAllArtworksStyle = {
+  maxWidth: '600px',
+  width: '100%',
+  height: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  opacity: '.9',
+  overflowY: 'scroll',
+  zIndex: '10'
+}

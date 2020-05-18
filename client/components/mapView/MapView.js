@@ -9,7 +9,11 @@ import ReactMapGl, {
 } from 'react-map-gl'
 import Popup from 'reactjs-popup'
 // customize popup style
-import {desktopContentStyle, mobileContentStyle} from './popupStyle.js'
+import {
+  desktopContentStyle,
+  mobileContentStyle,
+  mobileAllArtworksStyle
+} from './popupStyle.js'
 import {Link} from 'react-router-dom'
 import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
@@ -159,6 +163,7 @@ class MapView extends Component {
             }
             modal
             closeOnDocumentClick
+            contentStyle={innerWidth < 768 ? mobileAllArtworksStyle : ''}
           >
             {close => (
               <div className="modal">
