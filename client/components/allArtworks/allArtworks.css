@@ -1,12 +1,12 @@
 .all-artworks-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  margin: 20px;
+  padding: 20px;
 }
 .artwork-container {
-  margin: 20px;
-  background-color: #ccd1d2;
-  border-radius: 20px;
   padding: 10px;
   width: 100%;
   height: 100%;
@@ -14,6 +14,30 @@
 .artwork-container img {
   display: block;
   object-fit: cover;
+  width: 100%;
+  height: 300px;
   max-width: 300px;
   max-height: 200px;
+}
+.all-artworks-container {
+  margin: 10px;
+}
+.all-artworks-container h2 {
+  color: black;
+  font-size: 20px;
+}
+/* BELOW CHANGES TO TABLES AND DESKTOP*/
+@media only screen and (min-device-width: 768px) {
+  .all-artworks-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .artwork-container {
+    margin: 20px;
+    background-color: #ccd1d2;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+  }
 }

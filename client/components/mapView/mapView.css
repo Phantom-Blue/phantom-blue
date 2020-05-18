@@ -34,7 +34,9 @@
   opacity: 0.85;
 }
 /* MODAL STYLE FOR VIEW AS A LIST ARTWORKS*/
-
+.modal {
+  padding-top: 60px;
+}
 .modal > .close {
   cursor: pointer;
   position: absolute;
