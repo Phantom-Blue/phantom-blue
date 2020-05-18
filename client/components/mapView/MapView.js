@@ -4,11 +4,12 @@ import {connect} from 'react-redux'
 import {fetchAllArtworks} from '../../store/artworks'
 import ReactMapGl, {
   Marker,
-  Popup,
   NavigationControl,
   FullscreenControl
 } from 'react-map-gl'
-import ArtworksPopup from 'reactjs-popup'
+import Popup from 'reactjs-popup'
+// customize popup style
+import {desktopContentStyle, mobileContentStyle} from './popupStyle.js'
 import {Link} from 'react-router-dom'
 import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
@@ -89,12 +90,15 @@ class MapView extends Component {
           {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
           {this.state.selectedPin ? (
             <div>
-              <ArtworksPopup
-                className="popup-container"
+              <Popup
+                className="popup-contaner"
                 open={this.state.open}
                 closeOnDocumentClick
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
+                contentStyle={
+                  innerWidth < 768 ? mobileContentStyle : desktopContentStyle
+                }
                 onClose={() => {
                   this.setState({selectedPin: null})
                   this.closeModal()
@@ -115,7 +119,7 @@ class MapView extends Component {
                     address={this.state.selectedPin.address}
                   />
                 </div>
-              </ArtworksPopup>
+              </Popup>
             </div>
           ) : (
             ''
@@ -145,7 +149,7 @@ class MapView extends Component {
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
         <div className="artwork-list-outer-container">
-          <ArtworksPopup
+          <Popup
             trigger={
               <div className="see-all-artworks-link-container">
                 <Link to="/" id="link-to-all-artworks">
@@ -166,7 +170,7 @@ class MapView extends Component {
                 </div>
               </div>
             )}
-          </ArtworksPopup>
+          </Popup>
         </div>
       </div>
     )
