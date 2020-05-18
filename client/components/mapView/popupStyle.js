@@ -5,7 +5,7 @@ export const mobileContentStyle = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  opacity: '.85'
+  opacity: '.89'
 }
 
 export const desktopContentStyle = {

@@ -55,3 +55,23 @@
   top: 5px;
   font-size: 26px;
 }
+
+/* POP UP STYLE */
+
+.close-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 60px;
+  position: absolute;
+  top: 5px;
+  right: 20px;
+}
+
+@media only screen and (min-device-width: 768px) {
+  .close-btn {
+    font-size: 30px;
+    top: -5px;
+    right: 20px;
+  }
+}

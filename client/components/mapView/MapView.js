@@ -107,11 +107,11 @@ class MapView extends Component {
                 <div>
                   <button
                     type="button"
-                    className="close"
+                    className="close-btn"
                     onClick={() => this.closeModal()}
                   >
                     {' '}
-                    Close
+                    &times;
                   </button>
                   <Artwork
                     latitude={Number(this.state.selectedPin.latitude)}
