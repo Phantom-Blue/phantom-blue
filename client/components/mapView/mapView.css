@@ -27,20 +27,22 @@
 
 #link-to-all-artworks {
   color: black;
-  font-size: 30px;
+  font-size: 40px;
 }
 
+#link-to-all-artworks:hover {
+  opacity: 0.85;
+}
 /* MODAL STYLE FOR VIEW AS A LIST ARTWORKS*/
+
 .modal {
   position: absolute;
   width: 100%;
   max-height: 600px;
-  right: calc(50% - 50%);
-  /* top: calc(50% - (max-height / 2)); */
-  /* margin: -305px 0 0 -300px; */
   margin-top: -305px;
   margin-right: -50%;
-  border: solid 2px #cccccc;
+  border: none;
+  border-radius: 10px;
   background-color: #ffffff;
   overflow-y: scroll;
   z-index: 10;
@@ -51,9 +53,9 @@
   position: absolute;
   display: block;
   line-height: 20px;
-  right: 5px;
+  right: 10px;
   top: 5px;
-  font-size: 26px;
+  font-size: 30px;
 }
 
 /* POP UP STYLE */

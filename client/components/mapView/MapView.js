@@ -152,7 +152,7 @@ class MapView extends Component {
           <Popup
             trigger={
               <div className="see-all-artworks-link-container">
-                <Link to="/" id="link-to-all-artworks">
+                <Link to="/map" id="link-to-all-artworks">
                   View as list
                 </Link>
               </div>
