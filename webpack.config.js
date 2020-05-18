@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const isDev = process.env.NODE_ENV === 'development'
 // const nodeExternals = require('webpack-node-externals') //include this
 
@@ -37,5 +38,12 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.REACT_APP_MAPBOX_KEY': JSON.stringify(
+        process.env.REACT_APP_MAPBOX_KEY
+      )
+    })
+  ]
 }
