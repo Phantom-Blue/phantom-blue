@@ -9,6 +9,7 @@ import {
   removeArtwork
 } from '../../store/artworks'
 import {me} from '../../store/user'
+import Loading from '../Loading'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
@@ -110,7 +111,7 @@ class ArtworkOptions extends React.Component {
             </Popup> */}
           </div>
         ) : (
-          ''
+          <Loading />
         )}
         {user.id === artwork.UserId ? (
           <Popup
@@ -127,7 +128,7 @@ class ArtworkOptions extends React.Component {
             </Link>
           </Popup>
         ) : (
-          ''
+          <Loading />
         )}
         {// we render the edit artwork component if the user is an admin
         user.isAdmin === true ? (
@@ -145,7 +146,7 @@ class ArtworkOptions extends React.Component {
             </Link>
           </Popup>
         ) : (
-          ''
+          <Loading />
         )}
         {/** Show admin edit to all artworks */}
         {user.isAdmin === true ? (
@@ -155,22 +156,24 @@ class ArtworkOptions extends React.Component {
             </button>
           </Link>
         ) : (
-          ''
+          <Loading />
         )}
         {/** Show edit to user specific artwork */}
-        {user && user.artwork
-          ? user.artwork.map(art => {
-              if (art.id === artwork.id) {
-                return (
-                  <Link to={`/artwork/${artwork.id}/edit`}>
-                    <button type="submit">
-                      <h4>E D I T</h4>
-                    </button>
-                  </Link>
-                )
-              }
-            })
-          : ''}
+        {user && user.artwork ? (
+          user.artwork.map(art => {
+            if (art.id === artwork.id) {
+              return (
+                <Link to={`/artwork/${artwork.id}/edit`}>
+                  <button type="submit">
+                    <h4>E D I T</h4>
+                  </button>
+                </Link>
+              )
+            }
+          })
+        ) : (
+          <Loading />
+        )}
       </div>
     )
   }

@@ -9,6 +9,7 @@ import SingleArtwork from './SingleArtwork'
 import {Link} from 'react-router-dom'
 import LocationArtwork from './LocationArtwork'
 import './artwork.css'
+import Loading from '../Loading'
 
 class Artwork extends React.Component {
   componentDidMount() {
@@ -42,15 +43,7 @@ class Artwork extends React.Component {
             </Link>
           </div>
         ) : (
-          <div>
-            <center>
-              <h2>L O A D I N G . . .</h2>
-              <img
-                src="http://gisellezatonyl.com/images/blobbers-03-newalgos-12-23-13-02-lessframes-600pxw.gif"
-                width="300px"
-              />
-            </center>
-          </div>
+          <Loading />
         )}
         <div id="google-nav-btn">
           <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
