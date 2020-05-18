@@ -27,18 +27,28 @@ class MapView extends Component {
         height: '100vh',
         zoom: 12
       },
-      selectedPin: null
+      selectedPin: null,
+      open: false
     }
-    this.popupContainer = React.createRef();
+    this.popupContainer = React.createRef()
     this.handleClose = this.handleClose.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
-  
+
   componentDidMount() {
     this.props.getAllArtWorks()
   }
 
   handleClose() {
     this.popupContainer.style.width = '0vw'
+  }
+
+  openModal() {
+    this.setState({open: true})
+  }
+  closeModal() {
+    this.setState({open: false})
   }
 
   render() {
@@ -68,6 +78,7 @@ class MapView extends Component {
                     onClick={ev => {
                       ev.preventDefault()
                       this.setState({selectedPin: artwork.Location})
+                      this.openModal()
                     }}
                   >
                     <MapPin />
@@ -78,25 +89,33 @@ class MapView extends Component {
           {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
           {this.state.selectedPin ? (
             <div>
-              <div
+              <ArtworksPopup
                 className="popup-container"
-                ref = {this.popupContainer}
+                open={this.state.open}
+                closeOnDocumentClick
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
-                // closeOnClick={false}
                 onClose={() => {
                   this.setState({selectedPin: null})
+                  this.closeModal()
                 }}
               >
                 <div>
-                  <button type="button" onClick={() => this.handleClose()}> Close</button>
+                  <button
+                    type="button"
+                    className="close"
+                    onClick={() => this.closeModal()}
+                  >
+                    {' '}
+                    Close
+                  </button>
                   <Artwork
                     latitude={Number(this.state.selectedPin.latitude)}
                     longitude={Number(this.state.selectedPin.longitude)}
                     address={this.state.selectedPin.address}
                   />
                 </div>
-              </div>
+              </ArtworksPopup>
             </div>
           ) : (
             ''
