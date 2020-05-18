@@ -1,5 +1,5 @@
-const User = require('./User')
 const Artwork = require('./Artwork')
+const User = require('./user')
 const Location = require('./Location')
 const Tag = require('./Tag')
 const TaggedArtwork = require('./TaggedArtwork')

@@ -77,7 +77,7 @@ class MainHome extends React.Component {
   }
 
   async handleGeocode(geocoder) {
-    // console.log('GOT IN GEOCODE')
+    console.log('GOT IN GEOCODE')
     const coded = await geocoder._geocode(geocoder._inputEl.value)
     if (coded.body.features[0]) {
       let longitude = coded.body.features[0].center[0]

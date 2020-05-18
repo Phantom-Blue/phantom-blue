@@ -1,27 +1,27 @@
 language: node_js
 node_js:
-  - 12 # uses version 12
+  - 12
 services:
-  - postgresql # starts up postgres
+  - postgresql
 addons:
-  postgresql: '10' # recent postgres version on Travis
-dist: xenial # uses xenial environment
+  postgresql: '10'
+dist: xenial
 notifications:
   email:
-    on_success: change # default: change (only when going from broken to fixed)
-    on_failure: always # default: always (which is annoying, as it should be)
+    on_success: change
+    on_failure: always
 install:
-  - npm ci # faster, goes only from package-lock
+  - npm ci
 before_script:
-  - psql -c 'create database "pentimento-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "pentimento-test";' -U postgres
 script:
-  - npm test # test the code
-  - npm run build-client # make the bundle
-# before_deploy:
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+  - npm test
+  - npm run build-client
+deploy: # see README for details on these keys
+  skip_cleanup: true
+  provider: heroku
+  app: pentimentostreet
+  api_key:
+    secure: umqTFEWqybnuOmUZWZN7AiLlnepHqR99H/nSaPGvrpbvujKHvtx4p0beroeG1RVUMptSiFvjA3RoD37t6rT0gclxqVIfd51RmwudWXL++1nrzFYPe4cqDeTwMKOah2AXRtgOocbmcwYLaznpStVQ/JWh0MEHAJpTVXAUd7ZCAjhdSZTj16v21PG2azhPZnClmtzubqXV+WxHMgoizUt2acalW1PPc9ME2mWTPH0Ztpa49RZP4zIqjDG1ZKPdB+pB+GS4RItvh/SfWJeJhYprK1qSt14bCBpM501TrGqqp0yV2b1yc1X478dY9EMyhdQlniZ6UtNl4/vAqG4DpJC2mLduiNzpe5wc1KGo9QC28ZZh8SaD+Clyx8OU2j4KVE+K8RVQhhcdYnVHbT81hWizR3Cymb7ujNsMkQ3HKYUfHFS5zQXHfWCyXjsfaj1ONGR0GF04DhhNkHLtw60Dw1nNE3xZVuVtz0FfscQUyiUu4aKhvGMhpXuKXYBSDXnhRq/qR4HAx4pTh2mAxSzItmEQ6INHmZZUyDRN/rCyX98GknGpXoFUA+q8BidAptS1PROPNPF1lzpJqrMU70NGzI1t+DbgmjvIOet5aFYxnjF5hvX0QCTYrWFrR+8Dbnge2SSCrKVpYsW4S4WtWM2F4nzG3v16rQG7MUY8lLssbxQyKEI=
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules

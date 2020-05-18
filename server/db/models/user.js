@@ -2,7 +2,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 const Artwork = require('./Artwork')
 const crypto = require('crypto')
-// const Artwork = require('./Artwork')
 
 const User = db.define('Users', {
   firstName: {
