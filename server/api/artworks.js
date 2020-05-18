@@ -62,46 +62,6 @@ router.get('/:artworkId', async (req, res, next) => {
   }
 })
 
-router.put('/:artworkId', async (req, res) => {
-  const {artworkId} = req.params
-  try {
-    const artworkToVerify = await Artwork.findOne({
-      where: {
-        id: artworkId
-      },
-      include: Tag
-    })
-    const verfiedArtwork = await artworkToVerify.update({
-      isVerified: true
-    })
-    res.json(verfiedArtwork)
-  } catch (error) {
-    console.error('could not verify artwork')
-  }
-})
-
-router.get('/', async (req, res, next) => {
-  try {
-    const artwork = await Artwork.findAll()
-    res.json(artwork)
-  } catch (err) {
-    next(err)
-  }
-})
-
-// router.get('/:ArtworkId', async (req, res, next) => {
-//   try {
-// if (req.user && req.user.isAdmin) {
-//       const artwork = await Artwork.findByPk(req.params.ArtworkId)
-//       res.json(artwork)
-// } else {
-// res.sendStatus(403)
-// }
-//   } catch (err) {
-//     next(err)
-//   }
-// })
-
 router.delete('/:ArtworkId', async (req, res, next) => {
   try {
     if (req.user && req.user.isAdmin) {
@@ -183,23 +143,57 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:artworkId/edit', async (req, res, next) => {
-  const id = req.params.artworkId
+router.put('/:artworkId', async (req, res) => {
+  //TODO: Move this route to /:artworkId/verify
+
   try {
+    const {artworkId} = req.params
+    if (req.user && req.user.id) {
+      const artworkToVerify = await Artwork.findOne({
+        where: {
+          id: artworkId
+        },
+        include: Tag
+      })
+      const verfiedArtwork = await artworkToVerify.update({
+        isVerified: true
+      })
+      res.json(verfiedArtwork)
+    } else {
+      res.json('Log in to verify artwork.')
+    }
+  } catch (error) {
+    console.error('Could not verify artwork')
+  }
+})
+
+router.put('/:artworkId/edit', async (req, res, next) => {
+  //TODO: Move this route to /:artworkId
+
+  try {
+    const id = req.params.artworkId
+
+    let userId = null
     if (req.user) {
+      userId = req.user.id
+    }
+    const art = await Artwork.findByPk(id)
+    if ((req.user && req.user.isAdmin) || userId === art.UserId) {
       let {artist, description, imageUrl, address} = req.body
 
       let artwork = {artist, description, imageUrl, address}
 
-      const updatedArtwork = await Artwork.update(artwork, {where: {id: id}})
+      await Artwork.update(artwork, {where: {id: id}})
+
+      const updatedArtwork = await Artwork.findByPk(id)
 
       if (updatedArtwork) {
         res.json(updatedArtwork)
       } else {
-        res.json('Failed to updated.')
+        res.json('Failed to update.')
       }
     } else {
-      res.json('log in to update.')
+      res.json('You do not have edit permission.')
     }
   } catch (err) {
     next(err)

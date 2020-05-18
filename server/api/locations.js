@@ -2,6 +2,8 @@ const router = require('express').Router()
 const {Artwork, Location, Tag} = require('../db/models')
 
 router.get('/:lat', async (req, res, next) => {
+  // TODO: Route working fine, but consider refactoring for consistency/readability later.
+
   const {long} = req.query
   const {lat} = req.params
 
@@ -28,10 +30,8 @@ router.get('/:lat', async (req, res, next) => {
 
 router.get('/artNearby/:radius/:long/:lat', async (req, res, next) => {
   const {radius, long, lat} = req.params
-  console.log('REQ DAT PARAMSSSSSSSSS =>>>>>>>', radius, long, lat)
   try {
     const nearbyArt = await Location.getNearbyArt(radius, long, lat)
-    // console.log(nearbyArt, 'NEARBY ART IN API REQUEST')
     res.send(nearbyArt)
   } catch (err) {
     next(err)

@@ -1,13 +1,17 @@
 const router = require('express').Router()
-const {User, Artwork} = require('../db/models')
+const {User} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await User.findAll({
-      attributes: ['id', 'firstName', 'lastName', 'isVerified', 'email']
-    })
-    res.json(users)
+    if (req.user && req.user.isAdmin) {
+      const users = await User.findAll({
+        attributes: ['id', 'firstName', 'lastName', 'isVerified', 'email']
+      })
+      res.json(users)
+    } else {
+      res.sendStatus(403)
+    }
   } catch (err) {
     next(err)
   }
@@ -15,11 +19,14 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:userId', async (req, res, next) => {
   try {
-    console.log('req.params: ', req.params)
-    const users = await User.findByPk(req.params.userId)
-    const artwork = await users.getArtwork()
-    users.dataValues.artwork = artwork
-    res.json(users)
+    if (req.user && req.user.isAdmin) {
+      const user = await User.findByPk(req.params.userId)
+      const artwork = await user.getArtwork()
+      user.dataValues.artwork = artwork
+      res.json(user)
+    } else {
+      res.sendStatus(403)
+    }
   } catch (err) {
     next(err)
   }
@@ -28,9 +35,12 @@ router.get('/:userId', async (req, res, next) => {
 router.delete('/:userId', async (req, res, next) => {
   try {
     if (req.user && req.user.isAdmin) {
-      const artwork = await User.findByPk(req.params.userId)
-      await artwork.destroy()
-      res.sendStatus(204)
+      const deleted = await User.destroy({where: {id: req.params.userId}})
+      if (deleted) {
+        res.sendStatus(204)
+      } else {
+        res.sendStatus(304)
+      }
     } else {
       res.sendStatus(403)
     }
