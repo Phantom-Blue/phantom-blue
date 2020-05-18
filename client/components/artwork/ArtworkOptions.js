@@ -47,7 +47,6 @@ class ArtworkOptions extends React.Component {
     const {artwork, addTags} = this.props
     this.state.tags.split(',').forEach(tag => {
       let cleanTag = tag.toLowerCase()
-      // console.log(cleanTag)
       addTags(artwork.id, cleanTag)
     })
     this.setState({
@@ -62,15 +61,13 @@ class ArtworkOptions extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const {artwork, user} = this.props
-    console.log(user.id, artwork.UserId, artwork)
     return (
       <div>
         <div className="additionalartworkinfo">
-          n
           <div>
             <p>{artwork.description}</p>
+            <br />
           </div>
           <div>
             <p>T A G S:</p>
@@ -150,13 +147,30 @@ class ArtworkOptions extends React.Component {
         ) : (
           ''
         )}
+        {/** Show admin edit to all artworks */}
         {user.isAdmin === true ? (
           <Link to={`/artwork/${artwork.id}/edit`}>
-            <button type="submit">EDIT</button>
+            <button type="submit">
+              <h4>E D I T</h4>
+            </button>
           </Link>
         ) : (
           ''
         )}
+        {/** Show edit to user specific artwork */}
+        {user && user.artwork
+          ? user.artwork.map(art => {
+              if (art.id === artwork.id) {
+                return (
+                  <Link to={`/artwork/${artwork.id}/edit`}>
+                    <button type="submit">
+                      <h4>E D I T</h4>
+                    </button>
+                  </Link>
+                )
+              }
+            })
+          : ''}
       </div>
     )
   }

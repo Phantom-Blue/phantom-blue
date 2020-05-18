@@ -1,24 +1,73 @@
 #map-popup-container {
-  max-height: 500px;
-  /* height: 500px; */
-  /* display: flex;
-  justify-content: center; */
+  padding: 30px;
 }
-#map-popup-img {
-  width: 300px;
-  max-height: 300px;
+
+#map-popup-container a {
+  color: black;
 }
-.carousel-image {
-  /* display: flex;
+#map-popup-container img {
+  width: 250px;
+  max-height: 250px;
+}
+
+#artistname {
+  color: #5d95e8;
+  padding: 2px;
+}
+#all-art-at-location {
+  color: black;
+  font-size: 20px;
+}
+
+#google-nav-btn a {
+  font-size: 20px;
+  font-weight: bold;
+}
+#google-nav-btn a:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+/* .carousel-image { */
+/* display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center; */
-  /* position: absolute; */
-  /* margin: auto; */
-  /* max-height: 70vh; */
-  /* height: 400px; */
-}
+/* position: absolute; */
+/* margin: auto; */
+/* max-height: 70vh; */
+/* height: 400px; */
+/* } */
 
-.carousel-image img {
-  width: 100vw;
+/* .carousel-image img {
+    width: 100vw;
+  } */
+
+/* .single-image img {
+  max-width: 200px;
+  height: auto;
+} */
+
+@media screen and (min-width: 768px) {
+  /* #map-popup-container {
+    max-height: 500px; */
+  /* height: 500px; */
+  /* display: flex;
+    justify-content: center; */
+  /* } */
+  /* #map-popup-img {
+    width: 100%;
+    height: auto;
+  } */
+  /* chelsea */
+  .single-artwork-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 35px;
+  }
+  .single-image {
+    max-width: 100%;
+    height: auto;
+  }
 }

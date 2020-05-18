@@ -25,18 +25,20 @@ class Artwork extends React.Component {
       <div id="map-popup-container">
         {// HERE WE INCOORPORATE A CAROUSEL //
         this.props.artworks[0] ? (
-          <div>
+          <div className="map-popup-content">
             <Link to={`/artwork/${this.props.artworks[0].id}`}>
               <img
                 src={this.props.artworks[0].imageUrl[0]}
                 alt={this.props.artworks[0].artist}
                 id="map-popup-img"
-                // width="200"
               />
-              <h3 className="artistname">{this.props.artworks[0].artist}</h3>
+              <h3 id="artistname">{this.props.artworks[0].artist}</h3>
             </Link>
-            <Link to={`/location/${this.props.artworks[0].LocationId}`}>
-              <p>View all art at this location</p>
+            <Link
+              id="all-art-at-location"
+              to={`/location/${this.props.artworks[0].LocationId}`}
+            >
+              View all art at this location
             </Link>
           </div>
         ) : (
@@ -45,14 +47,14 @@ class Artwork extends React.Component {
               <h2>L O A D I N G . . .</h2>
               <img
                 src="http://gisellezatonyl.com/images/blobbers-03-newalgos-12-23-13-02-lessframes-600pxw.gif"
-                width="300"
+                width="300px"
               />
             </center>
           </div>
         )}
-        <div>
+        <div id="google-nav-btn">
           <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
-            <h4>TAKE ME THERE</h4>
+            TAKE ME THERE
           </a>
         </div>
       </div>

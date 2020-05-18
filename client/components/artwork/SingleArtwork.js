@@ -17,17 +17,22 @@ class SingleArtwork extends React.Component {
     return (
       <div>
         {this.props.artwork ? (
-          <div>
+          //ADJUST CLASSNAMES FROM LINES 21-25
+          // //   && this.props.artwork[0] ?
+          // <div className="single-artwork-container">
+          //   <div className="single-image">
+          //     <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
+          //   </div>
+          <div className="single-image" id="map-popup-container">
             {artwork.imageUrl
               ? artwork.imageUrl.map((url, idx) => {
-                  return (
-                    <img src={url} alt={artwork.artist} width="200" key={idx} />
-                  )
+                  return <img src={url} alt={artwork.artist} key={idx} />
                 })
               : ''}
             {/* <img src={artwork.imageUrl} alt={artwork.artist} width="200" /> */}
             <div className="carousel-text">
               <h1 className="artistname">{artwork.artist}</h1>
+              {/* <br /> */}
               <ArtworkOptions artwork={artwork} />
             </div>
           </div>

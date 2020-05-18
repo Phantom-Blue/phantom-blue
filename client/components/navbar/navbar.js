@@ -8,25 +8,23 @@ import './navbar.css'
 class Navbar extends Component {
   constructor(props) {
     super(props)
-    this.menuIcon = React.createRef()
-    this.menuItems = React.createRef()
+    this.state = {
+      visible: false
+    }
 
-    this.handleMenuClick = this.handleMenuClick.bind(this)
+    this.toggleMenu = this.toggleMenu.bind(this)
   }
 
-  handleMenuClick() {
+  toggleMenu() {
     const {innerWidth} = window
 
-    if (innerWidth <= 768) {
-      if (this.menuItems.current.style.display === 'flex') {
-        this.menuItems.current.style.display = 'none'
-      } else {
-        this.menuItems.current.style.display = 'flex'
-      }
+    if (innerWidth < 768) {
+      this.setState({visible: !this.state.visible})
     }
   }
   render() {
     const {isLoggedIn, handleClick} = this.props
+    const {innerWidth} = window
     return (
       <div>
         <nav>
@@ -39,23 +37,37 @@ class Navbar extends Component {
               {/**Mobile menu bar */}
               <div
                 className="menu-icon"
-                ref={this.menuIcon}
                 onClick={e => {
-                  this.handleMenuClick(e)
+                  this.toggleMenu(e)
                 }}
               >
                 <div />
                 <div />
                 <div />
               </div>
-              <div className="sub-links" ref={this.menuItems}>
-                <Link to="/upload">Upload Art</Link>
-                <Link to="/map">Map</Link>
-                <a href="#" onClick={handleClick}>
-                  Logout
-                </a>
-                <Link to="/account">Account</Link>
-              </div>
+              {this.state.visible && (
+                <div className="sub-links">
+                  <Link to="/upload">Upload Art</Link>
+                  <Link to="/map">Map</Link>
+                  <a href="#" onClick={handleClick}>
+                    Logout
+                  </a>
+                  <Link to="/account">Account</Link>
+                </div>
+              )}
+              {/** DESKTOP */}
+              {innerWidth > 768 ? (
+                <div className="sub-links">
+                  <Link to="/upload">Upload Art</Link>
+                  <Link to="/map">Map</Link>
+                  <a href="#" onClick={handleClick}>
+                    Logout
+                  </a>
+                  <Link to="/account">Account</Link>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
           ) : (
             <div className="nav-links">
@@ -66,20 +78,32 @@ class Navbar extends Component {
               {/**Mobile menu bar */}
               <div
                 className="menu-icon"
-                ref={this.menuIcon}
                 onClick={e => {
-                  this.handleMenuClick(e)
+                  this.toggleMenu(e)
                 }}
               >
                 <div />
                 <div />
                 <div />
               </div>
-              <div className="sub-links" ref={this.menuItems}>
-                <Link to="/login">Upload Art</Link>
-                <Link to="/map">Map</Link>
-                <Link to="/login">Login</Link>
-              </div>
+              {/** MOBILE TOGGLE */}
+              {this.state.visible && (
+                <div className="sub-links">
+                  <Link to="/login">Upload Art</Link>
+                  <Link to="/map">Map</Link>
+                  <Link to="/login">Login</Link>
+                </div>
+              )}
+              {/** DESKTOP */}
+              {innerWidth > 768 ? (
+                <div className="sub-links">
+                  <Link to="/login">Upload Art</Link>
+                  <Link to="/map">Map</Link>
+                  <Link to="/login">Login</Link>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
           )}
         </nav>

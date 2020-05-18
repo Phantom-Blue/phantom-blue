@@ -1,13 +1,19 @@
+/* eslint-disable react/no-access-state-in-setstate */
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllArtworks} from '../../store/artworks'
 import ReactMapGl, {
   Marker,
-  Popup,
   NavigationControl,
   FullscreenControl
 } from 'react-map-gl'
-import ArtworksPopup from 'reactjs-popup'
+import Popup from 'reactjs-popup'
+// customize popup style
+import {
+  desktopContentStyle,
+  mobileContentStyle,
+  mobileAllArtworksStyle
+} from './popupStyle.js'
 import {Link} from 'react-router-dom'
 import Artwork from '../artwork/Artwork'
 import AllArtworks from '../allArtworks/AllArtworks'
@@ -26,16 +32,33 @@ class MapView extends Component {
         height: '100vh',
         zoom: 12
       },
-      selectedPin: null
+      selectedPin: null,
+      open: false
     }
+    this.popupContainer = React.createRef()
+    this.handleClose = this.handleClose.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
   componentDidMount() {
     this.props.getAllArtWorks()
   }
 
+  handleClose() {
+    this.popupContainer.style.width = '0vw'
+  }
+
+  openModal() {
+    this.setState({open: true})
+  }
+  closeModal() {
+    this.setState({open: false})
+  }
+
   render() {
     const {theArtworks} = this.props
+    const {innerWidth} = window
     console.log(theArtworks)
     return (
       <div className="map-container">
@@ -60,6 +83,7 @@ class MapView extends Component {
                     onClick={ev => {
                       ev.preventDefault()
                       this.setState({selectedPin: artwork.Location})
+                      this.openModal()
                     }}
                   >
                     <MapPin />
@@ -67,44 +91,79 @@ class MapView extends Component {
                 </Marker>
               ))
             : ''}
+          {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
           {this.state.selectedPin ? (
-            <Popup
-              className="popup-container"
-              latitude={Number(this.state.selectedPin.latitude)}
-              longitude={Number(this.state.selectedPin.longitude)}
-              closeOnClick={false}
-              onClose={() => {
-                this.setState({selectedPin: null})
-              }}
-            >
-              <Artwork
+            <div>
+              <Popup
+                className="popup-contaner"
+                open={this.state.open}
+                closeOnDocumentClick
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
-                address={this.state.selectedPin.address}
-              />
-            </Popup>
+                contentStyle={
+                  innerWidth < 768 ? mobileContentStyle : desktopContentStyle
+                }
+                onClose={() => {
+                  this.setState({selectedPin: null})
+                  this.closeModal()
+                }}
+              >
+                <div>
+                  <button
+                    type="button"
+                    className="close-btn"
+                    onClick={() => this.closeModal()}
+                  >
+                    {' '}
+                    &times;
+                  </button>
+                  <Artwork
+                    latitude={Number(this.state.selectedPin.latitude)}
+                    longitude={Number(this.state.selectedPin.longitude)}
+                    address={this.state.selectedPin.address}
+                  />
+                </div>
+              </Popup>
+            </div>
           ) : (
             ''
           )}
-          <div id="navegation-control">
-            <NavigationControl />
-          </div>
-          <div id="fullscreen-control">
-            <FullscreenControl />
-          </div>
+          {/** CONDITIONS FOR LOADING NAV CONTROLS BASE ON DEVICE */}
+          {innerWidth > 768 ? (
+            <div>
+              <div id="navegation-control">
+                <NavigationControl />
+              </div>
+              <div id="fullscreen-control">
+                <FullscreenControl />
+              </div>
+            </div>
+          ) : innerWidth < 768 && this.state.selectedPin === null ? (
+            <div>
+              <div id="navegation-control">
+                <NavigationControl />
+              </div>
+              <div id="fullscreen-control">
+                <FullscreenControl />
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
         <div className="artwork-list-outer-container">
-          <ArtworksPopup
+          <Popup
             trigger={
               <div className="see-all-artworks-link-container">
-                <Link to="/" id="link-to-all-artworks">
+                <Link to="/map" id="link-to-all-artworks">
                   View as list
                 </Link>
               </div>
             }
             modal
             closeOnDocumentClick
+            contentStyle={innerWidth < 768 ? mobileAllArtworksStyle : ''}
           >
             {close => (
               <div className="modal">
@@ -116,7 +175,7 @@ class MapView extends Component {
                 </div>
               </div>
             )}
-          </ArtworksPopup>
+          </Popup>
         </div>
       </div>
     )
