@@ -25,6 +25,7 @@
   margin: 5px;
 }
 .sub-links {
+  /* update links view */
   position: absolute;
   top: 100px;
   display: flex;
