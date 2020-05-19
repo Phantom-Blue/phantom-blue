@@ -13,6 +13,7 @@ import {
   ButtonNext
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
+import Loading from '../Loading'
 
 class LocationArtwork extends React.Component {
   componentDidMount() {
@@ -65,15 +66,7 @@ class LocationArtwork extends React.Component {
             </CarouselProvider>
           </div>
         ) : (
-          <div>
-            <center>
-              <h2>L O A D I N G . . .</h2>
-              <img
-                src="http://gisellezatonyl.com/images/blobbers-03-newalgos-12-23-13-02-lessframes-600pxw.gif"
-                width="300"
-              />
-            </center>
-          </div>
+          <Loading />
         )}
       </div>
     )

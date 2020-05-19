@@ -90,7 +90,7 @@ class ArtByLoctionMap extends Component {
               />
             </Popup>
           ) : (
-            'THE PIN IS NULLLLLLLLLL'
+            ''
           )}
           <div id="navegation-control">
             <NavigationControl />

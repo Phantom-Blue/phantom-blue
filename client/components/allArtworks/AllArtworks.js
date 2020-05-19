@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchAllArtworks} from '../../store/artworks'
 import './allArtworks.css'
+import Loading from '../Loading'
 
 export class AllArtWorks extends Component {
   componentDidMount() {
@@ -14,18 +15,20 @@ export class AllArtWorks extends Component {
     return (
       <div className="all-artworks-container">
         <div>
-          {allArtWorks
-            ? allArtWorks.map(artwork => {
-                return (
-                  <div className="artwork-container" key={artwork.userId}>
-                    <Link to={`/artwork/${artwork.id}`}>
-                      <img src={artwork.imageUrl} alt="Artwork" />
-                      <h2>{artwork.artist}</h2>
-                    </Link>
-                  </div>
-                )
-              })
-            : 'No Artworks at this location'}
+          {allArtWorks ? (
+            allArtWorks.map(artwork => {
+              return (
+                <div className="artwork-container" key={artwork.userId}>
+                  <Link to={`/artwork/${artwork.id}`}>
+                    <img src={artwork.imageUrl} alt="Artwork" />
+                    <h2>{artwork.artist}</h2>
+                  </Link>
+                </div>
+              )
+            })
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
     )
