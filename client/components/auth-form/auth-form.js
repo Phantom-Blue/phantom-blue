@@ -10,7 +10,6 @@ import './auth-form.css'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
-
   return (
     <div className="login-form-container">
       <form onSubmit={handleSubmit} name={name}>
@@ -66,9 +65,13 @@ const AuthForm = props => {
               ''
             )}
             {name === 'login' ? (
-              <Link id="sign-up-form-btn" to="/signup">
-                Create an account{' '}
-              </Link>
+              <div>
+                <button id="signup-btn" type="submit">
+                  <Link id="sign-up-form-btn" to="/signup">
+                    Create an account{' '}
+                  </Link>
+                </button>
+              </div>
             ) : (
               ''
             )}
