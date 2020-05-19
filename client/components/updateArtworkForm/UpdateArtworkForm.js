@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import {
   fetchUpdatedArtwork,
   fetchOneArtwork,
-  postArtwork
+  postArtwork,
+  removeArtwork
 } from '../../store/artworks'
 import './updateArtworkForm.css'
 
@@ -85,7 +86,8 @@ class UpdateArtworkForm extends Component {
   }
 
   render() {
-    const {artwork} = this.props
+    const {artwork, removeArtwork} = this.props
+    console.log('inside render', this.props)
     const handleDeleteImage = this.handleDeleteImage
     return (
       <div className="update-form-container">
@@ -142,6 +144,15 @@ class UpdateArtworkForm extends Component {
           </div>
           <div>
             <button
+              id="delete-artwork-btn"
+              type="button"
+              onClick={() => removeArtwork(artwork.id)}
+            >
+              Delete
+            </button>
+          </div>
+          <div>
+            <button
               id="update-artwork-btn"
               type="submit"
               onClick={e => this.handleUpdate(e, artwork.id)}
@@ -164,7 +175,8 @@ const mapDispatch = dispatch => ({
     dispatch(fetchUpdatedArtwork(artworkId, artworkUpdatedInfo))
   },
   getSingleArtwork: artworkId => dispatch(fetchOneArtwork(artworkId)),
-  postArtwork: state => dispatch(postArtwork(state))
+  postArtwork: state => dispatch(postArtwork(state)),
+  removeArtwork: artworkId => dispatch(removeArtwork(artworkId))
 })
 
 export default connect(mapState, mapDispatch)(UpdateArtworkForm)
