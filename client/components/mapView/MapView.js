@@ -9,17 +9,13 @@ import ReactMapGl, {
 } from 'react-map-gl'
 import Popup from 'reactjs-popup'
 // customize popup style
-import {
-  desktopContentStyle,
-  mobileContentStyle,
-  mobileAllArtworksStyle
-} from './popupStyle.js'
-import {Link} from 'react-router-dom'
+import {desktopContentStyle, mobileContentStyle} from './popupStyle.js'
 import Artwork from '../artwork/Artwork'
-import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
 import MapPin from './MapPin'
+// VIEW AS A LIST POPUP
+import ArtistListPopup from '../popups/artistListPopup'
 
 class MapView extends Component {
   constructor(props) {
@@ -152,31 +148,7 @@ class MapView extends Component {
           )}
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
-        <div className="artwork-list-outer-container">
-          <Popup
-            trigger={
-              <div className="see-all-artworks-link-container">
-                <Link to="/map" id="link-to-all-artworks">
-                  View as list
-                </Link>
-              </div>
-            }
-            modal
-            closeOnDocumentClick
-            contentStyle={innerWidth < 768 ? mobileAllArtworksStyle : ''}
-          >
-            {close => (
-              <div className="modal">
-                <a className="close" onClick={close}>
-                  &times;
-                </a>
-                <div className="content">
-                  <AllArtworks />
-                </div>
-              </div>
-            )}
-          </Popup>
-        </div>
+        <ArtistListPopup />
       </div>
     )
   }
