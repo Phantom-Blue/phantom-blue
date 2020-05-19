@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import {
   fetchUpdatedArtwork,
   fetchOneArtwork,
-  postArtwork
+  postArtwork,
+  removeArtwork
 } from '../../store/artworks'
 import './updateArtworkForm.css'
 
@@ -22,6 +23,7 @@ class UpdateArtworkForm extends Component {
     this.handleFileChange = this.handleFileChange.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.handleDeleteImage = this.handleDeleteImage.bind(this)
+    this.handleDeleteArtwork = this.handleDeleteArtwork.bind(this)
   }
   async componentDidMount() {
     await this.props.getSingleArtwork(this.props.match.params.id)
@@ -84,8 +86,17 @@ class UpdateArtworkForm extends Component {
     })
   }
 
+  // handle delete artwork
+  handleDeleteArtwork(artworkId) {
+    const {history} = window
+    this.props.removeArtwork(artworkId)
+    history.back()
+    history.back()
+  }
+
   render() {
     const {artwork} = this.props
+    console.log('inside render', this.props)
     const handleDeleteImage = this.handleDeleteImage
     return (
       <div className="update-form-container">
@@ -142,6 +153,15 @@ class UpdateArtworkForm extends Component {
           </div>
           <div>
             <button
+              id="delete-artwork-btn"
+              type="button"
+              onClick={() => this.handleDeleteArtwork(artwork.id)}
+            >
+              Delete
+            </button>
+          </div>
+          <div>
+            <button
               id="update-artwork-btn"
               type="submit"
               onClick={e => this.handleUpdate(e, artwork.id)}
@@ -164,7 +184,8 @@ const mapDispatch = dispatch => ({
     dispatch(fetchUpdatedArtwork(artworkId, artworkUpdatedInfo))
   },
   getSingleArtwork: artworkId => dispatch(fetchOneArtwork(artworkId)),
-  postArtwork: state => dispatch(postArtwork(state))
+  postArtwork: state => dispatch(postArtwork(state)),
+  removeArtwork: artworkId => dispatch(removeArtwork(artworkId))
 })
 
 export default connect(mapState, mapDispatch)(UpdateArtworkForm)

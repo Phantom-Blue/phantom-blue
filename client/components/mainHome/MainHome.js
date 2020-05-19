@@ -176,12 +176,14 @@ class MainHome extends React.Component {
           <Loading />
         )}
       </div>
-    ) : (
+    ) : this.props.artNearMe ? (
       <ArtByLocationMap
         artworks={this.props.artNearMe}
         latitude={this.state.latitude}
         longitude={this.state.longitude}
       />
+    ) : (
+      ''
     )
   }
 }
