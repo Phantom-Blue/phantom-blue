@@ -86,7 +86,7 @@ export const fetchLocationArtwork = (lat, long) => async dispatch => {
     console.log('GOT ARTWORK', data)
     dispatch(gotArtByLoc(data))
   } catch (error) {
-    console.error("didn't receive any data")
+    console.error(error)
   }
 }
 
@@ -96,7 +96,7 @@ export const fetchArtWorkByLocationId = LocationId => async dispatch => {
     console.log('GOT ARTWORK', data)
     dispatch(gotArtByLocId(data))
   } catch (error) {
-    console.error("didn't receive any data")
+    console.error(error)
   }
 }
 
@@ -110,7 +110,7 @@ export const fetchArtFromMyLocation = location => async dispatch => {
     // console.log('GOT ARTWORK', data)
     dispatch(gotArtFromMyLoc(data))
   } catch (error) {
-    console.error("didn't receive any data")
+    console.error(error)
   }
 }
 
@@ -119,7 +119,7 @@ export const fetchOneArtwork = artworkId => async dispatch => {
     const {data} = await axios.get(`/api/artworks/${artworkId}`)
     dispatch(gotArtbyId(data))
   } catch (error) {
-    console.error("didn't receive any data")
+    console.error(error)
   }
 }
 
@@ -137,7 +137,7 @@ export const verifyArtworkInDB = artworkId => async dispatch => {
     const {data} = await axios.put(`/api/artworks/${artworkId}`)
     dispatch(verifiedArtwork(data))
   } catch (error) {
-    console.error("didn't receive any data")
+    console.error(error)
   }
 }
 
@@ -184,10 +184,10 @@ export const fetchAllVerified = () => async dispatch => {
 
 export const removeArtwork = artworkId => async dispatch => {
   try {
-    const {data} = await axios.delete(`/api/artworks/${artworkId}`)
+    await axios.delete(`/api/artworks/${artworkId}`)
     dispatch(deletedArtwork(artworkId))
   } catch (error) {
-    console.error("didn't receive any data")
+    console.error(error)
   }
 }
 
@@ -196,7 +196,7 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
     const {data} = await axios.post(`/api/tags/${artworkId}`, {tag: tag})
     dispatch(taggedArt(data))
   } catch (error) {
-    console.error("didn't receive any data")
+    console.error(error)
   }
 }
 
@@ -224,6 +224,8 @@ export const postArtwork = newArt => async dispatch => {
 const initialState = {
   all: [],
   selected: {},
+  artByLocation: [],
+  artNearMe: [],
   error: null,
   verified: []
 }
@@ -235,11 +237,11 @@ export default function artworkReducer(state = initialState, action) {
     case CATCH_ERROR:
       return {...state, error: action.error}
     case GET_ART_BY_LOCATION:
-      return {...state, selected: action.artwork}
+      return {...state, artByLocation: action.artwork}
     case GET_ART_BY_LOCATIONID:
-      return {...state, selected: action.artwork}
+      return {...state, artByLocation: action.artwork}
     case GET_ART_FROM_MY_LOCATION:
-      return {...state, selected: action.artwork}
+      return {...state, artNearMe: action.artwork}
     case GET_ONE_ARTWORK:
       return {...state, selected: action.artwork}
     case GET_ALL_ARTWORKS:
@@ -253,7 +255,11 @@ export default function artworkReducer(state = initialState, action) {
     case ADD_TAGS:
       return {...state, selected: action.artwork}
     case DELETE_ARTWORK:
-      return action.artworks.filter(artwork => artwork.id !== action.id)
+      return {
+        ...state,
+        all: state.all.filter(artwork => artwork.id !== action.id),
+        selected: {}
+      }
     case POST_ARTWORK:
       return {...state, all: [...state.all, action.artwork]}
     default:

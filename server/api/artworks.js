@@ -14,6 +14,7 @@ router.get('/', async (req, res, next) => {
     const artworks = await Artwork.findAll({
       include: Location
     })
+    console.log(req)
     res.json(artworks)
   } catch (err) {
     next(err)
@@ -67,7 +68,7 @@ router.delete('/:ArtworkId', async (req, res, next) => {
     if (req.user && req.user.isAdmin) {
       const artwork = await Artwork.findByPk(req.params.ArtworkId)
       await artwork.destroy()
-      res.sendStatus(204)
+      res.send(req.params.ArtworkId)
     } else {
       res.sendStatus(403)
     }
