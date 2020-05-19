@@ -39,6 +39,15 @@ class MapView extends Component {
 
   componentDidMount() {
     this.props.getAllArtWorks()
+    this.setState({
+      viewport: {
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        width: '100vw',
+        height: '100vh',
+        zoom: 12
+      }
+    })
   }
 
   handleClose() {
@@ -147,7 +156,8 @@ class MapView extends Component {
 }
 
 const mapState = state => ({
-  theArtworks: state.artwork.all
+  theArtworks: state.artwork.all,
+  location: state.location
 })
 
 const mapDispatch = dispatch => ({
