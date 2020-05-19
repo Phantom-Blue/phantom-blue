@@ -3,13 +3,8 @@ import React from 'react'
 import Popup from 'reactjs-popup'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {
-  verifyArtworkInDB,
-  addTagsToDB,
-  removeArtwork
-} from '../../store/artworks'
+import {verifyArtworkInDB, addTagsToDB} from '../../store/artworks'
 import {me} from '../../store/user'
-import history from '../../history'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
@@ -21,7 +16,6 @@ class ArtworkOptions extends React.Component {
     this.handleTagging = this.handleTagging.bind(this)
     this.handleVerify = this.handleVerify.bind(this)
     this.handleChange = this.handleChange.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
   }
 
   componentDidMount() {
@@ -54,13 +48,6 @@ class ArtworkOptions extends React.Component {
     this.setState({
       tags: ''
     })
-  }
-
-  handleDelete(e) {
-    e.preventDefault()
-    const {removeOneArtwork, artwork} = this.props
-    removeOneArtwork(artwork.id)
-    history.push('/map')
   }
 
   render() {
@@ -115,43 +102,8 @@ class ArtworkOptions extends React.Component {
         ) : (
           ''
         )}
-        {user.id === artwork.UserId ? (
-          <Popup
-            trigger={
-              <button type="button">
-                <h4> D E L E T E </h4>
-              </button>
-            }
-          >
-            <Link to="/map">
-              <button type="submit" onClick={e => this.handleDelete(e)}>
-                Yes, delete this artwork
-              </button>
-            </Link>
-          </Popup>
-        ) : (
-          ''
-        )}
-        {// we render the edit artwork component if the user is an admin
-        user.isAdmin === true ? (
-          <Popup
-            trigger={
-              <button type="button">
-                <h4> D E L E T E </h4>
-              </button>
-            }
-          >
-            <Link to="/map">
-              <button type="submit" onClick={e => this.handleDelete(e)}>
-                Yes, delete this artwork
-              </button>
-            </Link>
-          </Popup>
-        ) : (
-          ''
-        )}
-        {/** Show admin edit to all artworks */}
-        {user.isAdmin === true ? (
+        {/** Show edit to user specific artwork */}
+        {user && (user.id === artwork.UserId || user.isAdmin) ? (
           <Link to={`/artwork/${artwork.id}/edit`}>
             <button type="submit">
               <h4>E D I T</h4>
@@ -160,20 +112,6 @@ class ArtworkOptions extends React.Component {
         ) : (
           ''
         )}
-        {/** Show edit to user specific artwork */}
-        {user && user.artwork
-          ? user.artwork.map(art => {
-              if (art.id === artwork.id) {
-                return (
-                  <Link to={`/artwork/${artwork.id}/edit`}>
-                    <button type="submit">
-                      <h4>E D I T</h4>
-                    </button>
-                  </Link>
-                )
-              }
-            })
-          : ''}
       </div>
     )
   }
@@ -188,7 +126,6 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   verifyArtwork: artworkId => dispatch(verifyArtworkInDB(artworkId)),
   addTags: (artworkId, tags) => dispatch(addTagsToDB(artworkId, tags)),
-  removeOneArtwork: artworkId => dispatch(removeArtwork(artworkId)),
   getMe: () => dispatch(me())
 })
 

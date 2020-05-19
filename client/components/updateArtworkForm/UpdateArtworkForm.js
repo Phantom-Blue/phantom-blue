@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-// import history from '../../history'
 import {connect} from 'react-redux'
 import {
   fetchUpdatedArtwork,
