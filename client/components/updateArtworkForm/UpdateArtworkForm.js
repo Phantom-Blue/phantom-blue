@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+// import history from '../../history'
 import {connect} from 'react-redux'
 import {
   fetchUpdatedArtwork,
@@ -23,6 +24,7 @@ class UpdateArtworkForm extends Component {
     this.handleFileChange = this.handleFileChange.bind(this)
     this.handleUpdate = this.handleUpdate.bind(this)
     this.handleDeleteImage = this.handleDeleteImage.bind(this)
+    this.handleDeleteArtwork = this.handleDeleteArtwork.bind(this)
   }
   async componentDidMount() {
     await this.props.getSingleArtwork(this.props.match.params.id)
@@ -85,8 +87,16 @@ class UpdateArtworkForm extends Component {
     })
   }
 
+  // handle delete artwork
+  handleDeleteArtwork(artworkId) {
+    const {history} = window
+    this.props.removeArtwork(artworkId)
+    history.back()
+    history.back()
+  }
+
   render() {
-    const {artwork, removeArtwork} = this.props
+    const {artwork} = this.props
     console.log('inside render', this.props)
     const handleDeleteImage = this.handleDeleteImage
     return (
@@ -146,7 +156,7 @@ class UpdateArtworkForm extends Component {
             <button
               id="delete-artwork-btn"
               type="button"
-              onClick={() => removeArtwork(artwork.id)}
+              onClick={() => this.handleDeleteArtwork(artwork.id)}
             >
               Delete
             </button>
