@@ -6,6 +6,7 @@ import ArtworkOptions from './ArtworkOptions'
 import {fetchOneArtwork} from '../../store/artworks'
 import './artwork.css'
 // import AllArtworks from '../allArtworks/AllArtworks'
+import Loading from '../Loading'
 
 class SingleArtwork extends React.Component {
   componentDidMount() {
