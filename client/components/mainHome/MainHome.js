@@ -18,7 +18,7 @@ import './mainHome.css'
 import '../../../secrets'
 import ls from 'local-storage'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-// import 'mapbox-gl-js/v1.10.0/mapbox-gl.css'
+import Loading from '../Loading'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -77,7 +77,7 @@ class MainHome extends React.Component {
   }
 
   async handleGeocode(geocoder) {
-    console.log('GOT IN GEOCODE')
+    // console.log('GOT IN GEOCODE')
     const coded = await geocoder._geocode(geocoder._inputEl.value)
     if (coded.body.features[0]) {
       let longitude = coded.body.features[0].center[0]
@@ -172,13 +172,7 @@ class MainHome extends React.Component {
             <ButtonNext>Next</ButtonNext>
           </CarouselProvider>
         ) : (
-          <center>
-            <h2>L O A D I N G . . .</h2>
-            <img
-              src="http://gisellezatonyl.com/images/blobbers-03-newalgos-12-23-13-02-lessframes-600pxw.gif"
-              width="300"
-            />
-          </center>
+          <Loading />
         )}
       </div>
     ) : (
