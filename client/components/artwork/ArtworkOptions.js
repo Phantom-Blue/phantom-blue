@@ -10,6 +10,7 @@ import {
 } from '../../store/artworks'
 import {me} from '../../store/user'
 import history from '../../history'
+import Loading from '../Loading'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
