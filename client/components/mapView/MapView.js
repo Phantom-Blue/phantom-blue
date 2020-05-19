@@ -8,8 +8,11 @@ import ReactMapGl, {
   FullscreenControl
 } from 'react-map-gl'
 import Popup from 'reactjs-popup'
-// customize popup style
-import {desktopContentStyle, mobileContentStyle} from './popupStyle.js'
+// CUSTOMIZE POP UP STYLING
+import {
+  desktopContentStyle,
+  mobileContentStyle
+} from '../popups/style/popupStyle'
 import Artwork from '../artwork/Artwork'
 import '../../../secrets'
 import './mapView.css'
