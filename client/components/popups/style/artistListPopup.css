@@ -1,27 +1,25 @@
-.map-container {
+.artwork-list-outer-container .see-all-artworks-link-container {
   width: 100vw;
-  height: 100vh;
-}
-#marker-pin {
-  background: none;
-  border: none;
-  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
 }
 
-#navegation-control {
-  position: absolute;
-  margin: 20px;
+#link-to-all-artworks {
+  color: black;
+  font-size: 40px;
 }
-#fullscreen-control {
-  position: absolute;
-  margin: 20px;
-  top: 100px;
+
+#link-to-all-artworks:hover {
+  opacity: 0.85;
 }
 
 /* MODAL STYLE FOR VIEW AS A LIST ARTWORKS*/
 .modal {
   padding-top: 60px;
 }
+
 .modal > .close {
   cursor: pointer;
   position: absolute;
@@ -30,18 +28,6 @@
   right: 10px;
   top: 5px;
   font-size: 30px;
-}
-
-/* POP UP STYLE */
-
-.close-btn {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  font-size: 60px;
-  position: absolute;
-  top: 5px;
-  right: 20px;
 }
 
 @media only screen and (min-device-width: 768px) {
@@ -66,10 +52,5 @@
     right: 10px;
     top: 5px;
     font-size: 30px;
-  }
-  .close-btn {
-    font-size: 30px;
-    top: -5px;
-    right: 20px;
   }
 }

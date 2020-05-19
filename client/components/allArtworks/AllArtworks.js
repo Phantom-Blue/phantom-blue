@@ -18,7 +18,7 @@ export class AllArtWorks extends Component {
           {allArtWorks ? (
             allArtWorks.map(artwork => {
               return (
-                <div className="artwork-container" key={artwork.userId}>
+                <div className="artwork-container" key={artwork.id}>
                   <Link to={`/artwork/${artwork.id}`}>
                     <img src={artwork.imageUrl} alt="Artwork" />
                     <h2>{artwork.artist}</h2>

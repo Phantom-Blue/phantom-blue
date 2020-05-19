@@ -8,18 +8,17 @@ import ReactMapGl, {
   FullscreenControl
 } from 'react-map-gl'
 import Popup from 'reactjs-popup'
-// customize popup style
+// CUSTOMIZE POP UP STYLING
 import {
   desktopContentStyle,
-  mobileContentStyle,
-  mobileAllArtworksStyle
-} from './popupStyle.js'
-import {Link} from 'react-router-dom'
+  mobileContentStyle
+} from '../popups/style/popupStyle'
 import Artwork from '../artwork/Artwork'
-import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
 import MapPin from './MapPin'
+// VIEW AS A LIST POPUP
+import ArtistListPopup from '../popups/artistListPopup'
 
 class MapView extends Component {
   constructor(props) {
@@ -35,8 +34,6 @@ class MapView extends Component {
       selectedPin: null,
       open: false
     }
-    this.popupContainer = React.createRef()
-    this.handleClose = this.handleClose.bind(this)
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
   }
@@ -54,10 +51,6 @@ class MapView extends Component {
     })
   }
 
-  handleClose() {
-    this.popupContainer.style.width = '0vw'
-  }
-
   openModal() {
     this.setState({open: true})
   }
@@ -68,7 +61,7 @@ class MapView extends Component {
   render() {
     const {theArtworks} = this.props
     const {innerWidth} = window
-    console.log(theArtworks)
+
     return (
       <div className="map-container">
         <ReactMapGl
@@ -109,6 +102,7 @@ class MapView extends Component {
                 closeOnDocumentClick
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
+                // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
                 contentStyle={
                   innerWidth < 768 ? mobileContentStyle : desktopContentStyle
                 }
@@ -126,6 +120,7 @@ class MapView extends Component {
                     {' '}
                     &times;
                   </button>
+                  {/** INDIVIDUAL ARTWORK FOR EACH PIN BY LOCATION*/}
                   <Artwork
                     latitude={Number(this.state.selectedPin.latitude)}
                     longitude={Number(this.state.selectedPin.longitude)}
@@ -138,16 +133,8 @@ class MapView extends Component {
             ''
           )}
           {/** CONDITIONS FOR LOADING NAV CONTROLS BASE ON DEVICE */}
-          {innerWidth > 768 ? (
-            <div>
-              <div id="navegation-control">
-                <NavigationControl />
-              </div>
-              <div id="fullscreen-control">
-                <FullscreenControl />
-              </div>
-            </div>
-          ) : innerWidth < 768 && this.state.selectedPin === null ? (
+          {innerWidth > 768 ||
+          (innerWidth < 768 && this.state.selectedPin === null) ? (
             <div>
               <div id="navegation-control">
                 <NavigationControl />
@@ -161,31 +148,7 @@ class MapView extends Component {
           )}
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
-        <div className="artwork-list-outer-container">
-          <Popup
-            trigger={
-              <div className="see-all-artworks-link-container">
-                <Link to="/map" id="link-to-all-artworks">
-                  View as list
-                </Link>
-              </div>
-            }
-            modal
-            closeOnDocumentClick
-            contentStyle={innerWidth < 768 ? mobileAllArtworksStyle : ''}
-          >
-            {close => (
-              <div className="modal">
-                <a className="close" onClick={close}>
-                  &times;
-                </a>
-                <div className="content">
-                  <AllArtworks />
-                </div>
-              </div>
-            )}
-          </Popup>
-        </div>
+        <ArtistListPopup />
       </div>
     )
   }
