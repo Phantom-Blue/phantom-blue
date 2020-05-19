@@ -31,8 +31,6 @@ class MapView extends Component {
       selectedPin: null,
       open: false
     }
-    this.popupContainer = React.createRef()
-    this.handleClose = this.handleClose.bind(this)
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
   }
@@ -50,10 +48,6 @@ class MapView extends Component {
     })
   }
 
-  handleClose() {
-    this.popupContainer.style.width = '0vw'
-  }
-
   openModal() {
     this.setState({open: true})
   }
@@ -64,7 +58,7 @@ class MapView extends Component {
   render() {
     const {theArtworks} = this.props
     const {innerWidth} = window
-    console.log(theArtworks)
+
     return (
       <div className="map-container">
         <ReactMapGl
@@ -105,6 +99,7 @@ class MapView extends Component {
                 closeOnDocumentClick
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
+                // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
                 contentStyle={
                   innerWidth < 768 ? mobileContentStyle : desktopContentStyle
                 }
@@ -122,6 +117,7 @@ class MapView extends Component {
                     {' '}
                     &times;
                   </button>
+                  {/** INDIVIDUAL ARTWORK FOR EACH PIN BY LOCATION*/}
                   <Artwork
                     latitude={Number(this.state.selectedPin.latitude)}
                     longitude={Number(this.state.selectedPin.longitude)}
