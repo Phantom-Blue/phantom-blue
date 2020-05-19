@@ -125,16 +125,8 @@ class MapView extends Component {
             ''
           )}
           {/** CONDITIONS FOR LOADING NAV CONTROLS BASE ON DEVICE */}
-          {innerWidth > 768 ? (
-            <div>
-              <div id="navegation-control">
-                <NavigationControl />
-              </div>
-              <div id="fullscreen-control">
-                <FullscreenControl />
-              </div>
-            </div>
-          ) : innerWidth < 768 && this.state.selectedPin === null ? (
+          {innerWidth > 768 ||
+          (innerWidth < 768 && this.state.selectedPin === null) ? (
             <div>
               <div id="navegation-control">
                 <NavigationControl />
