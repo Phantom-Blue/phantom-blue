@@ -65,8 +65,11 @@ router.get('/:artworkId', async (req, res, next) => {
 
 router.delete('/:ArtworkId', async (req, res, next) => {
   try {
-    if (req.user && req.user.isAdmin) {
-      const artwork = await Artwork.findByPk(req.params.ArtworkId)
+    const artwork = await Artwork.findByPk(req.params.ArtworkId)
+    if (
+      (req.user && req.user.isAdmin) ||
+      req.user.id === artwork.dataValues.UserId
+    ) {
       await artwork.destroy()
       res.send(req.params.ArtworkId)
     } else {
