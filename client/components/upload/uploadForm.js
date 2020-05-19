@@ -5,6 +5,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import './searchBar.css'
 import axios from 'axios'
 import '../../../secrets'
+import {setLocation} from '../../store/location'
 
 export class UploadForm extends React.Component {
   constructor(props) {
@@ -76,6 +77,10 @@ export class UploadForm extends React.Component {
     // }
 
     // ^ This is code for if we were handling image uploading on the front end. This reduces the amount of data passed through our express server, but also makes it possible to upload images to the cloudinary database without any security checks, so for now it will stay on the backend.
+    this.props.setLocation({
+      latitude: this.state.latitude,
+      longitude: this.state.longitude
+    })
     this.props.postArtwork(this.state)
   }
 
@@ -173,6 +178,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   postArtwork: state => {
     dispatch(postArtwork(state))
+  },
+  setLocation: (latitude, longitude) => {
+    dispatch(setLocation(latitude, longitude))
   }
 })
 
