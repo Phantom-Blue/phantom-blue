@@ -30,8 +30,18 @@ export class UploadForm extends React.Component {
 
   handleGeocode(data) {
     if (data.result) {
-      let longitude = data.result.center[0]
+      // let tileset = 'mstykmshy.ckaegfldq0f8129pn0jmcuzfp-20i0t'
+      // let radius = 100000
+      // let limit = 50
+
+      // let query = 'https://api.mapbox.com/v4/' + tileset + '/tilequery/' + data.result.center[1] + ',' + data.result.center[0] + '.json?radius=' + radius + '&limit= ' + limit + ' &access_token=' + process.env.REACT_APP_MAPBOX_KEY;
+
+      // const res = await axios.get(query)
+      // console.log(data)
+      // console.log(query)
+      // console.log(res.data)
       let latitude = data.result.center[1]
+      let longitude = data.result.center[0]
       let address = data.result.place_name
       this.setState({
         latitude,
