@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {verifyArtworkInDB, addTagsToDB} from '../../store/artworks'
 import {me} from '../../store/user'
+import Loading from '../Loading'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {

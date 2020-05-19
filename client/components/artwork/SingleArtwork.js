@@ -6,6 +6,7 @@ import ArtworkOptions from './ArtworkOptions'
 import {fetchOneArtwork} from '../../store/artworks'
 import './artwork.css'
 // import AllArtworks from '../allArtworks/AllArtworks'
+import Loading from '../Loading'
 
 class SingleArtwork extends React.Component {
   componentDidMount() {
@@ -24,11 +25,13 @@ class SingleArtwork extends React.Component {
           //     <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
           //   </div>
           <div className="single-image" id="map-popup-container">
-            {artwork.imageUrl
-              ? artwork.imageUrl.map((url, idx) => {
-                  return <img src={url} alt={artwork.artist} key={idx} />
-                })
-              : ''}
+            {artwork.imageUrl ? (
+              artwork.imageUrl.map((url, idx) => {
+                return <img src={url} alt={artwork.artist} key={idx} />
+              })
+            ) : (
+              <Loading />
+            )}
             {/* <img src={artwork.imageUrl} alt={artwork.artist} width="200" /> */}
             <div className="carousel-text">
               <h1 className="artistname">{artwork.artist}</h1>
