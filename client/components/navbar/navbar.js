@@ -11,7 +11,7 @@ class Navbar extends Component {
     this.state = {
       visible: false
     }
-
+    this.menuItems = React.createRef()
     this.toggleMenu = this.toggleMenu.bind(this)
   }
 
@@ -46,7 +46,7 @@ class Navbar extends Component {
                 <div />
               </div>
               {this.state.visible && (
-                <div className="sub-links">
+                <div className="sub-links" ref={this.menuItems}>
                   <Link to="/upload">Upload Art</Link>
                   <Link to="/map">Map</Link>
                   <a href="#" onClick={handleClick}>
@@ -88,7 +88,7 @@ class Navbar extends Component {
               </div>
               {/** MOBILE TOGGLE */}
               {this.state.visible && (
-                <div className="sub-links">
+                <div className="sub-links" ref={this.menuItems}>
                   <Link to="/login">Upload Art</Link>
                   <Link to="/map">Map</Link>
                   <Link to="/login">Login</Link>
