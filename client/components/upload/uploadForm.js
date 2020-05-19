@@ -28,12 +28,11 @@ export class UploadForm extends React.Component {
     this.handleFileRead = this.handleFileRead.bind(this)
   }
 
-  async handleGeocode(geocoder) {
-    const coded = await geocoder._geocode(geocoder._inputEl.value)
-    if (coded.body.features[0]) {
-      let longitude = coded.body.features[0].center[0]
-      let latitude = coded.body.features[0].center[1]
-      let address = coded.body.features[0].place_name
+  handleGeocode(data) {
+    if (data.result) {
+      let longitude = data.result.center[0]
+      let latitude = data.result.center[1]
+      let address = data.result.place_name
       this.setState({
         latitude,
         longitude,
@@ -52,9 +51,8 @@ export class UploadForm extends React.Component {
       types: 'country,region,place,locality,neighborhood, address'
     })
     geocoder.addTo('#geocoder')
-
-    geocoder._inputEl.addEventListener('change', () => {
-      this.handleGeocode(geocoder)
+    geocoder.on('result', data => {
+      this.handleGeocode(data)
     })
   }
 
@@ -115,7 +113,6 @@ export class UploadForm extends React.Component {
       return 'Add a location.'
     }
     // return 'Invalid Address'
-    console.log('No!')
     return 'Error.'
   }
 
