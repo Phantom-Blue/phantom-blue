@@ -14,6 +14,12 @@ import AllArtworks from '../allArtworks/AllArtworks'
 import '../../../secrets'
 import './mapView.css'
 import ls from 'local-storage'
+import MapPin from './MapPin'
+import {
+  desktopContentStyle,
+  mobileContentStyle,
+  mobileAllArtworksStyle
+} from './popupStyle.js'
 
 class ArtByLoctionMap extends Component {
   constructor(props) {
@@ -24,22 +30,40 @@ class ArtByLoctionMap extends Component {
         longitude: this.props.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 15
+        zoom: 14
       },
       selectedPin: null,
       selectedPinLat: 0,
       selectedPinLong: 0,
-      selectedPinAdd: ''
+      selectedPinAdd: '',
+      open: false
     }
+    this.popupContainer = React.createRef()
+    this.handleClose = this.handleClose.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
+  }
+
+  handleClose() {
+    this.popupContainer.style.width = '0vw'
+  }
+
+  openModal() {
+    this.setState({open: true})
+  }
+  closeModal() {
+    this.setState({open: false})
   }
 
   render() {
+    console.log(this.props)
+    const {innerWidth} = window
     return (
       <div className="map-container">
         <ReactMapGl
           {...this.state.viewport}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
-          mapStyle="mapbox://styles/gisellez/ck9yorghb2d811ipjrtgocomz"
+          mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
           onViewportChange={newport => {
             this.setState({viewport: newport})
           }}
@@ -59,58 +83,86 @@ class ArtByLoctionMap extends Component {
                       this.setState({
                         selectedPinLat: artwork.Location.latitude,
                         selectedPinLong: artwork.Location.longitude,
-                        selectedPinAdd: artwork.Location.address
+                        selectedPinAdd: artwork.Location.address,
+                        selectedPin: artwork.Location
                       })
+                      this.openModal()
                     }}
                   >
-                    <img
-                      width="50px"
-                      height="50px"
-                      src="/location-pin.png"
-                      alt="city"
-                    />
+                    <MapPin />
                   </button>
                 </Marker>
               ))
             : ''}
           {this.state.selectedPinLat !== null ? (
             <Popup
-              className="popup-container"
+              className="popup-contaner"
+              open={this.state.open}
+              closeOnDocumentClick
               latitude={Number(this.state.selectedPinLat)}
               longitude={Number(this.state.selectedPinLong)}
-              closeOnClick={false}
+              contentStyle={
+                innerWidth < 768 ? mobileContentStyle : desktopContentStyle
+              }
               onClose={() => {
                 this.setState({selectedPin: null})
+                this.closeModal()
               }}
             >
-              <Artwork
-                latitude={Number(this.state.selectedPinLat)}
-                longitude={Number(this.state.selectedPinLong)}
-                address={this.state.selectedPinAdd}
-              />
+              <div>
+                <button
+                  type="button"
+                  className="close-btn"
+                  onClick={() => this.closeModal()}
+                >
+                  {' '}
+                  &times;
+                </button>
+                <Artwork
+                  latitude={Number(this.state.selectedPinLat)}
+                  longitude={Number(this.state.selectedPinLong)}
+                  address={this.state.selectedPinAdd}
+                />
+              </div>
             </Popup>
           ) : (
             ''
           )}
-          <div id="navegation-control">
-            <NavigationControl />
-          </div>
-          <div id="fullscreen-control">
-            <FullscreenControl />
-          </div>
+          {innerWidth > 768 ? (
+            <div>
+              <div id="navegation-control">
+                <NavigationControl />
+              </div>
+              <div id="fullscreen-control">
+                <FullscreenControl />
+              </div>
+            </div>
+          ) : innerWidth < 768 && this.state.selectedPin === null ? (
+            <div>
+              <div id="navegation-control">
+                <NavigationControl />
+              </div>
+              <div id="fullscreen-control">
+                <FullscreenControl />
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
         <div className="artwork-list-outer-container">
-          <ArtworksPopup
+          <Popup
             trigger={
               <div className="see-all-artworks-link-container">
-                <Link to="/" id="link-to-all-artworks">
+                <Link to="/map" id="link-to-all-artworks">
                   View as list
                 </Link>
               </div>
             }
             modal
             closeOnDocumentClick
+            contentStyle={innerWidth < 768 ? mobileAllArtworksStyle : ''}
           >
             {close => (
               <div className="modal">
@@ -122,7 +174,7 @@ class ArtByLoctionMap extends Component {
                 </div>
               </div>
             )}
-          </ArtworksPopup>
+          </Popup>
         </div>
       </div>
     )

@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {postArtwork} from '../../store/artworks'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import './upload.css'
+import './searchBar.css'
 import axios from 'axios'
 import '../../../secrets'
 
@@ -124,7 +124,7 @@ export class UploadForm extends React.Component {
           <input
             type="text"
             value={this.state.artist}
-            artist="artist"
+            name="artist"
             onChange={e => {
               handleChange(e)
             }}

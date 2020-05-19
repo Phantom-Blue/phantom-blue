@@ -56,7 +56,7 @@ class Artwork extends React.Component {
 }
 
 const mapState = state => ({
-  artworks: state.artwork.selected
+  artworks: state.artwork.artByLocation
 })
 
 const mapDispatch = dispatch => ({

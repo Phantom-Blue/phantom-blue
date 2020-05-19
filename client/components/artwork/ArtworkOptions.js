@@ -10,6 +10,7 @@ import {
 } from '../../store/artworks'
 import {me} from '../../store/user'
 import Loading from '../Loading'
+import history from '../../history'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class ArtworkOptions extends React.Component {
     this.handleTagging = this.handleTagging.bind(this)
     this.handleVerify = this.handleVerify.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   componentDidMount() {
@@ -59,6 +61,7 @@ class ArtworkOptions extends React.Component {
     e.preventDefault()
     const {removeOneArtwork, artwork} = this.props
     removeOneArtwork(artwork.id)
+    history.push('/map')
   }
 
   render() {

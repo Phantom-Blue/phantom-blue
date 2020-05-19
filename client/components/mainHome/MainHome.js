@@ -109,6 +109,7 @@ class MainHome extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return this.state.location === false ? (
       <div>
         <div className="search-section">
@@ -177,7 +178,7 @@ class MainHome extends React.Component {
       </div>
     ) : (
       <ArtByLocationMap
-        artworks={this.props.locationArtworks}
+        artworks={this.props.artNearMe}
         latitude={this.state.latitude}
         longitude={this.state.longitude}
       />
@@ -187,7 +188,7 @@ class MainHome extends React.Component {
 
 const mapState = state => ({
   artworks: state.artwork.verified,
-  locationArtworks: state.artwork.selected
+  artNearMe: state.artwork.artNearMe
 })
 
 const mapDispatch = dispatch => ({
