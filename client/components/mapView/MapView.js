@@ -14,7 +14,6 @@ import Popup from 'reactjs-popup'
 // customize popup style
 import {desktopContentStyle, mobileContentStyle} from './popupStyle.js'
 import Artwork from '../artwork/Artwork'
-
 import '../../../secrets'
 import './mapView.css'
 import MapPin from './MapPin'
@@ -22,7 +21,6 @@ import MapPin from './MapPin'
 import ArtistListPopup from '../popups/artistListPopup'
 import {getLSLocation, setLSLocation} from '../utils/utils'
 import Loading from '../utils/Loading'
-// import ls from 'local-storage'
 
 class MapView extends Component {
   constructor(props) {
@@ -43,58 +41,58 @@ class MapView extends Component {
     this.handleClose = this.handleClose.bind(this)
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
-    this.lodArtIntoState = this.lodArtIntoState.bind(this)
   }
 
   async componentDidMount() {
     const lSLocation = getLSLocation()
 
-    if (this.props.artToMapFromMain[0]) {
+    if (this.props.artToMapFromMain) {
       const {userLocation} = this.props
       // this.props.getMyLocationArt(userLocation)
       this.setState({
         viewport: {
           latitude: userLocation.latitude,
-          longitude: userLocation.longitude
-        }
+          longitude: userLocation.longitude,
+          width: '100vw',
+          height: '100vh',
+          zoom: 12
+        },
+        artworks: this.props.artToMapFromMain
       })
       setLSLocation(userLocation)
     } else if (
       lSLocation.latitude !== undefined &&
       lSLocation.latitude !== null
     ) {
-      console.log('lSLocation.latitude', lSLocation.latitude)
-      await this.props.getMyLocationArt(lSLocation)
-      this.setState({
-        viewport: {
-          latitude: lSLocation.latitude,
-          longitude: lSLocation.longitude
-        }
-      })
+      try {
+        await this.props.getMyLocationArt(lSLocation)
+        this.setState({
+          viewport: {
+            latitude: lSLocation.latitude,
+            longitude: lSLocation.longitude,
+            width: '100vw',
+            height: '100vh',
+            zoom: 12
+          },
+          artworks: this.props.artNearMe
+        })
+      } catch (error) {
+        console.error('could not retrieve all artworks')
+      }
     } else {
-      await this.props.getAllArtWorks()
-      console.log('ALL ARTWORKS IN CDM', this.props.allArtworks)
+      try {
+        await this.props.getAllArtWorks()
+      } catch (error) {
+        console.error('could not retrieve all artworks')
+      }
       this.setState({
         viewport: {
           latitude: this.props.location.latitude,
-          longitude: this.props.location.longitude
-        }
-      })
-    }
-    this.lodArtIntoState()
-  }
-
-  lodArtIntoState() {
-    if (this.props.artToMapFromMain[0] !== undefined) {
-      this.setState({
-        artworks: this.props.artToMapFromMain
-      })
-    } else if (this.props.artNearMe[0] !== undefined) {
-      this.setState({
-        artworks: this.props.artNearMe
-      })
-    } else if (this.props.allArtworks[0] !== undefined) {
-      this.setState({
+          longitude: this.props.location.longitude,
+          width: '100vw',
+          height: '100vh',
+          zoom: 12
+        },
         artworks: this.props.allArtworks
       })
     }
@@ -112,14 +110,13 @@ class MapView extends Component {
 
   render() {
     const {innerWidth} = window
-    const {allArtworks, artNearMe} = this.props
 
-    return this.state.artworks[0] ? (
+    return (
       <div className="map-container">
         <ReactMapGl
           {...this.state.viewport}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
-          mapStyle="mapbox://styles/gisellez/ck9yorghb2d811ipjrtgocomz"
+          mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
           onViewportChange={newport => {
             this.setState({viewport: newport})
           }}
@@ -216,10 +213,8 @@ class MapView extends Component {
           )}
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
-        {/* <ArtistListPopup /> */}
+        <ArtistListPopup />
       </div>
-    ) : (
-      <Loading />
     )
   }
 }
