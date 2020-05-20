@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 
 const SET_LOCATION = 'SET_LOCATION'

@@ -1,8 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchArtWorkByLocationId} from '../../store/artworks'
-import {generateUrl} from './utils'
-import Popup from 'reactjs-popup'
 import './artwork.css'
 import {Link} from 'react-router-dom'
 import {
@@ -13,7 +11,7 @@ import {
   ButtonNext
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
-import Loading from '../Loading'
+import Loading from '../utils/Loading'
 
 class LocationArtwork extends React.Component {
   componentDidMount() {
