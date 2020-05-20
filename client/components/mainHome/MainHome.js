@@ -1,11 +1,11 @@
+/* eslint-disable react/no-unused-state */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
-import ArtByLocationMap from '../mapView/ArtByLocationMap'
-import {generateUrl} from '../artwork/utils'
 import {Link} from 'react-router-dom'
+import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
 import {
   CarouselProvider,
   Slider,
@@ -16,9 +16,11 @@ import {
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import './mainHome.css'
 import '../../../secrets'
-import ls from 'local-storage'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import Loading from '../Loading'
+import MapView from '../mapView/MapView'
+import ls from 'local-storage'
+import Loading from '../utils/Loading'
+import {setLSLocation, generateUrl} from '../utils/utils'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -26,15 +28,14 @@ class MainHome extends React.Component {
     this.state = {
       location: false,
       longitude: 0,
-      latitude: 0,
-      address: null
+      latitude: 0
     }
     this.handleLocation = this.handleLocation.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleLocation() {
+  async handleLocation() {
     const {getMyLocationArt} = this.props
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -49,13 +50,12 @@ class MainHome extends React.Component {
         latitude: lat,
         longitude: long
       }
-
-      getMyLocationArt(myLocation)
-
+      await getMyLocationArt(myLocation)
       this.setState({
         latitude: lat,
         longitude: long,
-        location: true
+        location: true,
+        error: null
       })
     } else {
       console.log('Geolocation not available')
@@ -85,8 +85,7 @@ class MainHome extends React.Component {
       let address = coded.body.features[0].place_name
       this.setState({
         latitude,
-        longitude,
-        address
+        longitude
       })
     } else {
       this.setState({
@@ -109,6 +108,9 @@ class MainHome extends React.Component {
   }
 
   render() {
+    const {latitude, longitude} = this.state
+    const userLocation = {latitude, longitude}
+
     return this.state.location === false ? (
       <div>
         <div className="search-section">
@@ -175,19 +177,20 @@ class MainHome extends React.Component {
           <Loading />
         )}
       </div>
-    ) : (
-      <ArtByLocationMap
-        artworks={this.props.locationArtworks}
-        latitude={this.state.latitude}
-        longitude={this.state.longitude}
+    ) : this.props.artNearMe[0] ? (
+      <MapView
+        userLocation={userLocation}
+        artToMapFromMain={this.props.artNearMe}
       />
+    ) : (
+      <Loading />
     )
   }
 }
 
 const mapState = state => ({
   artworks: state.artwork.verified,
-  locationArtworks: state.artwork.selected
+  artNearMe: state.artwork.artNearMe
 })
 
 const mapDispatch = dispatch => ({
