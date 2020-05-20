@@ -13,8 +13,11 @@ import ReactMapGl, {
 //IMPORTS GEOCODER MODULE FOR REACT MAPGL
 import Geocoder from 'react-map-gl-geocoder'
 import Popup from 'reactjs-popup'
-// customize popup style
-import {desktopContentStyle, mobileContentStyle} from './popupStyle.js'
+// CUSTOMIZE POP UP STYLING
+import {
+  desktopContentStyle,
+  mobileContentStyle
+} from '../popups/style/popupStyle'
 import Artwork from '../artwork/Artwork'
 import '../../../secrets'
 import './mapView.css'
@@ -45,8 +48,6 @@ class MapView extends Component {
       // DEPENDING ON USER ACTION, ONLY ONE GROUP OF ARTWORKS GETS MAPPED AT A TIME
       artworks: []
     }
-    this.popupContainer = React.createRef()
-    this.handleClose = this.handleClose.bind(this)
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.handleNewSearch = this.handleNewSearch.bind(this)
@@ -157,9 +158,6 @@ class MapView extends Component {
     this.handleGeocoderViewportChange(this.state.viewport)
   }
 
-  handleClose() {
-    this.popupContainer.style.width = '0vw'
-  }
   openModal() {
     this.setState({open: true})
   }
@@ -224,6 +222,7 @@ class MapView extends Component {
                 closeOnDocumentClick
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
+                // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
                 contentStyle={
                   innerWidth < 768 ? mobileContentStyle : desktopContentStyle
                 }
@@ -241,6 +240,7 @@ class MapView extends Component {
                     {' '}
                     &times;
                   </button>
+                  {/** INDIVIDUAL ARTWORK FOR EACH PIN BY LOCATION*/}
                   <Artwork
                     latitude={Number(this.state.selectedPin.latitude)}
                     longitude={Number(this.state.selectedPin.longitude)}

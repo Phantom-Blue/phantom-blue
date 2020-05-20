@@ -24,10 +24,55 @@
   font-size: 20px;
   margin: 5px;
 }
-.sub-links {
-  display: flex;
-  flex-direction: column;
-  padding: 5px;
+
+/*MOBILE MENU BAR SPECIFIC STYLE*/
+@media screen and (max-height: 768px) {
+  .sub-links a {
+    font-size: 20px;
+    margin: 5px;
+  }
+
+  .sub-links-overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: white;
+    opacity: 0.9;
+    overflow-x: hidden;
+    transition: 0.5s;
+  }
+
+  .sub-links {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .sub-links-overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: black;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .sub-links-overlay a:hover,
+  .sub-links-overlay a:focus {
+    color: white;
+  }
+
+  .sub-links-overlay .closebtn {
+    position: absolute;
+    top: -75px;
+    right: -40px;
+    font-size: 60px;
+  }
 }
 /*MOBILE MENU BAR */
 .menu-icon {
@@ -43,10 +88,6 @@
   background-color: black;
 }
 
-.active {
-  display: block;
-}
-
 /* BELOW CHANGES TO TABLES AND DESKTOP*/
 @media only screen and (min-device-width: 768px) {
   .nav-links {
@@ -60,11 +101,15 @@
   .sub-links {
     display: flex;
     flex-direction: row;
+    padding: 5px;
   }
   .sub-links a {
     margin: 0 10px;
   }
   .sub-links a:hover {
     opacity: 0.6;
+  }
+  .closebtn {
+    display: none;
   }
 }
