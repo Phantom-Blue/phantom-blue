@@ -18,7 +18,7 @@ import {desktopContentStyle, mobileContentStyle} from './popupStyle.js'
 import Artwork from '../artwork/Artwork'
 import '../../../secrets'
 import './mapView.css'
-// import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import './mapBoxGL.css'
 import MapPin from './MapPin'
 // VIEW AS A LIST POPUP
 import ArtistListPopup from '../popups/artistListPopup'
@@ -273,8 +273,6 @@ class MapView extends Component {
     )
   }
 }
-
-// MapView.getInitialProps = async function() {}
 
 const mapState = state => ({
   // ALL ARTWORKS IS FALLBACK IF NO LOCATION IS AVAILABLE
