@@ -1,3 +1,17 @@
+import ls from 'local-storage'
+
+export const getLSLocation = () => {
+  const latitude = ls.get('latitude')
+  const longitude = ls.get('longitude')
+  const lSLocation = {latitude, longitude}
+  return lSLocation
+}
+
+export const setLSLocation = location => {
+  ls.set('latitude', location.latitude)
+  ls.set('longitude', location.longitude)
+}
+
 export function generateUrl(loc, loc2) {
   let directionsUrl = 'https://www.google.com/maps/dir//'
 

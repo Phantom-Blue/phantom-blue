@@ -102,7 +102,7 @@ export const fetchArtWorkByLocationId = LocationId => async dispatch => {
 
 export const fetchArtFromMyLocation = location => async dispatch => {
   const {latitude, longitude} = location
-  console.log('INSIDE THUUUNK', latitude, longitude)
+  // console.log('INSIDE THUUUNK', latitude, longitude)
   try {
     const {data} = await axios.get(
       `/api/locations/artNearby/10000/${longitude}/${latitude}`

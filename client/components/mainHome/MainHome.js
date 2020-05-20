@@ -1,11 +1,11 @@
+/* eslint-disable react/no-unused-state */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
-import ArtByLocationMap from '../mapView/ArtByLocationMap'
-import {generateUrl} from '../artwork/utils'
 import {Link} from 'react-router-dom'
+import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
 import {
   CarouselProvider,
   Slider,
@@ -16,9 +16,11 @@ import {
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import './mainHome.css'
 import '../../../secrets'
-import ls from 'local-storage'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import Loading from '../Loading'
+import MapView from '../mapView/MapView'
+import ls from 'local-storage'
+import Loading from '../utils/Loading'
+import {setLSLocation, generateUrl} from '../utils/utils'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -26,8 +28,7 @@ class MainHome extends React.Component {
     this.state = {
       location: false,
       longitude: 0,
-      latitude: 0,
-      address: null
+      latitude: 0
     }
     this.handleLocation = this.handleLocation.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
@@ -35,7 +36,7 @@ class MainHome extends React.Component {
   }
 
   handleLocation() {
-    const {getMyLocationArt} = this.props
+    // const {getMyLocationArt} = this.props
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude
@@ -45,17 +46,16 @@ class MainHome extends React.Component {
       })
       const lat = ls.get('latitude')
       const long = ls.get('longitude')
-      const myLocation = {
-        latitude: lat,
-        longitude: long
-      }
-
-      getMyLocationArt(myLocation)
-
+      // const myLocation = {
+      //   latitude: lat,
+      //   longitude: long
+      // }
+      // getMyLocationArt(myLocation)
       this.setState({
         latitude: lat,
         longitude: long,
-        location: true
+        location: true,
+        error: null
       })
     } else {
       console.log('Geolocation not available')
@@ -65,11 +65,11 @@ class MainHome extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
 
-    const {latitude, longitude} = this.state
+    // const {latitude, longitude} = this.state
 
-    const myLocation = {latitude, longitude}
+    // const myLocation = {latitude, longitude}
 
-    this.props.getMyLocationArt(myLocation)
+    // this.props.getMyLocationArt(myLocation)
 
     this.setState({
       location: true
@@ -85,8 +85,7 @@ class MainHome extends React.Component {
       let address = coded.body.features[0].place_name
       this.setState({
         latitude,
-        longitude,
-        address
+        longitude
       })
     } else {
       this.setState({
@@ -109,6 +108,9 @@ class MainHome extends React.Component {
   }
 
   render() {
+    const {latitude, longitude} = this.state
+    const userLocation = {latitude, longitude}
+
     return this.state.location === false ? (
       <div>
         <div className="search-section">
@@ -176,23 +178,19 @@ class MainHome extends React.Component {
         )}
       </div>
     ) : (
-      <ArtByLocationMap
-        artworks={this.props.locationArtworks}
-        latitude={this.state.latitude}
-        longitude={this.state.longitude}
-      />
+      <MapView userLocation={userLocation} />
     )
   }
 }
 
 const mapState = state => ({
-  artworks: state.artwork.verified,
-  locationArtworks: state.artwork.selected
+  artworks: state.artwork.verified
+  // artNearMe: state.artwork.artNearMe
 })
 
 const mapDispatch = dispatch => ({
-  getVerifiedArtwork: () => dispatch(fetchAllVerified()),
-  getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location))
+  getVerifiedArtwork: () => dispatch(fetchAllVerified())
+  // getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location))
 })
 
 export default connect(mapState, mapDispatch)(MainHome)

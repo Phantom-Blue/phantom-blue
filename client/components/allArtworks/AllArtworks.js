@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchAllArtworks} from '../../store/artworks'
 import './allArtworks.css'
-import Loading from '../Loading'
+import Loading from '../utils/Loading'
 
 export class AllArtWorks extends Component {
   componentDidMount() {
