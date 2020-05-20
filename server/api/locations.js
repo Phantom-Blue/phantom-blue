@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {Artwork, Location, Tag} = require('../db/models')
 const axios = require('axios')
+require('..')
 
 router.get('/geojson', async (req, res, next) => {
   try {

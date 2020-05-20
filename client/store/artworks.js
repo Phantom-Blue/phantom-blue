@@ -5,7 +5,7 @@
 import axios from 'axios'
 import history from '../history'
 import '../../secrets'
-import {Location} from '../../server/db'
+import {Location} from '../../server/db/models'
 
 // A C T I O N   C R E A T O R S //
 const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
