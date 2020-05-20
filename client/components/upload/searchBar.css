@@ -1,3 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
 /* Basics */
 .mapboxgl-ctrl-geocoder,
 .mapboxgl-ctrl-geocoder *,
@@ -247,4 +254,95 @@
   .mapboxgl-ctrl-geocoder {
     min-width: 100%;
   }
+}
+
+/* UPLOAD FORM STYLE */
+
+.upload-artwork-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.upload-artwork-container form h1 {
+  color: #061a40;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.upload-artwork-container {
+  max-width: 600px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.upload-artwork-container div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* UPLOAD ART FILE */
+#file-container input[type='file'] {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+
+#file-container input[type='file'] + .file-label {
+  background: #4d98e3;
+  border: none;
+  border-radius: 5px;
+  color: #ffff;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 25px;
+  font-weight: 600;
+  outline: none;
+  padding: 20px;
+  position: relative;
+  border-radius: 10px;
+}
+
+#upload-artist-name,
+#upload-textarea textarea {
+  border-radius: 10px;
+  outline: none;
+  font-size: 20px;
+  border: 1px solid black;
+}
+#upload-artist-name {
+  padding: 10px 20px;
+}
+
+#upload-textarea textarea {
+  padding: 10px;
+  outline: none;
+}
+input::placeholder,
+#upload-textarea textarea::placeholder {
+  font-size: 20px;
+  text-align: 20px;
+}
+
+.upload-description {
+  border-radius: 10px;
+  padding: 20px 40px;
+}
+
+#upload-btn {
+  border: none;
+  max-width: 300px;
+  padding: 20px;
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  background-color: #4aa875;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#upload-btn:hover,
+#file-container input[type='file'] + .file-label:hover {
+  opacity: 0.7;
 }
