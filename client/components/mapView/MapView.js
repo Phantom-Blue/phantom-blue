@@ -59,6 +59,7 @@ class MapView extends Component {
   async componentDidMount() {
     const lSLocation = getLSLocation()
 
+    /// ARTWORKS FROM OTHER COMPONENT PROPS
     if (this.props.artToMapFromMain) {
       const {userLocation} = this.props
       // this.props.getMyLocationArt(userLocation)
@@ -73,6 +74,8 @@ class MapView extends Component {
         artworks: this.props.artToMapFromMain
       })
       setLSLocation(userLocation)
+
+      /// MAPS LOCAL STORAGE LAT LONG ARTWORKS TO REDUX STORE
     } else if (
       lSLocation.latitude !== undefined &&
       lSLocation.latitude !== null
@@ -92,6 +95,8 @@ class MapView extends Component {
       } catch (error) {
         console.error('could not retrieve all artworks')
       }
+
+      //IF THERE'S NO PROPS, OR LAT LONG IN LS STORAGE, WE GET ALL ARTWORKS
     } else {
       try {
         await this.props.getAllArtWorks()

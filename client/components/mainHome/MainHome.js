@@ -115,8 +115,8 @@ class MainHome extends React.Component {
       <div>
         <div className="search-section">
           <div className="search-label">
-            <p>To find street art near you,</p>
-            <h4>enter you address:</h4>
+            <p id="address-ad">TO FIND STREET ART NEAR YOU,</p>
+            <h4 id="address-prompt">ENTER YOU ADDRESS:</h4>
           </div>
           <div className="search-box-submit">
             <div id="geocoder" />
