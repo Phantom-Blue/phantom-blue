@@ -21,6 +21,7 @@ import MapPin from './MapPin'
 // VIEW AS A LIST POPUP
 import ArtistListPopup from '../popups/artistListPopup'
 import {getLSLocation, setLSLocation} from '../utils/utils'
+import Loading from '../utils/Loading'
 // import ls from 'local-storage'
 
 class MapView extends Component {
@@ -45,19 +46,12 @@ class MapView extends Component {
     this.lodArtIntoState = this.lodArtIntoState.bind(this)
   }
 
-  componentDidMount() {
-    const {getAllArtWorks, getMyLocationArt} = this.props
+  async componentDidMount() {
     const lSLocation = getLSLocation()
-    this.setState({
-      viewport: {
-        width: '100vw',
-        height: '100vh',
-        zoom: 12
-      }
-    })
-    if (this.props.userLocation !== undefined) {
+
+    if (this.props.artToMapFromMain[0]) {
       const {userLocation} = this.props
-      this.props.getMyLocationArt(userLocation)
+      // this.props.getMyLocationArt(userLocation)
       this.setState({
         viewport: {
           latitude: userLocation.latitude,
@@ -70,7 +64,7 @@ class MapView extends Component {
       lSLocation.latitude !== null
     ) {
       console.log('lSLocation.latitude', lSLocation.latitude)
-      this.props.getMyLocationArt(lSLocation)
+      await this.props.getMyLocationArt(lSLocation)
       this.setState({
         viewport: {
           latitude: lSLocation.latitude,
@@ -78,7 +72,7 @@ class MapView extends Component {
         }
       })
     } else {
-      this.props.getAllArtWorks()
+      await this.props.getAllArtWorks()
       console.log('ALL ARTWORKS IN CDM', this.props.allArtworks)
       this.setState({
         viewport: {
@@ -89,8 +83,13 @@ class MapView extends Component {
     }
     this.lodArtIntoState()
   }
+
   lodArtIntoState() {
-    if (this.props.artNearMe[0] !== undefined) {
+    if (this.props.artToMapFromMain[0] !== undefined) {
+      this.setState({
+        artworks: this.props.artToMapFromMain
+      })
+    } else if (this.props.artNearMe[0] !== undefined) {
       this.setState({
         artworks: this.props.artNearMe
       })
@@ -104,7 +103,6 @@ class MapView extends Component {
   handleClose() {
     this.popupContainer.style.width = '0vw'
   }
-
   openModal() {
     this.setState({open: true})
   }
@@ -116,35 +114,55 @@ class MapView extends Component {
     const {innerWidth} = window
     const {allArtworks, artNearMe} = this.props
 
-    return artNearMe ? (
+    return this.state.artworks[0] ? (
       <div className="map-container">
         <ReactMapGl
           {...this.state.viewport}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
-          mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
+          mapStyle="mapbox://styles/gisellez/ck9yorghb2d811ipjrtgocomz"
           onViewportChange={newport => {
             this.setState({viewport: newport})
           }}
         >
-          {artNearMe.map(artwork => (
-            <Marker
-              key={artwork.id}
-              latitude={Number(artwork.Location.latitude)}
-              longitude={Number(artwork.Location.longitude)}
-            >
-              <button
-                type="button"
-                id="marker-pin"
-                onClick={ev => {
-                  ev.preventDefault()
-                  this.setState({selectedPin: artwork.Location})
-                  this.openModal()
-                }}
-              >
-                <MapPin />
-              </button>
-            </Marker>
-          ))}
+          {this.state.artworks[0]
+            ? this.state.artworks.map(artwork => (
+                <Marker
+                  key={artwork.id}
+                  latitude={Number(artwork.Location.latitude)}
+                  longitude={Number(artwork.Location.longitude)}
+                >
+                  <button
+                    type="button"
+                    id="marker-pin"
+                    onClick={ev => {
+                      ev.preventDefault()
+                      this.setState({selectedPin: artwork.Location})
+                      this.openModal()
+                    }}
+                  >
+                    <MapPin />
+                  </button>
+                </Marker>
+              ))
+            : this.props.allArtworks.map(artwork => (
+                <Marker
+                  key={artwork.id}
+                  latitude={Number(artwork.Location.latitude)}
+                  longitude={Number(artwork.Location.longitude)}
+                >
+                  <button
+                    type="button"
+                    id="marker-pin"
+                    onClick={ev => {
+                      ev.preventDefault()
+                      this.setState({selectedPin: artwork.Location})
+                      this.openModal()
+                    }}
+                  >
+                    <MapPin />
+                  </button>
+                </Marker>
+              ))}
           {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
           {this.state.selectedPin ? (
             <div>
@@ -198,15 +216,15 @@ class MapView extends Component {
           )}
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
-        <ArtistListPopup />
+        {/* <ArtistListPopup /> */}
       </div>
     ) : (
-      ''
+      <Loading />
     )
   }
 }
 
-MapView.getInitialProps = async function() {}
+// MapView.getInitialProps = async function() {}
 
 const mapState = state => ({
   allArtworks: state.artwork.all,

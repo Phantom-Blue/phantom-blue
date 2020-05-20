@@ -35,8 +35,8 @@ class MainHome extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleLocation() {
-    // const {getMyLocationArt} = this.props
+  async handleLocation() {
+    const {getMyLocationArt} = this.props
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude
@@ -46,11 +46,11 @@ class MainHome extends React.Component {
       })
       const lat = ls.get('latitude')
       const long = ls.get('longitude')
-      // const myLocation = {
-      //   latitude: lat,
-      //   longitude: long
-      // }
-      // getMyLocationArt(myLocation)
+      const myLocation = {
+        latitude: lat,
+        longitude: long
+      }
+      await getMyLocationArt(myLocation)
       this.setState({
         latitude: lat,
         longitude: long,
@@ -65,11 +65,11 @@ class MainHome extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
 
-    // const {latitude, longitude} = this.state
+    const {latitude, longitude} = this.state
 
-    // const myLocation = {latitude, longitude}
+    const myLocation = {latitude, longitude}
 
-    // this.props.getMyLocationArt(myLocation)
+    this.props.getMyLocationArt(myLocation)
 
     this.setState({
       location: true
@@ -177,20 +177,25 @@ class MainHome extends React.Component {
           <Loading />
         )}
       </div>
+    ) : this.props.artNearMe[0] ? (
+      <MapView
+        userLocation={userLocation}
+        artToMapFromMain={this.props.artNearMe}
+      />
     ) : (
-      <MapView userLocation={userLocation} />
+      <Loading />
     )
   }
 }
 
 const mapState = state => ({
-  artworks: state.artwork.verified
-  // artNearMe: state.artwork.artNearMe
+  artworks: state.artwork.verified,
+  artNearMe: state.artwork.artNearMe
 })
 
 const mapDispatch = dispatch => ({
-  getVerifiedArtwork: () => dispatch(fetchAllVerified())
-  // getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location))
+  getVerifiedArtwork: () => dispatch(fetchAllVerified()),
+  getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location))
 })
 
 export default connect(mapState, mapDispatch)(MainHome)
