@@ -29,7 +29,6 @@ class Navbar extends Component {
 
   render() {
     const {isLoggedIn, handleClick} = this.props
-    const {innerWidth} = window
 
     return (
       <div>

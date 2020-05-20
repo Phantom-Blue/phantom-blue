@@ -25,7 +25,7 @@
   margin: 5px;
 }
 
-/*MOBILE MENU BAR */
+/*MOBILE MENU BAR SPECIFIC STYLE*/
 @media screen and (max-height: 768px) {
   .sub-links a {
     font-size: 20px;
@@ -39,8 +39,8 @@
     z-index: 1;
     top: 0;
     right: 0;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: white;
+    opacity: 0.9;
     overflow-x: hidden;
     transition: 0.5s;
   }
@@ -57,20 +57,20 @@
     padding: 8px;
     text-decoration: none;
     font-size: 36px;
-    color: white;
+    color: black;
     display: block;
     transition: 0.3s;
   }
 
   .sub-links-overlay a:hover,
   .sub-links-overlay a:focus {
-    color: #f1f1f1;
+    color: white;
   }
 
   .sub-links-overlay .closebtn {
     position: absolute;
-    top: -70px;
-    right: -35px;
+    top: -75px;
+    right: -40px;
     font-size: 60px;
   }
 }
