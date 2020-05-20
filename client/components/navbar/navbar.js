@@ -8,104 +8,66 @@ import './navbar.css'
 class Navbar extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      visible: false
-    }
     this.menuItems = React.createRef()
-    this.toggleMenu = this.toggleMenu.bind(this)
+
+    this.openNav = this.openNav.bind(this)
+    this.closeNav = this.closeNav.bind(this)
   }
 
-  toggleMenu() {
+  openNav() {
     const {innerWidth} = window
-
     if (innerWidth < 768) {
-      this.setState({visible: !this.state.visible})
+      this.menuItems.current.style.width = '100%'
     }
   }
+  closeNav() {
+    const {innerWidth} = window
+    if (innerWidth < 768) {
+      this.menuItems.current.style.width = '0%'
+    }
+  }
+
   render() {
     const {isLoggedIn, handleClick} = this.props
     const {innerWidth} = window
+
     return (
       <div>
         <nav>
-          {isLoggedIn ? (
-            <div className="nav-links">
-              {/* The navbar will show these links after you log in */}
-              <div className="main-link">
-                <Link to="/">PENTIMENTO</Link>
-              </div>
-              {/**Mobile menu bar */}
-              <div
-                className="menu-icon"
-                onClick={e => {
-                  this.toggleMenu(e)
-                }}
-              >
-                <div />
-                <div />
-                <div />
-              </div>
-              {this.state.visible && (
-                <div className="sub-links" ref={this.menuItems}>
-                  <Link to="/upload">Upload Art</Link>
-                  <Link to="/map">Map</Link>
-                  <a href="#" onClick={handleClick}>
-                    Logout
-                  </a>
-                  <Link to="/account">Account</Link>
-                </div>
-              )}
-              {/** DESKTOP */}
-              {innerWidth > 768 ? (
-                <div className="sub-links">
-                  <Link to="/upload">Upload Art</Link>
-                  <Link to="/map">Map</Link>
-                  <a href="#" onClick={handleClick}>
-                    Logout
-                  </a>
-                  <Link to="/account">Account</Link>
-                </div>
-              ) : (
-                ''
-              )}
+          <div className="nav-links">
+            <div className="main-link">
+              <Link to="/">PENTIMENTO</Link>
             </div>
-          ) : (
-            <div className="nav-links">
-              {/* The navbar will show these links before you log in */}
-              <div className="main-link">
-                <Link to="/">PENTIMENTO</Link>
-              </div>
-              {/**Mobile menu bar */}
-              <div
-                className="menu-icon"
-                onClick={e => {
-                  this.toggleMenu(e)
-                }}
-              >
-                <div />
-                <div />
-                <div />
-              </div>
-              {/** MOBILE TOGGLE */}
-              {this.state.visible && (
-                <div className="sub-links" ref={this.menuItems}>
-                  <Link to="/login">Upload Art</Link>
-                  <Link to="/map">Map</Link>
-                  <Link to="/login">Login</Link>
-                </div>
-              )}
-              {/** DESKTOP */}
-              {innerWidth > 768 ? (
-                <div className="sub-links">
-                  <Link to="/login">Upload Art</Link>
-                  <Link to="/map">Map</Link>
-                  <Link to="/login">Login</Link>
-                </div>
-              ) : (
-                ''
-              )}
+            {/**Mobile menu bar */}
+            <div className="menu-icon" onClick={() => this.openNav()}>
+              <div />
+              <div />
+              <div />
             </div>
-          )}
+            <div className="sub-links-overlay" ref={this.menuItems}>
+              <a href="#" className="closebtn" onClick={() => this.closeNav()}>
+                &times;
+              </a>
+              <div className="sub-links" onClick={() => this.closeNav()}>
+                {isLoggedIn ? (
+                  <div>
+                    <Link to="/upload">Upload Art</Link>
+                    <Link to="/map">Map</Link>
+                    <a href="#" onClick={handleClick}>
+                      Logout
+                    </a>
+                    <Link to="/account">Account</Link>
+                  </div>
+                ) : (
+                  <div>
+                    <Link to="/login">Upload Art</Link>
+                    <Link to="/map">Map</Link>
+                    <Link to="/login">Login</Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </nav>
       </div>
     )
