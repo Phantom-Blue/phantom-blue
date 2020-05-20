@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react'
 import {connect} from 'react-redux'
 import {postArtwork} from '../../store/artworks'

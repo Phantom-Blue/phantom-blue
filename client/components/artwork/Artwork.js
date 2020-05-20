@@ -1,15 +1,15 @@
+/* eslint-disable no-unused-vars */
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchLocationArtwork} from '../../store/artworks'
 import ArtworkOptions from './ArtworkOptions'
-import {generateUrl} from './utils'
+import {generateUrl} from '../utils/utils'
 import Popup from 'reactjs-popup'
 import './artwork.css'
 import SingleArtwork from './SingleArtwork'
 import {Link} from 'react-router-dom'
 import LocationArtwork from './LocationArtwork'
-import './artwork.css'
-import Loading from '../Loading'
+import Loading from '../utils/Loading'
 
 class Artwork extends React.Component {
   componentDidMount() {

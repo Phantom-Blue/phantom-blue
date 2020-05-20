@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react'
 import {connect} from 'react-redux'
 // import RedirectArtwork from './RedirectArtwork'
@@ -6,7 +7,7 @@ import ArtworkOptions from './ArtworkOptions'
 import {fetchOneArtwork} from '../../store/artworks'
 import './artwork.css'
 // import AllArtworks from '../allArtworks/AllArtworks'
-import Loading from '../Loading'
+import Loading from '../utils/Loading'
 
 class SingleArtwork extends React.Component {
   componentDidMount() {

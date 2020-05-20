@@ -68,6 +68,7 @@
     "react-geocode": "^0.2.1",
     "react-google-places-autocomplete": "^2.0.5",
     "react-map-gl": "^5.2.5",
+    "react-map-gl-geocoder": "^2.0.11",
     "react-redux": "^7.2.0",
     "react-responsive-carousel": "^3.2.7",
     "react-router-dom": "^5.2.0",

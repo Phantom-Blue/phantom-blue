@@ -1,3 +1,4 @@
+/* eslint-disable no-warning-comments */
 const router = require('express').Router()
 const {Artwork, Location, Tag} = require('../db/models')
 const axios = require('axios')
