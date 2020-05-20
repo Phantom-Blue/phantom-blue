@@ -10,6 +10,7 @@ import ReactMapGl, {
   NavigationControl,
   FullscreenControl
 } from 'react-map-gl'
+//IMPORTS GEOCODER MODULE FOR REACT MAPGL
 import Geocoder from 'react-map-gl-geocoder'
 import Popup from 'reactjs-popup'
 // customize popup style
@@ -21,7 +22,9 @@ import './mapView.css'
 import MapPin from './MapPin'
 // VIEW AS A LIST POPUP
 import ArtistListPopup from '../popups/artistListPopup'
+//IMPORTS TWO UTILITY FUCNTIONS TO GET AND SET LATITUDE AND LONGITUDE TO LOCAL STATE // COULD BE REFACTORED TO RECEIVE ANY ARGS
 import {getLSLocation, setLSLocation} from '../utils/utils'
+import Loading from '../utils/Loading'
 // import {Loading, getAccessToken} from '../utils'
 
 class MapView extends Component {
@@ -37,6 +40,9 @@ class MapView extends Component {
       },
       selectedPin: null,
       open: false,
+      /// SET A LOCAL STATE FOR ARTWORKS TO BE MAPPED IN RENDER.
+      //ALL ARTWORK THUNKS CAN DEPOSIT ART IN HERE, AND OVERRIDE EACH OTHER
+      // DEPENDING ON USER ACTION, ONLY ONE GROUP OF ARTWORKS GETS MAPPED AT A TIME
       artworks: []
     }
     this.popupContainer = React.createRef()
@@ -46,6 +52,9 @@ class MapView extends Component {
     this.handleNewSearch = this.handleNewSearch.bind(this)
   }
 
+  // CHECKS FOR ARTWORKS PASSED AS PROPS FROM OTHER COMPONENTS - MAINLY MAIN HOME :P
+  // OTHERWISE TAKES CARE OF CHECKING THE LOCAL STORAGE FOR A LEFTOVER USER LOCATION, AND CALLS A LOCATION THUNK, IF FOUND
+  // IF NO INFORMATION IS AVAILABLE, IT CALLS A THUNK TO RECEIVE ALL ARTWORKS
   async componentDidMount() {
     const lSLocation = getLSLocation()
 
@@ -101,14 +110,19 @@ class MapView extends Component {
     }
   }
 
+  //THIS ADDS A REFERENCE TO THE MAPBOXGL COMPONENT, FOR THE GEOCODER
   mapRef = React.createRef()
 
+  //THIS HANDLES THE VIEWPORT CHANGE CALLED IN HANDLE GEOCODERVIEWPORT CHANGE//
+  //REDUNDANT, BUT SINCE IT'S CALLED INSIDE A FUNCTION, RATHER THAN RENDER MENTHOD, NECESSARY
+  // COULD POSSIBLY REFACTOR MAPBOXGL COMPONENT TO CALL *THIS* INSTEAD OF LOGIC IN COMPONENT RENDER
   handleViewportChange = viewport => {
     this.setState({
       viewport: {...this.state.viewport, ...viewport}
     })
   }
 
+  ///HANDLES VIEWPORT CHANGE ... THERES SOME METHODS WE CAN USE IF THERES OTHER STUFF WE WANNA CHANGE...
   handleGeocoderViewportChange = viewport => {
     const geocoderDefaultOverrides = {transitionDuration: 1000}
 
@@ -118,6 +132,8 @@ class MapView extends Component {
     })
   }
 
+  /// THIS TAKES *ONRESULT* FROM GEOCODER COMPONENT IN RENDER, AND CALLS A THUNK W THE NEW SEARCH PROVIDED BY
+  // GEOCODER. THEN SETS THE ARTWORKS AND VIEWPOER STUFF ON STATE
   async handleNewSearch(result) {
     const newLocation = {
       latitude: result.result.center[1],
@@ -153,7 +169,6 @@ class MapView extends Component {
 
   render() {
     const {innerWidth} = window
-    console.log(this.props)
 
     return (
       <div className="map-container">
@@ -166,54 +181,40 @@ class MapView extends Component {
             this.setState({viewport: newport})
           }}
         >
+          {/* GEOCODER GOES INSIDE REACTMAPGL, CAN REMOVE INLINE STYLING AND ADD OTHER METHODS */}
           <Geocoder
             mapRef={this.mapRef}
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
             onViewportChange={this.handleGeocoderViewportChange}
             position="top-right"
             onResult={result => this.handleNewSearch(result)}
-            zoom={12}
+            zoom={13}
           />
 
-          {this.state.artworks[0]
-            ? this.state.artworks.map(artwork => (
-                <Marker
-                  key={artwork.id}
-                  latitude={Number(artwork.Location.latitude)}
-                  longitude={Number(artwork.Location.longitude)}
+          {/* WE NOW MAP THROUGH OUR STATE TO MAKE THE MARKERS, THE STATE WILL CHANGE FREQUENTLY W NEW SEARCHES AND PASSED PROPS */}
+          {this.state.artworks[0] ? (
+            this.state.artworks.map(artwork => (
+              <Marker
+                key={artwork.id}
+                latitude={Number(artwork.Location.latitude)}
+                longitude={Number(artwork.Location.longitude)}
+              >
+                <button
+                  type="button"
+                  id="marker-pin"
+                  onClick={ev => {
+                    ev.preventDefault()
+                    this.setState({selectedPin: artwork.Location})
+                    this.openModal()
+                  }}
                 >
-                  <button
-                    type="button"
-                    id="marker-pin"
-                    onClick={ev => {
-                      ev.preventDefault()
-                      this.setState({selectedPin: artwork.Location})
-                      this.openModal()
-                    }}
-                  >
-                    <MapPin />
-                  </button>
-                </Marker>
-              ))
-            : this.props.allArtworks.map(artwork => (
-                <Marker
-                  key={artwork.id}
-                  latitude={Number(artwork.Location.latitude)}
-                  longitude={Number(artwork.Location.longitude)}
-                >
-                  <button
-                    type="button"
-                    id="marker-pin"
-                    onClick={ev => {
-                      ev.preventDefault()
-                      this.setState({selectedPin: artwork.Location})
-                      this.openModal()
-                    }}
-                  >
-                    <MapPin />
-                  </button>
-                </Marker>
-              ))}
+                  <MapPin />
+                </button>
+              </Marker>
+            ))
+          ) : (
+            <Loading />
+          )}
           {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
           {this.state.selectedPin ? (
             <div>
@@ -276,7 +277,9 @@ class MapView extends Component {
 // MapView.getInitialProps = async function() {}
 
 const mapState = state => ({
+  // ALL ARTWORKS IS FALLBACK IF NO LOCATION IS AVAILABLE
   allArtworks: state.artwork.all,
+  // ART NEAR ME IS USED FOR NEW SEARCHES IN GEOCODER
   artNearMe: state.artwork.artNearMe,
   location: state.location
 })
