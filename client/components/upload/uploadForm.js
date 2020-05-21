@@ -160,9 +160,7 @@ export class UploadForm extends React.Component {
               Upload Photo
             </label>
           </div>
-          <div>
-            <div id="geocoder" />
-          </div>
+          <div id="geocoder" />
           <div>
             <button
               id="upload-btn"

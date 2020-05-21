@@ -11,6 +11,7 @@
 .mapboxgl-ctrl-geocoder *:after,
 .mapboxgl-ctrl-geocoder *:before {
   box-sizing: border-box;
+  margin: 0;
 }
 
 .mapboxgl-ctrl-geocoder {
@@ -21,12 +22,15 @@
   background-color: #fff;
   width: 100%;
   min-width: 240px;
+  /* controls the search box height */
+  height: 50px;
   z-index: 1;
   border-radius: 4px;
   transition: width 0.25s, min-width 0.25s;
 }
 
 .mapboxgl-ctrl-geocoder--input[type='text'] {
+  position: absolute;
   font: inherit;
   width: 100%;
   border: 0;
@@ -34,7 +38,7 @@
   margin: 0;
   color: #404040; /* fallback */
   color: rgba(0, 0, 0, 0.75);
-  padding: 6px 45px;
+  padding: 16px 45px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -135,7 +139,7 @@
   top: 13px;
   left: 12px;
   width: 23px;
-  /* height: 23px; */
+  height: 23px;
 }
 
 .mapboxgl-ctrl-geocoder--button {
@@ -149,7 +153,7 @@
 
 .mapboxgl-ctrl-geocoder--icon-close {
   width: 20px;
-  /* height: 20px; */
+  height: 20px;
   margin-top: 8px;
   margin-right: 3px;
 }
@@ -160,7 +164,7 @@
 
 .mapboxgl-ctrl-geocoder--icon-loading {
   width: 26px;
-  /* height: 26px; */
+  height: 26px;
   margin-top: 5px;
   margin-right: 0px;
   -moz-animation: rotate 0.8s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
@@ -214,7 +218,7 @@
 
   .mapboxgl-ctrl-geocoder--icon-close {
     width: 16px;
-    /* height: 16px; */
+    height: 16px;
     margin-top: 3px;
     margin-right: 0;
   }
@@ -222,6 +226,7 @@
   .mapboxgl-ctrl-geocoder--icon-search {
     left: 7px;
     width: 20px;
+    height: 20px;
     /* height: 20px; */
   }
 
@@ -232,7 +237,7 @@
 
   .mapboxgl-ctrl-geocoder--icon-loading {
     width: 26px;
-    /* height: 26px; */
+    height: 26px;
     margin-top: -2px;
     margin-right: -5px;
   }
@@ -267,9 +272,6 @@
 .upload-artwork-container form {
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  text-align: center;
-  align-items: center; */
 }
 
 .upload-artwork-container div {
@@ -277,9 +279,11 @@
   flex-direction: column;
 }
 .upload-artwork-container form h1 {
-  color: #061a40;
-  font-size: 30px;
+  color: #982649;
+  font-weight: 500;
+  font-size: 40px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 /* UPLOAD ART FILE */
@@ -330,11 +334,6 @@ input::placeholder,
   border-radius: 10px;
 }
 
-/* #upload-btn-container {
-  display: flex;
-  justify-content: flex-start;
-  align-content: flex-start;
-} */
 #upload-btn {
   border: none;
   max-width: 300px;
