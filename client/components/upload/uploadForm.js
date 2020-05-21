@@ -7,6 +7,7 @@ import './searchBar.css'
 import axios from 'axios'
 import '../../../secrets'
 import {setLocation} from '../../store/location'
+import BackButton from '../utils/BackButton'
 
 export class UploadForm extends React.Component {
   constructor(props) {
@@ -171,6 +172,7 @@ export class UploadForm extends React.Component {
             >
               Submit
             </button>
+            <BackButton />
           </div>
         </form>
         <div>{this.props.error ? <p>{this.errorMessage()}</p> : ''}</div>

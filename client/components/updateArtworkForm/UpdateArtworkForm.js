@@ -9,6 +9,7 @@ import {
   removeArtwork
 } from '../../store/artworks'
 import './updateArtworkForm.css'
+import BackButton from '../utils/BackButton'
 
 class UpdateArtworkForm extends Component {
   constructor(props) {
@@ -169,6 +170,7 @@ class UpdateArtworkForm extends Component {
             >
               Update Artwork
             </button>
+            <BackButton />
           </div>
         </form>
       </div>

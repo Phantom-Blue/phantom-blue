@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {fetchOneArtwork} from '../../store/artworks'
 import Loading from '../utils/Loading'
+import BackButton from '../utils/BackButton'
 import './style/singleArtwork.css'
 
 class SingleArtwork extends React.Component {
@@ -43,6 +44,7 @@ class SingleArtwork extends React.Component {
               <h1 id="artist-name">{artwork.artist}</h1>
               {/* <br /> */}
               <ArtworkOptions artwork={artwork} />
+              <BackButton />
             </div>
           </div>
         ) : (
