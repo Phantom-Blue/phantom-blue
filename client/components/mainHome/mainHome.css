@@ -1,3 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* SEARCH BAR STYLE */
 .submit {
   padding: 10px;
   margin: 20px;
@@ -5,67 +13,116 @@
 }
 
 .search-section {
-  align-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   padding: 10px;
-  margin: 20px;
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   text-align: center;
 }
 
 .search-label {
+  margin: 10px 0;
 }
 
-#geocoder {
-  margin: 20px;
-  /* padding-top: 10px; */
+.search-label h4 {
+  color: #161840;
 }
 
-.search-box-submit {
-  /* padding: 10px; */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+#submit-search-btn,
+#share-location-btn {
+  border: none;
+  max-width: 300px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.share-location-section {
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  align-items: center;
-  align-content: center;
-}
-
-.share-location {
-  display: flex;
-  align-self: center;
-  align-items: center;
-  align-content: center;
-  padding: 20px;
-  /* margin-bottom: 20px; */
+#submit-search-btn {
+  background-color: #4aa875;
   border-radius: 10px;
+  color: white;
+  padding: 20px;
 }
-/* #carousel {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
+
+#share-location-btn {
+  font-weight: 300;
+  background-color: transparent;
 }
-#carousel #carousel-text {
-  position: absolute;
-  top: 35vh;
-  color: #fff;
-  text-shadow: 2px 2px #252525;
-  z-index: 1;
+
+#submit-search-btn:hover,
+#share-location-btn:hover {
+  opacity: 0.85;
 }
-.carousel-image img {
+
+/* CAROUSEL STYLE */
+.carousel-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
-  /* position: absolute; */
-/* margin: auto; */
-/* max-width: 100vw;
-  max-width: 70vw; */
-/* height: 400px; */
-/* } */
+  align-items: center;
+}
+
+.carousel-details {
+  width: 400px;
+  height: auto;
+}
+
+#carousel-arwork-img {
+  width: 100%;
+  object-fit: cover;
+  max-width: 600px;
+}
+
+/* Desktop */
+@media screen and (min-device-width: 768px) {
+  .carousel-details {
+    width: 600px;
+    height: auto;
+  }
+}
+
+#carousel-artist-name {
+  color: #982649;
+  font-weight: 300;
+  font-size: 25px;
+}
+
+#carousel-art-description {
+  font-size: 20px;
+}
+
+#navegation-link {
+  color: #161840;
+  font-weight: 800;
+}
+
+#navegation-link:hover {
+  opacity: 0.85;
+}
+
+.carousel-btns {
+  margin-top: 10px;
+}
+
+.previous-btn,
+.forward-btn {
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  font-weight: 800;
+  border-radius: 10px;
+  margin: 5px;
+  outline: none;
+}
+
+.previous-btn {
+  background-color: #4d98e3;
+}
+
+.forward-btn {
+  background-color: #061840;
+}
