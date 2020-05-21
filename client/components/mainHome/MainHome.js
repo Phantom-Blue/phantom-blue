@@ -6,6 +6,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
+import {setLocation} from '../../store/location'
 import {
   CarouselProvider,
   Slider,
@@ -44,7 +45,8 @@ class MainHome extends React.Component {
   }
 
   async handleLocation() {
-    const {getMyLocationArt} = this.props
+    const {getMyLocationArt, setUserLocation} = this.props
+
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude
@@ -59,6 +61,7 @@ class MainHome extends React.Component {
         longitude: long
       }
       await getMyLocationArt(myLocation)
+      await setUserLocation(myLocation)
       this.setState({
         latitude: lat,
         longitude: long,
@@ -74,10 +77,12 @@ class MainHome extends React.Component {
     e.preventDefault()
 
     const {latitude, longitude} = this.state
+    const {getMyLocationArt, setUserLocation} = this.props
 
     const myLocation = {latitude, longitude}
 
-    this.props.getMyLocationArt(myLocation)
+    getMyLocationArt(myLocation)
+    setUserLocation(myLocation)
 
     this.setState({
       location: true
@@ -123,8 +128,8 @@ class MainHome extends React.Component {
       <div>
         <div className="search-section">
           <div className="search-label">
-            <p>To find street art near you,</p>
-            <h4>enter you address:</h4>
+            <p id="address-ad">TO FIND STREET ART NEAR YOU,</p>
+            <h4 id="address-prompt">ENTER YOU ADDRESS:</h4>
           </div>
           <div className="search-box-submit">
             <div id="geocoder" />
@@ -203,10 +208,7 @@ class MainHome extends React.Component {
         )}
       </div>
     ) : this.props.artNearMe[0] ? (
-      <MapView
-        userLocation={userLocation}
-        artToMapFromMain={this.props.artNearMe}
-      />
+      <MapView artToMapFromMain={this.props.artNearMe} />
     ) : (
       <Loading />
     )
@@ -215,12 +217,14 @@ class MainHome extends React.Component {
 
 const mapState = state => ({
   artworks: state.artwork.verified,
-  artNearMe: state.artwork.artNearMe
+  artNearMe: state.artwork.artNearMe,
+  location: state.location
 })
 
 const mapDispatch = dispatch => ({
   getVerifiedArtwork: () => dispatch(fetchAllVerified()),
-  getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location))
+  getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location)),
+  setUserLocation: location => dispatch(setLocation(location))
 })
 
 export default connect(mapState, mapDispatch)(MainHome)
