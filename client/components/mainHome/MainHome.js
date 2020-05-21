@@ -23,6 +23,13 @@ import ls from 'local-storage'
 import Loading from '../utils/Loading'
 import {setLSLocation, generateUrl} from '../utils/utils'
 
+// const carouselStyle = {
+//   display: 'flex',
+//   justifyContent: 'center',
+//   flexDirection: 'center',
+//   alignItems: 'center'
+// }
+
 class MainHome extends React.Component {
   constructor(props) {
     super(props)
@@ -144,38 +151,46 @@ class MainHome extends React.Component {
           </div>
         </div>
         {this.props.artworks[0] ? (
-          <CarouselProvider
-            naturalSlideWidth={100}
-            naturalSlideHeight={125}
-            totalSlides={this.props.artworks.length}
-          >
-            <Slider className="carousel">
-              {this.props.artworks.map((artwork, i) => (
-                <Slide index={i} key={artwork.id} className="carousel-image">
-                  <img src={artwork.imageUrl[0]} />
-                  <Link to={`/artwork/${artwork.id}`}>
-                    <button type="button">
-                      <div>
+          <div className="carousel-container">
+            <CarouselProvider
+              naturalSlideWidth={100}
+              naturalSlideHeight={125}
+              totalSlides={this.props.artworks.length}
+              touchEnabled
+              playDirection
+              currentSlide
+            >
+              <Slider className="carousel-details">
+                {this.props.artworks.map((artwork, i) => (
+                  <Slide index={i} key={artwork.id}>
+                    <div>
+                      <img
+                        id="carousel-arwork-img"
+                        src={artwork.imageUrl[0]}
+                        alt="artwork image"
+                      />
+                      <Link to={`/artwork/${artwork.id}`}>
                         <h2>{artwork.artist}</h2>
+                      </Link>
+                      <div>
+                        <p>{artwork.description}</p>
                       </div>
-                    </button>
-                  </Link>
-                  <div>
-                    <p>{artwork.description}</p>
-                  </div>
-                  <a
-                    href={generateUrl(artwork.Location.address)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <h4>TAKE ME THERE</h4>
-                  </a>
-                </Slide>
-              ))}
-            </Slider>
-            <ButtonBack>Back</ButtonBack>
-            <ButtonNext>Next</ButtonNext>
-          </CarouselProvider>
+                      <a
+                        id="navegation-link"
+                        href={generateUrl(artwork.Location.address)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        TAKE ME THERE
+                      </a>
+                    </div>
+                  </Slide>
+                ))}
+              </Slider>
+              <ButtonBack>Back</ButtonBack>
+              <ButtonNext>Next</ButtonNext>
+            </CarouselProvider>
+          </div>
         ) : (
           <Loading />
         )}
