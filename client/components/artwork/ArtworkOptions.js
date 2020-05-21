@@ -68,6 +68,7 @@ class ArtworkOptions extends React.Component {
 
   render() {
     const {artwork, user} = this.props
+    console.log('>>>>>>', artwork.isVerified)
     return (
       <div>
         <div className="additional-artwork-info">
@@ -95,7 +96,7 @@ class ArtworkOptions extends React.Component {
                   this.openModal()
                 }}
               >
-                V E R I F Y
+                {artwork.isVerified ? 'V E R I F I E D' : 'V E R I F Y'}
               </button>
             </div>
             <Popup
