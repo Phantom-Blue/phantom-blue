@@ -36,7 +36,7 @@ class ArtworkOptions extends React.Component {
     const {artwork, user, verifyArtwork} = this.props
     if (artwork.userId !== user.id) {
       verifyArtwork(artwork.id)
-      alert('Thanks so much! This artwork has now been verified!')
+      // alert('Thanks so much! This artwork has now been verified!')
     }
   }
 
@@ -102,7 +102,6 @@ class ArtworkOptions extends React.Component {
               className="popup-contaner"
               open={this.state.open}
               closeOnDocumentClick
-              // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
               contentStyle={
                 innerWidth < 768 ? mobileContentStyle : desktopContentStyle
               }
@@ -115,7 +114,16 @@ class ArtworkOptions extends React.Component {
                 type="submit"
                 onClick={e => this.handleVerify(e)}
               >
-                I've seen this piece IRL, at this location!
+                I've seen this piece here IRL! <br />
+                  <button 
+                  id="verify-btn"
+                  type="submit"
+                  onClick={() => {
+                    this.closeModal()
+                  }}
+                  >
+                    Verify
+                  </button>
               </button>
             </Popup>
 
