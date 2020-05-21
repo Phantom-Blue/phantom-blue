@@ -17,7 +17,22 @@
   margin: 20px;
   top: 100px;
 }
+.artwork-list-outer-container .see-all-artworks-link-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
 
+#link-to-all-artworks {
+  color: black;
+  font-size: 40px;
+}
+
+#link-to-all-artworks:hover {
+  opacity: 0.85;
+}
 /* MODAL STYLE FOR VIEW AS A LIST ARTWORKS*/
 .modal {
   padding-top: 60px;

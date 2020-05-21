@@ -13,6 +13,7 @@ class SingleArtwork extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     const {artwork} = this.props
     return (
       <div className="single-artwork-container">
@@ -38,10 +39,14 @@ class SingleArtwork extends React.Component {
             ) : (
               <Loading />
             )}
-            {/* <img src={artwork.imageUrl} alt={artwork.artist} width="200" /> */}
             <div className="single-artwork-artist">
               <h1 id="artist-name">{artwork.artist}</h1>
-              {/* <br /> */}
+              {this.props.artwork.Location ? (
+                <h5 id="artaddress">{artwork.Location.address}</h5>
+              ) : (
+                ''
+              )}
+              <br />
               <ArtworkOptions artwork={artwork} />
             </div>
           </div>

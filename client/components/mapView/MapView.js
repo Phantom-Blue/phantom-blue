@@ -5,6 +5,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllArtworks, fetchArtFromMyLocation} from '../../store/artworks'
+import {setLocation} from '../../store/location'
 import ReactMapGl, {
   Marker,
   NavigationControl,
@@ -58,31 +59,38 @@ class MapView extends Component {
   // IF NO INFORMATION IS AVAILABLE, IT CALLS A THUNK TO RECEIVE ALL ARTWORKS
   async componentDidMount() {
     const lSLocation = getLSLocation()
+    const {getMyLocationArt, getUserLocation} = this.props
+    const myLocation = {
+      latitude: this.props.location.latitude,
+      longitude: this.props.location.longitude
+    }
 
+    /// ARTWORKS FROM OTHER COMPONENT PROPS
     if (this.props.artToMapFromMain) {
-      const {userLocation} = this.props
-      // this.props.getMyLocationArt(userLocation)
       this.setState({
         viewport: {
-          latitude: userLocation.latitude,
-          longitude: userLocation.longitude,
+          latitude: this.props.location.latitude,
+          longitude: this.props.location.longitude,
           width: '100vw',
           height: '100vh',
           zoom: 13
         },
         artworks: this.props.artToMapFromMain
       })
-      setLSLocation(userLocation)
+      setLSLocation(myLocation)
+
+      /// MAPS LOCAL STORAGE LAT LONG ARTWORKS TO REDUX STORE
     } else if (
       lSLocation.latitude !== undefined &&
       lSLocation.latitude !== null
     ) {
       try {
-        await this.props.getMyLocationArt(lSLocation)
+        await getMyLocationArt(lSLocation)
+        await getUserLocation(lSLocation)
         this.setState({
           viewport: {
-            latitude: lSLocation.latitude,
-            longitude: lSLocation.longitude,
+            latitude: this.props.location.latitude,
+            longitude: this.props.location.longitude,
             width: '100vw',
             height: '100vh',
             zoom: 13
@@ -92,6 +100,8 @@ class MapView extends Component {
       } catch (error) {
         console.error('could not retrieve all artworks')
       }
+
+      //IF THERE'S NO PROPS, OR LAT LONG IN LS STORAGE, WE GET ALL ARTWORKS
     } else {
       try {
         await this.props.getAllArtWorks()
@@ -140,15 +150,18 @@ class MapView extends Component {
       latitude: result.result.center[1],
       longitude: result.result.center[0]
     }
+    setLSLocation(newLocation)
+
     try {
       await this.props.getMyLocationArt(newLocation)
+      await this.props.getUserLocation(newLocation)
     } catch (error) {
       console.error('could not retrieve all artworks')
     }
     this.setState({
       viewport: {
-        latitude: newLocation.latitude,
-        longitude: newLocation.longitude,
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
         width: '100vw',
         height: '100vh',
         zoom: 13
@@ -283,7 +296,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getAllArtWorks: () => dispatch(fetchAllArtworks()),
-  getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location))
+  getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location)),
+  getUserLocation: location => dispatch(setLocation(location))
 })
 
 export default connect(mapState, mapDispatch)(MapView)

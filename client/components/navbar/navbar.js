@@ -51,18 +51,18 @@ class Navbar extends Component {
               <div className="sub-links" onClick={() => this.closeNav()}>
                 {isLoggedIn ? (
                   <div>
-                    <Link to="/upload">Upload Art</Link>
-                    <Link to="/map">Map</Link>
+                    <Link to="/upload">UPLOAD ART</Link>
+                    <Link to="/map">MAP</Link>
                     <a href="#" onClick={handleClick}>
-                      Logout
+                      LOGOUT
                     </a>
-                    <Link to="/account">Account</Link>
+                    <Link to="/account">ACCOUNT</Link>
                   </div>
                 ) : (
                   <div>
-                    <Link to="/login">Upload Art</Link>
-                    <Link to="/map">Map</Link>
-                    <Link to="/login">Login</Link>
+                    <Link to="/login">UPLOAD ART</Link>
+                    <Link to="/map">MAP</Link>
+                    <Link to="/login">LOGIN</Link>
                   </div>
                 )}
               </div>

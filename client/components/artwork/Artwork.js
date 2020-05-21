@@ -36,17 +36,22 @@ class Artwork extends React.Component {
                 />
                 <h2 id="artistname">{this.props.artworks[0].artist}</h2>
               </Link>
+              <h5 id="artaddress">{this.props.address}</h5>
+              <div id="google-nav-btn">
+                <a
+                  href={directionsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  TAKE ME THERE
+                </a>
+              </div>
               <Link
                 id="all-art-at-location"
                 to={`/location/${this.props.artworks[0].LocationId}`}
               >
                 View all art at this location
               </Link>
-            </div>
-            <div id="google-nav-btn">
-              <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
-                TAKE ME THERE
-              </a>
             </div>
           </div>
         ) : (
