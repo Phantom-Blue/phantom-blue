@@ -2,14 +2,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchLocationArtwork} from '../../store/artworks'
-import ArtworkOptions from './ArtworkOptions'
+// import ArtworkOptions from './ArtworkOptions'
 import {generateUrl} from '../utils/utils'
 import Popup from 'reactjs-popup'
-import './artwork.css'
-import SingleArtwork from './SingleArtwork'
+// import SingleArtwork from './SingleArtwork'
 import {Link} from 'react-router-dom'
-import LocationArtwork from './LocationArtwork'
+// import LocationArtwork from './LocationArtwork'
 import Loading from '../utils/Loading'
+import './style/artwork.css'
 
 class Artwork extends React.Component {
   componentDidMount() {
@@ -26,30 +26,32 @@ class Artwork extends React.Component {
       <div id="map-popup-container">
         {// HERE WE INCOORPORATE A CAROUSEL //
         this.props.artworks[0] ? (
-          <div className="map-popup-content">
-            <Link to={`/artwork/${this.props.artworks[0].id}`}>
-              <img
-                src={this.props.artworks[0].imageUrl[0]}
-                alt={this.props.artworks[0].artist}
-                id="map-popup-img"
-              />
-              <h3 id="artistname">{this.props.artworks[0].artist}</h3>
-            </Link>
-            <Link
-              id="all-art-at-location"
-              to={`/location/${this.props.artworks[0].LocationId}`}
-            >
-              View all art at this location
-            </Link>
+          <div id="map-popup-content">
+            <div>
+              <Link to={`/artwork/${this.props.artworks[0].id}`}>
+                <img
+                  src={this.props.artworks[0].imageUrl[0]}
+                  alt={this.props.artworks[0].artist}
+                  id="map-popup-img"
+                />
+                <h2 id="artistname">{this.props.artworks[0].artist}</h2>
+              </Link>
+              <Link
+                id="all-art-at-location"
+                to={`/location/${this.props.artworks[0].LocationId}`}
+              >
+                View all art at this location
+              </Link>
+            </div>
+            <div id="google-nav-btn">
+              <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
+                TAKE ME THERE
+              </a>
+            </div>
           </div>
         ) : (
           <Loading />
         )}
-        <div id="google-nav-btn">
-          <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
-            TAKE ME THERE
-          </a>
-        </div>
       </div>
     )
   }

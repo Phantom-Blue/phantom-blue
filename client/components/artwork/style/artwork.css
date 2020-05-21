@@ -1,0 +1,52 @@
+#map-popup-container {
+  height: inherit;
+  max-width: 400px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+#map-popup-container a {
+  color: black;
+}
+#map-popup-content {
+  padding: 20px 0;
+}
+
+#map-popup-img {
+  object-fit: cover;
+  width: 100%;
+  max-width: 400px;
+  max-height: 200px;
+}
+
+#artistname {
+  color: #4d98e3;
+  margin: 5px 0;
+  font-size: 25px;
+  font-weight: 300;
+}
+
+#all-art-at-location {
+  color: black;
+  font-size: 20px;
+}
+
+#google-nav-btn {
+  margin: 20px 0;
+}
+#google-nav-btn a {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#google-nav-btn a:hover,
+#all-art-at-location:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}

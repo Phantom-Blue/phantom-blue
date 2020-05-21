@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {verifyArtworkInDB, addTagsToDB} from '../../store/artworks'
 import {me} from '../../store/user'
+import './style/artworkOptions.css'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
@@ -54,13 +55,13 @@ class ArtworkOptions extends React.Component {
     const {artwork, user} = this.props
     return (
       <div>
-        <div className="additionalartworkinfo">
+        <div className="additional-artwork-info">
           <div>
             <p>{artwork.description}</p>
             <br />
           </div>
           <div>
-            <p>T A G S:</p>
+            <h2 id="tags">T A G S:</h2>
             <p>
               {artwork.Tags ? artwork.Tags.map(tag => `| ${tag.tag} |`) : ''}
             </p>
@@ -72,12 +73,16 @@ class ArtworkOptions extends React.Component {
           <div>
             <Popup
               trigger={
-                <button type="button">
-                  <h4> V E R I F Y </h4>
+                <button id="verify-btn" type="button">
+                  V E R I F Y
                 </button>
               }
             >
-              <button type="submit" onClick={e => this.handleVerify(e)}>
+              <button
+                id="confirm-popup"
+                type="submit"
+                onClick={e => this.handleVerify(e)}
+              >
                 I've seen this piece IRL, at this location!
               </button>
             </Popup>
@@ -105,8 +110,8 @@ class ArtworkOptions extends React.Component {
         {/** Show edit to user specific artwork */}
         {user && (user.id === artwork.UserId || user.isAdmin) ? (
           <Link to={`/artwork/${artwork.id}/edit`}>
-            <button type="submit">
-              <h4>E D I T</h4>
+            <button id="edit-btn" type="submit">
+              E D I T
             </button>
           </Link>
         ) : (

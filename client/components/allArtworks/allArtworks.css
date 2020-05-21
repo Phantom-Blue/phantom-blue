@@ -3,8 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  padding: 20px;
+  padding-top: 30px;
 }
 .artwork-container {
   padding: 10px;
@@ -15,16 +14,14 @@
   display: block;
   object-fit: cover;
   width: 100%;
-  height: 300px;
-  max-width: 300px;
-  max-height: 200px;
+  height: 200px;
+  max-width: 700px;
 }
-.all-artworks-container {
-  margin: 10px;
-}
+
 .all-artworks-container h2 {
-  color: black;
-  font-size: 20px;
+  color: #982640;
+  font-size: 30px;
+  margin-top: 10px;
 }
 /* BELOW CHANGES TO TABLES AND DESKTOP*/
 @media only screen and (min-device-width: 768px) {
@@ -35,9 +32,12 @@
   }
   .artwork-container {
     margin: 20px;
-    background-color: #ccd1d2;
     padding: 10px;
     width: 100%;
     height: 100%;
+  }
+  .artwork-container img {
+    height: auto;
+    max-width: 700px;
   }
 }

@@ -103,7 +103,7 @@ class UpdateArtworkForm extends Component {
     return (
       <div className="update-form-container">
         <form>
-          <h2>Update Artwork</h2>
+          <h1>Update Artwork</h1>
           <div className="update-artwork-container">
             {this.state.displayImages
               ? this.state.displayImages.map((artImg, idx) => {
@@ -117,7 +117,7 @@ class UpdateArtworkForm extends Component {
                           handleDeleteImage(artImg)
                         }}
                       >
-                        Remove image
+                        X
                       </button>
                     </div>
                   )
@@ -135,7 +135,7 @@ class UpdateArtworkForm extends Component {
               Upload Another Photo
             </label>
           </div>
-          <div id="update-artist-name">
+          <div>
             <input
               id="update-artist-name"
               type="text"
@@ -145,8 +145,9 @@ class UpdateArtworkForm extends Component {
               onChange={e => this.handleChange(e)}
             />
           </div>
-          <div id="update-textarea">
+          <div>
             <textarea
+              id="update-textarea"
               type="text"
               name="updateDescription"
               value={this.state.updateDescription}
@@ -161,8 +162,6 @@ class UpdateArtworkForm extends Component {
             >
               Delete
             </button>
-          </div>
-          <div>
             <button
               id="update-artwork-btn"
               type="submit"

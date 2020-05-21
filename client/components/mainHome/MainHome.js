@@ -15,12 +15,20 @@ import {
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import './mainHome.css'
+import '../upload/searchBar.css'
 import '../../../secrets'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import MapView from '../mapView/MapView'
 import ls from 'local-storage'
 import Loading from '../utils/Loading'
 import {setLSLocation, generateUrl} from '../utils/utils'
+
+// const carouselStyle = {
+//   display: 'flex',
+//   justifyContent: 'center',
+//   flexDirection: 'center',
+//   alignItems: 'center'
+// }
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -121,58 +129,75 @@ class MainHome extends React.Component {
           <div className="search-box-submit">
             <div id="geocoder" />
             <button
+              id="submit-search-btn"
               type="submit"
               className="submit"
               onClick={e => {
                 this.handleSubmit(e)
               }}
             >
-              Submit!
+              Submit
             </button>
+            <div className="share-location-section">
+              <button
+                id="share-location-btn"
+                type="submit"
+                className="share-location"
+                onClick={() => this.handleLocation()}
+              >
+                or use your current location
+              </button>
+            </div>
           </div>
         </div>
-        <div className="share-location-section">
-          <button
-            type="submit"
-            className="share-location"
-            onClick={() => this.handleLocation()}
-          >
-            or use your current location
-          </button>
-        </div>
         {this.props.artworks[0] ? (
-          <CarouselProvider
-            naturalSlideWidth={100}
-            naturalSlideHeight={125}
-            totalSlides={this.props.artworks.length}
-          >
-            <Slider className="carousel">
-              {this.props.artworks.map((artwork, i) => (
-                <Slide index={i} key={artwork.id} className="carousel-image">
-                  <img src={artwork.imageUrl[0]} />
-                  <Link to={`/artwork/${artwork.id}`}>
-                    <button type="button">
+          <div className="carousel-container">
+            <CarouselProvider
+              naturalSlideWidth={100}
+              naturalSlideHeight={170}
+              totalSlides={this.props.artworks.length}
+              touchEnabled
+              playDirection
+              currentSlide
+            >
+              <Slider className="carousel-details">
+                {this.props.artworks.map((artwork, i) => (
+                  <Slide index={i} key={artwork.id}>
+                    <div>
+                      <img
+                        id="carousel-arwork-img"
+                        src={artwork.imageUrl[0]}
+                        alt="artwork image"
+                      />
+
+                      <Link to={`/artwork/${artwork.id}`}>
+                        <h2 id="carousel-artist-name">{artwork.artist}</h2>
+                      </Link>
                       <div>
-                        <h2>{artwork.artist}</h2>
+                        <p id="carousel-art-description">
+                          {artwork.description}
+                        </p>
                       </div>
-                    </button>
-                  </Link>
-                  <div>
-                    <p>{artwork.description}</p>
-                  </div>
-                  <a
-                    href={generateUrl(artwork.Location.address)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <h4>TAKE ME THERE</h4>
-                  </a>
-                </Slide>
-              ))}
-            </Slider>
-            <ButtonBack>Back</ButtonBack>
-            <ButtonNext>Next</ButtonNext>
-          </CarouselProvider>
+                      <div>
+                        <a
+                          id="navegation-link"
+                          href={generateUrl(artwork.Location.address)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          TAKE ME THERE
+                        </a>
+                        <div className="carousel-btns">
+                          <ButtonBack className="previous-btn">Back</ButtonBack>
+                          <ButtonNext className="forward-btn">Next</ButtonNext>
+                        </div>
+                      </div>
+                    </div>
+                  </Slide>
+                ))}
+              </Slider>
+            </CarouselProvider>
+          </div>
         ) : (
           <Loading />
         )}
