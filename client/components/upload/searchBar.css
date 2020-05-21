@@ -30,7 +30,7 @@
 }
 
 .mapboxgl-ctrl-geocoder--input[type='text'] {
-  position: absolute;
+  position: relative;
   font: inherit;
   width: 100%;
   border: 0;

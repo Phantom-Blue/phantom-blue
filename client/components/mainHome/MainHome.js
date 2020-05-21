@@ -15,6 +15,7 @@ import {
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import './mainHome.css'
+import '../upload/searchBar.css'
 import '../../../secrets'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import MapView from '../mapView/MapView'
@@ -121,24 +122,26 @@ class MainHome extends React.Component {
           <div className="search-box-submit">
             <div id="geocoder" />
             <button
+              id="submit-search-btn"
               type="submit"
               className="submit"
               onClick={e => {
                 this.handleSubmit(e)
               }}
             >
-              Submit!
+              Submit
             </button>
+            <div className="share-location-section">
+              <button
+                id="share-location-btn"
+                type="submit"
+                className="share-location"
+                onClick={() => this.handleLocation()}
+              >
+                or use your current location
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="share-location-section">
-          <button
-            type="submit"
-            className="share-location"
-            onClick={() => this.handleLocation()}
-          >
-            or use your current location
-          </button>
         </div>
         {this.props.artworks[0] ? (
           <CarouselProvider
