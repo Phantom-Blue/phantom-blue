@@ -1,3 +1,10 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
 .update-form-container form {
   display: flex;
   flex-direction: column;
@@ -5,29 +12,51 @@
   margin-top: 100px;
 }
 
-.update-artwork-container {
-  max-width: 600px;
-  padding: 10px;
-  border-radius: 20px;
+.update-form-container h1 {
+  color: #982649;
+  font-weight: 500;
+  font-size: 40px;
+  margin-bottom: 20px;
+  text-align: center;
 }
-.update-artwork-container div {
+.update-artwork-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  /* background-color: #c5def6; */
 }
+/* .update-artwork-container div {
+  display: flex;
+  flex-direction: column;
+} */
 .update-artwork-container img {
   max-width: 400px;
   max-height: 500px;
   border-radius: 10px;
+  width: 100%;
 }
 
 #update-art-btn {
-  border: none;
-  background-color: inherit;
+  position: absolute;
+  display: inline-block;
+  top: 10%;
+  left: 92%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  color: #061a40;
+  font-size: 22px;
   cursor: pointer;
-  font-size: 20px;
-  font-weight: bold;
   text-align: center;
-  padding: 20px;
+  background-color: white;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 1px solid #061a40;
 }
 
 #file-container input[type='file'] {
@@ -37,40 +66,66 @@
 }
 
 #file-container input[type='file'] + .file-label {
-  background: #5d95e8;
+  background: #4d98e3;
   border: none;
   border-radius: 5px;
-  color: #fff;
+  color: #ffff;
   cursor: pointer;
   display: inline-block;
-  font-size: inherit;
+  font-size: 25px;
   font-weight: 600;
   outline: none;
-  padding: 20px 40px;
+  padding: 20px;
   position: relative;
   border-radius: 10px;
 }
 
-#update-artist-name input[type='text'] {
+#update-artist-name,
+#update-textarea {
   border-radius: 10px;
+  outline: none;
+  font-size: 20px;
+  border: 1px solid black;
   padding: 20px 40px;
 }
 
-#update-textarea textarea {
-  border-radius: 10px;
-  padding: 20px 40px;
+input::placeholder,
+textarea::placeholder {
+  font-size: 20px;
+  text-align: 20px;
 }
 #update-artwork-btn {
+  background-color: #4aa875;
+}
+
+#delete-artwork-btn,
+#update-artwork-btn {
+  border: none;
   max-width: 300px;
-  padding: 20px 40px;
+  padding: 20px;
   color: white;
   font-size: 20px;
-  background-color: #1ba644;
+  font-weight: 800;
   border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+#update-artwork-btn {
+  background-color: #4aa875;
+}
+#delete-artwork-btn {
+  background-color: #d52217;
 }
 
 #update-art-btn:hover,
 #file-container input[type='file'] + .file-label:hover,
 #update-artwork-btn:hover {
   opacity: 0.7;
+}
+/* Desktop */
+@media screen and (min-device-width: 768px) {
+  #update-artist-name,
+  #update-textarea {
+    padding: 20px 100px;
+  }
 }

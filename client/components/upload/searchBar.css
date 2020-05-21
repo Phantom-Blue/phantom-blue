@@ -227,7 +227,6 @@
     left: 7px;
     width: 20px;
     height: 20px;
-    /* height: 20px; */
   }
 
   .mapboxgl-ctrl-geocoder--input[type='text'] {
@@ -315,15 +314,10 @@
   outline: none;
   font-size: 20px;
   border: 1px solid black;
-}
-#upload-artist-name {
-  padding: 20px 40px;
-}
-
-#upload-textarea textarea {
   padding: 20px 40px;
   outline: none;
 }
+
 input::placeholder,
 #upload-textarea textarea::placeholder {
   font-size: 20px;
@@ -353,10 +347,7 @@ input::placeholder,
 
 /* Desktop */
 @media screen and (min-device-width: 768px) {
-  #upload-artist-name {
-    padding: 20px 100px;
-  }
-
+  #upload-artist-name,
   #upload-textarea textarea {
     padding: 20px 100px;
   }
