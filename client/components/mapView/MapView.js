@@ -60,6 +60,7 @@ class MapView extends Component {
   async componentDidMount() {
     const lSLocation = getLSLocation()
     const {getMyLocationArt, getUserLocation} = this.props
+    // MAPS LOCATION PASSED AS PROPS TO LOCAL STORAGE AND LOCAL STATE
     const myLocation = {
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude
@@ -188,6 +189,7 @@ class MapView extends Component {
           {...this.state.viewport}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
           mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
+          doubleClickZoom={true}
           onViewportChange={newport => {
             this.setState({viewport: newport})
           }}
