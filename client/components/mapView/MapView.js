@@ -13,12 +13,15 @@ import ReactMapGl, {
 //IMPORTS GEOCODER MODULE FOR REACT MAPGL
 import Geocoder from 'react-map-gl-geocoder'
 import Popup from 'reactjs-popup'
-// customize popup style
-import {desktopContentStyle, mobileContentStyle} from './popupStyle.js'
+// CUSTOMIZE POP UP STYLING
+import {
+  desktopContentStyle,
+  mobileContentStyle
+} from '../popups/style/popupStyle'
 import Artwork from '../artwork/Artwork'
 import '../../../secrets'
 import './mapView.css'
-// import 'react-map-gl-geocoder/dist/mapbox-gl-geocoder.css'
+import './mapBoxGL.css'
 import MapPin from './MapPin'
 // VIEW AS A LIST POPUP
 import ArtistListPopup from '../popups/artistListPopup'
@@ -45,8 +48,6 @@ class MapView extends Component {
       // DEPENDING ON USER ACTION, ONLY ONE GROUP OF ARTWORKS GETS MAPPED AT A TIME
       artworks: []
     }
-    this.popupContainer = React.createRef()
-    this.handleClose = this.handleClose.bind(this)
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
     this.handleNewSearch = this.handleNewSearch.bind(this)
@@ -157,9 +158,6 @@ class MapView extends Component {
     this.handleGeocoderViewportChange(this.state.viewport)
   }
 
-  handleClose() {
-    this.popupContainer.style.width = '0vw'
-  }
   openModal() {
     this.setState({open: true})
   }
@@ -223,6 +221,7 @@ class MapView extends Component {
                 closeOnDocumentClick
                 latitude={Number(this.state.selectedPin.latitude)}
                 longitude={Number(this.state.selectedPin.longitude)}
+                // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
                 contentStyle={
                   innerWidth < 768 ? mobileContentStyle : desktopContentStyle
                 }
@@ -240,6 +239,7 @@ class MapView extends Component {
                     {' '}
                     &times;
                   </button>
+                  {/** INDIVIDUAL ARTWORK FOR EACH PIN BY LOCATION*/}
                   <Artwork
                     latitude={Number(this.state.selectedPin.latitude)}
                     longitude={Number(this.state.selectedPin.longitude)}
@@ -272,8 +272,6 @@ class MapView extends Component {
     )
   }
 }
-
-// MapView.getInitialProps = async function() {}
 
 const mapState = state => ({
   // ALL ARTWORKS IS FALLBACK IF NO LOCATION IS AVAILABLE

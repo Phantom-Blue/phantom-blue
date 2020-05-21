@@ -13,7 +13,7 @@ export class UploadForm extends React.Component {
     super(props)
 
     this.state = {
-      artist: 'Unknown Artist',
+      artist: '',
       description: '',
       imageFile: null,
       imageUrl: null,
@@ -131,46 +131,54 @@ export class UploadForm extends React.Component {
     const handleChange = this.handleChange
     const handleSubmit = this.handleSubmit
     return (
-      <div>
+      <div className="upload-artwork-container">
         <form>
-          <label htmlFor="artist">Artist: </label>
-          <input
-            type="text"
-            value={this.state.artist}
-            name="artist"
-            onChange={e => {
-              handleChange(e)
-            }}
-          />
-          <label htmlFor="description">Description: </label>
-          <input
-            type="text"
-            value={this.state.description}
-            name="description"
-            onChange={e => {
-              handleChange(e)
-            }}
-          />
-          <label htmlFor="imageFile">Image File:</label>
-          <input
-            id="imageFile"
-            type="file"
-            name="imageFile"
-            onChange={e => {
-              this.handleFileRead(e)
-            }}
-          />
-
-          <label>Address:</label>
+          <h1>Upload Artwork</h1>
+          <div>
+            <input
+              id="upload-artist-name"
+              type="text"
+              value={this.state.artist}
+              placeholder="Artist name"
+              name="artist"
+              onChange={e => {
+                handleChange(e)
+              }}
+            />
+          </div>
+          <div id="upload-textarea">
+            <textarea
+              value={this.state.description}
+              name="description"
+              placeholder="Description"
+              onChange={e => {
+                handleChange(e)
+              }}
+            />
+          </div>
+          <div id="file-container">
+            <input
+              id="file"
+              type="file"
+              name="imageFile"
+              onChange={e => this.handleFileRead(e)}
+            />
+            <label htmlFor="file" className="file-label">
+              Upload Photo
+            </label>
+          </div>
           <div id="geocoder" />
-          <button
-            type="submit"
-            onClick={e => {
-              handleSubmit(e)
-            }}
-          >
-            Submit!
-          </button>
+          <div>
+            <button
+              id="upload-btn"
+              type="submit"
+              onClick={e => {
+                handleSubmit(e)
+              }}
+            >
+              Submit
+            </button>
+          </div>
         </form>
         <div>{this.props.error ? <p>{this.errorMessage()}</p> : ''}</div>
       </div>

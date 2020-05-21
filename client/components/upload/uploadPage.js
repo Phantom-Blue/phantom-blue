@@ -6,7 +6,6 @@ import UploadForm from './uploadForm'
 export const UploadPage = props => {
   return (
     <div>
-      <h1>Upload Art</h1>
       <UploadForm history={props.history} />
     </div>
   )

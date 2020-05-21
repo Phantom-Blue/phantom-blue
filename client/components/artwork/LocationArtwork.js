@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchArtWorkByLocationId} from '../../store/artworks'
-import './artwork.css'
+import './style/artwork.css'
 import {Link} from 'react-router-dom'
 import {
   CarouselProvider,

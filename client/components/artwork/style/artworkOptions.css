@@ -1,0 +1,27 @@
+#tags {
+  color: #982649;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+/* BUTTONS */
+
+#verify-btn,
+#edit-btn {
+  border: none;
+  max-width: 200px;
+  padding: 10px;
+  color: black;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 5px 0;
+  background-color: white;
+  border: 1px solid black;
+}
+
+#verify-btn:hover,
+#edit-btn:hover {
+  opacity: 0.85;
+}

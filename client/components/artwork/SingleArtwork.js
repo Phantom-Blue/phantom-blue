@@ -1,13 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react'
 import {connect} from 'react-redux'
-// import RedirectArtwork from './RedirectArtwork'
 import {Link} from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {fetchOneArtwork} from '../../store/artworks'
-import './artwork.css'
-// import AllArtworks from '../allArtworks/AllArtworks'
 import Loading from '../utils/Loading'
+import './style/singleArtwork.css'
 
 class SingleArtwork extends React.Component {
   componentDidMount() {
@@ -17,7 +15,7 @@ class SingleArtwork extends React.Component {
   render() {
     const {artwork} = this.props
     return (
-      <div>
+      <div className="single-artwork-container">
         {this.props.artwork ? (
           //ADJUST CLASSNAMES FROM LINES 21-25
           // //   && this.props.artwork[0] ?
@@ -25,17 +23,24 @@ class SingleArtwork extends React.Component {
           //   <div className="single-image">
           //     <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
           //   </div>
-          <div className="single-image" id="map-popup-container">
+          <div className="single-artwork-details">
             {artwork.imageUrl ? (
               artwork.imageUrl.map((url, idx) => {
-                return <img src={url} alt={artwork.artist} key={idx} />
+                return (
+                  <img
+                    id="single-artwork-img"
+                    src={url}
+                    alt={artwork.artist}
+                    key={idx}
+                  />
+                )
               })
             ) : (
               <Loading />
             )}
             {/* <img src={artwork.imageUrl} alt={artwork.artist} width="200" /> */}
-            <div className="carousel-text">
-              <h1 className="artistname">{artwork.artist}</h1>
+            <div className="single-artwork-artist">
+              <h1 id="artist-name">{artwork.artist}</h1>
               {/* <br /> */}
               <ArtworkOptions artwork={artwork} />
             </div>
@@ -44,10 +49,14 @@ class SingleArtwork extends React.Component {
           <div>
             <p>No artworks here</p>
             <Link to={`/artwork/${this.props.match.params.id}`}>
-              <button type="button">Retry</button>
+              <button id="retry-btn" type="button">
+                Retry
+              </button>
             </Link>
             <Link to="/map">
-              <button type="submit">View Map</button>
+              <button id="view-map-btn" type="submit">
+                View Map
+              </button>
             </Link>
           </div>
         )}
