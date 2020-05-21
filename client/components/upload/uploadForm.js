@@ -160,16 +160,20 @@ export class UploadForm extends React.Component {
               Upload Photo
             </label>
           </div>
-          <div id="geocoder" />
-          <button
-            id="upload-btn"
-            type="submit"
-            onClick={e => {
-              handleSubmit(e)
-            }}
-          >
-            Submit
-          </button>
+          <div>
+            <div id="geocoder" />
+          </div>
+          <div>
+            <button
+              id="upload-btn"
+              type="submit"
+              onClick={e => {
+                handleSubmit(e)
+              }}
+            >
+              Submit
+            </button>
+          </div>
         </form>
         <div>{this.props.error ? <p>{this.errorMessage()}</p> : ''}</div>
       </div>

@@ -16,8 +16,8 @@
 .mapboxgl-ctrl-geocoder {
   font-size: 18px;
   line-height: 24px;
-  font-family: 'Open Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   position: relative;
+  font-family: 'Montserrat', sans-serif;
   background-color: #fff;
   width: 100%;
   min-width: 240px;
@@ -26,13 +26,12 @@
   transition: width 0.25s, min-width 0.25s;
 }
 
-.mapboxgl-ctrl-geocoder--input {
+.mapboxgl-ctrl-geocoder--input[type='text'] {
   font: inherit;
   width: 100%;
   border: 0;
   background-color: transparent;
   margin: 0;
-  height: 50px;
   color: #404040; /* fallback */
   color: rgba(0, 0, 0, 0.75);
   padding: 6px 45px;
@@ -41,11 +40,11 @@
   overflow: hidden;
 }
 
-.mapboxgl-ctrl-geocoder--input::-ms-clear {
+.mapboxgl-ctrl-geocoder--input[type='text']::-ms-clear {
   display: none; /* hide input clear button in IE */
 }
 
-.mapboxgl-ctrl-geocoder--input:focus {
+.mapboxgl-ctrl-geocoder--input[type='text']:focus {
   color: #404040; /* fallback */
   color: rgba(0, 0, 0, 0.75);
   outline: 0;
@@ -136,7 +135,7 @@
   top: 13px;
   left: 12px;
   width: 23px;
-  height: 23px;
+  /* height: 23px; */
 }
 
 .mapboxgl-ctrl-geocoder--button {
@@ -150,7 +149,7 @@
 
 .mapboxgl-ctrl-geocoder--icon-close {
   width: 20px;
-  height: 20px;
+  /* height: 20px; */
   margin-top: 8px;
   margin-right: 3px;
 }
@@ -161,7 +160,7 @@
 
 .mapboxgl-ctrl-geocoder--icon-loading {
   width: 26px;
-  height: 26px;
+  /* height: 26px; */
   margin-top: 5px;
   margin-right: 0px;
   -moz-animation: rotate 0.8s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
@@ -193,7 +192,7 @@
 }
 
 /* Media queries*/
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 768px) {
   .mapboxgl-ctrl-geocoder.mapboxgl-ctrl-geocoder--collapsed {
     width: 36px;
     min-width: 36px;
@@ -215,7 +214,7 @@
 
   .mapboxgl-ctrl-geocoder--icon-close {
     width: 16px;
-    height: 16px;
+    /* height: 16px; */
     margin-top: 3px;
     margin-right: 0;
   }
@@ -223,17 +222,17 @@
   .mapboxgl-ctrl-geocoder--icon-search {
     left: 7px;
     width: 20px;
-    height: 20px;
+    /* height: 20px; */
   }
 
-  .mapboxgl-ctrl-geocoder--input {
+  .mapboxgl-ctrl-geocoder--input[type='text'] {
     height: 36px;
     padding: 6px 35px;
   }
 
   .mapboxgl-ctrl-geocoder--icon-loading {
     width: 26px;
-    height: 26px;
+    /* height: 26px; */
     margin-top: -2px;
     margin-right: -5px;
   }
@@ -257,28 +256,30 @@
 }
 
 /* UPLOAD FORM STYLE */
+.upload-artwork-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 100px;
+}
 
 .upload-artwork-container form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 100px;
-}
-
-.upload-artwork-container form h1 {
-  color: #061a40;
-  font-size: 30px;
-  margin-bottom: 20px;
-}
-.upload-artwork-container {
-  max-width: 600px;
-  padding: 10px;
-  border-radius: 20px;
+  /* justify-content: center;
+  text-align: center;
+  align-items: center; */
 }
 
 .upload-artwork-container div {
   display: flex;
   flex-direction: column;
+}
+.upload-artwork-container form h1 {
+  color: #061a40;
+  font-size: 30px;
+  margin-bottom: 20px;
 }
 
 /* UPLOAD ART FILE */
@@ -312,11 +313,11 @@
   border: 1px solid black;
 }
 #upload-artist-name {
-  padding: 10px 20px;
+  padding: 20px 40px;
 }
 
 #upload-textarea textarea {
-  padding: 10px;
+  padding: 20px 40px;
   outline: none;
 }
 input::placeholder,
@@ -327,9 +328,13 @@ input::placeholder,
 
 .upload-description {
   border-radius: 10px;
-  padding: 20px 40px;
 }
 
+/* #upload-btn-container {
+  display: flex;
+  justify-content: flex-start;
+  align-content: flex-start;
+} */
 #upload-btn {
   border: none;
   max-width: 300px;
@@ -345,4 +350,15 @@ input::placeholder,
 #upload-btn:hover,
 #file-container input[type='file'] + .file-label:hover {
   opacity: 0.7;
+}
+
+/* Desktop */
+@media screen and (min-device-width: 768px) {
+  #upload-artist-name {
+    padding: 20px 100px;
+  }
+
+  #upload-textarea textarea {
+    padding: 20px 100px;
+  }
 }
