@@ -22,17 +22,26 @@ input[type='email'],
 input[type='password'] {
   background-color: white;
   border: 1px solid black;
-  padding: 10px;
+  padding: 15px 40px;
   border-radius: 10px;
 }
 
-#login-btn {
-  max-width: 100px;
-  padding: 10px;
+#login-btn,
+#signup-btn {
+  font-size: 20px;
+  outline: none;
+  border: none;
+  max-width: 300px;
+  padding: 15px 40px;
   color: white;
   font-size: 20px;
-  background-color: #0061c7;
+  font-weight: 300;
   border-radius: 10px;
+  cursor: pointer;
+  margin: 5px;
+}
+#login-btn {
+  background-color: #4aa875;
 }
 
 #google-log-in {
@@ -41,7 +50,7 @@ input[type='password'] {
   justify-content: center;
   align-items: center;
   background-color: white;
-  box-shadow: 5px 10px 8px #888888;
+  box-shadow: 2px 2px 2px #888888;
   padding: 5px;
 }
 #google-log-in img {
@@ -59,13 +68,13 @@ input[type='password'] {
 }
 
 #login-form-btn {
-  color: #1b6bac;
+  color: #061a40;
 }
 
 #google-log-in:hover,
 #sign-up-form-btn:hover,
 #login-form-btn:hover {
-  opacity: 0.6;
+  opacity: 0.85;
 }
 @media only screen and (min-device-width: 768px) {
   #google-log-in {
@@ -85,7 +94,7 @@ input[type='password'] {
   #signup-btn {
     max-width: 200px;
     padding: 10px;
-    background-color: #5b80a7;
+    background-color: #061a40;
     border-radius: 10px;
   }
 }
