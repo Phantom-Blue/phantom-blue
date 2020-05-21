@@ -8,6 +8,7 @@ import axios from 'axios'
 import '../../../secrets'
 import {setLocation} from '../../store/location'
 import BackButton from '../utils/BackButton'
+import {setLSLocation} from '../utils/utils'
 
 export class UploadForm extends React.Component {
   constructor(props) {
@@ -80,6 +81,10 @@ export class UploadForm extends React.Component {
 
     // ^ This is code for if we were handling image uploading on the front end. This reduces the amount of data passed through our express server, but also makes it possible to upload images to the cloudinary database without any security checks, so for now it will stay on the backend.
     this.props.setLocation({
+      latitude: this.state.latitude,
+      longitude: this.state.longitude
+    })
+    setLSLocation({
       latitude: this.state.latitude,
       longitude: this.state.longitude
     })
