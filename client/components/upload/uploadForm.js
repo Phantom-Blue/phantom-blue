@@ -7,6 +7,7 @@ import './searchBar.css'
 import axios from 'axios'
 import '../../../secrets'
 import {setLocation} from '../../store/location'
+import ls from 'local-storage'
 
 export class UploadForm extends React.Component {
   constructor(props) {
@@ -20,13 +21,15 @@ export class UploadForm extends React.Component {
       latitude: null,
       longitude: null,
       address: null,
-      error: null
+      error: null,
+      geocoder: null
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
     this.handleFileRead = this.handleFileRead.bind(this)
+    this.handleLocation = this.handleLocation.bind(this)
   }
 
   handleGeocode(data) {
@@ -59,16 +62,21 @@ export class UploadForm extends React.Component {
   componentDidMount() {
     var geocoder = new MapboxGeocoder({
       accessToken: process.env.REACT_APP_MAPBOX_KEY,
-      types: 'country,region,place,locality,neighborhood, address'
+      types: 'address',
+      reverseGeocode: true
     })
     geocoder.addTo('#geocoder')
+    geocoder.placeholder = 'Address'
     geocoder.on('result', data => {
       this.handleGeocode(data)
     })
+    console.log('Coder:', geocoder)
+    this.setState({geocoder})
   }
 
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value})
+    console.log(this.state)
   }
 
   // eslint-disable-next-line complexity
@@ -90,7 +98,24 @@ export class UploadForm extends React.Component {
       latitude: this.state.latitude,
       longitude: this.state.longitude
     })
-    this.props.postArtwork(this.state)
+    const {
+      artist,
+      description,
+      imageFile,
+      imageUrl,
+      latitude,
+      longitude,
+      address
+    } = this.state
+    this.props.postArtwork({
+      artist,
+      description,
+      imageFile,
+      imageUrl,
+      latitude,
+      longitude,
+      address
+    })
   }
 
   handleFileRead(e) {
@@ -100,6 +125,34 @@ export class UploadForm extends React.Component {
         this.setState({imageFile: reader.result})
       }
       reader.readAsDataURL(e.target.files[0])
+    }
+  }
+
+  async handleLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+        ls.set('latitude', latitude)
+        ls.set('longitude', longitude)
+      })
+      const lat = ls.get('latitude')
+      const long = ls.get('longitude')
+
+      const geocoder = this.state.geocoder
+
+      const response = await geocoder._geocode(`${lat}, ${long}`)
+      const address = response.body.features[0].place_name
+
+      console.log(lat, long)
+      this.setState({
+        latitude: lat,
+        longitude: long,
+        address
+      })
+      console.log(this.state)
+    } else {
+      console.log('Geolocation not available')
     }
   }
 
@@ -114,8 +167,9 @@ export class UploadForm extends React.Component {
 
   errorMessage() {
     if (
-      this.props.error.response.data &&
-      this.props.error.response.data.includes('notNull Violation')
+      this.props.error ||
+      (this.props.error.response.data &&
+        this.props.error.response.data.includes('notNull Violation'))
     ) {
       return 'Enter all required fields'
     } else if (this.state.error === 'Missing image file.') {
@@ -130,6 +184,7 @@ export class UploadForm extends React.Component {
   render() {
     const handleChange = this.handleChange
     const handleSubmit = this.handleSubmit
+    const handleLocation = this.handleLocation
     return (
       <div className="upload-artwork-container">
         <form>
@@ -169,6 +224,10 @@ export class UploadForm extends React.Component {
           </div>
           <div id="geocoder" />
           <div>
+            <button type="button" onClick={handleLocation}>
+              {' '}
+              Use my location{' '}
+            </button>
             <button
               id="upload-btn"
               type="submit"

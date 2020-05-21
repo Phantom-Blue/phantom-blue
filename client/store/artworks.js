@@ -215,14 +215,6 @@ export const postArtwork = newArt => async dispatch => {
 
   try {
     dispatch(postedArtwork(res.data))
-    // const location = await Location.findByPk(res.data.LocationId)
-    // const feature = location.convertToGeo()
-    // await axios.post(
-    //   `https://api.mapbox.com/datasets/v1/mstykmshy/ckaejyuag0g6u22pnkxura0z0/features/${
-    //     location.id
-    //   }?access_token=${process.env.MAPBOX_DATA_KEY}`,
-    //   feature
-    // )
     await axios.post('/api/locations/tileset', {id: res.data.LocationId})
     history.push('/map')
   } catch (error) {
