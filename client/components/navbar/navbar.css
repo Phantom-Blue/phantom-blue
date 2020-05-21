@@ -17,6 +17,7 @@
   font-weight: 800;
   font-size: 40px;
   color: black;
+  margin: 0;
 }
 
 .sub-links a {
@@ -76,16 +77,16 @@
 
   .sub-links-overlay .closebtn {
     position: absolute;
-    top: -75px;
+    top: -70px;
     right: -40px;
-    font-size: 60px;
+    font-size: 70px;
   }
 }
 /*MOBILE MENU BAR */
 .menu-icon {
   margin: 0;
   position: absolute;
-  top: 12px;
+  top: 22px;
   right: 0;
 }
 .menu-icon div {
@@ -93,6 +94,7 @@
   height: 5px;
   margin: 6px 20px;
   background-color: black;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* BELOW CHANGES TO TABLES AND DESKTOP*/
