@@ -2,7 +2,7 @@
 const router = require('express').Router()
 const {Artwork, Location, Tag} = require('../db/models')
 const axios = require('axios')
-require('..')
+// require('..')
 
 router.get('/geojson', async (req, res, next) => {
   try {
@@ -13,18 +13,26 @@ router.get('/geojson', async (req, res, next) => {
   }
 })
 
-router.get('/tileset/:id', async (req, res, next) => {
+// router.post('/tileset', (req, res, next) => {
+
+// })
+
+router.post('/tileset', async (req, res, next) => {
   try {
-    location = await Location.findByPk(req.params.id)
-    const geo = location.convertToGeo()
-    console.log(geo)
-    await axios.put(
-      `https://api.mapbox.com/datasets/v1/mstykmshy/ckaejyuag0g6u22pnkxura0z0/features/${
-        req.params.id
-      }?access_token=${process.env.MAPBOX_DATA_KEY}`,
-      geo
-    )
-    res.send('ok')
+    const location = await Location.findByPk(req.body.id)
+    const feature = location.convertToGeo()
+
+    if (feature) {
+      await axios.put(
+        `https://api.mapbox.com/datasets/v1/mstykmshy/ckaejyuag0g6u22pnkxura0z0/features/${
+          req.body.id
+        }?access_token=${process.env.MAPBOX_DATA_KEY}`,
+        feature
+      )
+      res.send('ok')
+    } else {
+      res.send('Something went wrong :(')
+    }
   } catch (err) {
     next(err)
   }

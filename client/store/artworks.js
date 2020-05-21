@@ -5,7 +5,6 @@
 import axios from 'axios'
 import history from '../history'
 import '../../secrets'
-import {Location} from '../../server/db/models'
 
 // A C T I O N   C R E A T O R S //
 const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
@@ -216,14 +215,15 @@ export const postArtwork = newArt => async dispatch => {
 
   try {
     dispatch(postedArtwork(res.data))
-    const location = await Location.findByPk(res.data.LocationId)
-    const feature = location.convertToGo()
-    await axios.put(
-      `https://api.mapbox.com/datasets/v1/mstykmshy/ckaejyuag0g6u22pnkxura0z0/features/${
-        location.id
-      }?access_token=${process.env.MAPBOX_DATA_KEY}`,
-      feature
-    )
+    // const location = await Location.findByPk(res.data.LocationId)
+    // const feature = location.convertToGeo()
+    // await axios.post(
+    //   `https://api.mapbox.com/datasets/v1/mstykmshy/ckaejyuag0g6u22pnkxura0z0/features/${
+    //     location.id
+    //   }?access_token=${process.env.MAPBOX_DATA_KEY}`,
+    //   feature
+    // )
+    await axios.post('/api/locations/tileset', {id: res.data.LocationId})
     history.push('/map')
   } catch (error) {
     console.error(error)
