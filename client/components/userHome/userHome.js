@@ -42,8 +42,8 @@ export class SingleUserHome extends Component {
                       return (
                         <div className="artwork-display" key={artwork.id}>
                           <Link to={`/artwork/${artwork.id}`}>
-                            <img src={artwork.imageUrl} alt="Artwork" />
-                            <p>{artwork.artist}</p>
+                            <img src={artwork.imageUrl[0]} alt="Artwork" />
+                            <p id="users-home-artist-name">{artwork.artist}</p>
                             <br />
                           </Link>
                         </div>
