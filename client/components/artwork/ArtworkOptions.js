@@ -6,17 +6,25 @@ import {connect} from 'react-redux'
 import {verifyArtworkInDB, addTagsToDB} from '../../store/artworks'
 import {me} from '../../store/user'
 import './style/artworkOptions.css'
+import '../mapView/mapView.css'
+import {
+  mobileContentStyle,
+  desktopContentStyle
+} from '../popups/style/popupStyle'
 
 class ArtworkOptions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      tags: 'enter tags separated by commas'
+      tags: 'enter tags separated by commas',
+      open: false
     }
 
     this.handleTagging = this.handleTagging.bind(this)
     this.handleVerify = this.handleVerify.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
   componentDidMount() {
@@ -51,6 +59,13 @@ class ArtworkOptions extends React.Component {
     })
   }
 
+  openModal() {
+    this.setState({open: true})
+  }
+  closeModal() {
+    this.setState({open: false})
+  }
+
   render() {
     const {artwork, user} = this.props
     return (
@@ -71,12 +86,29 @@ class ArtworkOptions extends React.Component {
         {// we render the verification option if the user is logged
         user.id ? (
           <div>
+            <div>
+              <button
+                id="verify-btn"
+                type="button"
+                onClick={ev => {
+                  ev.preventDefault()
+                  this.openModal()
+                }}
+              >
+                V E R I F Y
+              </button>
+            </div>
             <Popup
-              trigger={
-                <button id="verify-btn" type="button">
-                  V E R I F Y
-                </button>
+              className="popup-contaner"
+              open={this.state.open}
+              closeOnDocumentClick
+              // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
+              contentStyle={
+                innerWidth < 768 ? mobileContentStyle : desktopContentStyle
               }
+              onClose={() => {
+                this.closeModal()
+              }}
             >
               <button
                 id="confirm-popup"
