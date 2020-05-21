@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 .user-home-container {
   display: flex;
@@ -13,12 +14,15 @@
 .user-info-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100vw;
   padding: 20px;
 }
 #user-name {
   padding: 30px;
-  color: #6e90ac;
+  color: #4aa875;
 }
 
 #user-img {
@@ -31,8 +35,11 @@
 
 /* User artwork */
 .saved-artwork h2 {
-  font-size: 20px;
+  font-size: 30px;
   margin: 50px 0px;
+  text-align: center;
+  color: #982649;
+  font-weight: 300;
 }
 .users-artworks {
   display: flex;
@@ -43,11 +50,45 @@
 }
 
 .artwork-display img {
-  width: 130px;
+  max-width: 600px;
+  width: 100%;
   height: 120px;
+  object-fit: cover;
 }
 
 .artwork-display p {
   font-size: 20px;
-  color: #6e90ac;
+  color: #061a40;
+}
+/* Desktop */
+@media screen and (min-device-width: 768px) {
+  #user-name {
+    padding: 40px;
+    color: #4aa875;
+    text-align: left;
+  }
+
+  #user-img {
+    max-width: 600px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  .users-artworks {
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .artwork-display img {
+    max-width: 400px;
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .artwork-display p {
+    font-size: 30px;
+  }
 }

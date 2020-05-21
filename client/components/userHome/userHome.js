@@ -17,7 +17,6 @@ export class SingleUserHome extends Component {
   }
 
   render() {
-    // console.log('>>>>> this.props:', this.props)
     const user = this.props || {}
     const allArtwork = this.props.user.artwork
     return (
@@ -36,7 +35,7 @@ export class SingleUserHome extends Component {
               </div>
             </div>
             <div className="saved-artwork">
-              <h2 align="center">Your Uploaded Artwork</h2>
+              <h2>Your Uploaded Artwork</h2>
               <div className="users-artworks">
                 {allArtwork
                   ? allArtwork.map(artwork => {
