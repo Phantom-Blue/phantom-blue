@@ -1,0 +1,26 @@
+.single-artwork-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+#single-artwork-img {
+  object-fit: cover;
+  width: 100%;
+  max-width: 600px;
+  max-height: 400px;
+}
+
+#artist-name {
+  color: #061840;
+  font-size: 30px;
+  font-weight: 300;
+  margin: 10px 0;
+}
+
+/* TODO: STYLE ERROR BTNS */
+/* #retry-btn */
+/* #view-map-btn */

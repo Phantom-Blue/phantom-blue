@@ -2,14 +2,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchLocationArtwork} from '../../store/artworks'
-import ArtworkOptions from './ArtworkOptions'
+// import ArtworkOptions from './ArtworkOptions'
 import {generateUrl} from '../utils/utils'
-import Popup from 'reactjs-popup'
-import './artwork.css'
-import SingleArtwork from './SingleArtwork'
+// import Popup from 'reactjs-popup'
+// import SingleArtwork from './SingleArtwork'
 import {Link} from 'react-router-dom'
-import LocationArtwork from './LocationArtwork'
+// import LocationArtwork from './LocationArtwork'
 import Loading from '../utils/Loading'
+import './style/artwork.css'
 
 class Artwork extends React.Component {
   componentDidMount() {
