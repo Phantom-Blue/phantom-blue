@@ -48,7 +48,7 @@
 #update-art-btn {
   position: absolute;
   display: inline-block;
-  top: 10%;
+  top: 30px;
   left: 92%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
