@@ -19,6 +19,7 @@
 
 #geocoder {
   margin: 20px;
+  /* padding-top: 10px; */
 }
 
 .search-box-submit {
@@ -42,7 +43,7 @@
   align-items: center;
   align-content: center;
   padding: 20px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   border-radius: 10px;
 }
 /* #carousel {

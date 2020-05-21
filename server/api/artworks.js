@@ -55,7 +55,7 @@ router.get('/:artworkId', async (req, res, next) => {
   try {
     // console.log(req.params)
     const artwork = await Artwork.findByPk(artworkId, {
-      include: Tag
+      include: [Tag, Location]
     })
     res.json(artwork)
   } catch (err) {
