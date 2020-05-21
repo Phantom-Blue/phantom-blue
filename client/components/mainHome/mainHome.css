@@ -79,10 +79,39 @@
   }
 }
 
-/* #carousel #carousel-text {
-  position: absolute;
-  top: 35vh;
-  color: #fff;
-  text-shadow: 2px 2px #252525;
-  z-index: 1;
-} */
+#carousel-artist-name {
+  color: #982649;
+  font-weight: 300;
+  font-size: 25px;
+}
+#carousel-art-description {
+  font-size: 20px;
+}
+#navegation-link {
+  color: #161840;
+  font-weight: 800;
+}
+
+#navegation-link:hover {
+  opacity: 0.85;
+}
+
+.carousel-btns {
+  margin-top: 10px;
+}
+.previous-btn,
+.forward-btn {
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  font-weight: 800;
+  border-radius: 10px;
+  margin: 5px;
+  outline: none;
+}
+.previous-btn {
+  background-color: #4d98e3;
+}
+.forward-btn {
+  background-color: #061840;
+}

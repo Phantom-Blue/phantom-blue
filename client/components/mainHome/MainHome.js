@@ -154,7 +154,7 @@ class MainHome extends React.Component {
           <div className="carousel-container">
             <CarouselProvider
               naturalSlideWidth={100}
-              naturalSlideHeight={125}
+              naturalSlideHeight={170}
               totalSlides={this.props.artworks.length}
               touchEnabled
               playDirection
@@ -169,26 +169,33 @@ class MainHome extends React.Component {
                         src={artwork.imageUrl[0]}
                         alt="artwork image"
                       />
+
                       <Link to={`/artwork/${artwork.id}`}>
-                        <h2>{artwork.artist}</h2>
+                        <h2 id="carousel-artist-name">{artwork.artist}</h2>
                       </Link>
                       <div>
-                        <p>{artwork.description}</p>
+                        <p id="carousel-art-description">
+                          {artwork.description}
+                        </p>
                       </div>
-                      <a
-                        id="navegation-link"
-                        href={generateUrl(artwork.Location.address)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        TAKE ME THERE
-                      </a>
+                      <div>
+                        <a
+                          id="navegation-link"
+                          href={generateUrl(artwork.Location.address)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          TAKE ME THERE
+                        </a>
+                        <div className="carousel-btns">
+                          <ButtonBack className="previous-btn">Back</ButtonBack>
+                          <ButtonNext className="forward-btn">Next</ButtonNext>
+                        </div>
+                      </div>
                     </div>
                   </Slide>
                 ))}
               </Slider>
-              <ButtonBack>Back</ButtonBack>
-              <ButtonNext>Next</ButtonNext>
             </CarouselProvider>
           </div>
         ) : (
