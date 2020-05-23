@@ -6,9 +6,6 @@
 }
 
 #map-popup-container {
-  height: inherit;
-  max-width: 400px;
-  max-height: 400px;
   display: flex;
   flex-direction: column;
   justify-content: center;
