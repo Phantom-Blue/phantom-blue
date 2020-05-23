@@ -11,7 +11,7 @@ const backButtonStyle = {
   fontSize: '20px',
   marginTop: '20px',
   textAlign: 'left',
-  padding: '10px 0'
+  padding: '0 10px'
 }
 
 const BackButton = () => {
