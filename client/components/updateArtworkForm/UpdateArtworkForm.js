@@ -99,7 +99,6 @@ class UpdateArtworkForm extends Component {
 
   render() {
     const {artwork} = this.props
-    console.log('inside render', this.props)
     const handleDeleteImage = this.handleDeleteImage
     return (
       <div className="update-form-container">
@@ -109,21 +108,24 @@ class UpdateArtworkForm extends Component {
             {this.state.displayImages
               ? this.state.displayImages.map((artImg, idx) => {
                   return (
-                    <div key={idx}>
-                      <img src={artImg} alt="Artwork Image" />
-                      <button
-                        id="update-art-btn"
-                        type="button"
-                        onClick={() => {
-                          handleDeleteImage(artImg)
-                        }}
-                      >
-                        X
-                      </button>
+                    <div className="display-image-container" key={idx}>
+                      <div>
+                        <button
+                          id="update-art-btn"
+                          type="button"
+                          onClick={() => {
+                            handleDeleteImage(artImg)
+                          }}
+                        >
+                          X
+                        </button>
+                        <img src={artImg} alt="Artwork Image" />
+                      </div>
                     </div>
                   )
                 })
               : ''}
+            {console.log('here display images', this.state.displayImages)}
           </div>
           <div id="file-container">
             <input

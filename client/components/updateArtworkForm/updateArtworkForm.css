@@ -46,10 +46,10 @@
 }
 
 #update-art-btn {
-  position: absolute;
+  position: relative;
   display: inline-block;
-  top: 30px;
-  left: 92%;
+  top: 45px;
+  left: 99%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   color: #061a40;
