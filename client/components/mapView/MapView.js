@@ -66,15 +66,15 @@ class MapView extends Component {
       longitude: this.props.location.longitude
     }
 
-    this.setState({
-      viewport: {
-        latitude: this.props.location.latitude,
-        longitude: this.props.location.longitude,
-        width: '100vw',
-        height: '100vh',
-        zoom: 13
-      }
-    })
+    // this.setState({
+    //   viewport: {
+    //     latitude: this.props.location.latitude,
+    //     longitude: this.props.location.longitude,
+    //     width: '100vw',
+    //     height: '100vh',
+    //     zoom: 13
+    //   }
+    // })
 
     /// ARTWORKS FROM OTHER COMPONENT PROPS
     if (this.props.artNearMe) {
