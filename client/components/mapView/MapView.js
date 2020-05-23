@@ -64,9 +64,13 @@ class MapView extends Component {
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude
     }
+    this.setState({
+      latitude: this.props.location.latitude,
+      longitude: this.props.location.longitude
+    })
 
     /// ARTWORKS FROM OTHER COMPONENT PROPS
-    if (this.props.artToMapFromMain) {
+    if (this.props.artNearMe) {
       this.setState({
         viewport: {
           latitude: this.props.location.latitude,
@@ -75,7 +79,7 @@ class MapView extends Component {
           height: '100vh',
           zoom: 13
         },
-        artworks: this.props.artToMapFromMain
+        artworks: this.props.artNearMe
       })
       setLSLocation(myLocation)
 
@@ -181,6 +185,7 @@ class MapView extends Component {
   render() {
     const window = windowCheck()
     const innerWidth = window.innerWidth
+    console.log(this.props)
 
     return (
       <div className="map-container">

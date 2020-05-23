@@ -22,7 +22,7 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import MapView from '../mapView/MapView'
 import ls from 'local-storage'
 import Loading from '../utils/Loading'
-import {setLSLocation, generateUrl} from '../utils/utils'
+import {setLSLocation, getLSLocation, generateUrl} from '../utils/utils'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -50,29 +50,27 @@ class MainHome extends React.Component {
     })
   }
 
-  async handleLocation(e) {
-    e.preventDefault()
+  handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(function(position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
-        ls.set('latitude', latitude)
-        ls.set('longitude', longitude)
+        const myLocation = {latitude, longitude}
+        setLSLocation(myLocation)
+        console.log('IN HANDLE LOCATION IF STATEMENT', myLocation)
+        console.log('IN HANDLE LOCATION IF STATEMENT', getLSLocation())
       })
-      const lat = ls.get('latitude')
-      const long = ls.get('longitude')
-      const myLocation = {
-        latitude: lat,
-        longitude: long
-      }
-      setLSLocation(myLocation)
-      await getMyLocationArt(myLocation)
-      await setUserLocation(myLocation)
+
+      const myLocation = getLSLocation()
+
+      getMyLocationArt(myLocation)
+      setUserLocation(myLocation)
+
       this.setState({
-        latitude: lat,
-        longitude: long,
+        latitude: myLocation.latitude,
+        longitude: myLocation.longitude,
         location: true,
         error: null
       })
@@ -81,7 +79,7 @@ class MainHome extends React.Component {
     }
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
 
     const {latitude, longitude} = this.state
@@ -89,12 +87,15 @@ class MainHome extends React.Component {
 
     const myLocation = {latitude, longitude}
 
-    getMyLocationArt(myLocation)
-    setUserLocation(myLocation)
+    await getMyLocationArt(myLocation)
+    await setUserLocation(myLocation)
 
     this.setState({
       location: true
     })
+
+    // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
+    // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
   }
 
   async handleGeocode(geocoder) {
@@ -210,8 +211,9 @@ class MainHome extends React.Component {
         )}
       </div>
     ) : this.props.artNearMe[0] ? (
-      <MapView artToMapFromMain={this.props.artNearMe} />
+      <Redirect to="/map" />
     ) : (
+      // <MapView artToMapFromMain={this.props.artNearMe} />
       <Loading />
     )
   }
