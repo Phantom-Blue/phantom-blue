@@ -43,16 +43,16 @@
 }
 .users-artworks {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
 }
 
 .artwork-display img {
-  max-width: 600px;
   width: 100%;
-  height: 120px;
+  max-width: 600px;
+  height: 400px;
   object-fit: cover;
 }
 
@@ -77,20 +77,21 @@
     object-fit: cover;
   }
   .users-artworks {
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: row;
     align-items: flex-start;
     flex-wrap: wrap;
   }
 
-  .artwork-display img {
-    max-width: 400px;
-    height: 200px;
-    width: 100%;
-    object-fit: cover;
+  .artwork-display {
+    margin: 10px 20px;
   }
 
   .artwork-display p {
     font-size: 30px;
+  }
+
+  .artwork-display a:hover {
+    opacity: 0.8;
   }
 }
