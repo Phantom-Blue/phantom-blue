@@ -186,8 +186,15 @@ class MainHome extends React.Component {
                           TAKE ME THERE
                         </a>
                         <div className="carousel-btns">
-                          <ButtonBack className="previous-btn">Back</ButtonBack>
-                          <ButtonNext className="forward-btn">Next</ButtonNext>
+                          {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
+                          {this.props.artworks.length > 1 ? (
+                            <div>
+                              <ButtonBack id="previous-btn">&#8249;</ButtonBack>
+                              <ButtonNext id="forward-btn">&#8250;</ButtonNext>
+                            </div>
+                          ) : (
+                            ''
+                          )}
                         </div>
                       </div>
                     </div>
