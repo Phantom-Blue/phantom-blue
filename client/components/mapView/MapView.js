@@ -27,7 +27,7 @@ import MapPin from './MapPin'
 // VIEW AS A LIST POPUP
 import ArtistListPopup from '../popups/artistListPopup'
 //IMPORTS TWO UTILITY FUCNTIONS TO GET AND SET LATITUDE AND LONGITUDE TO LOCAL STATE // COULD BE REFACTORED TO RECEIVE ANY ARGS
-import {getLSLocation, setLSLocationm, windowCheck} from '../utils/utils'
+import {getLSLocation, setLSLocation, windowCheck} from '../utils/utils'
 import Loading from '../utils/Loading'
 // import {Loading, getAccessToken} from '../utils'
 

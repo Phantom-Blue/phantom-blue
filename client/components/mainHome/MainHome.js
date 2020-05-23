@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
 import {setLocation} from '../../store/location'
 import {
@@ -37,7 +37,21 @@ class MainHome extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  async handleLocation() {
+  componentDidMount() {
+    this.props.getVerifiedArtwork()
+
+    var geocoder = new MapboxGeocoder({
+      accessToken: process.env.REACT_APP_MAPBOX_KEY,
+      types: 'country,region,place,locality,neighborhood, address'
+    })
+    geocoder.addTo('#geocoder')
+    geocoder._inputEl.addEventListener('change', () => {
+      this.handleGeocode(geocoder)
+    })
+  }
+
+  async handleLocation(e) {
+    e.preventDefault()
     const {getMyLocationArt, setUserLocation} = this.props
 
     if ('geolocation' in navigator) {
@@ -53,6 +67,7 @@ class MainHome extends React.Component {
         latitude: lat,
         longitude: long
       }
+      setLSLocation(myLocation)
       await getMyLocationArt(myLocation)
       await setUserLocation(myLocation)
       this.setState({
@@ -83,7 +98,6 @@ class MainHome extends React.Component {
   }
 
   async handleGeocode(geocoder) {
-    // console.log('GOT IN GEOCODE')
     const coded = await geocoder._geocode(geocoder._inputEl.value)
     if (coded.body.features[0]) {
       let longitude = coded.body.features[0].center[0]
@@ -100,24 +114,12 @@ class MainHome extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.props.getVerifiedArtwork()
-
-    var geocoder = new MapboxGeocoder({
-      accessToken: process.env.REACT_APP_MAPBOX_KEY,
-      types: 'country,region,place,locality,neighborhood, address'
-    })
-    geocoder.addTo('#geocoder')
-    geocoder._inputEl.addEventListener('change', () => {
-      this.handleGeocode(geocoder)
-    })
-  }
-
   render() {
     const {latitude, longitude} = this.state
     const userLocation = {latitude, longitude}
+    console.log(this.props.artworks)
 
-    return this.state.location === false ? (
+    return this.state.location === false && this.props.artworks ? (
       <div>
         <div className="search-section">
           <div className="search-label">
@@ -141,14 +143,14 @@ class MainHome extends React.Component {
                 id="share-location-btn"
                 type="submit"
                 className="share-location"
-                onClick={() => this.handleLocation()}
+                onClick={e => this.handleLocation(e)}
               >
                 or use your current location
               </button>
             </div>
           </div>
         </div>
-        {this.props.artworks[0] ? (
+        {this.props.artworks ? (
           <div className="carousel-container">
             <CarouselProvider
               naturalSlideWidth={100}
