@@ -98,7 +98,6 @@ class MainHome extends React.Component {
     // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
     // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
   }
-
   async handleGeocode(geocoder) {
     const coded = await geocoder._geocode(geocoder._inputEl.value)
     if (coded.body.features[0]) {
