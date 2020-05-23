@@ -45,13 +45,14 @@ class Artwork extends React.Component {
                 >
                   TAKE ME THERE
                 </a>
+                <br />
+                <Link
+                  className="all-art-at-location"
+                  to={`/location/${this.props.artworks[0].LocationId}`}
+                >
+                  View all art at this location
+                </Link>
               </div>
-              <Link
-                className="all-art-at-location"
-                to={`/location/${this.props.artworks[0].LocationId}`}
-              >
-                View all art at this location
-              </Link>
             </div>
           </div>
         ) : (

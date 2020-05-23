@@ -1,6 +1,6 @@
 * {
   margin: 0;
-  padding: 0;
+  padding: 20;
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
 }
@@ -19,41 +19,52 @@
   color: black;
 }
 #map-popup-content {
-  padding: 20px 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  align-content: center;
 }
 
 .map-popup-img {
   object-fit: cover;
-  width: 100%;
+  height: 100%;
   max-width: 400px;
-  max-height: 200px;
+  max-height: 400px;
 }
 
 .artist-name {
+  text-transform: uppercase;
+  text-align: center;
   color: #982649;
-  font-weight: bold;
   margin: 5px 0;
   font-size: 25px;
-  font-weight: 300;
+  font-weight: 800;
 }
 
 .art-address {
   color: black;
-  font-size: 20px;
+  font-size: 12px;
+  text-align: center;
 }
 
+.google-nav-btn,
 .all-art-at-location {
+  text-align: center;
+  align-content: center;
+  align-self: center;
+  text-transform: uppercase;
   color: #061a40;
-  font-size: 20px;
+  font-size: 13px;
 }
 
 .google-nav-btn {
   margin: 20px 0;
+  text-align: center;
 }
 .google-nav-btn a {
   color: #061a40;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 500;
+  text-align: center;
 }
 
 .google-nav-btn a:hover,
