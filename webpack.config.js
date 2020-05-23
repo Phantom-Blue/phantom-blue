@@ -38,14 +38,14 @@ module.exports = {
         }
       }
     ]
-  },
-  plugins: !isDev
-    ? [
-        new webpack.DefinePlugin({
-          'process.env.REACT_APP_MAPBOX_KEY': JSON.stringify(
-            process.env.REACT_APP_MAPBOX_KEY
-          )
-        })
-      ]
-    : []
+  }
+  // plugins: !isDev
+  //   ? [
+  //       new webpack.DefinePlugin({
+  //         'process.env.REACT_APP_MAPBOX_KEY': JSON.stringify(
+  //           process.env.REACT_APP_MAPBOX_KEY
+  //         )
+  //       })
+  //     ]
+  //   : []
 }
