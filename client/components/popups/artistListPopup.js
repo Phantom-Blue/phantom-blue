@@ -5,9 +5,12 @@ import {Link} from 'react-router-dom'
 // customize popup style
 import {mobileAllArtworksStyle} from './style/popupStyle'
 import './style/artistListPopup.css'
+import {windowCheck} from '../utils/utils'
 
 const artistListPopup = () => {
-  const {innerWidth} = window
+  const window = windowCheck()
+  const innerWidth = window.innerWidth
+
   return (
     <div className="artwork-list-outer-container">
       <Popup
