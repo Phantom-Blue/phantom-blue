@@ -215,7 +215,7 @@ export const postArtwork = newArt => async dispatch => {
 
   try {
     dispatch(postedArtwork(res.data))
-    await axios.post('/api/locations/tileset', {id: res.data.LocationId})
+    // await axios.post('/api/locations/tileset', {id: res.data.LocationId})
     history.push('/map')
   } catch (error) {
     console.error(error)
