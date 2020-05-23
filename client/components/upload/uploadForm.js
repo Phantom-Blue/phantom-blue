@@ -7,7 +7,7 @@ import './searchBar.css'
 import axios from 'axios'
 import '../../../secrets'
 import {setLocation} from '../../store/location'
-import ls from 'local-storage'
+import {setLSLocation} from '../utils/utils'
 
 export class UploadForm extends React.Component {
   constructor(props) {
@@ -21,32 +21,21 @@ export class UploadForm extends React.Component {
       latitude: null,
       longitude: null,
       address: null,
-      error: null,
-      geocoder: null
+      error: null
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
     this.handleFileRead = this.handleFileRead.bind(this)
-    this.handleLocation = this.handleLocation.bind(this)
   }
 
-  handleGeocode(data) {
-    if (data.result) {
-      // let tileset = 'mstykmshy.ckaegfldq0f8129pn0jmcuzfp-20i0t'
-      // let radius = 100000
-      // let limit = 50
-
-      // let query = 'https://api.mapbox.com/v4/' + tileset + '/tilequery/' + data.result.center[1] + ',' + data.result.center[0] + '.json?radius=' + radius + '&limit= ' + limit + ' &access_token=' + process.env.REACT_APP_MAPBOX_KEY;
-
-      // const res = await axios.get(query)
-      // console.log(data)
-      // console.log(query)
-      // console.log(res.data)
-      let latitude = data.result.center[1]
-      let longitude = data.result.center[0]
-      let address = data.result.place_name
+  async handleGeocode(geocoder) {
+    const coded = await geocoder._geocode(geocoder._inputEl.value)
+    if (coded.body.features[0]) {
+      let longitude = coded.body.features[0].center[0]
+      let latitude = coded.body.features[0].center[1]
+      let address = coded.body.features[0].place_name
       this.setState({
         latitude,
         longitude,
@@ -62,21 +51,17 @@ export class UploadForm extends React.Component {
   componentDidMount() {
     var geocoder = new MapboxGeocoder({
       accessToken: process.env.REACT_APP_MAPBOX_KEY,
-      types: 'address',
-      reverseGeocode: true
+      types: 'country,region,place,locality,neighborhood, address'
     })
     geocoder.addTo('#geocoder')
-    geocoder.placeholder = 'Address'
-    geocoder.on('result', data => {
-      this.handleGeocode(data)
+
+    geocoder._inputEl.addEventListener('change', () => {
+      this.handleGeocode(geocoder)
     })
-    console.log('Coder:', geocoder)
-    this.setState({geocoder})
   }
 
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value})
-    console.log(this.state)
   }
 
   // eslint-disable-next-line complexity
@@ -98,24 +83,11 @@ export class UploadForm extends React.Component {
       latitude: this.state.latitude,
       longitude: this.state.longitude
     })
-    const {
-      artist,
-      description,
-      imageFile,
-      imageUrl,
-      latitude,
-      longitude,
-      address
-    } = this.state
-    this.props.postArtwork({
-      artist,
-      description,
-      imageFile,
-      imageUrl,
-      latitude,
-      longitude,
-      address
+    setLSLocation({
+      latitude: this.state.latitude,
+      longitude: this.state.longitude
     })
+    this.props.postArtwork(this.state)
   }
 
   handleFileRead(e) {
@@ -125,34 +97,6 @@ export class UploadForm extends React.Component {
         this.setState({imageFile: reader.result})
       }
       reader.readAsDataURL(e.target.files[0])
-    }
-  }
-
-  async handleLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        const latitude = position.coords.latitude
-        const longitude = position.coords.longitude
-        ls.set('latitude', latitude)
-        ls.set('longitude', longitude)
-      })
-      const lat = ls.get('latitude')
-      const long = ls.get('longitude')
-
-      const geocoder = this.state.geocoder
-
-      const response = await geocoder._geocode(`${lat}, ${long}`)
-      const address = response.body.features[0].place_name
-
-      console.log(lat, long)
-      this.setState({
-        latitude: lat,
-        longitude: long,
-        address
-      })
-      console.log(this.state)
-    } else {
-      console.log('Geolocation not available')
     }
   }
 
@@ -167,9 +111,8 @@ export class UploadForm extends React.Component {
 
   errorMessage() {
     if (
-      this.props.error ||
-      (this.props.error.response.data &&
-        this.props.error.response.data.includes('notNull Violation'))
+      this.props.error.response.data &&
+      this.props.error.response.data.includes('notNull Violation')
     ) {
       return 'Enter all required fields'
     } else if (this.state.error === 'Missing image file.') {
@@ -178,13 +121,13 @@ export class UploadForm extends React.Component {
       return 'Add a location.'
     }
     // return 'Invalid Address'
+    console.log('No!')
     return 'Error.'
   }
 
   render() {
     const handleChange = this.handleChange
     const handleSubmit = this.handleSubmit
-    const handleLocation = this.handleLocation
     return (
       <div className="upload-artwork-container">
         <form>
@@ -224,10 +167,6 @@ export class UploadForm extends React.Component {
           </div>
           <div id="geocoder" />
           <div>
-            <button type="button" onClick={handleLocation}>
-              {' '}
-              Use my location{' '}
-            </button>
             <button
               id="upload-btn"
               type="submit"

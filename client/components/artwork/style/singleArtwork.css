@@ -1,10 +1,15 @@
 .single-artwork-container {
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin-top: 50px;
   padding: 20px;
+}
+.single-artwork-details {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 #single-artwork-img {
@@ -12,15 +17,25 @@
   width: 100%;
   max-width: 600px;
   max-height: 400px;
+  margin: 10px 0;
 }
 
 #artist-name {
-  color: #061840;
+  color: #4aa875;
   font-size: 30px;
   font-weight: 300;
   margin: 10px 0;
 }
 
+#art-address {
+  color: #061a40;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+#art-description {
+  max-width: 600px;
+}
 /* TODO: STYLE ERROR BTNS */
 /* #retry-btn */
 /* #view-map-btn */

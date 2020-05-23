@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../../store'
 import './navbar.css'
+import {windowCheck} from '../utils/utils'
 
 class Navbar extends Component {
   constructor(props) {
@@ -16,13 +17,15 @@ class Navbar extends Component {
   }
 
   openNav() {
-    const {innerWidth} = window
+    const window = windowCheck()
+    const innerWidth = window.innerWidth
     if (innerWidth < 768) {
       this.menuItems.current.style.width = '100%'
     }
   }
   closeNav() {
-    const {innerWidth} = window
+    const window = windowCheck()
+    const innerWidth = window.innerWidth
     if (innerWidth < 768) {
       this.menuItems.current.style.width = '0%'
     }

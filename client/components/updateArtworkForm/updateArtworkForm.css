@@ -5,18 +5,17 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.update-form-container form div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-}
-.update-form-container form {
+.update-form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 100px;
+}
+.update-form-container form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .update-form-container h1 {
@@ -46,10 +45,10 @@
 }
 
 #update-art-btn {
-  position: absolute;
+  position: relative;
   display: inline-block;
-  top: 10%;
-  left: 92%;
+  top: 45px;
+  left: 99%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   color: #061a40;
@@ -104,7 +103,6 @@ textarea::placeholder {
 #delete-artwork-btn,
 #update-artwork-btn {
   border: none;
-  max-width: 300px;
   padding: 20px;
   color: white;
   font-size: 20px;

@@ -1,7 +1,7 @@
 {
   "name": "pentimento",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "A street art visualizer map, for artists, historians and art enthusiasts!",
   "engines": {
     "node": "12.x"
   },
@@ -20,7 +20,7 @@
     "start": "node server",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & NODE_ENV='development' npm run start-server",
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
-    "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./client/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register --require babel-plugin-css-modules-transform"
+    "test": "NODE_ENV='test' mocha \"./server/**/*.spec.js\" \"./script/**/*.spec.js\" --require @babel/polyfill --require @babel/register --require babel-plugin-css-modules-transform"
   },
   "husky": {
     "hooks": {

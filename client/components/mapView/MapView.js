@@ -27,7 +27,7 @@ import MapPin from './MapPin'
 // VIEW AS A LIST POPUP
 import ArtistListPopup from '../popups/artistListPopup'
 //IMPORTS TWO UTILITY FUCNTIONS TO GET AND SET LATITUDE AND LONGITUDE TO LOCAL STATE // COULD BE REFACTORED TO RECEIVE ANY ARGS
-import {getLSLocation, setLSLocation} from '../utils/utils'
+import {getLSLocation, setLSLocationm, windowCheck} from '../utils/utils'
 import Loading from '../utils/Loading'
 // import {Loading, getAccessToken} from '../utils'
 
@@ -179,7 +179,9 @@ class MapView extends Component {
   }
 
   render() {
-    const {innerWidth} = window
+    const window = windowCheck()
+    const innerWidth = window.innerWidth
+
     return (
       <div className="map-container">
         <ReactMapGl
@@ -236,7 +238,9 @@ class MapView extends Component {
                 longitude={Number(this.state.selectedPin.longitude)}
                 // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
                 contentStyle={
-                  innerWidth < 768 ? mobileContentStyle : desktopContentStyle
+                  window.innerWidth < 768
+                    ? mobileContentStyle
+                    : desktopContentStyle
                 }
                 onClose={() => {
                   this.setState({selectedPin: null})
@@ -265,8 +269,8 @@ class MapView extends Component {
             ''
           )}
           {/** CONDITIONS FOR LOADING NAV CONTROLS BASE ON DEVICE */}
-          {innerWidth > 768 ||
-          (innerWidth < 768 && this.state.selectedPin === null) ? (
+          {window.innerWidth > 768 ||
+          (window.innerWidth < 768 && this.state.selectedPin === null) ? (
             <div>
               <div id="navegation-control">
                 <NavigationControl />

@@ -17,6 +17,7 @@
   font-weight: 800;
   font-size: 40px;
   color: black;
+  margin: 0;
 }
 
 .sub-links a {
@@ -31,7 +32,7 @@
 /*MOBILE MENU BAR SPECIFIC STYLE*/
 @media screen and (max-device-width: 768px) {
   .sub-links a {
-    color: black;
+    color: white;
     margin: 0;
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
@@ -46,7 +47,7 @@
     z-index: 2000;
     top: 0;
     right: 0;
-    background-color: white;
+    background-color: #061a40;
     opacity: 0.9;
     overflow-x: hidden;
     transition: 0.5s;
@@ -64,7 +65,7 @@
     padding: 8px;
     text-decoration: none;
     font-size: 36px;
-    color: black;
+    color: white;
     display: block;
     transition: 0.3s;
   }
@@ -76,16 +77,15 @@
 
   .sub-links-overlay .closebtn {
     position: absolute;
-    top: -75px;
-    right: -40px;
-    font-size: 60px;
+    top: -70px;
+    right: -60px;
+    font-size: 70px;
   }
 }
 /*MOBILE MENU BAR */
 .menu-icon {
   margin: 0;
   position: absolute;
-  top: 12px;
   right: 0;
 }
 .menu-icon div {
@@ -93,6 +93,7 @@
   height: 5px;
   margin: 6px 20px;
   background-color: black;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* BELOW CHANGES TO TABLES AND DESKTOP*/

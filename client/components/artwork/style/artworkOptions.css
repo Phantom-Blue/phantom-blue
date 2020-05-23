@@ -25,3 +25,7 @@
 #edit-btn:hover {
   opacity: 0.85;
 }
+
+#confirm-popup {
+  font-size: 20px;
+}
