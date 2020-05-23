@@ -6,7 +6,9 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import './searchBar.css'
 import axios from 'axios'
 import '../../../secrets'
+import ls from 'local-storage'
 import {setLocation} from '../../store/location'
+import BackButton from '../utils/BackButton'
 import {setLSLocation} from '../utils/utils'
 
 export class UploadForm extends React.Component {
@@ -28,14 +30,14 @@ export class UploadForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
     this.handleFileRead = this.handleFileRead.bind(this)
+    this.handleLocation = this.handleLocation.bind(this)
   }
 
-  async handleGeocode(geocoder) {
-    const coded = await geocoder._geocode(geocoder._inputEl.value)
-    if (coded.body.features[0]) {
-      let longitude = coded.body.features[0].center[0]
-      let latitude = coded.body.features[0].center[1]
-      let address = coded.body.features[0].place_name
+  handleGeocode(data) {
+    if (data.result) {
+      let latitude = data.result.center[1]
+      let longitude = data.result.center[0]
+      let address = data.result.place_name
       this.setState({
         latitude,
         longitude,
@@ -51,13 +53,15 @@ export class UploadForm extends React.Component {
   componentDidMount() {
     var geocoder = new MapboxGeocoder({
       accessToken: process.env.REACT_APP_MAPBOX_KEY,
-      types: 'country,region,place,locality,neighborhood, address'
+      types: 'address',
+      reverseGeocode: true
     })
     geocoder.addTo('#geocoder')
 
-    geocoder._inputEl.addEventListener('change', () => {
-      this.handleGeocode(geocoder)
+    geocoder.on('result', data => {
+      this.handleGeocode(data)
     })
+    this.setState({geocoder})
   }
 
   handleChange(e) {
@@ -87,7 +91,24 @@ export class UploadForm extends React.Component {
       latitude: this.state.latitude,
       longitude: this.state.longitude
     })
-    this.props.postArtwork(this.state)
+    const {
+      artist,
+      description,
+      imageFile,
+      imageUrl,
+      latitude,
+      longitude,
+      address
+    } = this.state
+    this.props.postArtwork({
+      artist,
+      description,
+      imageFile,
+      imageUrl,
+      latitude,
+      longitude,
+      address
+    })
   }
 
   handleFileRead(e) {
@@ -97,6 +118,34 @@ export class UploadForm extends React.Component {
         this.setState({imageFile: reader.result})
       }
       reader.readAsDataURL(e.target.files[0])
+    }
+  }
+
+  async handleLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+        ls.set('latitude', latitude)
+        ls.set('longitude', longitude)
+      })
+      const lat = ls.get('latitude')
+      const long = ls.get('longitude')
+
+      const geocoder = this.state.geocoder
+
+      const response = await geocoder._geocode(`${lat}, ${long}`)
+      const address = response.body.features[0].place_name
+
+      console.log(lat, long)
+      this.setState({
+        latitude: lat,
+        longitude: long,
+        address
+      })
+      console.log(this.state)
+    } else {
+      console.log('Geolocation not available')
     }
   }
 
@@ -110,10 +159,7 @@ export class UploadForm extends React.Component {
   }
 
   errorMessage() {
-    if (
-      this.props.error.response.data &&
-      this.props.error.response.data.includes('notNull Violation')
-    ) {
+    if (this.props.error) {
       return 'Enter all required fields'
     } else if (this.state.error === 'Missing image file.') {
       return 'Add an image.'
@@ -128,6 +174,7 @@ export class UploadForm extends React.Component {
   render() {
     const handleChange = this.handleChange
     const handleSubmit = this.handleSubmit
+    const handleLocation = this.handleLocation
     return (
       <div className="upload-artwork-container">
         <form>
@@ -166,6 +213,10 @@ export class UploadForm extends React.Component {
             </label>
           </div>
           <div id="geocoder" />
+          <button type="button" onClick={handleLocation}>
+            {' '}
+            Use my location{' '}
+          </button>
           <div>
             <button
               id="upload-btn"
@@ -176,6 +227,7 @@ export class UploadForm extends React.Component {
             >
               Submit
             </button>
+            <BackButton />
           </div>
         </form>
         <div>{this.props.error ? <p>{this.errorMessage()}</p> : ''}</div>
