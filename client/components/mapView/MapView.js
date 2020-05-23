@@ -64,10 +64,10 @@ class MapView extends Component {
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude
     }
-    this.setState({
-      latitude: this.props.location.latitude,
-      longitude: this.props.location.longitude
-    })
+    // this.setState({
+    //   latitude: this.props.location.latitude,
+    //   longitude: this.props.location.longitude
+    // })
 
     /// ARTWORKS FROM OTHER COMPONENT PROPS
     if (this.props.artNearMe) {
@@ -185,7 +185,6 @@ class MapView extends Component {
   render() {
     const window = windowCheck()
     const innerWidth = window.innerWidth
-    console.log(this.props)
 
     return (
       <div className="map-container">
@@ -209,29 +208,27 @@ class MapView extends Component {
           />
 
           {/* WE NOW MAP THROUGH OUR STATE TO MAKE THE MARKERS, THE STATE WILL CHANGE FREQUENTLY W NEW SEARCHES AND PASSED PROPS */}
-          {this.state.artworks[0] ? (
-            this.state.artworks.map(artwork => (
-              <Marker
-                key={artwork.id}
-                latitude={Number(artwork.Location.latitude)}
-                longitude={Number(artwork.Location.longitude)}
-              >
-                <button
-                  type="button"
-                  id="marker-pin"
-                  onClick={ev => {
-                    ev.preventDefault()
-                    this.setState({selectedPin: artwork.Location})
-                    this.openModal()
-                  }}
+          {this.state.artworks[0]
+            ? this.state.artworks.map(artwork => (
+                <Marker
+                  key={artwork.id}
+                  latitude={Number(artwork.Location.latitude)}
+                  longitude={Number(artwork.Location.longitude)}
                 >
-                  <MapPin />
-                </button>
-              </Marker>
-            ))
-          ) : (
-            <Loading />
-          )}
+                  <button
+                    type="button"
+                    id="marker-pin"
+                    onClick={ev => {
+                      ev.preventDefault()
+                      this.setState({selectedPin: artwork.Location})
+                      this.openModal()
+                    }}
+                  >
+                    <MapPin />
+                  </button>
+                </Marker>
+              ))
+            : ''}
           {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
           {this.state.selectedPin ? (
             <div>

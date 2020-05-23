@@ -59,8 +59,6 @@ class MainHome extends React.Component {
         const longitude = position.coords.longitude
         const myLocation = {latitude, longitude}
         setLSLocation(myLocation)
-        console.log('IN HANDLE LOCATION IF STATEMENT', myLocation)
-        console.log('IN HANDLE LOCATION IF STATEMENT', getLSLocation())
       })
 
       const myLocation = getLSLocation()
@@ -118,7 +116,6 @@ class MainHome extends React.Component {
   render() {
     const {latitude, longitude} = this.state
     const userLocation = {latitude, longitude}
-    console.log(this.props.artworks)
 
     return this.state.location === false && this.props.artworks ? (
       <div>
