@@ -11,11 +11,6 @@ export class SingleUserHome extends Component {
     this.state = {}
   }
 
-  componentDidMount() {
-    // this.props.fetchUser(this.props.match.params.id)
-    // console.log('this.props.match.params', this.props.match.params)
-  }
-
   render() {
     const user = this.props || {}
     const allArtwork = this.props.user.artwork

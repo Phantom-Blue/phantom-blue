@@ -20,6 +20,16 @@ export const desktopContentStyle = {
   padding: '10px'
 }
 
+export const mapPopupDesktopStyle = {
+  width: '50%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: 'none',
+  borderRadius: '5px',
+  padding: '20px'
+}
+
 export const mobileAllArtworksStyle = {
   width: '100%',
   height: '100vh',

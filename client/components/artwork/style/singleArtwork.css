@@ -16,7 +16,7 @@
   object-fit: cover;
   width: 100%;
   max-width: 600px;
-  max-height: 400px;
+  height: auto;
   margin: 10px 0;
 }
 

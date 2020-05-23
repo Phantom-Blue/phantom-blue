@@ -10,17 +10,18 @@
   width: 100%;
   height: 100%;
 }
-.artwork-container img {
+#view-as-list-img {
   display: block;
   object-fit: cover;
   width: 100%;
-  height: 200px;
+  max-height: 200px;
   max-width: 700px;
 }
 
 .all-artworks-container h2 {
-  color: #982640;
+  color: #4aa875;
   font-size: 30px;
+  font-weight: 300;
   margin-top: 10px;
 }
 /* BELOW CHANGES TO TABLES AND DESKTOP*/
@@ -36,8 +37,7 @@
     width: 100%;
     height: 100%;
   }
-  .artwork-container img {
-    height: auto;
-    max-width: 700px;
+  #view-as-list-img {
+    max-height: inherit;
   }
 }

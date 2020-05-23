@@ -16,7 +16,7 @@ import Geocoder from 'react-map-gl-geocoder'
 import Popup from 'reactjs-popup'
 // CUSTOMIZE POP UP STYLING
 import {
-  desktopContentStyle,
+  mapPopupDesktopStyle,
   mobileContentStyle
 } from '../popups/style/popupStyle'
 import Artwork from '../artwork/Artwork'
@@ -242,7 +242,7 @@ class MapView extends Component {
                 contentStyle={
                   window.innerWidth < 768
                     ? mobileContentStyle
-                    : desktopContentStyle
+                    : mapPopupDesktopStyle
                 }
                 onClose={() => {
                   this.setState({selectedPin: null})
