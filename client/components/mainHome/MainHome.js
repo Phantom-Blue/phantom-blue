@@ -24,13 +24,6 @@ import ls from 'local-storage'
 import Loading from '../utils/Loading'
 import {setLSLocation, generateUrl} from '../utils/utils'
 
-// const carouselStyle = {
-//   display: 'flex',
-//   justifyContent: 'center',
-//   flexDirection: 'center',
-//   alignItems: 'center'
-// }
-
 class MainHome extends React.Component {
   constructor(props) {
     super(props)
