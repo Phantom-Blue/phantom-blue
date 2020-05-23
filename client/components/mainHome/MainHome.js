@@ -50,8 +50,9 @@ class MainHome extends React.Component {
     })
   }
 
-  async handleLocation(e) {
+  handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
+    console.log('BEFORE IF handle location', getLSLocation())
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async function(position) {
@@ -60,8 +61,6 @@ class MainHome extends React.Component {
         const myLocation = {latitude, longitude}
         console.log('inside navigator location', myLocation)
         setLSLocation(myLocation)
-
-        console.log('inside handle location', myLocation)
 
         await getMyLocationArt(myLocation)
         await setUserLocation(myLocation)
@@ -82,22 +81,22 @@ class MainHome extends React.Component {
 
   async handleSubmit(e) {
     e.preventDefault()
-
     const {latitude, longitude} = this.state
     const {getMyLocationArt, setUserLocation} = this.props
 
     const myLocation = {latitude, longitude}
 
+    setLSLocation(myLocation)
     await getMyLocationArt(myLocation)
     await setUserLocation(myLocation)
 
     this.setState({
       location: true
     })
-
     // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
     // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
   }
+
   async handleGeocode(geocoder) {
     const coded = await geocoder._geocode(geocoder._inputEl.value)
     if (coded.body.features[0]) {

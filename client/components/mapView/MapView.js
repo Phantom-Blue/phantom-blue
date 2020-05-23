@@ -60,28 +60,34 @@ class MapView extends Component {
   async componentDidMount() {
     const lSLocation = getLSLocation()
     const {getMyLocationArt, getUserLocation} = this.props
+
     const myLocation = {
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude
     }
-    // this.setState({
-    //   latitude: this.props.location.latitude,
-    //   longitude: this.props.location.longitude
-    // })
+
+    this.setState({
+      viewport: {
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        width: '100vw',
+        height: '100vh',
+        zoom: 13
+      }
+    })
 
     /// ARTWORKS FROM OTHER COMPONENT PROPS
     if (this.props.artNearMe) {
       this.setState({
         viewport: {
-          latitude: this.props.location.latitude,
-          longitude: this.props.location.longitude,
+          latitude: lSLocation.latitude,
+          longitude: lSLocation.longitude,
           width: '100vw',
           height: '100vh',
           zoom: 13
         },
         artworks: this.props.artNearMe
       })
-      setLSLocation(myLocation)
 
       /// MAPS LOCAL STORAGE LAT LONG ARTWORKS TO REDUX STORE
     } else if (
