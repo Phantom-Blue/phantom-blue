@@ -20,7 +20,11 @@ export class AllArtWorks extends Component {
               return (
                 <div className="artwork-container" key={artwork.id}>
                   <Link to={`/artwork/${artwork.id}`}>
-                    <img src={artwork.imageUrl} alt="Artwork" />
+                    <img
+                      id="view-as-list-img"
+                      src={artwork.imageUrl}
+                      alt="Artwork Image"
+                    />
                     <h2>{artwork.artist}</h2>
                   </Link>
                 </div>
