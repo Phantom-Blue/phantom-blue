@@ -221,6 +221,7 @@ class MapView extends Component {
             ''
           )}
           {/* THIS MAPS ARTWORK TO PINS */}
+          {console.log('>>>>>>>>> ', this.state.artworks)}
           {this.state.artworks[0] ? (
             this.state.artworks.map(artwork => (
               <Marker
@@ -237,7 +238,12 @@ class MapView extends Component {
                     this.openModal()
                   }}
                 >
-                  <MapPin />
+                  <img
+                    className="user-location-pin"
+                    height="40px"
+                    width=""
+                    src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590270243/GREEN-Lightning-Bolt-v2_i6kcre.png"
+                  />
                 </button>
               </Marker>
             ))
