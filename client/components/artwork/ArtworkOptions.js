@@ -68,7 +68,7 @@ class ArtworkOptions extends React.Component {
 
   render() {
     const {artwork, user} = this.props
-    console.log('>>>>>>', artwork.isVerified)
+    // console.log('>>>>>>', artwork.isVerified)
     return (
       <div>
         <div className="additional-artwork-info">
@@ -100,7 +100,9 @@ class ArtworkOptions extends React.Component {
               open={this.state.open}
               closeOnDocumentClick
               contentStyle={
-                innerWidth < 768 ? mobileContentStyle : desktopContentStyle
+                window.innerWidth < 768
+                  ? mobileContentStyle
+                  : desktopContentStyle
               }
               onClose={() => {
                 this.closeModal()
