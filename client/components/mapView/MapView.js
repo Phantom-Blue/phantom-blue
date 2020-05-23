@@ -204,6 +204,23 @@ class MapView extends Component {
           />
 
           {/* WE NOW MAP THROUGH OUR STATE TO MAKE THE MARKERS, THE STATE WILL CHANGE FREQUENTLY W NEW SEARCHES AND PASSED PROPS */}
+          {/* THIS MAPS USER'S CURRENT LOCATION TO A PIN */}
+          {this.props.location ? (
+            <Marker
+              latitude={Number(this.props.location.latitude)}
+              longitude={Number(this.props.location.longitude)}
+            >
+              <img
+                className="user-location-pin"
+                height="40px"
+                width=""
+                src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590269279/Raspberry-Lightning-Bolt_hiyje0_4_f12mr4.png"
+              />
+            </Marker>
+          ) : (
+            ''
+          )}
+          {/* THIS MAPS ARTWORK TO PINS */}
           {this.state.artworks[0] ? (
             this.state.artworks.map(artwork => (
               <Marker

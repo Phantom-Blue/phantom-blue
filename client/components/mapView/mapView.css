@@ -59,6 +59,12 @@
   right: 20px;
 }
 
+.user-location-pin {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+}
+
 @media only screen and (min-device-width: 768px) {
   .modal {
     position: absolute;
