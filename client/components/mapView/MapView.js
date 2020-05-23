@@ -211,7 +211,7 @@ class MapView extends Component {
               longitude={Number(this.props.location.longitude)}
             >
               <img
-                className="user-location-pin"
+                className="location-pin"
                 height="40px"
                 width=""
                 src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590269279/Raspberry-Lightning-Bolt_hiyje0_4_f12mr4.png"
@@ -238,21 +238,11 @@ class MapView extends Component {
                   }}
                 >
                   <img
-                    className="user-location-pin"
+                    className="location-pin"
                     height="40px"
                     width=""
                     src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590270243/GREEN-Lightning-Bolt-v2_i6kcre.png"
                   />
-                  {/* {artwork.UserId ? (
-                 ) : (
-                  <img
-                    className="user-location-pin"
-                    height="40px"
-                    width=""
-                    src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590270243/BLUE-Lightning-Bolt_oxmcee.png"
-                  />
-                  )
-                } */}
                 </button>
               </Marker>
             ))
