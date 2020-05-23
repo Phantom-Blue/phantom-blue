@@ -7,9 +7,11 @@ const backButtonStyle = {
   borderRadius: '20px',
   cursor: 'pointer',
   color: 'black',
+  fontWeight: '400',
   fontSize: '20px',
   marginTop: '20px',
-  textAlign: 'left'
+  textAlign: 'left',
+  padding: '10px 0'
 }
 
 const BackButton = () => {
@@ -21,7 +23,7 @@ const BackButton = () => {
         history.back()
       }}
     >
-      BACK
+      &#8249; BACK
     </button>
   )
 }
