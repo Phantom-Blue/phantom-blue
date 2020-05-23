@@ -41,9 +41,13 @@ class SingleArtwork extends React.Component {
               <Loading />
             )}
             <div className="single-artwork-artist">
-              <h1 id="artist-name">{artwork.artist}</h1>
               {this.props.artwork.Location ? (
-                <h5 id="artaddress">{artwork.Location.address}</h5>
+                <div>
+                  <h1 id="artist-name">{artwork.artist}</h1>
+                  <p id="art-address">{artwork.Location.address}</p>
+                  <br />
+                  <p id="art-description">{artwork.description}</p>
+                </div>
               ) : (
                 ''
               )}

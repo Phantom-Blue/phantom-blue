@@ -73,10 +73,6 @@ class ArtworkOptions extends React.Component {
       <div>
         <div className="additional-artwork-info">
           <div>
-            <p>{artwork.description}</p>
-            <br />
-          </div>
-          <div>
             <h2 id="tags">T A G S:</h2>
             <p>
               {artwork.Tags ? artwork.Tags.map(tag => `| ${tag.tag} |`) : ''}
@@ -116,15 +112,15 @@ class ArtworkOptions extends React.Component {
                 onClick={e => this.handleVerify(e)}
               >
                 I've seen this piece here IRL! <br />
-                  <button 
+                <button
                   id="verify-btn"
                   type="submit"
                   onClick={() => {
                     this.closeModal()
                   }}
-                  >
-                    Verify
-                  </button>
+                >
+                  Verify
+                </button>
               </button>
             </Popup>
 
