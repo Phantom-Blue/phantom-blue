@@ -32,12 +32,12 @@ class Artwork extends React.Component {
                 <img
                   src={this.props.artworks[0].imageUrl[0]}
                   alt={this.props.artworks[0].artist}
-                  id="map-popup-img"
+                  className="map-popup-img"
                 />
-                <h2 id="artistname">{this.props.artworks[0].artist}</h2>
+                <h2 className="artist-name">{this.props.artworks[0].artist}</h2>
               </Link>
-              <h5 id="artaddress">{this.props.address}</h5>
-              <div id="google-nav-btn">
+              <p className="art-address">{this.props.address}</p>
+              <div className="google-nav-btn">
                 <a
                   href={directionsUrl}
                   target="_blank"
@@ -47,7 +47,7 @@ class Artwork extends React.Component {
                 </a>
               </div>
               <Link
-                id="all-art-at-location"
+                className="all-art-at-location"
                 to={`/location/${this.props.artworks[0].LocationId}`}
               >
                 View all art at this location
