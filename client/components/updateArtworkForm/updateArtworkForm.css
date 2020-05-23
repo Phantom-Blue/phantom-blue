@@ -5,18 +5,17 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.update-form-container form div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
-}
-.update-form-container form {
+.update-form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 100px;
+}
+.update-form-container form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .update-form-container h1 {

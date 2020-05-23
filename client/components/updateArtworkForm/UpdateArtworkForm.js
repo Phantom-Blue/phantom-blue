@@ -165,6 +165,8 @@ class UpdateArtworkForm extends Component {
             >
               Delete
             </button>
+          </div>
+          <div>
             <button
               id="update-artwork-btn"
               type="submit"
@@ -172,6 +174,8 @@ class UpdateArtworkForm extends Component {
             >
               Update Artwork
             </button>
+          </div>
+          <div>
             <BackButton />
           </div>
         </form>
