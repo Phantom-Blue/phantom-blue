@@ -6,10 +6,8 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import './searchBar.css'
 import axios from 'axios'
 import '../../../secrets'
-import ls from 'local-storage'
 import {setLocation} from '../../store/location'
 import BackButton from '../utils/BackButton'
-import {setLSLocation} from '../utils/utils'
 
 export class UploadForm extends React.Component {
   constructor(props) {

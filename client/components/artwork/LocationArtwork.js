@@ -12,6 +12,7 @@ import {
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import Loading from '../utils/Loading'
+import './style/locationArtwork.css'
 
 class LocationArtwork extends React.Component {
   componentDidMount() {
@@ -40,7 +41,11 @@ class LocationArtwork extends React.Component {
                     >
                       <center>
                         <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
-                          <img src={artwork.imageUrl} alt={artwork.artist} />
+                          <img
+                            src={artwork.imageUrl}
+                            alt={artwork.artist}
+                            className="carousel-img"
+                          />
                           <h5 className="artistname">{artwork.artist}</h5>
                         </Link>
                         <div>
