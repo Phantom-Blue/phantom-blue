@@ -5,7 +5,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchAllArtworks, fetchArtFromMyLocation} from '../../store/artworks'
-import {setLocation} from '../../store/location'
+import {setLocation, syncLocation} from '../../store/location'
 import ReactMapGl, {
   Marker,
   NavigationControl,
@@ -36,8 +36,8 @@ class MapView extends Component {
     super(props)
     this.state = {
       viewport: {
-        latitude: 40.7736,
-        longitude: -73.9566,
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
         width: '100vw',
         height: '100vh',
         zoom: 12
@@ -58,71 +58,72 @@ class MapView extends Component {
   // OTHERWISE TAKES CARE OF CHECKING THE LOCAL STORAGE FOR A LEFTOVER USER LOCATION, AND CALLS A LOCATION THUNK, IF FOUND
   // IF NO INFORMATION IS AVAILABLE, IT CALLS A THUNK TO RECEIVE ALL ARTWORKS
   async componentDidMount() {
-    const lSLocation = getLSLocation()
-    const {getMyLocationArt, getUserLocation} = this.props
-    const myLocation = {
-      latitude: this.props.location.latitude,
-      longitude: this.props.location.longitude
-    }
+    // const lSLocation = getLSLocation()
+    // const {getMyLocationArt, getUserLocation} = this.props
+    // const myLocation = {
+    //   latitude: this.props.location.latitude,
+    //   longitude: this.props.location.longitude
+    // }
     // this.setState({
     //   latitude: this.props.location.latitude,
     //   longitude: this.props.location.longitude
     // })
 
     /// ARTWORKS FROM OTHER COMPONENT PROPS
-    if (this.props.artNearMe) {
-      this.setState({
-        viewport: {
-          latitude: this.props.location.latitude,
-          longitude: this.props.location.longitude,
-          width: '100vw',
-          height: '100vh',
-          zoom: 13
-        },
-        artworks: this.props.artNearMe
-      })
-      setLSLocation(myLocation)
+    // if (this.props.artNearMe) {
+    //   this.setState({
+    //     viewport: {
+    //       latitude: this.props.location.latitude,
+    //       longitude: this.props.location.longitude,
+    //       width: '100vw',
+    //       height: '100vh',
+    //       zoom: 13
+    //     },
+    //     artworks: this.props.artNearMe
+    //   })
+    //   setLSLocation(myLocation)
 
-      /// MAPS LOCAL STORAGE LAT LONG ARTWORKS TO REDUX STORE
-    } else if (
-      lSLocation.latitude !== undefined &&
-      lSLocation.latitude !== null
-    ) {
-      try {
-        await getMyLocationArt(lSLocation)
-        await getUserLocation(lSLocation)
-        this.setState({
-          viewport: {
-            latitude: this.props.location.latitude,
-            longitude: this.props.location.longitude,
-            width: '100vw',
-            height: '100vh',
-            zoom: 13
-          },
-          artworks: this.props.artNearMe
-        })
-      } catch (error) {
-        console.error('could not retrieve all artworks')
-      }
+    /// MAPS LOCAL STORAGE LAT LONG ARTWORKS TO REDUX STORE
+    // } else if (
+    //   lSLocation.latitude !== undefined &&
+    //   lSLocation.latitude !== null
+    // ) {
+    //   try {
+    // await getMyLocationArt(lSLocation)
+    // await getUserLocation(lSLocation)
+    //   this.setState({
+    //     viewport: {
+    //       latitude: this.props.location.latitude,
+    //       longitude: this.props.location.longitude,
+    //       width: '100vw',
+    //       height: '100vh',
+    //       zoom: 13
+    //     },
+    //     artworks: this.props.artNearMe
+    //   })
+    // } catch (error) {
+    //   console.error('could not retrieve all artworks')
+    // }
 
-      //IF THERE'S NO PROPS, OR LAT LONG IN LS STORAGE, WE GET ALL ARTWORKS
-    } else {
-      try {
-        await this.props.getAllArtWorks()
-      } catch (error) {
-        console.error('could not retrieve all artworks')
-      }
-      this.setState({
-        viewport: {
-          latitude: this.props.location.latitude,
-          longitude: this.props.location.longitude,
-          width: '100vw',
-          height: '100vh',
-          zoom: 12
-        },
-        artworks: this.props.allArtworks
-      })
+    //IF THERE'S NO PROPS, OR LAT LONG IN LS STORAGE, WE GET ALL ARTWORKS
+
+    try {
+      await this.props.getAllArtWorks()
+    } catch (error) {
+      console.error('could not retrieve all artworks')
     }
+
+    this.props.syncUserLocation() // Checking for a locally stored location
+    this.setState({
+      artworks: this.props.allArtworks,
+      viewport: {
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        width: '100vw',
+        height: '100vh',
+        zoom: 12
+      }
+    })
   }
 
   //THIS ADDS A REFERENCE TO THE MAPBOXGL COMPONENT, FOR THE GEOCODER
@@ -149,30 +150,25 @@ class MapView extends Component {
 
   /// THIS TAKES *ONRESULT* FROM GEOCODER COMPONENT IN RENDER, AND CALLS A THUNK W THE NEW SEARCH PROVIDED BY
   // GEOCODER. THEN SETS THE ARTWORKS AND VIEWPOER STUFF ON STATE
-  async handleNewSearch(result) {
+  handleNewSearch(result) {
     const newLocation = {
       latitude: result.result.center[1],
       longitude: result.result.center[0]
     }
-    setLSLocation(newLocation)
+    this.props.getUserLocation(newLocation)
+    // setLSLocation(newLocation)
 
-    try {
-      await this.props.getMyLocationArt(newLocation)
-      await this.props.getUserLocation(newLocation)
-    } catch (error) {
-      console.error('could not retrieve all artworks')
-    }
-    this.setState({
-      viewport: {
-        latitude: this.props.location.latitude,
-        longitude: this.props.location.longitude,
-        width: '100vw',
-        height: '100vh',
-        zoom: 13
-      },
-      artworks: this.props.artNearMe
-    })
-    this.handleGeocoderViewportChange(this.state.viewport)
+    // try {
+    //   await this.props.getMyLocationArt(newLocation)
+    //   await this.props.getUserLocation(newLocation)
+    // } catch (error) {
+    //   console.error('could not retrieve all artworks')
+    // }
+
+    // this.setState({
+    //   viewport: newLocation
+    // })
+    // this.handleGeocoderViewportChange(this.state.viewport)
   }
 
   openModal() {
@@ -303,7 +299,8 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getAllArtWorks: () => dispatch(fetchAllArtworks()),
   getMyLocationArt: location => dispatch(fetchArtFromMyLocation(location)),
-  getUserLocation: location => dispatch(setLocation(location))
+  getUserLocation: location => dispatch(setLocation(location)),
+  syncUserLocation: () => dispatch(syncLocation())
 })
 
 export default connect(mapState, mapDispatch)(MapView)

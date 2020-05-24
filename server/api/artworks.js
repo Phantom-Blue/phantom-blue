@@ -102,6 +102,10 @@ router.post('/', async (req, res, next) => {
       } = req.body
       let isVerified = false
 
+      if (!imageFile || !latitude || !longitude || !address) {
+        throw new Error('Location and image are required.')
+      }
+
       // *** Comment out the following if statement
       if (req.user.isVerified || req.user.isAdmin) {
         isVerified = true

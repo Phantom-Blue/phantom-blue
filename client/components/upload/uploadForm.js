@@ -23,7 +23,8 @@ export class UploadForm extends React.Component {
       latitude: null,
       longitude: null,
       address: null,
-      error: null
+      error: null,
+      posted: false
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -83,14 +84,6 @@ export class UploadForm extends React.Component {
     // }
 
     // ^ This is code for if we were handling image uploading on the front end. This reduces the amount of data passed through our express server, but also makes it possible to upload images to the cloudinary database without any security checks, so for now it will stay on the backend.
-    this.props.setLocation({
-      latitude: this.state.latitude,
-      longitude: this.state.longitude
-    })
-    setLSLocation({
-      latitude: this.state.latitude,
-      longitude: this.state.longitude
-    })
     const {
       artist,
       description,
@@ -100,15 +93,20 @@ export class UploadForm extends React.Component {
       longitude,
       address
     } = this.state
-    this.props.postArtwork({
-      artist,
-      description,
-      imageFile,
-      imageUrl,
-      latitude,
-      longitude,
-      address
-    })
+    try {
+      this.props.postArtwork({
+        artist,
+        description,
+        imageFile,
+        imageUrl,
+        latitude,
+        longitude,
+        address
+      })
+    } catch (err) {
+      this.setState({error: err})
+      return console.error(err)
+    }
   }
 
   handleFileRead(e) {
@@ -121,31 +119,28 @@ export class UploadForm extends React.Component {
     }
   }
 
-  async handleLocation() {
+  handleLocation() {
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
+      let bigThis = this
+      navigator.geolocation.getCurrentPosition(async function(position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
-        ls.set('latitude', latitude)
-        ls.set('longitude', longitude)
+
+        const geocoder = bigThis.state.geocoder
+
+        const response = await geocoder._geocode(`${latitude}, ${longitude}`)
+
+        const address = response.body.features[0].place_name
+
+        bigThis.setState({
+          latitude,
+          longitude,
+          address
+        })
       })
-      const lat = ls.get('latitude')
-      const long = ls.get('longitude')
-
-      const geocoder = this.state.geocoder
-
-      const response = await geocoder._geocode(`${lat}, ${long}`)
-      const address = response.body.features[0].place_name
-
-      console.log(lat, long)
-      this.setState({
-        latitude: lat,
-        longitude: long,
-        address
-      })
-      console.log(this.state)
     } else {
       console.log('Geolocation not available')
+      this.setState({error: 'Geolocation not available.'})
     }
   }
 
@@ -165,9 +160,10 @@ export class UploadForm extends React.Component {
       return 'Add an image.'
     } else if (this.state.error === 'Missing location information.') {
       return 'Add a location.'
+    } else if (this.state.error === 'Geolocation not available.') {
+      return 'Geolocation not available.'
     }
     // return 'Invalid Address'
-    console.log('No!')
     return 'Error.'
   }
 

@@ -23,6 +23,7 @@ import MapView from '../mapView/MapView'
 import ls from 'local-storage'
 import Loading from '../utils/Loading'
 import {setLSLocation, getLSLocation, generateUrl} from '../utils/utils'
+import history from '../../history'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -30,7 +31,8 @@ class MainHome extends React.Component {
     this.state = {
       location: false,
       longitude: 0,
-      latitude: 0
+      latitude: 0,
+      error: null
     }
     this.handleLocation = this.handleLocation.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
@@ -50,7 +52,7 @@ class MainHome extends React.Component {
     })
   }
 
-  async handleLocation(e) {
+  handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
 
     if ('geolocation' in navigator) {
@@ -59,22 +61,22 @@ class MainHome extends React.Component {
         const longitude = await position.coords.longitude
         const myLocation = {latitude, longitude}
         console.log('inside navigator location', myLocation)
-        setLSLocation(myLocation)
+        // setLSLocation(myLocation)
+        setUserLocation(myLocation)
 
         console.log('inside handle location', myLocation)
 
-        await getMyLocationArt(myLocation)
-        await setUserLocation(myLocation)
+        // await getMyLocationArt(myLocation)
+        // this.setState({
+        //   latitude: myLocation.latitude,
+        //   longitude: myLocation.longitude,
+        //   location: true,
+        //   error: null
+        // })
+        history.push('/map')
       })
 
-      const myLocation = getLSLocation()
-
-      this.setState({
-        latitude: myLocation.latitude,
-        longitude: myLocation.longitude,
-        location: true,
-        error: null
-      })
+      // const myLocation = getLSLocation()
     } else {
       console.log('Geolocation not available')
     }
@@ -89,11 +91,9 @@ class MainHome extends React.Component {
     const myLocation = {latitude, longitude}
 
     await getMyLocationArt(myLocation)
-    await setUserLocation(myLocation)
+    setUserLocation(myLocation)
 
-    this.setState({
-      location: true
-    })
+    history.push('/map')
 
     // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
     // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
@@ -119,7 +119,7 @@ class MainHome extends React.Component {
     const {latitude, longitude} = this.state
     const userLocation = {latitude, longitude}
 
-    return this.state.location === false && this.props.artworks ? (
+    return this.props.artworks ? (
       <div>
         <div className="search-section">
           <div className="search-label">
@@ -150,67 +150,60 @@ class MainHome extends React.Component {
             </div>
           </div>
         </div>
-        {this.props.artworks ? (
-          <div className="carousel-container">
-            <CarouselProvider
-              naturalSlideWidth={100}
-              naturalSlideHeight={170}
-              totalSlides={this.props.artworks.length}
-              touchEnabled
-              playDirection
-              currentSlide
-            >
-              <Slider className="carousel-details">
-                {this.props.artworks.map((artwork, i) => (
-                  <Slide index={i} key={artwork.id}>
-                    <div>
-                      <img
-                        id="carousel-arwork-img"
-                        src={artwork.imageUrl[0]}
-                        alt="artwork image"
-                      />
 
-                      <Link to={`/artwork/${artwork.id}`}>
-                        <h2 id="carousel-artist-name">{artwork.artist}</h2>
-                      </Link>
-                      <div>
-                        <p id="carousel-art-description">
-                          {artwork.description}
-                        </p>
-                      </div>
-                      <div>
-                        <a
-                          id="navegation-link"
-                          href={generateUrl(artwork.Location.address)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          TAKE ME THERE
-                        </a>
-                        <div className="carousel-btns">
-                          {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
-                          {this.props.artworks.length > 1 ? (
-                            <div>
-                              <ButtonBack id="previous-btn">&#8249;</ButtonBack>
-                              <ButtonNext id="forward-btn">&#8250;</ButtonNext>
-                            </div>
-                          ) : (
-                            ''
-                          )}
-                        </div>
+        <div className="carousel-container">
+          <CarouselProvider
+            naturalSlideWidth={100}
+            naturalSlideHeight={170}
+            totalSlides={this.props.artworks.length}
+            touchEnabled
+            playDirection
+            currentSlide
+          >
+            <Slider className="carousel-details">
+              {this.props.artworks.map((artwork, i) => (
+                <Slide index={i} key={artwork.id}>
+                  <div>
+                    <img
+                      id="carousel-arwork-img"
+                      src={artwork.imageUrl[0]}
+                      alt="artwork image"
+                    />
+
+                    <Link to={`/artwork/${artwork.id}`}>
+                      <h2 id="carousel-artist-name">{artwork.artist}</h2>
+                    </Link>
+                    <div>
+                      <p id="carousel-art-description">{artwork.description}</p>
+                    </div>
+                    <div>
+                      <a
+                        id="navegation-link"
+                        href={generateUrl(artwork.Location.address)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        TAKE ME THERE
+                      </a>
+                      <div className="carousel-btns">
+                        {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
+                        {this.props.artworks.length > 1 ? (
+                          <div>
+                            <ButtonBack id="previous-btn">&#8249;</ButtonBack>
+                            <ButtonNext id="forward-btn">&#8250;</ButtonNext>
+                          </div>
+                        ) : (
+                          ''
+                        )}
                       </div>
                     </div>
-                  </Slide>
-                ))}
-              </Slider>
-            </CarouselProvider>
-          </div>
-        ) : (
-          <Loading />
-        )}
+                  </div>
+                </Slide>
+              ))}
+            </Slider>
+          </CarouselProvider>
+        </div>
       </div>
-    ) : this.props.artNearMe[0] ? (
-      <Redirect to="/map" />
     ) : (
       // <MapView artToMapFromMain={this.props.artNearMe} />
       <Loading />
