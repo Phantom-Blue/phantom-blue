@@ -38,6 +38,26 @@ router.post('/tileset', async (req, res, next) => {
   }
 })
 
+router.delete('/tileset/:id', async (req, res, next) => {
+  try {
+    console.log('ID ', req.params.id)
+    const artwork = await Artwork.findByPk(req.params.id)
+    const id = artwork.LocationId
+    const works = await Artwork.findAll({where: {LocationId: id}})
+    console.log(works)
+    if (works.length < 2) {
+      await axios.delete(
+        `https://api.mapbox.com/datasets/v1/mstykmshy/ckaejyuag0g6u22pnkxura0z0/features/${id}?access_token=${
+          process.env.MAPBOX_DATA_KEY
+        }`
+      )
+    }
+    res.send('ok')
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:lat', async (req, res, next) => {
   // TODO: Route working fine, but consider refactoring for consistency/readability later.
 

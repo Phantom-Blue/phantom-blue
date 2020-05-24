@@ -14,7 +14,6 @@ router.get('/', async (req, res, next) => {
     const artworks = await Artwork.findAll({
       include: Location
     })
-    console.log(req)
     res.json(artworks)
   } catch (err) {
     next(err)
@@ -113,7 +112,7 @@ router.post('/', async (req, res, next) => {
 
       if (latitude && longitude && address && imageFile) {
         await cloudinary.v2.uploader.upload(imageFile, function(error, result) {
-          console.log(result, error)
+          console.log(error)
           imageUrl = result.secure_url
         })
 

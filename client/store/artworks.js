@@ -186,10 +186,12 @@ export const fetchAllVerified = () => async dispatch => {
 
 export const removeArtwork = artworkId => async dispatch => {
   try {
+    // Comment in below for remote dataset integration vvv
+    // await axios.delete(`/api/locations/tileset/${artworkId}`)
     await axios.delete(`/api/artworks/${artworkId}`)
     dispatch(deletedArtwork(artworkId))
   } catch (error) {
-    console.error(error)
+    return console.error(error)
   }
 }
 
@@ -217,6 +219,7 @@ export const postArtwork = newArt => async dispatch => {
   try {
     dispatch(postedArtwork(res.data))
     storeLocation({latitude: newArt.latitude, longitude: newArt.longitude})
+    // Comment in below for remote dataset integration vvv
     // await axios.post('/api/locations/tileset', {id: res.data.LocationId})
     history.push('/map')
   } catch (error) {
