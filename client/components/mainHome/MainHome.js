@@ -30,7 +30,8 @@ class MainHome extends React.Component {
       location: false,
       longitude: 0,
       latitude: 0,
-      error: null
+      error: null,
+      loading: false
     }
     this.handleLocation = this.handleLocation.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
@@ -53,6 +54,7 @@ class MainHome extends React.Component {
   handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
     console.log('BEFORE IF handle location', getLSLocation())
+    this.setState({loading: true})
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async function(position) {
@@ -120,93 +122,99 @@ class MainHome extends React.Component {
     const {latitude, longitude} = this.state
     const userLocation = {latitude, longitude}
 
-    return this.props.artworks ? (
-      <div>
-        <div className="search-section">
-          <div className="search-label">
-            <p id="address-ad">TO FIND STREET ART NEAR YOU,</p>
-            <h4 id="address-prompt">ENTER YOU ADDRESS:</h4>
-          </div>
-          <div className="search-box-submit">
-            <div id="geocoder" />
-            <button
-              id="submit-search-btn"
-              type="submit"
-              className="submit"
-              onClick={e => {
-                this.handleSubmit(e)
-              }}
-            >
-              Submit
-            </button>
-            <div className="share-location-section">
+    return !this.state.loading ? (
+      this.props.artworks ? (
+        <div>
+          <div className="search-section">
+            <div className="search-label">
+              <p id="address-ad">TO FIND STREET ART NEAR YOU,</p>
+              <h4 id="address-prompt">ENTER YOU ADDRESS:</h4>
+            </div>
+            <div className="search-box-submit">
+              <div id="geocoder" />
               <button
-                id="share-location-btn"
+                id="submit-search-btn"
                 type="submit"
-                className="share-location"
-                onClick={e => this.handleLocation(e)}
+                className="submit"
+                onClick={e => {
+                  this.handleSubmit(e)
+                }}
               >
-                or use your current location
+                Submit
               </button>
+              <div className="share-location-section">
+                <button
+                  id="share-location-btn"
+                  type="submit"
+                  className="share-location"
+                  onClick={e => this.handleLocation(e)}
+                >
+                  or use your current location
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="carousel-container">
-          <CarouselProvider
-            naturalSlideWidth={100}
-            naturalSlideHeight={170}
-            totalSlides={this.props.artworks.length}
-            touchEnabled
-            playDirection
-            currentSlide
-          >
-            <Slider className="carousel-details">
-              {this.props.artworks.map((artwork, i) => (
-                <Slide index={i} key={artwork.id}>
-                  <div>
-                    <img
-                      id="carousel-arwork-img"
-                      src={artwork.imageUrl[0]}
-                      alt="artwork image"
-                    />
+          <div className="carousel-container">
+            <CarouselProvider
+              naturalSlideWidth={100}
+              naturalSlideHeight={170}
+              totalSlides={this.props.artworks.length}
+              touchEnabled
+              playDirection
+              currentSlide
+            >
+              <Slider className="carousel-details">
+                {this.props.artworks.map((artwork, i) => (
+                  <Slide index={i} key={artwork.id}>
+                    <div>
+                      <img
+                        id="carousel-arwork-img"
+                        src={artwork.imageUrl[0]}
+                        alt="artwork image"
+                      />
 
-                    <Link to={`/artwork/${artwork.id}`}>
-                      <h2 id="carousel-artist-name">{artwork.artist}</h2>
-                    </Link>
-                    <div>
-                      <p id="carousel-art-description">{artwork.description}</p>
-                    </div>
-                    <div>
-                      <a
-                        id="navegation-link"
-                        href={generateUrl(artwork.Location.address)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        TAKE ME THERE
-                      </a>
-                      <div className="carousel-btns">
-                        {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
-                        {this.props.artworks.length > 1 ? (
-                          <div>
-                            <ButtonBack id="previous-btn">&#8249;</ButtonBack>
-                            <ButtonNext id="forward-btn">&#8250;</ButtonNext>
-                          </div>
-                        ) : (
-                          ''
-                        )}
+                      <Link to={`/artwork/${artwork.id}`}>
+                        <h2 id="carousel-artist-name">{artwork.artist}</h2>
+                      </Link>
+                      <div>
+                        <p id="carousel-art-description">
+                          {artwork.description}
+                        </p>
+                      </div>
+                      <div>
+                        <a
+                          id="navegation-link"
+                          href={generateUrl(artwork.Location.address)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          TAKE ME THERE
+                        </a>
+                        <div className="carousel-btns">
+                          {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
+                          {this.props.artworks.length > 1 ? (
+                            <div>
+                              <ButtonBack id="previous-btn">&#8249;</ButtonBack>
+                              <ButtonNext id="forward-btn">&#8250;</ButtonNext>
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Slide>
-              ))}
-            </Slider>
-          </CarouselProvider>
+                  </Slide>
+                ))}
+              </Slider>
+            </CarouselProvider>
+          </div>
         </div>
-      </div>
+      ) : (
+        // <MapView artToMapFromMain={this.props.artNearMe} />
+        <Loading />
+      )
     ) : (
-      // <MapView artToMapFromMain={this.props.artNearMe} />
       <Loading />
     )
   }
