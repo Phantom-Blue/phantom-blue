@@ -30,6 +30,7 @@ class LocationArtwork extends React.Component {
               naturalSlideWidth={100}
               naturalSlideHeight={125}
               totalSlides={this.props.artworks.length}
+              infinite={true}
             >
               <div>
                 <Slider id="carousel">
@@ -58,13 +59,19 @@ class LocationArtwork extends React.Component {
                           >
                             <h4>TAKE ME THERE</h4>
                           </a> */}
-                          <ButtonBack>Back</ButtonBack>
-                          <ButtonNext>Next</ButtonNext>
                         </div>
                       </center>
                     </Slide>
                   ))}
                 </Slider>
+              </div>
+              <div id="nav-buttons">
+                <ButtonBack>
+                  <img className="arrow" src="/back_arrow.jpeg" />
+                </ButtonBack>
+                <ButtonNext>
+                  <img className="arrow" src="/forward_arrow.jpeg" />
+                </ButtonNext>
               </div>
             </CarouselProvider>
           </div>
