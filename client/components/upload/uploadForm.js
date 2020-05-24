@@ -17,7 +17,6 @@ export class UploadForm extends React.Component {
       artist: '',
       description: '',
       imageFile: null,
-      imageUrl: null,
       latitude: null,
       longitude: null,
       address: null,
@@ -68,34 +67,21 @@ export class UploadForm extends React.Component {
   }
 
   // eslint-disable-next-line complexity
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault()
+    const {artist, description, latitude, longitude, address} = this.state
 
-    // if (this.state.longitude && this.state.latitude && this.state.address && this.state.imageFile){
-    //   const sendFile = async function(fileData) {
-    //     const file = await axios.post(`https://api.cloudinary.com/v1_1/pentimento/upload`, {file: this.state.imageFile, upload_preset:      'ea0bwcdh'})
-    //     return file.data.secure_url
-    //   }
-    //   const imageUrl = await this.sendFile(this.state.imageFile)
-    //   this.setState({imageUrl: imageUrl})
-    //
-    // }
+    if (!latitude || !longitude || !address || !this.state.imageFile) {
+      this.setState({error: 'Enter all required fields.'})
+      return
+    }
 
-    // ^ This is code for if we were handling image uploading on the front end. This reduces the amount of data passed through our express server, but also makes it possible to upload images to the cloudinary database without any security checks, so for now it will stay on the backend.
-    const {
-      artist,
-      description,
-      imageFile,
-      imageUrl,
-      latitude,
-      longitude,
-      address
-    } = this.state
+    const imageUrl = await this.sendFile()
+
     try {
       this.props.postArtwork({
         artist,
         description,
-        imageFile,
         imageUrl,
         latitude,
         longitude,
@@ -148,7 +134,6 @@ export class UploadForm extends React.Component {
       `https://api.cloudinary.com/v1_1/pentimento/upload`,
       {file: this.state.imageFile, upload_preset: 'ea0bwcdh'}
     )
-    console.log(file.data.secure_url)
     return file.data.secure_url
   }
 
@@ -161,8 +146,9 @@ export class UploadForm extends React.Component {
       return 'Add a location.'
     } else if (this.state.error === 'Geolocation not available.') {
       return 'Geolocation not available.'
+    } else if (this.state.error === 'Enter all required fields') {
+      return 'Enter all required fields'
     }
-    // return 'Invalid Address'
     return 'Error.'
   }
 

@@ -96,12 +96,12 @@ router.post('/', async (req, res, next) => {
         latitude,
         longitude,
         address,
-        imageUrl,
-        imageFile
+        imageUrl
+        // imageFile
       } = req.body
       let isVerified = false
 
-      if (!imageFile || !latitude || !longitude || !address) {
+      if (!imageUrl || !latitude || !longitude || !address) {
         throw new Error('Location and image are required.')
       }
 
@@ -110,8 +110,8 @@ router.post('/', async (req, res, next) => {
         isVerified = true
       }
 
-      if (latitude && longitude && address && imageFile) {
-        await cloudinary.v2.uploader.upload(imageFile, function(error, result) {
+      if (latitude && longitude && address && imageUrl) {
+        await cloudinary.v2.uploader.upload(imageUrl, function(error, result) {
           console.log(error)
           imageUrl = result.secure_url
         })
