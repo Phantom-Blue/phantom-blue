@@ -8,6 +8,7 @@ import axios from 'axios'
 import '../../../secrets'
 import {setLocation} from '../../store/location'
 import BackButton from '../utils/BackButton'
+import Loading from '../utils/Loading'
 
 export class UploadForm extends React.Component {
   constructor(props) {
@@ -20,7 +21,10 @@ export class UploadForm extends React.Component {
       latitude: null,
       longitude: null,
       address: null,
-      error: null
+      error: null,
+      loading: false,
+      locationLoading: false,
+      geocoder: null
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -75,9 +79,8 @@ export class UploadForm extends React.Component {
       this.setState({error: 'Enter all required fields.'})
       return
     }
-
+    this.setState({loading: true})
     const imageUrl = await this.sendFile()
-
     try {
       this.props.postArtwork({
         artist,
@@ -106,6 +109,7 @@ export class UploadForm extends React.Component {
   handleLocation() {
     if ('geolocation' in navigator) {
       let bigThis = this
+      this.setState({locationLoading: true})
       navigator.geolocation.getCurrentPosition(async function(position) {
         const latitude = position.coords.latitude
         const longitude = position.coords.longitude
@@ -119,7 +123,8 @@ export class UploadForm extends React.Component {
         bigThis.setState({
           latitude,
           longitude,
-          address
+          address,
+          locationLoading: false
         })
         bigThis.state.geocoder._inputEl.value = address
       })
@@ -156,7 +161,7 @@ export class UploadForm extends React.Component {
     const handleChange = this.handleChange
     const handleSubmit = this.handleSubmit
     const handleLocation = this.handleLocation
-    return (
+    return !this.state.loading ? (
       <div className="upload-artwork-container">
         <form>
           <h1>Upload Artwork</h1>
@@ -199,10 +204,14 @@ export class UploadForm extends React.Component {
             )}
           </div>
           <div id="geocoder" />
-          <button type="button" onClick={handleLocation}>
-            {' '}
-            Use my location{' '}
-          </button>
+          {!this.state.locationLoading ? (
+            <button type="button" onClick={handleLocation}>
+              {' '}
+              Use my location{' '}
+            </button>
+          ) : (
+            'Fetching location...'
+          )}
           <div>
             <button
               id="upload-btn"
@@ -218,6 +227,8 @@ export class UploadForm extends React.Component {
         </form>
         <div>{this.props.error ? <p>{this.errorMessage()}</p> : ''}</div>
       </div>
+    ) : (
+      <Loading />
     )
   }
 }
