@@ -58,58 +58,6 @@ class MapView extends Component {
   // OTHERWISE TAKES CARE OF CHECKING THE LOCAL STORAGE FOR A LEFTOVER USER LOCATION, AND CALLS A LOCATION THUNK, IF FOUND
   // IF NO INFORMATION IS AVAILABLE, IT CALLS A THUNK TO RECEIVE ALL ARTWORKS
   async componentDidMount() {
-    // const lSLocation = getLSLocation()
-    // const {getMyLocationArt, getUserLocation} = this.props
-    // const myLocation = {
-    //   latitude: this.props.location.latitude,
-    //   longitude: this.props.location.longitude
-    // }
-    // this.setState({
-    //   viewport: {
-    //     latitude: this.props.location.latitude,
-    //     longitude: this.props.location.longitude,
-    //     width: '100vw',
-    //     height: '100vh',
-    //     zoom: 13
-    //   }
-    // })
-
-    /// ARTWORKS FROM OTHER COMPONENT PROPS
-    // if (this.props.artNearMe) {
-    //   this.setState({
-    //     viewport: {
-    //       latitude: this.props.location.latitude,
-    //       longitude: this.props.location.longitude,
-    //       width: '100vw',
-    //       height: '100vh',
-    //       zoom: 13
-    //     },
-    //     artworks: this.props.artNearMe
-    //   })
-    //   setLSLocation(myLocation)
-
-    /// MAPS LOCAL STORAGE LAT LONG ARTWORKS TO REDUX STORE
-    // } else if (
-    //   lSLocation.latitude !== undefined &&
-    //   lSLocation.latitude !== null
-    // ) {
-    //   try {
-    // await getMyLocationArt(lSLocation)
-    // await getUserLocation(lSLocation)
-    //   this.setState({
-    //     viewport: {
-    //       latitude: this.props.location.latitude,
-    //       longitude: this.props.location.longitude,
-    //       width: '100vw',
-    //       height: '100vh',
-    //       zoom: 13
-    //     },
-    //     artworks: this.props.artNearMe
-    //   })
-    // } catch (error) {
-    //   console.error('could not retrieve all artworks')
-    // }
-
     //IF THERE'S NO PROPS, OR LAT LONG IN LS STORAGE, WE GET ALL ARTWORKS
 
     try {
@@ -161,19 +109,6 @@ class MapView extends Component {
       longitude: result.result.center[0]
     }
     this.props.getUserLocation(newLocation)
-    // setLSLocation(newLocation)
-
-    // try {
-    //   await this.props.getMyLocationArt(newLocation)
-    //   await this.props.getUserLocation(newLocation)
-    // } catch (error) {
-    //   console.error('could not retrieve all artworks')
-    // }
-
-    // this.setState({
-    //   viewport: newLocation
-    // })
-    // this.handleGeocoderViewportChange(this.state.viewport)
   }
 
   openModal() {

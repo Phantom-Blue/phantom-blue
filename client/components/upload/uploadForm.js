@@ -23,8 +23,7 @@ export class UploadForm extends React.Component {
       latitude: null,
       longitude: null,
       address: null,
-      error: null,
-      posted: false
+      error: null
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -55,7 +54,8 @@ export class UploadForm extends React.Component {
     var geocoder = new MapboxGeocoder({
       accessToken: process.env.REACT_APP_MAPBOX_KEY,
       types: 'address',
-      reverseGeocode: true
+      reverseGeocode: true,
+      placeholder: 'Address'
     })
     geocoder.addTo('#geocoder')
 
@@ -137,6 +137,7 @@ export class UploadForm extends React.Component {
           longitude,
           address
         })
+        bigThis.state.geocoder._inputEl.value = address
       })
     } else {
       console.log('Geolocation not available')
@@ -207,6 +208,11 @@ export class UploadForm extends React.Component {
             <label htmlFor="file" className="file-label">
               Upload Photo
             </label>
+            {this.state.imageFile ? (
+              <img src={this.state.imageFile} className="currentImg" />
+            ) : (
+              ''
+            )}
           </div>
           <div id="geocoder" />
           <button type="button" onClick={handleLocation}>
