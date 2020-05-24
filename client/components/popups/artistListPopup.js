@@ -23,7 +23,7 @@ const artistListPopup = props => {
         }
         modal
         closeOnDocumentClick
-        contentStyle={innerWidth < 768 ? mobileAllArtworksStyle : ''}
+        contentStyle={innerWidth < 768 ? mobileAllArtworksStyle : {}}
       >
         {close => (
           <div className="modal">
