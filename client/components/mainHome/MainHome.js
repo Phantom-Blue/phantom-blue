@@ -62,6 +62,7 @@ class MainHome extends React.Component {
         console.log('inside navigator location', myLocation)
         // setLSLocation(myLocation)
         setUserLocation(myLocation)
+        await getMyLocationArt(myLocation)
 
         console.log('inside handle location', myLocation)
 

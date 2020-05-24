@@ -67,11 +67,13 @@ class MapView extends Component {
     }
 
     this.props.syncUserLocation() // Checking for a locally stored location
+    const {latitude, longitude} = this.props.location
+    this.props.getMyLocationArt({latitude, longitude})
     this.setState({
       artworks: this.props.allArtworks,
       viewport: {
-        latitude: this.props.location.latitude,
-        longitude: this.props.location.longitude,
+        latitude,
+        longitude,
         width: '100vw',
         height: '100vh',
         zoom: 12
@@ -103,12 +105,13 @@ class MapView extends Component {
 
   /// THIS TAKES *ONRESULT* FROM GEOCODER COMPONENT IN RENDER, AND CALLS A THUNK W THE NEW SEARCH PROVIDED BY
   // GEOCODER. THEN SETS THE ARTWORKS AND VIEWPOER STUFF ON STATE
-  handleNewSearch(result) {
+  async handleNewSearch(result) {
     const newLocation = {
       latitude: result.result.center[1],
       longitude: result.result.center[0]
     }
     this.props.getUserLocation(newLocation)
+    await this.props.getMyLocationArt(newLocation)
   }
 
   openModal() {
