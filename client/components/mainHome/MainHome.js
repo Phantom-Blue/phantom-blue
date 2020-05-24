@@ -163,6 +163,7 @@ class MainHome extends React.Component {
               touchEnabled
               playDirection
               currentSlide
+              infinite={true}
             >
               <Slider className="carousel-details">
                 {this.props.artworks.map((artwork, i) => (
