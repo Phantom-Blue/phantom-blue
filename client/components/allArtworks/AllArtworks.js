@@ -11,12 +11,12 @@ export class AllArtWorks extends Component {
   }
 
   render() {
-    const {allArtWorks} = this.props
+    const {art} = this.props
     return (
       <div className="all-artworks-container">
         <div>
-          {allArtWorks ? (
-            allArtWorks.map(artwork => {
+          {art ? (
+            art.map(artwork => {
               return (
                 <div className="artwork-container" key={artwork.id}>
                   <Link to={`/artwork/${artwork.id}`}>

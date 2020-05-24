@@ -7,7 +7,7 @@ import {mobileAllArtworksStyle} from './style/popupStyle'
 import './style/artistListPopup.css'
 import {windowCheck} from '../utils/utils'
 
-const artistListPopup = () => {
+const artistListPopup = props => {
   const window = windowCheck()
   const innerWidth = window.innerWidth
 
@@ -31,7 +31,7 @@ const artistListPopup = () => {
               &times;
             </a>
             <div className="content">
-              <AllArtworks />
+              <AllArtworks art={props.art} />
             </div>
           </div>
         )}

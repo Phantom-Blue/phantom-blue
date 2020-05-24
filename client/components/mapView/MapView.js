@@ -47,7 +47,8 @@ class MapView extends Component {
       /// SET A LOCAL STATE FOR ARTWORKS TO BE MAPPED IN RENDER.
       //ALL ARTWORK THUNKS CAN DEPOSIT ART IN HERE, AND OVERRIDE EACH OTHER
       // DEPENDING ON USER ACTION, ONLY ONE GROUP OF ARTWORKS GETS MAPPED AT A TIME
-      artworks: []
+      artworks: [],
+      location: false
     }
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
@@ -124,9 +125,20 @@ class MapView extends Component {
   render() {
     const window = windowCheck()
     const innerWidth = window.innerWidth
+    const renderedArt = this.state.location
+      ? this.props.artNearMe
+      : this.props.allArtworks
 
     return (
       <div className="map-container">
+        <label htmlFor="location">Only show art near me?</label>
+        <input
+          name="location"
+          type="checkbox"
+          onClick={() => {
+            this.setState({location: !this.state.location})
+          }}
+        />
         <ReactMapGl
           ref={this.mapRef}
           {...this.state.viewport}
@@ -147,8 +159,8 @@ class MapView extends Component {
           />
 
           {/* WE NOW MAP THROUGH OUR STATE TO MAKE THE MARKERS, THE STATE WILL CHANGE FREQUENTLY W NEW SEARCHES AND PASSED PROPS */}
-          {this.state.artworks[0]
-            ? this.state.artworks.map(artwork => (
+          {renderedArt[0]
+            ? renderedArt.map(artwork => (
                 <Marker
                   key={artwork.id}
                   latitude={Number(artwork.Location.latitude)}
@@ -225,7 +237,7 @@ class MapView extends Component {
           )}
         </ReactMapGl>
         {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
-        <ArtistListPopup />
+        <ArtistListPopup art={renderedArt} />
       </div>
     )
   }
