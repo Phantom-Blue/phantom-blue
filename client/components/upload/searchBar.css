@@ -351,3 +351,8 @@ input::placeholder,
     padding: 20px 100px;
   }
 }
+
+.currentImg {
+  height: 300px;
+  max-width: 100%;
+}

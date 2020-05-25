@@ -17,9 +17,25 @@
   position: relative;
   background-color: #fff;
   width: 100%;
-  /* padding-left: 20px; */
   min-width: 240px;
   z-index: 1;
+  top: 50px;
+  border-radius: 6px;
+  transition: width 0.25s, min-width 0.25s;
+}
+
+#geocoder .mapboxgl-ctrl-geocoder {
+  display: flex;
+  align-content: center;
+  font-size: 18px;
+  line-height: 24px;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  min-width: 240px;
+  z-index: 1;
+  top: 0px;
   border-radius: 6px;
   transition: width 0.25s, min-width 0.25s;
 }
@@ -51,7 +67,7 @@
   height: 50px;
   /* color: PURPLE; fallback */
   /* color: purple; */
-  padding: 20px;
+  /* padding: 20px; */
   /* padding: 6px 45px; */
   text-overflow: ellipsis;
   white-space: nowrap;
