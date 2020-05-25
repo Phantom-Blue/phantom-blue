@@ -71,6 +71,7 @@
 }
 
 #carousel-arwork-img {
+  /* position: absolute; */
   width: 100%;
   object-fit: cover;
   max-width: 600px;
