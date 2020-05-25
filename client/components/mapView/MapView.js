@@ -209,7 +209,7 @@ class MapView extends Component {
           ref={this.mapRef}
           {...this.state.viewport}
           mapboxApiAccessToken="pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg"
-          mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
+          mapStyle="mapbox://styles/chromaticblack/ckamv80kv248t1ipgo4jp5y5k"
           onViewportChange={newport => {
             this.setState({viewport: newport})
           }}
