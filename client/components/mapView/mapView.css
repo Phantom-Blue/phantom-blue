@@ -100,3 +100,8 @@
   outline: none;
   background: none;
 }
+
+a {
+  color: rgb(58, 58, 58);
+  text-decoration: underline;
+}
