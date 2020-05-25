@@ -208,7 +208,7 @@ class MapView extends Component {
         <ReactMapGl
           ref={this.mapRef}
           {...this.state.viewport}
-          mapboxApiAccessToken={mapboxKey}
+          mapboxApiAccessToken="pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg"
           mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
           onViewportChange={newport => {
             this.setState({viewport: newport})
@@ -217,7 +217,7 @@ class MapView extends Component {
           {/* GEOCODER GOES INSIDE REACTMAPGL, CAN REMOVE INLINE STYLING AND ADD OTHER METHODS */}
           <Geocoder
             mapRef={this.mapRef}
-            mapboxApiAccessToken={mapboxKey}
+            mapboxApiAccessToken="pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg"
             onViewportChange={this.handleGeocoderViewportChange}
             position="top-right"
             onResult={result => this.handleNewSearch(result)}

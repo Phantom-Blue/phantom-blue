@@ -44,7 +44,8 @@ class MainHome extends React.Component {
     this.props.getVerifiedArtwork()
 
     var geocoder = new MapboxGeocoder({
-      accessToken: mapboxKey,
+      accessToken:
+        'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg',
       types: 'country,region,place,locality,neighborhood, address'
     })
     geocoder.addTo('#geocoder')
