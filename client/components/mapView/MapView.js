@@ -32,7 +32,7 @@ import Loading from '../utils/Loading'
 // import {Loading, getAccessToken} from '../utils'
 
 const mapboxKey =
-  'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg'
+  'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg'
 
 class MapView extends Component {
   constructor(props) {
@@ -208,7 +208,7 @@ class MapView extends Component {
         <ReactMapGl
           ref={this.mapRef}
           {...this.state.viewport}
-          mapboxApiAccessToken="pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg"
+          mapboxApiAccessToken="pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg"
           mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
           onViewportChange={newport => {
             this.setState({viewport: newport})
@@ -217,7 +217,7 @@ class MapView extends Component {
           {/* GEOCODER GOES INSIDE REACTMAPGL, CAN REMOVE INLINE STYLING AND ADD OTHER METHODS */}
           <Geocoder
             mapRef={this.mapRef}
-            mapboxApiAccessToken="pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg"
+            mapboxApiAccessToken="pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg"
             onViewportChange={this.handleGeocoderViewportChange}
             position="top-right"
             onResult={result => this.handleNewSearch(result)}

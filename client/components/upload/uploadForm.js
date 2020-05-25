@@ -56,7 +56,7 @@ export class UploadForm extends React.Component {
   componentDidMount() {
     var geocoder = new MapboxGeocoder({
       accessToken:
-        'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg',
+        'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg',
       types: 'address',
       reverseGeocode: true
     })

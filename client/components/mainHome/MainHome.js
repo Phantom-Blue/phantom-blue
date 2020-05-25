@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
 import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
 import {setLocation} from '../../store/location'
+import Popup from 'reactjs-popup'
 import {
   CarouselProvider,
   Slider,
@@ -25,7 +26,7 @@ import Loading from '../utils/Loading'
 import {setLSLocation, getLSLocation, generateUrl} from '../utils/utils'
 
 const mapboxKey =
-  'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg'
+  'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class MainHome extends React.Component {
 
     var geocoder = new MapboxGeocoder({
       accessToken:
-        'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg',
+        'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg',
       types: 'country,region,place,locality,neighborhood, address'
     })
     geocoder.addTo('#geocoder')
@@ -218,7 +219,12 @@ class MainHome extends React.Component {
       <Redirect to="/map" />
     ) : (
       // <MapView artToMapFromMain={this.props.artNearMe} />
-      <Loading />
+      <Popup>
+        <p className="share-loction-alert">
+          {' '}
+          In order to use this feature, you must enable location sharing{' '}
+        </p>
+      </Popup>
     )
   }
 }
