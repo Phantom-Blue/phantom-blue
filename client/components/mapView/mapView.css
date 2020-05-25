@@ -10,13 +10,13 @@
 
 #navegation-control {
   position: absolute;
-  top: 50px;
+  top: 70px;
   margin: 20px;
 }
 #fullscreen-control {
   position: absolute;
   margin: 20px;
-  top: 150px;
+  top: 170px;
 }
 .artwork-list-outer-container .see-all-artworks-link-container {
   width: 100vw;

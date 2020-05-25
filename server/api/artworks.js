@@ -97,8 +97,7 @@ router.post('/', async (req, res, next) => {
         latitude,
         longitude,
         address,
-        imageUrl,
-        imageFile
+        imageUrl
       } = req.body
       let isVerified = false
 
@@ -107,12 +106,7 @@ router.post('/', async (req, res, next) => {
         isVerified = true
       }
 
-      if (latitude && longitude && address && imageFile) {
-        await cloudinary.v2.uploader.upload(imageFile, function(error, result) {
-          console.log(result, error)
-          imageUrl = result.secure_url
-        })
-
+      if (latitude && longitude && address && imageUrl) {
         const location = await Location.findOrCreate({
           where: {
             latitude,

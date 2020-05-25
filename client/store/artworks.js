@@ -5,6 +5,7 @@
 import axios from 'axios'
 import history from '../history'
 import '../../secrets'
+import {setLSLocation} from '../components/utils/utils'
 
 // A C T I O N   C R E A T O R S //
 const GET_ART_BY_LOCATION = 'GET_ART_BY_LOCATION'
@@ -204,9 +205,6 @@ export const addTagsToDB = (artworkId, tag) => async dispatch => {
 export const postArtwork = newArt => async dispatch => {
   let res
   try {
-    if (newArt.error) {
-      return dispatch(passError(newArt.error))
-    }
     res = await axios.post('/api/artworks', newArt)
   } catch (error) {
     console.error('Unable to post artwork.')
@@ -214,6 +212,7 @@ export const postArtwork = newArt => async dispatch => {
   }
 
   try {
+    setLSLocation({latitude: newArt.latitude, longitude: newArt.longitude})
     dispatch(postedArtwork(res.data))
     // await axios.post('/api/locations/tileset', {id: res.data.LocationId})
     history.push('/map')

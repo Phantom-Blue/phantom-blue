@@ -64,6 +64,10 @@ class MapView extends Component {
     const lSLocation = getLSLocation()
     const {getMyLocationArt, getUserLocation} = this.props
 
+    if (lSLocation) {
+      await getMyLocationArt(lSLocation)
+    }
+
     const myLocation = {
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude
