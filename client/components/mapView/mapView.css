@@ -101,7 +101,7 @@
   background: none;
 }
 
-a {
+.cheekyLink {
   color: rgb(58, 58, 58);
   text-decoration: underline;
 }

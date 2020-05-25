@@ -274,6 +274,7 @@ class MapView extends Component {
                   href="https://www.homedepot.com/b/Paint-Spray-Paint/N-5yc1vZapz5"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="cheekyLink"
                 >
                   Seems like there's not much art around here..
                 </a>
