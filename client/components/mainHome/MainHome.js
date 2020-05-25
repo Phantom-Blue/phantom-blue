@@ -24,6 +24,9 @@ import ls from 'local-storage'
 import Loading from '../utils/Loading'
 import {setLSLocation, getLSLocation, generateUrl} from '../utils/utils'
 
+const mapboxKey =
+  'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg'
+
 class MainHome extends React.Component {
   constructor(props) {
     super(props)
@@ -41,7 +44,7 @@ class MainHome extends React.Component {
     this.props.getVerifiedArtwork()
 
     var geocoder = new MapboxGeocoder({
-      accessToken: process.env.REACT_APP_MAPBOX_KEY,
+      accessToken: mapboxKey,
       types: 'country,region,place,locality,neighborhood, address'
     })
     geocoder.addTo('#geocoder')

@@ -31,6 +31,9 @@ import {getLSLocation, setLSLocation, windowCheck} from '../utils/utils'
 import Loading from '../utils/Loading'
 // import {Loading, getAccessToken} from '../utils'
 
+const mapboxKey =
+  'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg'
+
 class MapView extends Component {
   constructor(props) {
     super(props)
@@ -205,7 +208,7 @@ class MapView extends Component {
         <ReactMapGl
           ref={this.mapRef}
           {...this.state.viewport}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
+          mapboxApiAccessToken={mapboxKey}
           mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
           onViewportChange={newport => {
             this.setState({viewport: newport})
@@ -214,7 +217,7 @@ class MapView extends Component {
           {/* GEOCODER GOES INSIDE REACTMAPGL, CAN REMOVE INLINE STYLING AND ADD OTHER METHODS */}
           <Geocoder
             mapRef={this.mapRef}
-            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
+            mapboxApiAccessToken={mapboxKey}
             onViewportChange={this.handleGeocoderViewportChange}
             position="top-right"
             onResult={result => this.handleNewSearch(result)}
