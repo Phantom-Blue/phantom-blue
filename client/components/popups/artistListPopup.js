@@ -1,9 +1,12 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Popup from 'reactjs-popup'
 import AllArtworks from '../allArtworks/AllArtworks'
 import {Link} from 'react-router-dom'
 // customize popup style
-import {mobileAllArtworksStyle} from './style/popupStyle'
+import {
+  viewAsAListPopupMobile,
+  viewAsAListPopupDesktop
+} from './style/popupStyle'
 import './style/artistListPopup.css'
 import {windowCheck} from '../utils/utils'
 
@@ -14,6 +17,7 @@ const artistListPopup = () => {
   return (
     <div className="artwork-list-outer-container">
       <Popup
+        className="popup-contaner"
         trigger={
           <div className="see-all-artworks-link-container">
             <Link to="/map" id="link-to-all-artworks">
@@ -23,20 +27,21 @@ const artistListPopup = () => {
         }
         modal
         closeOnDocumentClick
-        contentStyle={innerWidth < 768 ? mobileAllArtworksStyle : ''}
+        contentStyle={
+          innerWidth < 768 ? viewAsAListPopupMobile : viewAsAListPopupDesktop
+        }
       >
         {close => (
-          <div className="modal">
+          <div className="custome-modal">
             <a className="close" onClick={close}>
               &times;
             </a>
-            <div className="content">
-              <AllArtworks />
-            </div>
+            <AllArtworks />
           </div>
         )}
       </Popup>
     </div>
   )
 }
+
 export default artistListPopup

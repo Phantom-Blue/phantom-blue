@@ -30,12 +30,16 @@ export const mapPopupDesktopStyle = {
   padding: '20px'
 }
 
-export const mobileAllArtworksStyle = {
+export const viewAsAListPopupDesktop = {
+  width: '50%',
+  border: 'none',
+  borderRadius: '5px',
+  paddingTop: '20px'
+}
+
+export const viewAsAListPopupMobile = {
   width: '100%',
   height: '100vh',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
   opacity: '.9',
   overflowY: 'scroll',
   zIndex: '10'
