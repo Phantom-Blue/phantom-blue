@@ -11,6 +11,9 @@ import {setLocation} from '../../store/location'
 import BackButton from '../utils/BackButton'
 import {setLSLocation} from '../utils/utils'
 
+const mapboxKey =
+  'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg'
+
 export class UploadForm extends React.Component {
   constructor(props) {
     super(props)
@@ -55,7 +58,8 @@ export class UploadForm extends React.Component {
 
   componentDidMount() {
     var geocoder = new MapboxGeocoder({
-      accessToken: process.env.REACT_APP_MAPBOX_KEY,
+      accessToken:
+        'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg',
       types: 'address',
       reverseGeocode: true,
       placeholder: 'Address'
