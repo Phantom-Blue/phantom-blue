@@ -76,25 +76,6 @@ export class UploadForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
 
-    // if (this.state.longitude && this.state.latitude && this.state.address && this.state.imageFile){
-    //   const sendFile = async function(fileData) {
-    //     const file = await axios.post(`https://api.cloudinary.com/v1_1/pentimento/upload`, {file: this.state.imageFile, upload_preset:      'ea0bwcdh'})
-    //     return file.data.secure_url
-    //   }
-    //   const imageUrl = await this.sendFile(this.state.imageFile)
-    //   this.setState({imageUrl: imageUrl})
-    //
-    // }
-
-    // ^ This is code for if we were handling image uploading on the front end. This reduces the amount of data passed through our express server, but also makes it possible to upload images to the cloudinary database without any security checks, so for now it will stay on the backend.
-    this.props.setLocation({
-      latitude: this.state.latitude,
-      longitude: this.state.longitude
-    })
-    setLSLocation({
-      latitude: this.state.latitude,
-      longitude: this.state.longitude
-    })
     const {
       artist,
       description,
