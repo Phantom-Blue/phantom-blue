@@ -12,6 +12,7 @@ import {
 } from 'pure-react-carousel'
 import 'pure-react-carousel/dist/react-carousel.es.css'
 import Loading from '../utils/Loading'
+import './style/locationArtwork.css'
 
 class LocationArtwork extends React.Component {
   componentDidMount() {
@@ -38,13 +39,16 @@ class LocationArtwork extends React.Component {
                       key={artwork.id}
                       className="carousel-image"
                     >
-                      <center>
-                        <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
-                          <img src={artwork.imageUrl} alt={artwork.artist} />
-                          <h5 className="artistname">{artwork.artist}</h5>
-                        </Link>
-                        <div>
-                          {/* <a
+                      <Link to={`/artwork/${artwork.id}`} key={artwork.id}>
+                        <img
+                          id="carousel-img"
+                          src={artwork.imageUrl}
+                          alt={artwork.artist}
+                        />
+                        <h5 id="artist-name">{artwork.artist}</h5>
+                      </Link>
+                      <div>
+                        {/* <a
                             href={generateUrl(
                               artwork.Location.address
                             )}
@@ -53,10 +57,9 @@ class LocationArtwork extends React.Component {
                           >
                             <h4>TAKE ME THERE</h4>
                           </a> */}
-                          <ButtonBack>Back</ButtonBack>
-                          <ButtonNext>Next</ButtonNext>
-                        </div>
-                      </center>
+                        <ButtonBack id="previous-btn">&#8249;</ButtonBack>
+                        <ButtonNext id="forward-btn">&#8250;</ButtonNext>
+                      </div>
                     </Slide>
                   ))}
                 </Slider>
