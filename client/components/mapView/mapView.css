@@ -96,3 +96,7 @@
     right: 20px;
   }
 }
+#here-pin {
+  outline: none;
+  background: none;
+}
