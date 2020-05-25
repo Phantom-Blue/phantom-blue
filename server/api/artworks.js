@@ -151,12 +151,18 @@ router.put('/:artworkId', async (req, res) => {
         where: {
           id: artworkId
         },
-        include: Tag
+        include: [Tag]
       })
-      const verfiedArtwork = await artworkToVerify.update({
+      await artworkToVerify.update({
         isVerified: true
       })
-      res.json(verfiedArtwork)
+      const verifiedArtwork = await Artwork.findOne({
+        where: {id: req.params.artworkId},
+        include: Location
+      })
+      if (verifiedArtwork) {
+        res.json(verifiedArtwork)
+      }
     } else {
       res.json('Log in to verify artwork.')
     }

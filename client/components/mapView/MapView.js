@@ -47,6 +47,7 @@ class MapView extends Component {
       },
       selectedPin: null,
       open: false,
+      myLocation: false,
       /// SET A LOCAL STATE FOR ARTWORKS TO BE MAPPED IN RENDER.
       //ALL ARTWORK THUNKS CAN DEPOSIT ART IN HERE, AND OVERRIDE EACH OTHER
       // DEPENDING ON USER ACTION, ONLY ONE GROUP OF ARTWORKS GETS MAPPED AT A TIME
@@ -63,6 +64,7 @@ class MapView extends Component {
   async componentDidMount() {
     const lSLocation = getLSLocation()
     const {getMyLocationArt, getUserLocation} = this.props
+    await this.props.getAllArtWorks()
 
     if (lSLocation) {
       await getMyLocationArt(lSLocation)
@@ -230,23 +232,58 @@ class MapView extends Component {
 
           {/* WE NOW MAP THROUGH OUR STATE TO MAKE THE MARKERS, THE STATE WILL CHANGE FREQUENTLY W NEW SEARCHES AND PASSED PROPS */}
           {/* THIS MAPS USER'S CURRENT LOCATION TO A PIN */}
-          {this.props.location ? (
-            <Marker
-              latitude={Number(this.props.location.latitude)}
-              longitude={Number(this.props.location.longitude)}
-            >
-              <img
-                className="location-pin"
-                height="40px"
-                width=""
-                src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590269279/Raspberry-Lightning-Bolt_hiyje0_4_f12mr4.png"
-              />
-            </Marker>
+          {localStorage.getItem('latitude') &&
+          localStorage.getItem('longitude') ? (
+            <div>
+              <Marker
+                latitude={Number(this.props.location.latitude)}
+                longitude={Number(this.props.location.longitude)}
+              >
+                <button
+                  type="button"
+                  // id="marker-pin"
+                  id="here-pin"
+                  onClick={() => {
+                    this.setState({myLocation: true})
+                  }}
+                >
+                  <img
+                    className="location-pin"
+                    height="40px"
+                    width=""
+                    src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590269279/Raspberry-Lightning-Bolt_hiyje0_4_f12mr4.png"
+                  />
+                </button>
+              </Marker>
+              <Popup
+                latitude={Number(this.props.location.latitude)}
+                longitude={Number(this.props.location.longitude)}
+                open={this.state.myLocation}
+                // onClose = {this.setState({myLocation: false})}
+              >
+                {' '}
+                You are here!
+              </Popup>
+              <Popup
+                latitude={Number(this.props.location.latitude)}
+                longitude={Number(this.props.location.longitude)}
+                open={!this.props.artNearMe[0]}
+              >
+                Hmm...{' '}
+                <a
+                  href="https://www.homedepot.com/b/Paint-Spray-Paint/N-5yc1vZapz5"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Seems like there's not much art around here..
+                </a>
+              </Popup>
+            </div>
           ) : (
             ''
           )}
           {/* THIS MAPS ARTWORK TO PINS */}
-          {this.state.artworks[0] ? (
+          {this.props.allArtworks[0] ? (
             this.state.artworks.map(artwork => (
               <Marker
                 key={artwork.id}
@@ -266,7 +303,14 @@ class MapView extends Component {
                     className="location-pin"
                     height="40px"
                     width=""
-                    src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590270243/GREEN-Lightning-Bolt-v2_i6kcre.png"
+                    src={
+                      artwork.Location.latitude ===
+                        localStorage.getItem('latitude') &&
+                      artwork.Location.longitude ===
+                        localStorage.getItem('longitude')
+                        ? 'https://res.cloudinary.com/dcr8cepdv/image/upload/v1590269279/Raspberry-Lightning-Bolt_hiyje0_4_f12mr4.png'
+                        : 'https://res.cloudinary.com/dcr8cepdv/image/upload/v1590270243/GREEN-Lightning-Bolt-v2_i6kcre.png'
+                    }
                   />
                 </button>
               </Marker>
