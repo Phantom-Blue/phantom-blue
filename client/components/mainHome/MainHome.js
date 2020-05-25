@@ -57,16 +57,12 @@ class MainHome extends React.Component {
 
   handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
-    console.log('BEFORE IF handle location', getLSLocation())
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async function(position) {
         const latitude = await position.coords.latitude
         const longitude = await position.coords.longitude
         const myLocation = {latitude, longitude}
-
-        console.log('inside navigator location', myLocation)
-
         setLSLocation(myLocation)
 
         await getMyLocationArt(myLocation)
@@ -82,7 +78,7 @@ class MainHome extends React.Component {
         error: null
       })
     } else {
-      console.log('Geolocation not available')
+      alert('Geolocation not available, please check your location settings')
     }
   }
 
