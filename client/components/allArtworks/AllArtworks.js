@@ -22,7 +22,7 @@ export class AllArtWorks extends Component {
                   <Link to={`/artwork/${artwork.id}`}>
                     <img
                       id="view-as-list-img"
-                      src={artwork.imageUrl}
+                      src={artwork.imageUrl[0]}
                       alt="Artwork Image"
                     />
                     <h2>{artwork.artist}</h2>
