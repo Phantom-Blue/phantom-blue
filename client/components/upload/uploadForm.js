@@ -23,7 +23,10 @@ export class UploadForm extends React.Component {
       latitude: null,
       longitude: null,
       address: null,
-      error: null
+      error: null,
+      loading: false,
+      locationLoading: false,
+      geocoder: null
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -54,7 +57,8 @@ export class UploadForm extends React.Component {
     var geocoder = new MapboxGeocoder({
       accessToken: process.env.REACT_APP_MAPBOX_KEY,
       types: 'address',
-      reverseGeocode: true
+      reverseGeocode: true,
+      placeholder: 'Address'
     })
     geocoder.addTo('#geocoder')
 
