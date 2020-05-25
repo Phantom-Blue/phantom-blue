@@ -352,7 +352,8 @@ input::placeholder,
   }
 }
 
-.currentImg {
-  height: 300px;
+#currentImg {
+  max-height: 30%;
   max-width: 100%;
+  margin-bottom: 1rem;
 }
