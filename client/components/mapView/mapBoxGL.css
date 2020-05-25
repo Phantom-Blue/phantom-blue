@@ -19,7 +19,7 @@
   width: 100%;
   min-width: 240px;
   z-index: 1;
-  top: 50px;
+  top: 70px;
   border-radius: 6px;
   transition: width 0.25s, min-width 0.25s;
 }

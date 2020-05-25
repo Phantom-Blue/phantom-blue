@@ -164,16 +164,32 @@ class MainHome extends React.Component {
               touchEnabled
               playDirection
               currentSlide
+              infinite={true}
             >
               <Slider className="carousel-details">
                 {this.props.artworks.map((artwork, i) => (
                   <Slide index={i} key={artwork.id}>
                     <div>
-                      <img
-                        id="carousel-arwork-img"
-                        src={artwork.imageUrl[0]}
-                        alt="artwork image"
-                      />
+                      <div id="carousel-arwork-img">
+                        <img
+                          // id="carousel-arwork-img"
+                          src={artwork.imageUrl[0]}
+                          alt="artwork image"
+                        />
+                        {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
+                        {this.props.artworks.length > 1 ? (
+                          <div id="carousel-btns">
+                            <ButtonBack id="previous-btn">
+                              <span>&#8249;</span>
+                            </ButtonBack>
+                            <ButtonNext id="forward-btn">
+                              <span>&#8250;</span>
+                            </ButtonNext>
+                          </div>
+                        ) : (
+                          ''
+                        )}
+                      </div>
 
                       <Link to={`/artwork/${artwork.id}`}>
                         <h2 id="carousel-artist-name">{artwork.artist}</h2>
@@ -192,17 +208,6 @@ class MainHome extends React.Component {
                         >
                           TAKE ME THERE
                         </a>
-                        <div className="carousel-btns">
-                          {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
-                          {this.props.artworks.length > 1 ? (
-                            <div>
-                              <ButtonBack id="previous-btn">&#8249;</ButtonBack>
-                              <ButtonNext id="forward-btn">&#8250;</ButtonNext>
-                            </div>
-                          ) : (
-                            ''
-                          )}
-                        </div>
                       </div>
                     </div>
                   </Slide>
