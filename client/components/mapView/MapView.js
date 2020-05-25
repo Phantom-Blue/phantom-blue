@@ -64,11 +64,11 @@ class MapView extends Component {
   async componentDidMount() {
     const lSLocation = getLSLocation()
     const {getMyLocationArt, getUserLocation} = this.props
-    await this.props.getAllArtWorks()
 
     if (lSLocation) {
       await getMyLocationArt(lSLocation)
     }
+    await this.props.getAllArtWorks()
 
     const myLocation = {
       latitude: this.props.location.latitude,
@@ -107,8 +107,8 @@ class MapView extends Component {
     ) {
       console.log('SECOND IF STATEMENT IN CDM')
       try {
-        await getMyLocationArt(lSLocation)
         await getUserLocation(lSLocation)
+        await getMyLocationArt(lSLocation)
 
         this.setState({
           viewport: {
@@ -267,7 +267,7 @@ class MapView extends Component {
               <Popup
                 latitude={Number(this.props.location.latitude)}
                 longitude={Number(this.props.location.longitude)}
-                open={!this.props.artNearMe[0]}
+                open={this.props.allArtworks[0] && !this.props.artNearMe[0]}
               >
                 Hmm...{' '}
                 <a

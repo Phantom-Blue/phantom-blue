@@ -24,6 +24,7 @@ import MapView from '../mapView/MapView'
 import ls from 'local-storage'
 import Loading from '../utils/Loading'
 import {setLSLocation, getLSLocation, generateUrl} from '../utils/utils'
+import history from '../../history'
 
 const mapboxKey =
   'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg'
@@ -32,9 +33,9 @@ class MainHome extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: false,
       longitude: 0,
-      latitude: 0
+      latitude: 0,
+      loading: false
     }
     this.handleLocation = this.handleLocation.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
@@ -58,8 +59,9 @@ class MainHome extends React.Component {
   handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
     console.log('BEFORE IF handle location', getLSLocation())
-
+    const bigThis = this
     if ('geolocation' in navigator) {
+      bigThis.setState({loading: true})
       navigator.geolocation.getCurrentPosition(async function(position) {
         const latitude = await position.coords.latitude
         const longitude = await position.coords.longitude
@@ -78,30 +80,34 @@ class MainHome extends React.Component {
       this.setState({
         latitude: myLocation.latitude,
         longitude: myLocation.longitude,
-        location: true,
-        error: null
+        error: null,
+        loading: false
       })
+      history.push('/map')
     } else {
       console.log('Geolocation not available')
     }
   }
 
   async handleSubmit(e) {
-    const {latitude, longitude} = this.state
-    const {getMyLocationArt, setUserLocation} = this.props
+    if (this.state.latitude && this.state.longitude) {
+      this.setState({loading: true})
+      const {latitude, longitude} = this.state
+      const {getMyLocationArt, setUserLocation} = this.props
 
-    const myLocation = {latitude, longitude}
+      const myLocation = {latitude, longitude}
 
-    setLSLocation(myLocation)
+      setLSLocation(myLocation)
 
-    await getMyLocationArt(myLocation)
-    await setUserLocation(myLocation)
+      await getMyLocationArt(myLocation)
+      await setUserLocation(myLocation)
 
-    this.setState({
-      location: true
-    })
-    // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
-    // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
+      history.push('/map')
+      // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
+      // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
+    } else {
+      alert('Invalid Address!')
+    }
   }
 
   async handleGeocode(geocoder) {
@@ -125,7 +131,7 @@ class MainHome extends React.Component {
     const {latitude, longitude} = this.state
     const userLocation = {latitude, longitude}
 
-    return this.state.location === false && this.props.artworks ? (
+    return !this.state.loading ? (
       <div>
         <div className="search-section">
           <div className="search-label">
@@ -220,16 +226,8 @@ class MainHome extends React.Component {
           <Loading />
         )}
       </div>
-    ) : this.props.artNearMe[0] ? (
-      <Redirect to="/map" />
     ) : (
-      // <MapView artToMapFromMain={this.props.artNearMe} />
-      <Popup>
-        <p className="share-loction-alert">
-          {' '}
-          In order to use this feature, you must enable location sharing{' '}
-        </p>
-      </Popup>
+      <Loading />
     )
   }
 }
