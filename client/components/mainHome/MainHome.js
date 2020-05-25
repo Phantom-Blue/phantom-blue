@@ -73,6 +73,7 @@ class MainHome extends React.Component {
 
         await getMyLocationArt(myLocation)
         await setUserLocation(myLocation)
+        history.push('/map')
       })
 
       const myLocation = getLSLocation()
@@ -83,7 +84,6 @@ class MainHome extends React.Component {
         error: null,
         loading: false
       })
-      history.push('/map')
     } else {
       console.log('Geolocation not available')
     }
