@@ -4,9 +4,10 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
 import {setLocation} from '../../store/location'
+import Popup from 'reactjs-popup'
 import {
   CarouselProvider,
   Slider,
@@ -22,7 +23,10 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import MapView from '../mapView/MapView'
 import ls from 'local-storage'
 import Loading from '../utils/Loading'
-import {setLSLocation, generateUrl} from '../utils/utils'
+import {setLSLocation, getLSLocation, generateUrl} from '../utils/utils'
+
+const mapboxKey =
+  'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg'
 
 class MainHome extends React.Component {
   constructor(props) {
@@ -37,27 +41,43 @@ class MainHome extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  async handleLocation() {
+  componentDidMount() {
+    this.props.getVerifiedArtwork()
+
+    var geocoder = new MapboxGeocoder({
+      accessToken:
+        'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg',
+      types: 'country,region,place,locality,neighborhood, address'
+    })
+    geocoder.addTo('#geocoder')
+    geocoder._inputEl.addEventListener('change', () => {
+      this.handleGeocode(geocoder)
+    })
+  }
+
+  handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
+    console.log('BEFORE IF handle location', getLSLocation())
 
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        const latitude = position.coords.latitude
-        const longitude = position.coords.longitude
-        ls.set('latitude', latitude)
-        ls.set('longitude', longitude)
+      navigator.geolocation.getCurrentPosition(async function(position) {
+        const latitude = await position.coords.latitude
+        const longitude = await position.coords.longitude
+        const myLocation = {latitude, longitude}
+
+        console.log('inside navigator location', myLocation)
+
+        setLSLocation(myLocation)
+
+        await getMyLocationArt(myLocation)
+        await setUserLocation(myLocation)
       })
-      const lat = ls.get('latitude')
-      const long = ls.get('longitude')
-      const myLocation = {
-        latitude: lat,
-        longitude: long
-      }
-      await getMyLocationArt(myLocation)
-      await setUserLocation(myLocation)
+
+      const myLocation = getLSLocation()
+
       this.setState({
-        latitude: lat,
-        longitude: long,
+        latitude: myLocation.latitude,
+        longitude: myLocation.longitude,
         location: true,
         error: null
       })
@@ -66,24 +86,25 @@ class MainHome extends React.Component {
     }
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
-
+  async handleSubmit(e) {
     const {latitude, longitude} = this.state
     const {getMyLocationArt, setUserLocation} = this.props
 
     const myLocation = {latitude, longitude}
 
-    getMyLocationArt(myLocation)
-    setUserLocation(myLocation)
+    setLSLocation(myLocation)
+
+    await getMyLocationArt(myLocation)
+    await setUserLocation(myLocation)
 
     this.setState({
       location: true
     })
+    // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
+    // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
   }
 
   async handleGeocode(geocoder) {
-    // console.log('GOT IN GEOCODE')
     const coded = await geocoder._geocode(geocoder._inputEl.value)
     if (coded.body.features[0]) {
       let longitude = coded.body.features[0].center[0]
@@ -100,24 +121,11 @@ class MainHome extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.props.getVerifiedArtwork()
-
-    var geocoder = new MapboxGeocoder({
-      accessToken: process.env.REACT_APP_MAPBOX_KEY,
-      types: 'country,region,place,locality,neighborhood, address'
-    })
-    geocoder.addTo('#geocoder')
-    geocoder._inputEl.addEventListener('change', () => {
-      this.handleGeocode(geocoder)
-    })
-  }
-
   render() {
     const {latitude, longitude} = this.state
     const userLocation = {latitude, longitude}
 
-    return this.state.location === false ? (
+    return this.state.location === false && this.props.artworks ? (
       <div>
         <div className="search-section">
           <div className="search-label">
@@ -141,14 +149,14 @@ class MainHome extends React.Component {
                 id="share-location-btn"
                 type="submit"
                 className="share-location"
-                onClick={() => this.handleLocation()}
+                onClick={e => this.handleLocation(e)}
               >
                 or use your current location
               </button>
             </div>
           </div>
         </div>
-        {this.props.artworks[0] ? (
+        {this.props.artworks ? (
           <div className="carousel-container">
             <CarouselProvider
               naturalSlideWidth={100}
@@ -208,9 +216,15 @@ class MainHome extends React.Component {
         )}
       </div>
     ) : this.props.artNearMe[0] ? (
-      <MapView artToMapFromMain={this.props.artNearMe} />
+      <Redirect to="/map" />
     ) : (
-      <Loading />
+      // <MapView artToMapFromMain={this.props.artNearMe} />
+      <Popup>
+        <p className="share-loction-alert">
+          {' '}
+          In order to use this feature, you must enable location sharing{' '}
+        </p>
+      </Popup>
     )
   }
 }

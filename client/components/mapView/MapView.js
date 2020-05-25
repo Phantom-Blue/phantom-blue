@@ -27,9 +27,12 @@ import MapPin from './MapPin'
 // VIEW AS A LIST POPUP
 import ArtistListPopup from '../popups/artistListPopup'
 //IMPORTS TWO UTILITY FUCNTIONS TO GET AND SET LATITUDE AND LONGITUDE TO LOCAL STATE // COULD BE REFACTORED TO RECEIVE ANY ARGS
-import {getLSLocation, setLSLocationm, windowCheck} from '../utils/utils'
+import {getLSLocation, setLSLocation, windowCheck} from '../utils/utils'
 import Loading from '../utils/Loading'
 // import {Loading, getAccessToken} from '../utils'
+
+const mapboxKey =
+  'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg'
 
 class MapView extends Component {
   constructor(props) {
@@ -60,13 +63,26 @@ class MapView extends Component {
   async componentDidMount() {
     const lSLocation = getLSLocation()
     const {getMyLocationArt, getUserLocation} = this.props
+
     const myLocation = {
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude
     }
 
+    this.setState({
+      viewport: {
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        width: '100vw',
+        height: '100vh',
+        zoom: 13
+      }
+    })
+
     /// ARTWORKS FROM OTHER COMPONENT PROPS
-    if (this.props.artToMapFromMain) {
+    if (this.props.artNearMe[0]) {
+      await getUserLocation(lSLocation)
+      console.log('FIRST IF STATEMENT IN CDM', this.props.location.latitude)
       this.setState({
         viewport: {
           latitude: this.props.location.latitude,
@@ -75,18 +91,19 @@ class MapView extends Component {
           height: '100vh',
           zoom: 13
         },
-        artworks: this.props.artToMapFromMain
+        artworks: this.props.artNearMe
       })
-      setLSLocation(myLocation)
 
       /// MAPS LOCAL STORAGE LAT LONG ARTWORKS TO REDUX STORE
     } else if (
       lSLocation.latitude !== undefined &&
       lSLocation.latitude !== null
     ) {
+      console.log('SECOND IF STATEMENT IN CDM')
       try {
         await getMyLocationArt(lSLocation)
         await getUserLocation(lSLocation)
+
         this.setState({
           viewport: {
             latitude: this.props.location.latitude,
@@ -104,20 +121,22 @@ class MapView extends Component {
       //IF THERE'S NO PROPS, OR LAT LONG IN LS STORAGE, WE GET ALL ARTWORKS
     } else {
       try {
+        console.log('THIRD IF STATEMENT IN CDM')
         await this.props.getAllArtWorks()
+
+        this.setState({
+          viewport: {
+            latitude: this.props.location.latitude,
+            longitude: this.props.location.longitude,
+            width: '100vw',
+            height: '100vh',
+            zoom: 12
+          },
+          artworks: this.props.allArtworks
+        })
       } catch (error) {
         console.error('could not retrieve all artworks')
       }
-      this.setState({
-        viewport: {
-          latitude: this.props.location.latitude,
-          longitude: this.props.location.longitude,
-          width: '100vw',
-          height: '100vh',
-          zoom: 12
-        },
-        artworks: this.props.allArtworks
-      })
     }
   }
 
@@ -182,13 +201,15 @@ class MapView extends Component {
     const window = windowCheck()
     const innerWidth = window.innerWidth
 
+    console.log(this.props)
+
     return (
       <div className="map-container">
         <ReactMapGl
           ref={this.mapRef}
           {...this.state.viewport}
-          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
-          mapStyle="mapbox://styles/gisellez/ckad1bysz015w1invk5uwl47i"
+          mapboxApiAccessToken="pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg"
+          mapStyle="mapbox://styles/chromaticblack/ckamv80kv248t1ipgo4jp5y5k"
           onViewportChange={newport => {
             this.setState({viewport: newport})
           }}
@@ -196,7 +217,7 @@ class MapView extends Component {
           {/* GEOCODER GOES INSIDE REACTMAPGL, CAN REMOVE INLINE STYLING AND ADD OTHER METHODS */}
           <Geocoder
             mapRef={this.mapRef}
-            mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_KEY}
+            mapboxApiAccessToken="pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg"
             onViewportChange={this.handleGeocoderViewportChange}
             position="top-right"
             onResult={result => this.handleNewSearch(result)}

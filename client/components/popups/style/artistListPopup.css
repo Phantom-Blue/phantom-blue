@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
 }
 
 #link-to-all-artworks {
@@ -16,41 +15,21 @@
 }
 
 /* MODAL STYLE FOR VIEW AS A LIST ARTWORKS*/
-.modal {
-  padding-top: 60px;
-}
-
-.modal > .close {
+.custome-modal > .close {
   cursor: pointer;
   position: absolute;
   display: block;
   line-height: 20px;
   right: 10px;
   top: 5px;
-  font-size: 30px;
+  font-size: 50px;
 }
 
 @media only screen and (min-device-width: 768px) {
-  .modal {
-    position: absolute;
+  .custome-modal {
     width: 100%;
     max-height: 600px;
-    margin-top: -305px;
-    margin-right: -50%;
-    border: none;
-    border-radius: 10px;
-    background-color: #ffffff;
     overflow-y: scroll;
     z-index: 10;
-  }
-
-  .modal > .close {
-    cursor: pointer;
-    position: absolute;
-    display: block;
-    line-height: 20px;
-    right: 10px;
-    top: 5px;
-    font-size: 30px;
   }
 }

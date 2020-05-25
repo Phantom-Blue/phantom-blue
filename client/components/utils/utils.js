@@ -7,15 +7,15 @@ export const getLSLocation = () => {
   return lSLocation
 }
 
+export const setLSLocation = location => {
+  ls.set('latitude', location.latitude)
+  ls.set('longitude', location.longitude)
+}
+
 export const windowCheck = () => {
   if (window) {
     return window
   }
-}
-
-export const setLSLocation = location => {
-  ls.set('latitude', location.latitude)
-  ls.set('longitude', location.longitude)
 }
 
 export function generateUrl(loc, loc2) {

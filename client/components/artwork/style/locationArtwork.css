@@ -1,0 +1,13 @@
+#carousel {
+  margin: 40px;
+}
+
+#carousel-img {
+  object-fit: cover;
+  width: 100%;
+  max-height: inherit;
+}
+
+#artist-name {
+  color: #982649;
+}

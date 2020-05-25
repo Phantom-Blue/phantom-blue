@@ -6,9 +6,13 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import './searchBar.css'
 import axios from 'axios'
 import '../../../secrets'
+import ls from 'local-storage'
 import {setLocation} from '../../store/location'
 import BackButton from '../utils/BackButton'
 import {setLSLocation} from '../utils/utils'
+
+const mapboxKey =
+  'pk.eyJ1IjoiZ2lzZWxsZXoiLCJhIjoiY2s5eWtwN21nMHZ6cDNybnRwMXNvYWo3bCJ9.Z1LvYD3L9CGq3EpnxaKglg'
 
 export class UploadForm extends React.Component {
   constructor(props) {
@@ -22,21 +26,24 @@ export class UploadForm extends React.Component {
       latitude: null,
       longitude: null,
       address: null,
-      error: null
+      error: null,
+      loading: false,
+      locationLoading: false,
+      geocoder: null
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
     this.handleFileRead = this.handleFileRead.bind(this)
+    this.handleLocation = this.handleLocation.bind(this)
   }
 
-  async handleGeocode(geocoder) {
-    const coded = await geocoder._geocode(geocoder._inputEl.value)
-    if (coded.body.features[0]) {
-      let longitude = coded.body.features[0].center[0]
-      let latitude = coded.body.features[0].center[1]
-      let address = coded.body.features[0].place_name
+  handleGeocode(data) {
+    if (data.result) {
+      let latitude = data.result.center[1]
+      let longitude = data.result.center[0]
+      let address = data.result.place_name
       this.setState({
         latitude,
         longitude,
@@ -51,14 +58,18 @@ export class UploadForm extends React.Component {
 
   componentDidMount() {
     var geocoder = new MapboxGeocoder({
-      accessToken: process.env.REACT_APP_MAPBOX_KEY,
-      types: 'country,region,place,locality,neighborhood, address'
+      accessToken:
+        'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg',
+      types: 'address',
+      reverseGeocode: true,
+      placeholder: 'Address'
     })
     geocoder.addTo('#geocoder')
 
-    geocoder._inputEl.addEventListener('change', () => {
-      this.handleGeocode(geocoder)
+    geocoder.on('result', data => {
+      this.handleGeocode(data)
     })
+    this.setState({geocoder})
   }
 
   handleChange(e) {
@@ -69,26 +80,24 @@ export class UploadForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
 
-    // if (this.state.longitude && this.state.latitude && this.state.address && this.state.imageFile){
-    //   const sendFile = async function(fileData) {
-    //     const file = await axios.post(`https://api.cloudinary.com/v1_1/pentimento/upload`, {file: this.state.imageFile, upload_preset:      'ea0bwcdh'})
-    //     return file.data.secure_url
-    //   }
-    //   const imageUrl = await this.sendFile(this.state.imageFile)
-    //   this.setState({imageUrl: imageUrl})
-    //
-    // }
-
-    // ^ This is code for if we were handling image uploading on the front end. This reduces the amount of data passed through our express server, but also makes it possible to upload images to the cloudinary database without any security checks, so for now it will stay on the backend.
-    this.props.setLocation({
-      latitude: this.state.latitude,
-      longitude: this.state.longitude
+    const {
+      artist,
+      description,
+      imageFile,
+      imageUrl,
+      latitude,
+      longitude,
+      address
+    } = this.state
+    this.props.postArtwork({
+      artist,
+      description,
+      imageFile,
+      imageUrl,
+      latitude,
+      longitude,
+      address
     })
-    setLSLocation({
-      latitude: this.state.latitude,
-      longitude: this.state.longitude
-    })
-    this.props.postArtwork(this.state)
   }
 
   handleFileRead(e) {
@@ -98,6 +107,34 @@ export class UploadForm extends React.Component {
         this.setState({imageFile: reader.result})
       }
       reader.readAsDataURL(e.target.files[0])
+    }
+  }
+
+  async handleLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+        ls.set('latitude', latitude)
+        ls.set('longitude', longitude)
+      })
+      const lat = ls.get('latitude')
+      const long = ls.get('longitude')
+
+      const geocoder = this.state.geocoder
+
+      const response = await geocoder._geocode(`${lat}, ${long}`)
+      const address = response.body.features[0].place_name
+
+      console.log(lat, long)
+      this.setState({
+        latitude: lat,
+        longitude: long,
+        address
+      })
+      console.log(this.state)
+    } else {
+      console.log('Geolocation not available')
     }
   }
 
@@ -111,10 +148,7 @@ export class UploadForm extends React.Component {
   }
 
   errorMessage() {
-    if (
-      this.props.error.response.data &&
-      this.props.error.response.data.includes('notNull Violation')
-    ) {
+    if (this.props.error) {
       return 'Enter all required fields'
     } else if (this.state.error === 'Missing image file.') {
       return 'Add an image.'
@@ -129,6 +163,7 @@ export class UploadForm extends React.Component {
   render() {
     const handleChange = this.handleChange
     const handleSubmit = this.handleSubmit
+    const handleLocation = this.handleLocation
     return (
       <div className="upload-artwork-container">
         <form>
@@ -167,6 +202,10 @@ export class UploadForm extends React.Component {
             </label>
           </div>
           <div id="geocoder" />
+          <button type="button" onClick={handleLocation}>
+            {' '}
+            Use my location{' '}
+          </button>
           <div>
             <button
               id="upload-btn"
