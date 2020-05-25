@@ -59,7 +59,9 @@ class MainHome extends React.Component {
         const latitude = await position.coords.latitude
         const longitude = await position.coords.longitude
         const myLocation = {latitude, longitude}
+
         console.log('inside navigator location', myLocation)
+
         setLSLocation(myLocation)
 
         await getMyLocationArt(myLocation)
@@ -80,13 +82,13 @@ class MainHome extends React.Component {
   }
 
   async handleSubmit(e) {
-    e.preventDefault()
     const {latitude, longitude} = this.state
     const {getMyLocationArt, setUserLocation} = this.props
 
     const myLocation = {latitude, longitude}
 
     setLSLocation(myLocation)
+
     await getMyLocationArt(myLocation)
     await setUserLocation(myLocation)
 

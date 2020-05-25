@@ -66,22 +66,24 @@ class MapView extends Component {
       longitude: this.props.location.longitude
     }
 
-    // this.setState({
-    //   viewport: {
-    //     latitude: this.props.location.latitude,
-    //     longitude: this.props.location.longitude,
-    //     width: '100vw',
-    //     height: '100vh',
-    //     zoom: 13
-    //   }
-    // })
+    this.setState({
+      viewport: {
+        latitude: this.props.location.latitude,
+        longitude: this.props.location.longitude,
+        width: '100vw',
+        height: '100vh',
+        zoom: 13
+      }
+    })
 
     /// ARTWORKS FROM OTHER COMPONENT PROPS
-    if (this.props.artNearMe) {
+    if (this.props.artNearMe[0]) {
+      await getUserLocation(lSLocation)
+      console.log('FIRST IF STATEMENT IN CDM', this.props.location.latitude)
       this.setState({
         viewport: {
-          latitude: lSLocation.latitude,
-          longitude: lSLocation.longitude,
+          latitude: this.props.location.latitude,
+          longitude: this.props.location.longitude,
           width: '100vw',
           height: '100vh',
           zoom: 13
@@ -94,9 +96,11 @@ class MapView extends Component {
       lSLocation.latitude !== undefined &&
       lSLocation.latitude !== null
     ) {
+      console.log('SECOND IF STATEMENT IN CDM')
       try {
         await getMyLocationArt(lSLocation)
         await getUserLocation(lSLocation)
+
         this.setState({
           viewport: {
             latitude: this.props.location.latitude,
@@ -114,20 +118,22 @@ class MapView extends Component {
       //IF THERE'S NO PROPS, OR LAT LONG IN LS STORAGE, WE GET ALL ARTWORKS
     } else {
       try {
+        console.log('THIRD IF STATEMENT IN CDM')
         await this.props.getAllArtWorks()
+
+        this.setState({
+          viewport: {
+            latitude: this.props.location.latitude,
+            longitude: this.props.location.longitude,
+            width: '100vw',
+            height: '100vh',
+            zoom: 12
+          },
+          artworks: this.props.allArtworks
+        })
       } catch (error) {
         console.error('could not retrieve all artworks')
       }
-      this.setState({
-        viewport: {
-          latitude: this.props.location.latitude,
-          longitude: this.props.location.longitude,
-          width: '100vw',
-          height: '100vh',
-          zoom: 12
-        },
-        artworks: this.props.allArtworks
-      })
     }
   }
 
@@ -191,6 +197,8 @@ class MapView extends Component {
   render() {
     const window = windowCheck()
     const innerWidth = window.innerWidth
+
+    console.log(this.props)
 
     return (
       <div className="map-container">
