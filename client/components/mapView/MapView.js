@@ -264,6 +264,20 @@ class MapView extends Component {
                 {' '}
                 You are here!
               </Popup>
+              <Popup
+                latitude={Number(this.props.location.latitude)}
+                longitude={Number(this.props.location.longitude)}
+                open={!this.props.artNearMe[0]}
+              >
+                Hmm...{' '}
+                <a
+                  href="https://www.homedepot.com/b/Paint-Spray-Paint/N-5yc1vZapz5"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Seems like there's not much art around here..
+                </a>
+              </Popup>
             </div>
           ) : (
             ''
