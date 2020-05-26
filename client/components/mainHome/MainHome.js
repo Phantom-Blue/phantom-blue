@@ -58,33 +58,25 @@ class MainHome extends React.Component {
 
   handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
-
+    const bigThis = this
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(async function(position) {
         const latitude = await position.coords.latitude
         const longitude = await position.coords.longitude
         const myLocation = {latitude, longitude}
-        setLSLocation(myLocation)
+        await setLSLocation(myLocation)
 
         await getMyLocationArt(myLocation)
         await setUserLocation(myLocation)
-      })
 
-      const myLocation = getLSLocation()
-
-      this.setState(
-        {
+        bigThis.setState({
           latitude: myLocation.latitude,
           longitude: myLocation.longitude,
           error: null,
           loading: false
-        },
-        function(error) {
-          console.log('Something went wrong!', error)
-        },
-        {timeout: 10000}
-      )
-      history.push('/map')
+        })
+        history.push('/map')
+      })
     } else {
       alert('Geolocation not available, please check your location settings')
     }
