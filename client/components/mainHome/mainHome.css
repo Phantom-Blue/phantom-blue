@@ -170,3 +170,8 @@
 #previous-btn {
   left:.1rem
 } */
+
+#checkbox {
+  position: absolute;
+  bottom: 8.5%;
+}
