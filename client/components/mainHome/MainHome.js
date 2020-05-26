@@ -72,12 +72,18 @@ class MainHome extends React.Component {
 
       const myLocation = getLSLocation()
 
-      this.setState({
-        latitude: myLocation.latitude,
-        longitude: myLocation.longitude,
-        error: null,
-        loading: false
-      })
+      this.setState(
+        {
+          latitude: myLocation.latitude,
+          longitude: myLocation.longitude,
+          error: null,
+          loading: false
+        },
+        function(error) {
+          console.log('Something went wrong!', error)
+        },
+        {timeout: 10000}
+      )
       history.push('/map')
     } else {
       alert('Geolocation not available, please check your location settings')
