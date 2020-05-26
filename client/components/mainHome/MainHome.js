@@ -59,9 +59,8 @@ class MainHome extends React.Component {
   handleLocation(e) {
     const {getMyLocationArt, setUserLocation} = this.props
     console.log('BEFORE IF handle location', getLSLocation())
-    const bigThis = this
     if ('geolocation' in navigator) {
-      bigThis.setState({loading: true})
+      this.setState({loading: true})
       navigator.geolocation.getCurrentPosition(async function(position) {
         const latitude = await position.coords.latitude
         const longitude = await position.coords.longitude
