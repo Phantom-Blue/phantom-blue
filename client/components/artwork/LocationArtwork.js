@@ -47,8 +47,11 @@ class LocationArtwork extends React.Component {
                         />
                         <h5 id="artist-name">{artwork.artist}</h5>
                       </Link>
-                      <div>
-                        {/* <a
+                    </Slide>
+                  ))}
+                </Slider>
+                <div className="buttons" align="center">
+                  {/* <a
                             href={generateUrl(
                               artwork.Location.address
                             )}
@@ -57,12 +60,14 @@ class LocationArtwork extends React.Component {
                           >
                             <h4>TAKE ME THERE</h4>
                           </a> */}
-                        <ButtonBack id="previous-btn">&#8249;</ButtonBack>
-                        <ButtonNext id="forward-btn">&#8250;</ButtonNext>
-                      </div>
-                    </Slide>
-                  ))}
-                </Slider>
+                  <ButtonBack id="previous-btn">
+                    <span>&#8249;</span>
+                  </ButtonBack>
+
+                  <ButtonNext id="forward-btn">
+                    <span>&#8250;</span>
+                  </ButtonNext>
+                </div>
               </div>
             </CarouselProvider>
           </div>

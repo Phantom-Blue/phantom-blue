@@ -11,6 +11,7 @@ import {
 import './updateArtworkForm.css'
 import BackButton from '../utils/BackButton'
 import {windowCheck} from '../utils/utils'
+import history from '../../history'
 
 class UpdateArtworkForm extends Component {
   constructor(props) {
@@ -91,12 +92,10 @@ class UpdateArtworkForm extends Component {
   }
 
   // handle delete artwork
-  handleDeleteArtwork(artworkId) {
-    const window = windowCheck()
-    const history = window.history
-    this.props.removeArtwork(artworkId)
-    history.back()
-    history.back()
+  async handleDeleteArtwork(artworkId) {
+    await this.props.removeArtwork(artworkId)
+    history.goBack()
+    history.goBack()
   }
 
   render() {

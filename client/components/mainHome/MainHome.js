@@ -24,6 +24,7 @@ import MapView from '../mapView/MapView'
 import ls from 'local-storage'
 import Loading from '../utils/Loading'
 import {setLSLocation, getLSLocation, generateUrl} from '../utils/utils'
+import history from '../../history'
 
 const mapboxKey =
   'pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg'
@@ -32,9 +33,9 @@ class MainHome extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      location: false,
       longitude: 0,
-      latitude: 0
+      latitude: 0,
+      loading: false
     }
     this.handleLocation = this.handleLocation.bind(this)
     this.handleGeocode = this.handleGeocode.bind(this)
@@ -74,8 +75,8 @@ class MainHome extends React.Component {
       this.setState({
         latitude: myLocation.latitude,
         longitude: myLocation.longitude,
-        location: true,
-        error: null
+        error: null,
+        loading: false
       })
     } else {
       alert('Geolocation not available, please check your location settings')
@@ -83,21 +84,24 @@ class MainHome extends React.Component {
   }
 
   async handleSubmit(e) {
-    const {latitude, longitude} = this.state
-    const {getMyLocationArt, setUserLocation} = this.props
+    if (this.state.latitude && this.state.longitude) {
+      this.setState({loading: true})
+      const {latitude, longitude} = this.state
+      const {getMyLocationArt, setUserLocation} = this.props
 
-    const myLocation = {latitude, longitude}
+      const myLocation = {latitude, longitude}
 
-    setLSLocation(myLocation)
+      setLSLocation(myLocation)
 
-    await getMyLocationArt(myLocation)
-    await setUserLocation(myLocation)
+      await getMyLocationArt(myLocation)
+      await setUserLocation(myLocation)
 
-    this.setState({
-      location: true
-    })
-    // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
-    // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
+      history.push('/map')
+      // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
+      // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
+    } else {
+      alert('Invalid Address!')
+    }
   }
 
   async handleGeocode(geocoder) {
@@ -121,7 +125,7 @@ class MainHome extends React.Component {
     const {latitude, longitude} = this.state
     const userLocation = {latitude, longitude}
 
-    return this.state.location === false && this.props.artworks ? (
+    return !this.state.loading ? (
       <div>
         <div className="search-section">
           <div className="search-label">
@@ -161,16 +165,32 @@ class MainHome extends React.Component {
               touchEnabled
               playDirection
               currentSlide
+              infinite={true}
             >
               <Slider className="carousel-details">
                 {this.props.artworks.map((artwork, i) => (
                   <Slide index={i} key={artwork.id}>
                     <div>
-                      <img
-                        id="carousel-arwork-img"
-                        src={artwork.imageUrl[0]}
-                        alt="artwork image"
-                      />
+                      <div id="carousel-arwork-img">
+                        <img
+                          // id="carousel-arwork-img"
+                          src={artwork.imageUrl[0]}
+                          alt="artwork image"
+                        />
+                        {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
+                        {this.props.artworks.length > 1 ? (
+                          <div id="carousel-btns">
+                            <ButtonBack id="previous-btn">
+                              <span>&#8249;</span>
+                            </ButtonBack>
+                            <ButtonNext id="forward-btn">
+                              <span>&#8250;</span>
+                            </ButtonNext>
+                          </div>
+                        ) : (
+                          ''
+                        )}
+                      </div>
 
                       <Link to={`/artwork/${artwork.id}`}>
                         <h2 id="carousel-artist-name">{artwork.artist}</h2>
@@ -189,17 +209,6 @@ class MainHome extends React.Component {
                         >
                           TAKE ME THERE
                         </a>
-                        <div className="carousel-btns">
-                          {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
-                          {this.props.artworks.length > 1 ? (
-                            <div>
-                              <ButtonBack id="previous-btn">&#8249;</ButtonBack>
-                              <ButtonNext id="forward-btn">&#8250;</ButtonNext>
-                            </div>
-                          ) : (
-                            ''
-                          )}
-                        </div>
                       </div>
                     </div>
                   </Slide>
@@ -208,19 +217,15 @@ class MainHome extends React.Component {
             </CarouselProvider>
           </div>
         ) : (
-          <Loading />
+          <div className="loading">
+            <Loading />
+          </div>
         )}
       </div>
-    ) : this.props.artNearMe[0] ? (
-      <Redirect to="/map" />
     ) : (
-      // <MapView artToMapFromMain={this.props.artNearMe} />
-      <Popup>
-        <p className="share-loction-alert">
-          {' '}
-          In order to use this feature, you must enable location sharing{' '}
-        </p>
-      </Popup>
+      <div className="loading">
+        <Loading />
+      </div>
     )
   }
 }

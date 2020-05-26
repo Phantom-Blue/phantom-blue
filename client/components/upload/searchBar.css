@@ -21,7 +21,6 @@
   font-family: 'Montserrat', sans-serif;
   background-color: #fff;
   width: 100%;
-  min-width: 240px;
   /* controls the search box height */
   height: 50px;
   z-index: 1;
@@ -352,7 +351,8 @@ input::placeholder,
   }
 }
 
-.currentImg {
-  height: 300px;
+#currentImg {
+  max-height: 30%;
   max-width: 100%;
+  margin-bottom: 1rem;
 }

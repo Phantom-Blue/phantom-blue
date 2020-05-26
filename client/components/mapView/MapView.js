@@ -43,14 +43,17 @@ class MapView extends Component {
         longitude: -73.9566,
         width: '100vw',
         height: '100vh',
-        zoom: 12
+        zoom: 11
       },
       selectedPin: null,
       open: false,
+      myLocation: false,
       /// SET A LOCAL STATE FOR ARTWORKS TO BE MAPPED IN RENDER.
       //ALL ARTWORK THUNKS CAN DEPOSIT ART IN HERE, AND OVERRIDE EACH OTHER
       // DEPENDING ON USER ACTION, ONLY ONE GROUP OF ARTWORKS GETS MAPPED AT A TIME
-      artworks: []
+      artworks: [],
+      viewAll: false
+      // cooldown: false
     }
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
@@ -64,6 +67,11 @@ class MapView extends Component {
     const lSLocation = getLSLocation()
     const {getMyLocationArt, getUserLocation} = this.props
 
+    if (lSLocation) {
+      await getMyLocationArt(lSLocation)
+    }
+    await this.props.getAllArtWorks()
+
     const myLocation = {
       latitude: this.props.location.latitude,
       longitude: this.props.location.longitude
@@ -75,8 +83,9 @@ class MapView extends Component {
         longitude: this.props.location.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 13
-      }
+        zoom: 11
+      },
+      cooldown: localStorage.getItem('cooldown')
     })
 
     /// ARTWORKS FROM OTHER COMPONENT PROPS
@@ -89,7 +98,7 @@ class MapView extends Component {
           longitude: this.props.location.longitude,
           width: '100vw',
           height: '100vh',
-          zoom: 13
+          zoom: 11
         },
         artworks: this.props.artNearMe
       })
@@ -101,8 +110,8 @@ class MapView extends Component {
     ) {
       console.log('SECOND IF STATEMENT IN CDM')
       try {
-        await getMyLocationArt(lSLocation)
         await getUserLocation(lSLocation)
+        await getMyLocationArt(lSLocation)
 
         this.setState({
           viewport: {
@@ -110,7 +119,7 @@ class MapView extends Component {
             longitude: this.props.location.longitude,
             width: '100vw',
             height: '100vh',
-            zoom: 13
+            zoom: 11
           },
           artworks: this.props.artNearMe
         })
@@ -130,9 +139,10 @@ class MapView extends Component {
             longitude: this.props.location.longitude,
             width: '100vw',
             height: '100vh',
-            zoom: 12
+            zoom: 11
           },
-          artworks: this.props.allArtworks
+          artworks: this.props.allArtworks,
+          allArtworks: this.props.allArtworks
         })
       } catch (error) {
         console.error('could not retrieve all artworks')
@@ -183,9 +193,10 @@ class MapView extends Component {
         longitude: this.props.location.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 13
+        zoom: 11
       },
-      artworks: this.props.artNearMe
+      artworks: this.props.artNearMe,
+      allArtworks: this.props.allArtworks
     })
     this.handleGeocoderViewportChange(this.state.viewport)
   }
@@ -200,33 +211,98 @@ class MapView extends Component {
   render() {
     const window = windowCheck()
     const innerWidth = window.innerWidth
+    const art = this.state.viewAll
+      ? this.props.allArtworks
+      : this.state.artworks
 
     console.log(this.props)
 
     return (
-      <div className="map-container">
-        <ReactMapGl
-          ref={this.mapRef}
-          {...this.state.viewport}
-          mapboxApiAccessToken="pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg"
-          mapStyle="mapbox://styles/chromaticblack/ckamv80kv248t1ipgo4jp5y5k"
-          onViewportChange={newport => {
-            this.setState({viewport: newport})
-          }}
-        >
-          {/* GEOCODER GOES INSIDE REACTMAPGL, CAN REMOVE INLINE STYLING AND ADD OTHER METHODS */}
-          <Geocoder
-            mapRef={this.mapRef}
+      <div>
+        <div className="map-container">
+          <ReactMapGl
+            ref={this.mapRef}
+            {...this.state.viewport}
             mapboxApiAccessToken="pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg"
-            onViewportChange={this.handleGeocoderViewportChange}
-            position="top-right"
-            onResult={result => this.handleNewSearch(result)}
-            zoom={13}
-          />
+            mapStyle="mapbox://styles/chromaticblack/ckamv80kv248t1ipgo4jp5y5k"
+            onViewportChange={newport => {
+              this.setState({viewport: newport})
+            }}
+          >
+            {/* GEOCODER GOES INSIDE REACTMAPGL, CAN REMOVE INLINE STYLING AND ADD OTHER METHODS */}
+            <Geocoder
+              mapRef={this.mapRef}
+              mapboxApiAccessToken="pk.eyJ1IjoiY2hyb21hdGljYmxhY2siLCJhIjoiY2thOXZ4bmdmMGRzdDJ0bWd2b2JrOHNqYiJ9.mfvYVXS09PgNdRH2SB6Ncg"
+              onViewportChange={this.handleGeocoderViewportChange}
+              position="top-right"
+              onResult={result => this.handleNewSearch(result)}
+              zoom={10}
+            />
 
-          {/* WE NOW MAP THROUGH OUR STATE TO MAKE THE MARKERS, THE STATE WILL CHANGE FREQUENTLY W NEW SEARCHES AND PASSED PROPS */}
-          {this.state.artworks[0]
-            ? this.state.artworks.map(artwork => (
+            {/* WE NOW MAP THROUGH OUR STATE TO MAKE THE MARKERS, THE STATE WILL CHANGE FREQUENTLY W NEW SEARCHES AND PASSED PROPS */}
+            {/* THIS MAPS USER'S CURRENT LOCATION TO A PIN */}
+            {localStorage.getItem('latitude') &&
+            localStorage.getItem('longitude') ? (
+              <div>
+                <Marker
+                  latitude={Number(this.props.location.latitude)}
+                  longitude={Number(this.props.location.longitude)}
+                >
+                  <button
+                    type="button"
+                    // id="marker-pin"
+                    id="here-pin"
+                    onClick={() => {
+                      this.setState({myLocation: true})
+                    }}
+                  >
+                    <img
+                      className="location-pin"
+                      height="40px"
+                      width=""
+                      src="https://res.cloudinary.com/dcr8cepdv/image/upload/v1590269279/Raspberry-Lightning-Bolt_hiyje0_4_f12mr4.png"
+                    />
+                  </button>
+                </Marker>
+                <Popup
+                  latitude={Number(this.props.location.latitude)}
+                  longitude={Number(this.props.location.longitude)}
+                  open={this.state.myLocation}
+                  // onClose = {this.setState({myLocation: false})}
+                >
+                  {' '}
+                  You are here!
+                </Popup>
+                {/* <Popup
+                  latitude={Number(this.props.location.latitude)}
+                  longitude={Number(this.props.location.longitude)}
+                  open={!!this.props.allArtworks.length && !this.props.artNearMe[0] && !this.state.cooldown}
+                  onClose={()=>{
+                    localStorage.setItem('cooldown', true)
+                    this.setState({cooldown: true})
+                    setTimeout(
+                      function(){
+                        localStorage.removeItem('cooldown')
+                      }, 5000
+                    )}}
+                >
+                  Hmm...{' '}
+                  <a
+                    href="https://www.homedepot.com/b/Paint-Spray-Paint/N-5yc1vZapz5"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cheekyPopup"
+                  >
+                    Seems like there's not much art around here..
+                  </a>
+                </Popup> */}
+              </div>
+            ) : (
+              ''
+            )}
+            {/* THIS MAPS ARTWORK TO PINS */}
+            {art[0] || this.props.allArtworks[0] ? (
+              art.map(artwork => (
                 <Marker
                   key={artwork.id}
                   latitude={Number(artwork.Location.latitude)}
@@ -241,69 +317,99 @@ class MapView extends Component {
                       this.openModal()
                     }}
                   >
-                    <MapPin />
+                    <img
+                      className="location-pin"
+                      height="40px"
+                      width=""
+                      src={
+                        artwork.Location.latitude ===
+                          localStorage.getItem('latitude') &&
+                        artwork.Location.longitude ===
+                          localStorage.getItem('longitude')
+                          ? 'https://res.cloudinary.com/dcr8cepdv/image/upload/v1590269279/Raspberry-Lightning-Bolt_hiyje0_4_f12mr4.png'
+                          : 'https://res.cloudinary.com/dcr8cepdv/image/upload/v1590270243/GREEN-Lightning-Bolt-v2_i6kcre.png'
+                      }
+                    />
                   </button>
                 </Marker>
               ))
-            : ''}
-          {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
-          {this.state.selectedPin ? (
-            <div>
-              <Popup
-                className="popup-contaner"
-                open={this.state.open}
-                closeOnDocumentClick
-                latitude={Number(this.state.selectedPin.latitude)}
-                longitude={Number(this.state.selectedPin.longitude)}
-                // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
-                contentStyle={
-                  window.innerWidth < 768
-                    ? mobileContentStyle
-                    : mapPopupDesktopStyle
-                }
-                onClose={() => {
-                  this.setState({selectedPin: null})
-                  this.closeModal()
-                }}
-              >
-                <div>
-                  <button
-                    type="button"
-                    className="close-btn"
-                    onClick={() => this.closeModal()}
-                  >
-                    {' '}
-                    &times;
-                  </button>
-                  {/** INDIVIDUAL ARTWORK FOR EACH PIN BY LOCATION*/}
-                  <Artwork
-                    latitude={Number(this.state.selectedPin.latitude)}
-                    longitude={Number(this.state.selectedPin.longitude)}
-                    address={this.state.selectedPin.address}
-                  />
+            ) : (
+              <div className="loading">
+                <Loading />
+              </div>
+            )}
+            {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
+            {this.state.selectedPin ? (
+              <div>
+                <Popup
+                  className="popup-contaner"
+                  open={this.state.open}
+                  closeOnDocumentClick
+                  latitude={Number(this.state.selectedPin.latitude)}
+                  longitude={Number(this.state.selectedPin.longitude)}
+                  // CUSTOMIZE STYLING BASE ON REACT_MAP_GL DOC
+                  contentStyle={
+                    window.innerWidth < 768
+                      ? mobileContentStyle
+                      : mapPopupDesktopStyle
+                  }
+                  onClose={() => {
+                    this.setState({selectedPin: null})
+                    this.closeModal()
+                  }}
+                >
+                  <div>
+                    <button
+                      type="button"
+                      className="close-btn"
+                      onClick={() => this.closeModal()}
+                    >
+                      {' '}
+                      &times;
+                    </button>
+                    {/** INDIVIDUAL ARTWORK FOR EACH PIN BY LOCATION*/}
+                    <Artwork
+                      latitude={Number(this.state.selectedPin.latitude)}
+                      longitude={Number(this.state.selectedPin.longitude)}
+                      address={this.state.selectedPin.address}
+                    />
+                  </div>
+                </Popup>
+              </div>
+            ) : (
+              ''
+            )}
+            {/** CONDITIONS FOR LOADING NAV CONTROLS BASE ON DEVICE */}
+            {window.innerWidth > 768 ||
+            (window.innerWidth < 768 && this.state.selectedPin === null) ? (
+              <div>
+                <div id="navegation-control">
+                  <NavigationControl />
                 </div>
-              </Popup>
-            </div>
-          ) : (
-            ''
-          )}
-          {/** CONDITIONS FOR LOADING NAV CONTROLS BASE ON DEVICE */}
-          {window.innerWidth > 768 ||
-          (window.innerWidth < 768 && this.state.selectedPin === null) ? (
-            <div>
-              <div id="navegation-control">
-                <NavigationControl />
+                <div id="fullscreen-control">
+                  <FullscreenControl />
+                </div>
               </div>
-              <div id="fullscreen-control">
-                <FullscreenControl />
-              </div>
+            ) : (
+              ''
+            )}
+          </ReactMapGl>
+          {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
+          <div id="footer">
+            <div id="checkbox">
+              <input
+                type="checkbox"
+                onChange={e => {
+                  this.setState({viewAll: !e.target.checked})
+                }}
+                name="viewAll"
+                defaultChecked={true}
+              />
+              <label htmlFor="viewAll">Only show art near me?</label>
             </div>
-          ) : (
-            ''
-          )}
-        </ReactMapGl>
-        {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
-        <ArtistListPopup />
+            <ArtistListPopup art={art} />
+          </div>
+        </div>
       </div>
     )
   }

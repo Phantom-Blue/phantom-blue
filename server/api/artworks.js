@@ -97,8 +97,7 @@ router.post('/', async (req, res, next) => {
         latitude,
         longitude,
         address,
-        imageUrl,
-        imageFile
+        imageUrl
       } = req.body
       let isVerified = false
 
@@ -107,12 +106,7 @@ router.post('/', async (req, res, next) => {
         isVerified = true
       }
 
-      if (latitude && longitude && address && imageFile) {
-        await cloudinary.v2.uploader.upload(imageFile, function(error, result) {
-          console.log(result, error)
-          imageUrl = result.secure_url
-        })
-
+      if (latitude && longitude && address && imageUrl) {
         const location = await Location.findOrCreate({
           where: {
             latitude,
@@ -157,12 +151,18 @@ router.put('/:artworkId', async (req, res) => {
         where: {
           id: artworkId
         },
-        include: Tag
+        include: [Tag]
       })
-      const verfiedArtwork = await artworkToVerify.update({
+      await artworkToVerify.update({
         isVerified: true
       })
-      res.json(verfiedArtwork)
+      const verifiedArtwork = await Artwork.findOne({
+        where: {id: req.params.artworkId},
+        include: Location
+      })
+      if (verifiedArtwork) {
+        res.json(verifiedArtwork)
+      }
     } else {
       res.json('Log in to verify artwork.')
     }
