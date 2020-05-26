@@ -222,11 +222,15 @@ class MainHome extends React.Component {
             </CarouselProvider>
           </div>
         ) : (
-          <Loading />
+          <div className="loading">
+            <Loading />
+          </div>
         )}
       </div>
     ) : (
-      <Loading />
+      <div className="loading">
+        <Loading />
+      </div>
     )
   }
 }

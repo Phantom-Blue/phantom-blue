@@ -43,7 +43,7 @@ class MapView extends Component {
         longitude: -73.9566,
         width: '100vw',
         height: '100vh',
-        zoom: 12
+        zoom: 10
       },
       selectedPin: null,
       open: false,
@@ -82,7 +82,7 @@ class MapView extends Component {
         longitude: this.props.location.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 13
+        zoom: 10
       }
     })
 
@@ -96,7 +96,7 @@ class MapView extends Component {
           longitude: this.props.location.longitude,
           width: '100vw',
           height: '100vh',
-          zoom: 13
+          zoom: 10
         },
         artworks: this.props.artNearMe
       })
@@ -117,7 +117,7 @@ class MapView extends Component {
             longitude: this.props.location.longitude,
             width: '100vw',
             height: '100vh',
-            zoom: 13
+            zoom: 10
           },
           artworks: this.props.artNearMe
         })
@@ -137,7 +137,7 @@ class MapView extends Component {
             longitude: this.props.location.longitude,
             width: '100vw',
             height: '100vh',
-            zoom: 12
+            zoom: 10
           },
           artworks: this.props.allArtworks,
           allArtworks: this.props.allArtworks
@@ -191,7 +191,7 @@ class MapView extends Component {
         longitude: this.props.location.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 13
+        zoom: 10
       },
       artworks: this.props.artNearMe,
       allArtworks: this.props.allArtworks
@@ -218,17 +218,6 @@ class MapView extends Component {
     return (
       <div>
         <div className="map-container">
-          <div id="checkbox">
-            <input
-              type="checkbox"
-              onChange={e => {
-                this.setState({viewAll: !e.target.checked})
-              }}
-              name="viewAll"
-              defaultChecked={true}
-            />
-            <label htmlFor="viewAll">Only show art near me?</label>
-          </div>
           <ReactMapGl
             ref={this.mapRef}
             {...this.state.viewport}
@@ -245,7 +234,7 @@ class MapView extends Component {
               onViewportChange={this.handleGeocoderViewportChange}
               position="top-right"
               onResult={result => this.handleNewSearch(result)}
-              zoom={13}
+              zoom={10}
             />
 
             {/* WE NOW MAP THROUGH OUR STATE TO MAKE THE MARKERS, THE STATE WILL CHANGE FREQUENTLY W NEW SEARCHES AND PASSED PROPS */}
@@ -335,7 +324,9 @@ class MapView extends Component {
                 </Marker>
               ))
             ) : (
-              <Loading />
+              <div className="loading">
+                <Loading />
+              </div>
             )}
             {/** CONDITIONS TO DISPLAY POP UP ON MOBILE AND DESKTOP */}
             {this.state.selectedPin ? (
@@ -394,7 +385,20 @@ class MapView extends Component {
             )}
           </ReactMapGl>
           {/** BELOW IS POPUP FOR DISPLAY OF ALL ARTWORK */}
-          <ArtistListPopup art={art} />
+          <div id="footer">
+            <div id="checkbox">
+              <input
+                type="checkbox"
+                onChange={e => {
+                  this.setState({viewAll: !e.target.checked})
+                }}
+                name="viewAll"
+                defaultChecked={true}
+              />
+              <label htmlFor="viewAll">Only show art near me?</label>
+            </div>
+            <ArtistListPopup art={art} />
+          </div>
         </div>
       </div>
     )

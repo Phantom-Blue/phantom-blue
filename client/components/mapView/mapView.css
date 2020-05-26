@@ -26,6 +26,8 @@
   align-items: center;
   padding: 40px;
   top: 85%;
+  /* background: rgba(255, 255, 255, 0.377); */
+  background: rgba(255, 255, 255, 0.514);
 }
 
 #link-to-all-artworks {
@@ -95,6 +97,10 @@
     font-size: 50px;
     right: 20px;
   }
+
+  #checkbox {
+    padding: 20px;
+  }
 }
 #here-pin {
   outline: none;
@@ -113,4 +119,8 @@
   width: 100%;
   z-index: 10;
   justify-content: center;
+}
+
+.loading {
+  padding-top: 80px;
 }
