@@ -26,8 +26,10 @@
   align-items: center;
   padding: 40px;
   top: 85%;
-  /* background: rgba(255, 255, 255, 0.377); */
   background: rgba(255, 255, 255, 0.514);
+  /* First color below is slightly more see-through, second is same color as navbar */
+  /* background: rgba(255, 255, 255, 0.377); */
+  /* background: rgba(255, 255, 255, 0.856); */
 }
 
 #link-to-all-artworks {

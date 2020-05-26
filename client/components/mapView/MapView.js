@@ -43,7 +43,7 @@ class MapView extends Component {
         longitude: -73.9566,
         width: '100vw',
         height: '100vh',
-        zoom: 10
+        zoom: 11
       },
       selectedPin: null,
       open: false,
@@ -53,6 +53,7 @@ class MapView extends Component {
       // DEPENDING ON USER ACTION, ONLY ONE GROUP OF ARTWORKS GETS MAPPED AT A TIME
       artworks: [],
       viewAll: false
+      // cooldown: false
     }
     this.openModal = this.openModal.bind(this)
     this.closeModal = this.closeModal.bind(this)
@@ -82,8 +83,9 @@ class MapView extends Component {
         longitude: this.props.location.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 10
-      }
+        zoom: 11
+      },
+      cooldown: localStorage.getItem('cooldown')
     })
 
     /// ARTWORKS FROM OTHER COMPONENT PROPS
@@ -96,7 +98,7 @@ class MapView extends Component {
           longitude: this.props.location.longitude,
           width: '100vw',
           height: '100vh',
-          zoom: 10
+          zoom: 11
         },
         artworks: this.props.artNearMe
       })
@@ -117,7 +119,7 @@ class MapView extends Component {
             longitude: this.props.location.longitude,
             width: '100vw',
             height: '100vh',
-            zoom: 10
+            zoom: 11
           },
           artworks: this.props.artNearMe
         })
@@ -137,7 +139,7 @@ class MapView extends Component {
             longitude: this.props.location.longitude,
             width: '100vw',
             height: '100vh',
-            zoom: 10
+            zoom: 11
           },
           artworks: this.props.allArtworks,
           allArtworks: this.props.allArtworks
@@ -191,7 +193,7 @@ class MapView extends Component {
         longitude: this.props.location.longitude,
         width: '100vw',
         height: '100vh',
-        zoom: 10
+        zoom: 11
       },
       artworks: this.props.artNearMe,
       allArtworks: this.props.allArtworks
@@ -271,10 +273,18 @@ class MapView extends Component {
                   {' '}
                   You are here!
                 </Popup>
-                <Popup
+                {/* <Popup
                   latitude={Number(this.props.location.latitude)}
                   longitude={Number(this.props.location.longitude)}
-                  open={this.props.allArtworks[0] && !this.props.artNearMe[0]}
+                  open={!!this.props.allArtworks.length && !this.props.artNearMe[0] && !this.state.cooldown}
+                  onClose={()=>{
+                    localStorage.setItem('cooldown', true)
+                    this.setState({cooldown: true})
+                    setTimeout(
+                      function(){
+                        localStorage.removeItem('cooldown')
+                      }, 5000
+                    )}}
                 >
                   Hmm...{' '}
                   <a
@@ -285,7 +295,7 @@ class MapView extends Component {
                   >
                     Seems like there's not much art around here..
                   </a>
-                </Popup>
+                </Popup> */}
               </div>
             ) : (
               ''
