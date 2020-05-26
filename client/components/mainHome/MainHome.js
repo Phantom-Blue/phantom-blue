@@ -78,6 +78,7 @@ class MainHome extends React.Component {
         error: null,
         loading: false
       })
+      history.push('/map')
     } else {
       alert('Geolocation not available, please check your location settings')
     }
