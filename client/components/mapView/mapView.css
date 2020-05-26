@@ -105,3 +105,12 @@
   color: rgb(58, 58, 58);
   text-decoration: underline;
 }
+
+#checkbox {
+  display: flex;
+  bottom: 50px;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  justify-content: center;
+}

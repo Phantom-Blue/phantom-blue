@@ -10,9 +10,10 @@ import {
 import './style/artistListPopup.css'
 import {windowCheck} from '../utils/utils'
 
-const artistListPopup = () => {
+const artistListPopup = props => {
   const window = windowCheck()
   const innerWidth = window.innerWidth
+  const {art} = props
 
   return (
     <div className="artwork-list-outer-container">
@@ -36,7 +37,7 @@ const artistListPopup = () => {
             <a className="close" onClick={close}>
               &times;
             </a>
-            <AllArtworks />
+            <AllArtworks art={art} />
           </div>
         )}
       </Popup>
