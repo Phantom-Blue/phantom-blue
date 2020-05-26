@@ -25,9 +25,6 @@ export class SingleUserHome extends Component {
                   Welcome, {this.props.user.firstName}!
                 </h2>
               </div>
-              <div>
-                <img id="user-img" src={this.props.user.imageUrl} />
-              </div>
             </div>
             <div className="saved-artwork">
               <h2>Your Uploaded Artwork</h2>

@@ -126,26 +126,32 @@ export class UploadForm extends React.Component {
     if ('geolocation' in navigator) {
       const bigThis = this
       this.setState({locationLoading: true})
-      navigator.geolocation.getCurrentPosition(async function(position) {
-        const latitude = position.coords.latitude
-        const longitude = position.coords.longitude
-        ls.set('latitude', latitude)
-        ls.set('longitude', longitude)
-        const geocoder = bigThis.state.geocoder
+      navigator.geolocation.getCurrentPosition(
+        async function(position) {
+          const latitude = position.coords.latitude
+          const longitude = position.coords.longitude
+          ls.set('latitude', latitude)
+          ls.set('longitude', longitude)
+          const geocoder = bigThis.state.geocoder
 
-        const response = await geocoder._geocode(`${latitude}, ${longitude}`)
-        const address = response.body.features[0].place_name
+          const response = await geocoder._geocode(`${latitude}, ${longitude}`)
+          const address = response.body.features[0].place_name
 
-        console.log(latitude, longitude)
-        bigThis.setState({
-          latitude: latitude,
-          longitude: longitude,
-          address,
-          locationLoading: false
-        })
-        bigThis.state.geocoder._inputEl.value = address
-        console.log(bigThis.state)
-      })
+          console.log(latitude, longitude)
+          bigThis.setState({
+            latitude: latitude,
+            longitude: longitude,
+            address,
+            locationLoading: false
+          })
+          bigThis.state.geocoder._inputEl.value = address
+          console.log(bigThis.state)
+        },
+        function(error) {
+          console.log('Something went wrong!', error)
+        },
+        {timeout: 10000}
+      )
     } else {
       console.log('Geolocation not available')
     }

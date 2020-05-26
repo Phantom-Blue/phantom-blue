@@ -26,6 +26,10 @@
   align-items: center;
   padding: 40px;
   top: 85%;
+  background: rgba(255, 255, 255, 0.514);
+  /* First color below is slightly more see-through, second is same color as navbar */
+  /* background: rgba(255, 255, 255, 0.377); */
+  /* background: rgba(255, 255, 255, 0.856); */
 }
 
 #link-to-all-artworks {
@@ -95,6 +99,10 @@
     font-size: 50px;
     right: 20px;
   }
+
+  #checkbox {
+    padding: 20px;
+  }
 }
 #here-pin {
   outline: none;
@@ -104,4 +112,17 @@
 .cheekyPopup {
   color: rgb(58, 58, 58);
   text-decoration: underline;
+}
+
+#checkbox {
+  display: flex;
+  bottom: 50px;
+  position: absolute;
+  width: 100%;
+  z-index: 10;
+  justify-content: center;
+}
+
+.loading {
+  padding-top: 80px;
 }
