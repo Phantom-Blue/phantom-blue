@@ -129,7 +129,7 @@ class MainHome extends React.Component {
         <div className="search-section">
           <div className="search-label">
             <p id="address-ad">TO FIND STREET ART NEAR YOU,</p>
-            <h4 id="address-prompt">ENTER YOU ADDRESS:</h4>
+            <h4 id="address-prompt">ENTER YOUR ADDRESS:</h4>
           </div>
           <div className="search-box-submit">
             <div id="geocoder" />
@@ -141,7 +141,7 @@ class MainHome extends React.Component {
                 this.handleSubmit(e)
               }}
             >
-              Submit
+              EXPLORE ARTWORK
             </button>
             <div className="share-location-section">
               <button
@@ -176,19 +176,21 @@ class MainHome extends React.Component {
                           src={artwork.imageUrl[0]}
                           alt="artwork image"
                         />
-                        {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
-                        {this.props.artworks.length > 1 ? (
-                          <div id="carousel-btns">
-                            <ButtonBack id="previous-btn">
-                              <span>&#8249;</span>
-                            </ButtonBack>
-                            <ButtonNext id="forward-btn">
-                              <span>&#8250;</span>
-                            </ButtonNext>
-                          </div>
-                        ) : (
-                          ''
-                        )}
+                        <div id="buttons">
+                          {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
+                          {this.props.artworks.length > 1 ? (
+                            <div id="carousel-btns">
+                              <ButtonBack id="previous-btn">
+                                <span>&#8249;</span>
+                              </ButtonBack>
+                              <ButtonNext id="forward-btn">
+                                <span>&#8250;</span>
+                              </ButtonNext>
+                            </div>
+                          ) : (
+                            ''
+                          )}
+                        </div>
                       </div>
 
                       <Link to={`/artwork/${artwork.id}`}>
