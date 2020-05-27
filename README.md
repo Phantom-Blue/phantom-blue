@@ -23,7 +23,7 @@ A mobile-first web application for finding and uploading street art around New Y
 - PostgreSQL
 - Sequelize ORM
 
-## Additional depencies
+## Additional dependecies
 
 - react-map-gl
 - reactjs-popup
