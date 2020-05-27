@@ -14,7 +14,7 @@ A mobile-first web application for finding and uploading street art around New Y
 
 - [Presentation](https://youtu.be/ZBzauWZc4Gk)
 
-## Stack used
+## Tech stack used
 
 - React.js
 - Redux.js
