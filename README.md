@@ -23,10 +23,21 @@ A mobile-first web application for finding and uploading street art around New Y
 - PostgreSQL
 - Sequelize ORM
 
-## Additional dependecies
+## Some additional dependecies
 
+- axios
 - react-map-gl
 - reactjs-popup
+- mapbox-gl-geocoder
+- pure-react-carousel
+- mapbox-sdk
+- cloudinary
+- cloudinary-react
+- mapbox-gl
+- passport
+- passport-google-oauth
+- pg
+- pg-hstore
 
 ## Additional resources
 
