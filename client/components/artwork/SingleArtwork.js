@@ -14,7 +14,6 @@ class SingleArtwork extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const {artwork} = this.props
     return (
       <div className="single-artwork-container">

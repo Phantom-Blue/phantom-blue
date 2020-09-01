@@ -4,10 +4,9 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {fetchAllVerified, fetchArtFromMyLocation} from '../../store/artworks'
 import {setLocation} from '../../store/location'
-import Popup from 'reactjs-popup'
 import {
   CarouselProvider,
   Slider,
@@ -20,10 +19,8 @@ import './mainHome.css'
 import '../upload/searchBar.css'
 import '../../../secrets'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import MapView from '../mapView/MapView'
-import ls from 'local-storage'
 import Loading from '../utils/Loading'
-import {setLSLocation, getLSLocation, generateUrl} from '../utils/utils'
+import {setLSLocation, generateUrl} from '../utils/utils'
 import history from '../../history'
 
 const mapboxKey =

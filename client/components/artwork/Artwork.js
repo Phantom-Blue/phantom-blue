@@ -13,7 +13,6 @@ import './style/artwork.css'
 
 class Artwork extends React.Component {
   componentDidMount() {
-    console.log('IN COMPONENT DID MOUNT', this.props)
     const {latitude, longitude, getArtwork} = this.props
     getArtwork(latitude, longitude)
   }
@@ -24,8 +23,7 @@ class Artwork extends React.Component {
 
     return (
       <div id="map-popup-container">
-        {// HERE WE INCOORPORATE A CAROUSEL //
-        this.props.artworks[0] ? (
+        {this.props.artworks[0] ? (
           <div id="map-popup-content">
             <div>
               <Link to={`/artwork/${this.props.artworks[0].id}`}>

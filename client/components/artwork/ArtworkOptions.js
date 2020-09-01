@@ -68,7 +68,6 @@ class ArtworkOptions extends React.Component {
 
   render() {
     const {artwork, user} = this.props
-    // console.log('>>>>>>', artwork.isVerified)
     return (
       <div>
         <div className="additional-artwork-info">
@@ -125,23 +124,6 @@ class ArtworkOptions extends React.Component {
                 </button>
               </button>
             </Popup>
-
-            {/* <Popup
-              trigger={<button type="button">Add Tags</button>}
-              position="right center"
-            >
-              <form>
-                <input
-                  name="tags"
-                  value={this.state.tags}
-                  type="text"
-                  onChange={e => this.handleChange(e)}
-                />
-                <button type="submit" onClick={e => this.handleTagging(e)}>
-                  Tag it!
-                </button>
-              </form>
-            </Popup> */}
           </div>
         ) : (
           ''

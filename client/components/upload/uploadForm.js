@@ -137,7 +137,6 @@ export class UploadForm extends React.Component {
           const response = await geocoder._geocode(`${latitude}, ${longitude}`)
           const address = response.body.features[0].place_name
 
-          console.log(latitude, longitude)
           bigThis.setState({
             latitude: latitude,
             longitude: longitude,
@@ -145,7 +144,6 @@ export class UploadForm extends React.Component {
             locationLoading: false
           })
           bigThis.state.geocoder._inputEl.value = address
-          console.log(bigThis.state)
         },
         function(error) {
           console.log('Something went wrong!', error)
@@ -162,7 +160,6 @@ export class UploadForm extends React.Component {
       `https://api.cloudinary.com/v1_1/pentimento/upload`,
       {file: this.state.imageFile, upload_preset: 'ea0bwcdh'}
     )
-    console.log(file.data.secure_url)
     return file.data.secure_url
   }
 

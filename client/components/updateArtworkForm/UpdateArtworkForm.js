@@ -10,7 +10,6 @@ import {
 } from '../../store/artworks'
 import './updateArtworkForm.css'
 import BackButton from '../utils/BackButton'
-import {windowCheck} from '../utils/utils'
 import history from '../../history'
 
 class UpdateArtworkForm extends Component {
@@ -51,7 +50,6 @@ class UpdateArtworkForm extends Component {
     if (e.target.files[0]) {
       let reader = new FileReader()
       reader.onload = () => {
-        console.log('handle file', this.state)
         this.setState({
           updateImageFile: [...state.updateImageFile, reader.result],
           displayImages: [...state.displayImages, reader.result]
@@ -126,7 +124,6 @@ class UpdateArtworkForm extends Component {
                   )
                 })
               : ''}
-            {console.log('here display images', this.state.displayImages)}
           </div>
           <div id="file-container">
             <input

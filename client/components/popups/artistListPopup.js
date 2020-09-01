@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import Popup from 'reactjs-popup'
 import AllArtworks from '../allArtworks/AllArtworks'
 import {Link} from 'react-router-dom'

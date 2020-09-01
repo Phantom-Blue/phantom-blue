@@ -108,7 +108,6 @@ class MapView extends Component {
       lSLocation.latitude !== undefined &&
       lSLocation.latitude !== null
     ) {
-      console.log('SECOND IF STATEMENT IN CDM')
       try {
         await getUserLocation(lSLocation)
         await getMyLocationArt(lSLocation)
@@ -130,9 +129,7 @@ class MapView extends Component {
       //IF THERE'S NO PROPS, OR LAT LONG IN LS STORAGE, WE GET ALL ARTWORKS
     } else {
       try {
-        console.log('THIRD IF STATEMENT IN CDM')
         await this.props.getAllArtWorks()
-
         this.setState({
           viewport: {
             latitude: this.props.location.latitude,
