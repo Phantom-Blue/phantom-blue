@@ -51,15 +51,6 @@ class LocationArtwork extends React.Component {
                   ))}
                 </Slider>
                 <div className="buttons" align="center">
-                  {/* <a
-                            href={generateUrl(
-                              artwork.Location.address
-                            )}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <h4>TAKE ME THERE</h4>
-                          </a> */}
                   <ButtonBack id="previous-btn">
                     <span>&#8249;</span>
                   </ButtonBack>

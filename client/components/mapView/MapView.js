@@ -250,7 +250,6 @@ class MapView extends Component {
                 >
                   <button
                     type="button"
-                    // id="marker-pin"
                     id="here-pin"
                     onClick={() => {
                       this.setState({myLocation: true})
@@ -268,34 +267,10 @@ class MapView extends Component {
                   latitude={Number(this.props.location.latitude)}
                   longitude={Number(this.props.location.longitude)}
                   open={this.state.myLocation}
-                  // onClose = {this.setState({myLocation: false})}
                 >
                   {' '}
                   You are here!
                 </Popup>
-                {/* <Popup
-                  latitude={Number(this.props.location.latitude)}
-                  longitude={Number(this.props.location.longitude)}
-                  open={!!this.props.allArtworks.length && !this.props.artNearMe[0] && !this.state.cooldown}
-                  onClose={()=>{
-                    localStorage.setItem('cooldown', true)
-                    this.setState({cooldown: true})
-                    setTimeout(
-                      function(){
-                        localStorage.removeItem('cooldown')
-                      }, 5000
-                    )}}
-                >
-                  Hmm...{' '}
-                  <a
-                    href="https://www.homedepot.com/b/Paint-Spray-Paint/N-5yc1vZapz5"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="cheekyPopup"
-                  >
-                    Seems like there's not much art around here..
-                  </a>
-                </Popup> */}
               </div>
             ) : (
               ''

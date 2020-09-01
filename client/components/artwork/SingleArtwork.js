@@ -19,12 +19,6 @@ class SingleArtwork extends React.Component {
     return (
       <div className="single-artwork-container">
         {this.props.artwork ? (
-          //ADJUST CLASSNAMES FROM LINES 21-25
-          // //   && this.props.artwork[0] ?
-          // <div className="single-artwork-container">
-          //   <div className="single-image">
-          //     <img src={artwork.imageUrl} alt={artwork.artist} width="200" />
-          //   </div>
           <div className="single-artwork-details">
             {artwork.imageUrl ? (
               artwork.imageUrl.map((url, idx) => {

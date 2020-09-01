@@ -96,8 +96,6 @@ class MainHome extends React.Component {
       await setUserLocation(myLocation)
 
       history.push('/map')
-      // console.log('MY LOCATION IN MAIN HOME SUBMIT',myLocation)
-      // console.log('PROPS IN MAIN HOME SUBMIT',this.props)
     } else {
       alert('Invalid Address!')
     }
@@ -171,11 +169,7 @@ class MainHome extends React.Component {
                   <Slide index={i} key={artwork.id}>
                     <div>
                       <div id="carousel-arwork-img">
-                        <img
-                          // id="carousel-arwork-img"
-                          src={artwork.imageUrl[0]}
-                          alt="artwork image"
-                        />
+                        <img src={artwork.imageUrl[0]} alt="artwork image" />
                         <div id="buttons">
                           {/** CHECKS IF CAROUSEL HAS MORE THAN ONE IMG TO DISPLAY CONTROLS */}
                           {this.props.artworks.length > 1 ? (
