@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, FavoriteArtwork} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -24,6 +24,24 @@ router.get('/:userId', async (req, res, next) => {
       const artwork = await user.getArtwork()
       user.dataValues.artwork = artwork
       res.json(user)
+    } else {
+      res.sendStatus(403)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:artworkId', async (req, res, next) => {
+  try {
+    if (req.user) {
+      const favoriteArtwork = await FavoriteArtwork.findOrCreate({
+        where: {
+          UserId: req.user.id,
+          ArtworkId: req.params.artworkId
+        }
+      })
+      res.json(favoriteArtwork)
     } else {
       res.sendStatus(403)
     }

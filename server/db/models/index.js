@@ -10,8 +10,8 @@ const FavoriteArtwork = require('./FavoriteArtwork')
 Artwork.belongsTo(Location, {foreignKey: {allowNull: false}})
 Location.hasMany(Artwork)
 
-User.belongsToMany(Artwork, {through: FavoriteArtwork})
-Artwork.belongsToMany(User, {through: FavoriteArtwork})
+User.belongsToMany(Artwork, {as: 'favoriteArtworks', through: FavoriteArtwork})
+Artwork.belongsToMany(User, {as: 'favoriteUsers', through: FavoriteArtwork})
 
 Artwork.belongsTo(User)
 User.hasMany(Artwork)

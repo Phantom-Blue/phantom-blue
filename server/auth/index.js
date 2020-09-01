@@ -45,7 +45,9 @@ router.get('/me', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.user.id)
     const artwork = await user.getArtwork()
+    const favorites = await user.getFavoriteArtworks()
     user.dataValues.artwork = artwork
+    user.dataValues.favorites = favorites
     res.json(user)
   } catch (error) {
     next(error)

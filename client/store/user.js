@@ -6,7 +6,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
-
+const FAVORITE_ARTWORK = 'FAVORITE_ARTWORK'
 /**
  * INITIAL STATE
  */
@@ -17,7 +17,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-
+const favoriteArtwork = artwork => ({type: FAVORITE_ARTWORK})
 /**
  * THUNK CREATORS
  */
@@ -67,6 +67,15 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const addFavoriteArtwork = artworkId => async dispatch => {
+  try {
+    const {data} = await axios.post(`/api/users/${artworkId}`)
+    dispatch(favoriteArtwork(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -76,6 +85,16 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case FAVORITE_ARTWORK:
+      if (action.artwork) {
+        let exits = false
+        state.favorites.forEach(artwork => {
+          if (artwork.id === action.artwork.id) {
+            exits = true
+          }
+        })
+      }
+
     default:
       return state
   }
