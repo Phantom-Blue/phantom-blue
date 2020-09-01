@@ -2,7 +2,6 @@
 
 const {expect} = require('chai')
 const {db, User} = require('../index')
-// const User = db.model('user')
 
 xdescribe('User model', () => {
   beforeEach(() => {
