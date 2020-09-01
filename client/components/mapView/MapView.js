@@ -91,7 +91,6 @@ class MapView extends Component {
     /// ARTWORKS FROM OTHER COMPONENT PROPS
     if (this.props.artNearMe[0]) {
       await getUserLocation(lSLocation)
-      console.log('FIRST IF STATEMENT IN CDM', this.props.location.latitude)
       this.setState({
         viewport: {
           latitude: this.props.location.latitude,
@@ -211,8 +210,6 @@ class MapView extends Component {
     const art = this.state.viewAll
       ? this.props.allArtworks
       : this.state.artworks
-
-    console.log(this.props)
 
     return (
       <div>
