@@ -17,7 +17,7 @@ const defaultUser = {}
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
-const favoriteArtwork = artwork => ({type: FAVORITE_ARTWORK})
+const favoriteArtwork = artwork => ({type: FAVORITE_ARTWORK, artwork})
 /**
  * THUNK CREATORS
  */
@@ -70,7 +70,7 @@ export const logout = () => async dispatch => {
 export const addFavoriteArtwork = artworkId => async dispatch => {
   try {
     const {data} = await axios.post(`/api/users/${artworkId}`)
-    console.log('here', data)
+    console.log('here info', data)
     dispatch(favoriteArtwork(data))
   } catch (err) {
     console.log('here err', err)
@@ -88,14 +88,14 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case FAVORITE_ARTWORK:
-      let exits = false
       if (action.artwork) {
-        state.favorites.forEach(artwork => {
-          if (artwork.id === action.artwork.id) {
+        let exits = false
+        state.favorites.forEach(artWork => {
+          if (artWork.id === action.artwork.id) {
             exits = true
           }
         })
-        if (!exist) {
+        if (!exits) {
           state.favorites = [...state.favorites, action.artwork]
           return state
         } else {

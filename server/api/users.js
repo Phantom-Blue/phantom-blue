@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, FavoriteArtwork} = require('../db/models')
+const {User, FavoriteArtwork, Artwork} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -35,14 +35,15 @@ router.get('/:userId', async (req, res, next) => {
 router.get('/:artworkId', async (req, res, next) => {
   try {
     if (req.user) {
-      const favoriteArtwork = await FavoriteArtwork.findOrCreate({
+      const favorite = await FavoriteArtwork.findOrCreate({
         where: {
           UserId: req.user.id,
           ArtworkId: req.params.artworkId
         }
       })
-      if (favoriteArtwork) {
-        const artwork = await Artwork.findById(req.params.artworkId)
+
+      if (favorite) {
+        const artwork = await Artwork.findByPk(req.params.artworkId)
         console.log('here', artwork)
         res.json(artwork)
       } else {
