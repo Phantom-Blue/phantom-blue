@@ -32,7 +32,7 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.get('/:artworkId', async (req, res, next) => {
+router.post('/:artworkId', async (req, res, next) => {
   try {
     if (req.user) {
       const favorite = await FavoriteArtwork.findOrCreate({
@@ -50,7 +50,7 @@ router.get('/:artworkId', async (req, res, next) => {
         res.status(500).send(false)
       }
     } else {
-      res.sendStatus(500)
+      res.send(false)
     }
   } catch (err) {
     next(err)
