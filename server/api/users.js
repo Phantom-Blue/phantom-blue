@@ -41,9 +41,15 @@ router.get('/:artworkId', async (req, res, next) => {
           ArtworkId: req.params.artworkId
         }
       })
-      res.json(favoriteArtwork)
+      if (favoriteArtwork) {
+        const artwork = await Artwork.findById(req.params.artworkId)
+        console.log('here', artwork)
+        res.json(artwork)
+      } else {
+        res.status(500).send(false)
+      }
     } else {
-      res.sendStatus(403)
+      res.sendStatus(500)
     }
   } catch (err) {
     next(err)

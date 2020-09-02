@@ -70,8 +70,10 @@ export const logout = () => async dispatch => {
 export const addFavoriteArtwork = artworkId => async dispatch => {
   try {
     const {data} = await axios.post(`/api/users/${artworkId}`)
+    console.log('here', data)
     dispatch(favoriteArtwork(data))
   } catch (err) {
+    console.log('here err', err)
     console.error(err)
   }
 }
@@ -86,15 +88,16 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case FAVORITE_ARTWORK:
+      let exits = false
       if (action.artwork) {
-        let exits = false
         state.favorites.forEach(artwork => {
           if (artwork.id === action.artwork.id) {
             exits = true
           }
         })
         if (!exist) {
-          return [...state.favorites, action.artwork]
+          state.favorites = [...state.favorites, action.artwork]
+          return state
         } else {
           return state
         }
