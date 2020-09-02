@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import ArtworkOptions from './ArtworkOptions'
 import {fetchOneArtwork} from '../../store/artworks'
+import {addFavoriteArtwork} from '../../store/user'
 import Loading from '../utils/Loading'
 import BackButton from '../utils/BackButton'
 import './style/singleArtwork.css'
@@ -14,7 +15,7 @@ class SingleArtwork extends React.Component {
   }
 
   render() {
-    const {artwork} = this.props
+    const {artwork, addToFavorites} = this.props
     return (
       <div className="single-artwork-container">
         {this.props.artwork ? (
@@ -46,6 +47,14 @@ class SingleArtwork extends React.Component {
               )}
               <br />
               <ArtworkOptions artwork={artwork} />
+              <button
+                type="button"
+                onClick={() => {
+                  addToFavorites(artwork.id)
+                }}
+              >
+                Add to Favorites
+              </button>
               <BackButton />
             </div>
           </div>
@@ -74,7 +83,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  getOneArtwork: artworkId => dispatch(fetchOneArtwork(artworkId))
+  getOneArtwork: artworkId => dispatch(fetchOneArtwork(artworkId)),
+  addToFavorites: artworkId => dispatch(addFavoriteArtwork(artworkId))
 })
 
 export default connect(mapState, mapDispatch)(SingleArtwork)

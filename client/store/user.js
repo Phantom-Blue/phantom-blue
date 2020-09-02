@@ -93,6 +93,11 @@ export default function(state = defaultUser, action) {
             exits = true
           }
         })
+        if (!exist) {
+          return [...state.favorites, action.artwork]
+        } else {
+          return state
+        }
       }
 
     default:
