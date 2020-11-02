@@ -14,6 +14,7 @@ export class SingleUserHome extends Component {
   render() {
     const user = this.props || {}
     const allArtwork = this.props.user.artwork
+    const favorites = this.props.user.favorites
     return (
       <div>
         {this.props.user.firstName ? (
@@ -36,6 +37,32 @@ export class SingleUserHome extends Component {
                           <Link to={`/artwork/${artwork.id}`}>
                             <img src={artwork.imageUrl[0]} alt="Artwork" />
                             <p id="users-home-artist-name">{artwork.artist}</p>
+                            <br />
+                          </Link>
+                        </div>
+                      )
+                    })
+                  : "You haven't uploaded anything yet!"}
+              </div>
+            </div>
+            <div className="saved-artwork">
+              <h2>Your Saved Artwork</h2>
+              <div className="users-artworks">
+                {favorites
+                  ? favorites.map(favoriteArtwork => {
+                      return (
+                        <div
+                          className="artwork-display"
+                          key={favoriteArtwork.id}
+                        >
+                          <Link to={`/artwork/${favoriteArtwork.id}`}>
+                            <img
+                              src={favoriteArtwork.imageUrl[0]}
+                              alt="Artwork"
+                            />
+                            <p id="users-home-artist-name">
+                              {favoriteArtwork.artist}
+                            </p>
                             <br />
                           </Link>
                         </div>
